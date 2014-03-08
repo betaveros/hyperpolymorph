@@ -119,7 +119,7 @@ buildTd key emap = case M.lookup key emap of
 
 buildRow :: (String, String) -> [EntryMap] -> String
 buildRow (key, desc) emaps =
-	"<tr><td>" ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
+	"<tr><td class='desc'>" ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
 
 makeThRow colspan cont =
 	"<tr><th colspan='" ++ show colspan ++ "'>" ++ cont ++ "</th></tr>"

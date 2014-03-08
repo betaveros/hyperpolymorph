@@ -1,7 +1,14 @@
 table { border-collapse: collapse; }
-th { font-family: sans-serif; border: 1px solid #999; padding: 0.3em 0.7em }
+th {
+	font-family: sans-serif;
+	border: 1px solid #999;
+	padding: 0.3em 0.7em;
+	background-color: #eee;
+	background: linear-gradient(to bottom, #fff, #eee);
+}
 td { font-family: monospace; color: #444; border: 1px solid #999; padding: 0.3em 0.7em; }
 strong { color: #000; }
+td.desc { font-family: sans-serif; background-color: #eee; color: black; }
 .key { color: #808; }
 .val { color: #008; }
 .builtin { color: #088; }
