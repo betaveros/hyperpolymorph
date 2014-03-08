@@ -1,0 +1,5 @@
+# stuff
+v: version used
+sv: show version
+prologue: implicit prologue
+minmax: min and max

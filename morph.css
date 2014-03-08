@@ -1,0 +1,7 @@
+table { border-collapse: collapse; }
+th { font-family: sans-serif; border: 1px solid #999; padding: 0.3em 0.7em }
+td { font-family: monospace; color: #444; border: 1px solid #999; padding: 0.3em 0.7em; }
+strong { color: #000; }
+.key { color: #808; }
+.val { color: #008; }
+.builtin { color: #088; }
