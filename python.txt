@@ -1,0 +1,842 @@
+`e versions-used
+2.7; 3.3
+`e show-version
+`$[python -V]
+`$[python --version]
+`e implicit-prologue
+`*import os, re, sys
+`e interpreter
+`$[python foo.py]
+`e repl
+`$[python]
+`e command-line-program
+`$[python -c '`.print("hi")']
+`e block-delimiters
+: and offside rule
+`e statement-terminator
+newline or ;
+
+newlines not separators inside (), [], {}, triple quote literals, or after backslash: \
+`e source-code-encoding
+`(Python 3 source is UTF-8 by default)
+# -*- coding: utf-8 -*-
+`e end-of-line-comment
+# comment
+`e multiple-line-comment
+`(use triple quote string literal:)
+'''comment line
+another line'''
+`e local-variable
+# in function body:
+v = `=None
+a, d = [], {}
+x = 1
+y, z = 2, 3
+`e regions-which-define-lexical-scope
+nestable (read only):
+  function or method body
+`e global-variable
+g1, g2 = 7, 8
+`*def swap_globals():
+  global g1, g2
+  g1, g2 = g2, g1
+`e constant
+# uppercase identifiers
+# constant by convention
+PI = 3.14
+`e assignment
+assignments can be chained but otherwise don't return values:
+v = 1
+`e parallel-assignment
+x, y, z = 1, 2, 3
+
+`![raises ValueError:]
+x, y = 1, 2, 3
+
+`![raises ValueError:]
+x, y, z = 1, 2
+`e swap
+x, y = y, x
+`e compound-assignment-arithmetic-string-logical-bit
+# do not return values:
++= -= *= /= //= %= **=
++= *=
+&= |= ^=
+<<= >>= &= |= ^=
+`e increment-and-decrement
+`e null
+`*None
+`e null-test
+v `*is `=None # slightly preferable to ==, as the latter can be overridden
+`e undefined-variable-access
+raises NameError
+`e conditional-expression
+x `*if x > 0 `*else -x
+`e true-and-false
+`=True `=False
+`e falsehoods
+`=False `=None 0 0.0 '' [] {}
+`e logical-operators
+`*and `*or `*not
+`e relational-operators
+relational operators are chainable:
+== != > < >= <=
+`e compare-strings
+relational operators are chainable:
+== != > < >= <=
+`e min-and-max
+`.min(1, 2, 3)
+`.max(1, 2, 3)
+
+`.min([1, 2, 3])
+`.max([1, 2, 3])
+`e three-value-comparison
+`(removed from Python 3:)
+`.cmp(0, 1)
+`.cmp('do', 're')
+`e arithmetic-operators
++ - * `(see note) // %
+
+`(Python 2 does not have an operator which performs float division on integers. In Python 3 / always performs float division.)
+`e integer-division
+13 // 5
+`e divmod
+q, r = `*divmod(13, 5)
+`e integer-division-by-zero
+`![raises `.ZeroDivisionError]
+`e float-division
+`.float(13) / 5
+# Python 3:
+13 / 5
+`e float-division-by-zero
+`![raises `.ZeroDivisionError]
+`e power
+2**32
+`e sqrt
+`*import math
+math.sqrt(2)
+`e sqrt-1
+`![raises ValueError:]
+`*import math
+math.sqrt(-1)
+`![returns complex float:]
+`*import cmath
+cmath.sqrt(-1)
+`e transcendental-functions
+`*from math `*import exp, log, \
+sin, cos, tan, asin, acos, atan, atan2
+`e transcendental-constants
+`*import math
+math.pi math.e
+`e float-truncation
+`*import math
+
+`.int(x)
+`.int(`.round(x))
+math.ceil(x)
+math.floor(x)
+`e absolute-value
+`.abs(x)
+`e integer-overflow
+`(becomes arbitrary length integer of type long)
+`e float-overflow
+`![raises OverflowError]
+`e rational-construction
+`*from fractions `*import Fraction
+x = Fraction(22, 7)
+`e rational-decomposition
+x.numerator
+x.denominator
+`e complex-construction
+z = 1 + 1.414j
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+`*import cmath
+z.real
+z.imag
+cmath.phase(z)
+`.abs(z)
+z.conjugate()
+`e random-number-uniform-integer-uniform-float-normal-float
+`*import random
+
+random.randint(0, 99)
+
+random.random()
+
+random.gauss(0, 1)
+`e random-seed
+`*import random
+
+random.seed(17)
+seed = random.getstate()
+
+random.setstate(seed)
+`e bit-operators
+<< >> & | ^ ~
+`e binary-octal-and-hex-literals
+0b101010
+052
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+`(none)
+`.int("60", 7)
+`e string-type
+str
+`e string-literal
+'don\'t say "no"'
+"don't say \"no\""
+"don't " 'say "no"'
+'''don't say "no"'''
+"""don't say "no\""""
+`e newline-in-literal
+`(triple quote literals only:)
+'''first line
+second line'''
+
+"""first line
+second line"""
+`e literal-escapes
+`(single and double quoted:)
+\newline \\ \' \" \a \b \f \n \r \t \v \ooo \xhh
+
+`(Python 3:)
+\uhhhh \Uhhhhhhhh
+`e custom-delimiters
+`e here-document
+`e variable-interpolation
+count = 3
+item = 'ball'
+`.print('{count} {item}s'.format(
+  **locals()))
+`e expression-interpolation
+'1 + 1 = {}'.format(1 + 1)
+`e format
+`(old-style)
+'lorem %s %d %f' % ('ipsum', 13, 3.7)
+`(new-style)
+fmt = 'lorem {0} {1} {2}'
+fmt.format('ipsum', 13, 3.7)
+`e are-strings-mutable
+no
+`e copy-string
+not necessary
+`e concatenate
+s = 'Hello, '
+s2 = s + 'World!'
+
+`(juxtaposition can be used to concatenate literals:)
+s2 = 'Hello, ' "World!"
+`e replicate-string
+hbar = '-' * 80
+`e translate-case
+'lorem'.upper()
+'LOREM'.lower()
+`e capitalize-string-words
+`*import string
+
+'lorem'.capitalize()
+string.capwords('lorem ipsum')
+`e trim
+' lorem '.strip()
+' lorem'.lstrip()
+'lorem '.rstrip()
+`e pad-on-right-on-left-centered
+'lorem'.ljust(10)
+'lorem'.rjust(10)
+'lorem'.center(10)
+`e number-to-string
+'value: ' + str(8)
+`e string-to-number
+7 + `.int('12')
+73.9 + `.float('.037')
+`e join
+' '.join(['do', 're', 'mi', 'fa'])
+`![raises TypeError:]
+' '.join([1, 2, 3])
+`e split
+'do re mi fa'.split()
+`e split-in-two
+'do re mi fa'.split(`=None, 1)
+`e split-and-keep-delimiters
+re.split('(\s+)', 'do re mi fa')
+`e string-length
+len('lorem')
+`e index-of-substring
+# raises ValueError if not found:
+'do re re'.index('re')
+'do re re'.rindex('re')
+
+# returns -1 if not found:
+'do re re'.find('re')
+'do re re'.rfind('re')
+`e extract-substring
+`(none)
+`(none)
+'lorem ipsum'[6:11]
+`e extract-character
+'lorem ipsum'[6]
+`e chr-and-ord
+`.chr(65)
+`.ord('A')
+`e to-array-of-characters
+`.list('abcd')
+`e translate-characters
+`*from string `*import lowercase as ins
+`*from string `*import maketrans
+
+outs = ins[13:] + ins[:13]
+'hello'.translate(maketrans(ins,outs))
+`e delete-characters
+"disemvowel me".translate(None, "aeiou")
+`e squeeze-characters
+re.sub('(\s)+', r'\1', 'too  much  space')
+`e literal-custom-delimited-literal
+re.compile('lorem|ipsum')
+none
+`e character-class-abbreviations
+. \d \D \s \S \w \W
+`e anchors
+^ $ \A \b \B \Z
+`e match-test
+`*if re.search('1999', s):
+  `.print('party!')
+`e case-insensitive-match-test
+re.search('lorem', 'Lorem', re.I)
+`e modifiers
+re.I re.M re.S re.X
+`e substitution
+s = 'do re mi mi mi'
+s = re.compile('mi').sub('ma', s)
+`e match-prematch-postmatch
+m = re.search('\d{4}', s)
+`*if m:
+  match = m.group()
+  prematch = s[0:m.start(0)]
+  postmatch = s[m.end(0):len(s)]
+`e group-capture
+rx = '(\d{4})-(\d{2})-(\d{2})'
+m = re.search(rx, '2010-06-03')
+yr, mo, dy = m.groups()
+`e named-group-capture
+rx = '^(?P<file>.+)\.(?P<suffix>.+)$'
+m = re.search(rx, ''foo.txt')
+
+
+m.groupdict()['file']
+
+m.groupdict()['suffix']
+`e scan
+s = 'dolor sit amet'
+a = re.findall('\w+', s)
+`e backreference-in-match-and-substitution
+none
+
+rx = re.compile('(\w+) (\w+)')
+
+rx.sub(r'\2 \1', 'do re')
+`e recursive-regex
+none
+`e date-time-type
+datetime.datetime
+`e current-date-time
+`*import datetime
+
+t = datetime.datetime.now()
+utc = datetime.datetime.utcnow()
+`e to-unix-epoch-from-unix-epoch
+`*from datetime `*import datetime as dt
+
+epoch = int(t.strftime("%s"))
+t2 = dt.fromtimestamp(1304442000)
+`e current-unix-epoch
+`*import datetime
+
+t = datetime.datetime.now()
+epoch = int(t.strftime("%s"))
+`e strftime
+t.strftime('%Y-%m-%d %H:%M:%S')
+`e default-format-example
+2011-08-23 19:35:59.411135
+`e strptime
+`*from datetime `*import datetime
+
+s = '2011-05-03 10:00:00'
+fmt = '%Y-%m-%d %H:%M:%S'
+t = datetime.strptime(s, fmt)
+`e parse-date-w-o-format
+# pip install python-dateutil
+`*import dateutil.parser
+
+s = 'July 7, 1999'
+t = dateutil.parser.parse(s)
+`e date-subtraction
+datetime.timedelta object
+
+use total_seconds() method to convert to float representing difference in seconds
+`e add-duration
+`*import datetime
+
+delta = datetime.timedelta(
+  minutes=10,
+  seconds=3)
+t = datetime.datetime.now() + delta
+`e local-timezone
+a datetime object has no timezone information unless a tzinfo object is provided when it is created
+`e arbitrary-timezone
+# pip install pytz
+
+`*import pytz
+
+`*import datetime
+
+
+tmz = pytz.timezone('Asia/Tokyo')
+
+utc = datetime.datetime.utcnow()
+
+utc_dt = datetime.datetime(
+  *utc.timetuple()[0:5],
+  tzinfo=pytz.utc)
+
+jp_dt = utc_dt.astimezone(tmz)
+`e timezone-name-offset-from-utc-is-daylight-savings
+`*import time
+
+tm = time.localtime()
+  
+
+time.tzname[tm.tm_isdst]
+
+(time.timezone / -3600) + tm.tm_isdst
+
+tm.tm_isdst
+`e microseconds
+t.microsecond
+`e sleep
+`*import time
+
+
+time.sleep(0.5)
+`e timeout
+`*import signal, time
+
+`*class Timeout(Exception): `*pass
+
+`*def timeout_handler(signo, fm):
+  raise Timeout()
+
+
+signal.signal(signal.SIGALRM,
+  timeout_handler)
+
+`*try:
+  signal.alarm(5)
+  time.sleep(10)
+`*except Timeout:
+  `*pass
+
+signal.alarm(0)
+`e literal
+a = [1, 2, 3, 4]
+`e quote-words
+none
+`e size
+len(a)
+`e empty-test
+not a
+`e lookup
+a[0]
+
+# returns last element:
+
+a[-1]
+`e update
+a[0] = 'lorem'
+`e out-of-bounds-behavior
+a = []
+# raises IndexError:
+
+a[10]
+# raises IndexError:
+
+a[10] = 'lorem'
+`e index-of-element
+a = ['x', 'y', 'z', 'w']
+i = a.index('y')
+`e slice
+# select 3rd and 4th elements:
+
+a[2:4]
+
+a[2:2 + 2]
+`e slice-to-end
+a[1:]
+`e manipulate-back
+a = [6, 7, 8]
+
+a.append(9)
+
+a.pop()
+`e manipulate-front
+a = [6, 7, 8]
+
+a.insert(0, 5)
+
+a.pop(0)
+`e concatenate
+a = [1, 2, 3]
+a2 = a + [4, 5, 6]
+
+a.extend([4, 5, 6])
+`e replicate
+a = [None] * 10
+
+a = [None `*for i `*in range(0, 10)]
+`e copy
+`*import copy
+
+a = [1,2,[3,4]]
+a2 = a
+a3 = list(a)
+a4 = copy.deepcopy(a)
+`e arrays-as-function-arguments
+parameter contains address copy
+`e iterate-over-elements
+`*for i `*in [1,2,3]:
+  `.print(i)
+`e iterate-over-indices-and-elements
+a = ['do', 're', 'mi', 'fa']
+`*for i, s `*in enumerate(a):
+  `.print('%s at index %d' % (s, i))
+`e iterate-over-range
+# use range() in Python 3:
+`*for i `*in xrange(1, 1000001):
+  code
+`e instantiate-range-as-array
+a = range(1, 11)
+Python 3:
+a = list(range(1, 11))
+`e reverse
+a = [1, 2, 3]
+
+
+a[::-1]
+
+a.reverse()
+`e sort
+a = ['b', 'A', 'a', 'B']
+
+sorted(a)
+
+a.sort()
+# custom binary comparision
+
+# removed from Python 3:
+
+a.sort(key=str.lower)
+`e dedupe
+a = [1, 2, 2, 3]
+
+a2 = list(set(a))
+a = list(set(a))
+`e membership
+7 `*in a
+`e intersection
+{1,2} & {2,3,4}
+`e union
+{1,2} | {2,3,4}
+`e relative-complement-symmetric-difference
+{1,2,3} - {2}
+
+{1,2} ^ {2,3,4}
+`e map
+map(lambda x: x * x, [1,2,3])
+# or use list comprehension:
+
+[x * x `*for x `*in [1,2,3]]
+`e filter
+filter(lambda x: x > 1, [1,2,3])
+# or use list comprehension:
+
+[x `*for x `*in [1,2,3] `*if x > 1]
+`e reduce
+# import needed in Python 3 only
+`*from functools `*import reduce
+
+reduce(lambda x, y: x+y, [1,2,3], 0)
+`e universal-and-existential-tests
+all(i % 2 == 0 `*for i `*in [1,2,3,4])
+any(i % 2 == 0 `*for i `*in [1,2,3,4])
+`e shuffle-and-sample
+`*from random `*import shuffle, sample
+
+a = [1, 2, 3, 4]
+
+shuffle(a)
+
+sample(a, 2)
+`e zip
+# array of 3 pairs:
+a = zip([1,2,3], ['a', 'b', 'c'])
+`e literal
+d = { 't':1, 'f':0 }
+`e size
+len(d)
+`e lookup
+d['t']
+`e out-of-bounds-behavior
+d = {}
+raises KeyError:
+
+d['lorem']
+adds key/value pair:
+
+d['lorem'] = 'ipsum'
+`e is-key-present
+'y' `*in d
+`e delete-entry
+d = {1: True, 0: False}
+del d[1]
+`e from-array-of-pairs-from-even-length-array
+a = [[1,'a'], [2,'b'], [3,'c']]
+d = dict(a)
+
+a = [1,'a',2,'b',3,'c']
+d = dict(zip(a[::2], a[1::2]))
+`e merge
+d1 = {'a':1, 'b':2}
+d2 = {'b':3, 'c':4}
+
+d1.update(d2)
+`e invert
+to_num = {'t':1, 'f':0}
+# dict comprehensions added in 2.7:
+to_let = {v:k `*for k, v
+  `*in to_num.items()}
+`e iteration
+`*for k, v `*in d.iteritems():
+  code
+
+Python 3:
+`*for k, v `*in d.items():
+  code
+`e keys-and-values-as-arrays
+d.keys()
+
+d.values()
+
+Python 3:
+
+list(d.keys())
+
+list(d.values())
+`e sort-by-values
+`*from operator `*import itemgetter
+
+pairs = sorted(d.iteritems(),
+  key=itemgetter(1))
+
+`*for k, v `*in pairs:
+  `.print('{}: {}'.format(k, v))
+`e default-value-computed-value
+`*from collections `*import defaultdict
+
+counts = defaultdict(lambda: 0)
+
+counts['foo'] += 1
+
+`*class Factorial(dict):
+  `*def __missing__(self, k):
+    `*if k > 1:
+      `*return k * self[k-1]
+    `*else:
+      `*return 1
+
+factorial = Factorial()
+`e define-function
+`*def add3(x1, x2, x3):
+  `*return x1 + x2 + x3
+`e invoke-function
+add3(1, 2, 3)
+`e apply-function-to-array
+a = [2, 3]
+
+
+add3(1, *a)
+
+# splat operator can only be used once
+
+# and must appear after other
+
+# unnamed arguments
+`e missing-argument-behavior
+raises TypeError if number of arguments doesn't match function arity
+`e default-argument
+`*import math
+
+`*def my_log(x, base=10):
+  `*return math.log(x) / math.log(base)
+
+
+my_log(42)
+
+my_log(42, math.e)
+`e variable-number-of-arguments
+`*def first_and_last(*a):
+
+  `*if len(a) >= 1:
+    `.print('first: ' + str(a[0]))
+
+  `*if len(a) >= 2:
+    `.print('last: ' + str(a[-1]))
+`e named-parameters
+`*def fequal(x, y, eps=0.01):
+  `*return abs(x - y) < eps
+
+
+fequal(1.0, 1.001)
+
+fequal(1.0, 1.001, eps=0.1**10)
+`e pass-number-or-string-by-reference
+not possible
+`e pass-array-or-dictionary-by-reference
+`*def foo(x, y):
+  x[2] = 5
+  y['f'] = -1
+
+a = [1,2,3]
+d = {'t':1, 'f':0}
+
+foo(a, d)
+`e return-value
+`*return arg or None
+`e multiple-return-values
+`*def first_and_second(a):
+  `*return a[0], a[1]
+
+x, y = first_and_second([1,2,3])
+`e lambda-declaration
+# body must be an expression:
+sqr = lambda x: x * x
+`e lambda-invocation
+sqr(2)
+`e function-as-value
+func = add
+`e function-with-private-state
+# state not private:
+`*def counter():
+  counter.i += 1
+  `*return counter.i
+
+
+counter.i = 0
+`.print(counter())
+`e closure
+# Python 3:
+`*def make_counter():
+  i = 0
+  `*def counter():
+    nonlocal i
+    i += 1
+    `*return i
+  `*return counter
+
+
+nays = make_counter()
+`e generator
+# The itertools library contains
+
+# standard generators.
+
+# c.f. itertools.count()
+
+`*def make_counter():
+  i = 0
+  `*while True:
+    i += 1
+    yield i
+
+nays = make_counter()
+`.print(nays.next())
+`e decorator
+`*def logcall(f):
+  `*def wrapper(*a, **opts):
+    `.print('calling ' + f.__name__)
+    f(*a, **opts)
+    `.print('called ' + f.__name__)
+  `*return wrapper
+
+@logcall
+`*def square(x):
+  `*return x * x
+`e operator-as-function
+`*import operator
+
+
+operator.mul(3, 7)
+
+a = ['foo', 'bar', 'baz']
+
+operator.itemgetter(2)(a)
+`e if
+`*if 0 == n:
+  `.print('no hits')
+`*elif 1 == n:
+  `.print('one hit')
+`*else:
+  `.print(str(n) + ' hits')
+`e switch
+none
+`e while
+`*while i < 100:
+  i += 1
+`e c-style-for
+none
+`e break-continue-redo
+break continue none
+`e control-structure-keywords
+`*elif `*else `*for `*if `*while
+`e what-do-does
+raises NameError unless a value was assigned to it
+`e statement-modifiers
+none
+`e raise-exception
+raise Exception('bad arg')
+`e re-raise-exception
+`*try:
+  raise Exception('bam!')
+`*except:
+  `.print('re-raising...')
+  raise
+`e catch-exception
+`*try:
+  risky()
+`*except:
+  `.print('risky failed')
+`e global-variable-for-last-exception
+last exception: sys.exc_info()[1]
+`e define-exception
+`*class Bam(Exception):
+  `*def __init__(self):
+    super(Bam, self).__init__('bam!')
+`e catch-exception-by-type
+`*try:
+  raise Bam()
+`*except Bam as e:
+  `.print(e)
+`e finally
+acquire_resource()
+`*try:
+  risky()
+finally:
+  release_resource()
+`e start-thread
+`*class sleep10(threading.Thread):
+  `*def run(self):
+    time.sleep(10)
+
+thr = sleep10()
+
+thr.start()
+`e wait-on-thread
+thr.join()

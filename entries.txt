@@ -94,7 +94,7 @@ compare-strings: compare strings
 are-strings-mutable: are strings mutable?
 copy-string: copy string
 concatenate: concatenate / and append
-replicate: replicate
+replicate-string: replicate string
 translate-case: translate case / to upper, to lower
 capitalize-string-words: capitalize / string, words
 trim: trim / both sides, left, right

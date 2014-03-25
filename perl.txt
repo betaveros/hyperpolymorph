@@ -1,0 +1,844 @@
+`e versions-used
+5.14; 5.16
+`e show-version
+`$[perl --version]
+`e implicit-prologue
+`*use strict;
+`e interpreter
+`$[perl foo.pl]
+`e repl
+`$[perl -de 0]
+`e command-line-program
+`$[perl -e 'print("hi\n")']
+`e block-delimiters
+{}
+`e statement-terminator
+;
+`e source-code-encoding
+`*use utf8;
+`e end-of-line-comment
+# comment
+`e multiple-line-comment
+=for
+
+comment line
+
+another line
+
+=cut
+`e local-variable
+`*my $v;
+`*my (@a, %d);
+`*my $x = 1;
+`*my ($y, $z) = (2, 3);
+`e regions-which-define-lexical-scope
+top level:
+  file
+
+
+nestable:
+  function body
+  anonymous function body
+  anonymous block
+`e global-variable
+our ($g1, $g2) = (7, 8);
+
+`*sub swap_globals {
+  ($g1, $g2) = ($g2, $g1);
+
+}
+`e constant
+`*use constant PI => 3.14;
+`e assignment
+$v = 1;
+`e parallel-assignment
+($x, $y, $z) = (1, 2, 3);
+
+# 3 is discarded:
+
+($x, $y) = (1, 2, 3);
+
+# $z set to undef:
+
+($x, $y, $z) = (1, 2);
+`e swap
+($x, $y) = ($y, $x);
+`e compound-assignment-arithmetic-string-logical-bit
++= -= *= none /= %= **=
+
+.= x=
+
+&&= ||= ^=
+<<= >>= &= |= ^=
+`e increment-and-decrement
+`*my $x = 1;
+`*my $y = ++$x;
+`*my $z = --$y;
+`e null
+undef
+`e null-test
+! defined $v
+`e undefined-variable-access
+error under `*use strict; otherwise undef
+`e conditional-expression
+$x > 0 ? $x : -$x
+`e true-and-false
+1 ""
+`e falsehoods
+undef 0 0.0 "" "0" ()
+`e logical-operators
+&& || !
+lower precedence:
+and or xor not
+`e relational-operators
+numbers only: == != > < >= <=
+`e compare-strings
+eq ne gt lt ge le
+`e min-and-max
+`*use List::Util qw(min max);
+
+
+min(1, 2, 3);
+
+max(1, 2, 3);
+
+@a = (1, 2, 3);
+
+min(@a);
+
+max(@a);
+`e three-value-comparison
+0 <=> 1
+"do" cmp "re"
+`e arithmetic-operators
++ - * / none %
+`e integer-division
+int(13 / 5)
+`e divmod
+none
+`e integer-division-by-zero
+error
+`e float-division
+13 / 5
+`e float-division-by-zero
+error
+`e power
+2**32
+`e sqrt
+sqrt(2)
+`e sqrt-1
+error unless `*use Math::Complex in effect
+`e transcendental-functions
+`*use Math::Trig qw(
+  tan asin acos atan);
+
+exp log sin cos tan asin acos atan atan2
+`e transcendental-constants
+
+`e float-truncation
+# cpan -i Number::Format
+`*use Number::Format 'round';
+`*use POSIX qw(ceil floor);
+
+int($x)
+
+round($x, 0)
+
+ceil($x)
+
+floor($x)
+`e absolute-value
+abs($x)
+`e integer-overflow
+converted to float; `*use Math::BigInt to create arbitrary length integers
+`e float-overflow
+inf
+`e rational-construction
+`*use Math::BigRat;
+
+`*my $x = Math::BigRat->new("22/7");
+`e rational-decomposition
+$x->numerator();
+
+$x->denominator();
+`e complex-construction
+`*use Math::Complex;
+
+`*my $z = 1 + 1.414 * i;
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+Re($z);
+
+Im($z);
+
+arg($z);
+
+abs($z);
+
+~$z;
+`e random-number-uniform-integer-uniform-float-normal-float
+int(rand() * 100)
+rand()
+none
+`e random-seed
+srand 17;
+
+`*my $seed = srand;
+srand($seed);
+`e bit-operators
+<< >> & | ^ ~
+`e binary-octal-and-hex-literals
+0b101010
+
+052
+
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+# cpan -i Math::BaseCalc
+`*use Math::BaseCalc;
+
+
+$c = new Math::BaseCalc(
+  digits => [0..6]);
+
+$c->to_base(42);
+
+$c->from_base("60");
+`e string-type
+SCALAR which is also used for numeric types and references
+`e string-literal
+"don't say \"no\""
+'don\'t say "no"'
+`e newline-in-literal
+'first line
+
+second line'
+
+
+"first line
+
+second line"
+`e literal-escapes
+double quoted:
+
+\a \b \cx \e \f \n \r \t \xhh \x{hhhh} \ooo \o{ooo}
+
+single quoted:
+
+\' \\
+`e custom-delimiters
+`*my $s1 = q(lorem ipsum);
+`*my $s2 = qq($s1 dolor sit amet);
+`e here-document
+$word = "amet";
+
+
+$s = <<EOF;
+lorem ipsum
+
+dolor sit $word
+
+EOF
+`e variable-interpolation
+`*my $count = 3;
+`*my $item = "ball";
+print "$count ${item}s\n";
+`e expression-interpolation
+none
+`e format
+`*my $fmt = "lorem %s %d %f";
+sprintf($fmt, "ipsum", 13, 3.7)
+`e are-strings-mutable
+$s = "bar";
+
+$s2 = $s;
+# sets s to "baz"; s2 is unchanged:
+
+$s =~ s/r/z/;
+`e copy-string
+$s2 = $s;
+`e concatenate
+`*my $s = "Hello, ";
+`*my $s2 = $s . "World!";
+`e replicate-string
+`*my $hbar = "-" x 80;
+`e translate-case
+uc("lorem")
+lc("LOREM")
+`e capitalize-string-words
+# cpan -i Text::Autoformat
+`*use Text::Autoformat;
+
+ucfirst("lorem")
+
+autoformat("lorem ipsum",
+  {case => 'title'})
+`e trim
+# cpan -i Text::Trim
+`*use Text::Trim;
+
+
+trim " lorem "
+
+ltrim " lorem"
+
+rtrim "lorem "
+`e pad-on-right-on-left-centered
+# cpan -i Text::Format
+`*use Text::Format;
+
+sprintf("%-10s", "lorem")
+sprintf("%10s", "lorem")
+
+
+$text = Text::Format->new(columns => 10);
+
+$text->center("lorem");
+`e number-to-string
+"value: " . 8
+`e string-to-number
+7 + "12"
+
+73.9 + ".037"
+`e join
+join(" ", qw(do re mi fa))
+`e split
+split(/\s+/, "do re mi fa")
+`e split-in-two
+split(/\s+/, "do re mi fa", 2)
+`e split-and-keep-delimiters
+split(/(\s+)/, "do re mi fa")
+`e string-length
+length("lorem")
+`e index-of-substring
+# returns -1 if not found:
+index("lorem ipsum", "ipsum")
+rindex("do re re", "re")
+`e extract-substring
+substr("lorem ipsum", 6, 5)
+none
+none
+`e extract-character
+# can't use index notation with
+
+# strings:
+substr("lorem ipsum", 6, 1)
+`e chr-and-ord
+chr(65)
+ord("A")
+`e to-array-of-characters
+split(//, "abcd")
+`e translate-characters
+$s = "hello";
+
+$s =~ tr/a-z/n-za-m/;
+`e delete-characters
+$s = "disemvowel me";
+
+$s =~ tr/aeiou//d;
+`e squeeze-characters
+$s = "too  much  space";
+
+$s =~ tr/ //s;
+`e literal-custom-delimited-literal
+/lorem|ipsum/
+qr(/etc/hosts)
+`e character-class-abbreviations
+. \d \D \h \H \s \S \v \V \w \W
+`e anchors
+^ $ \A \b \B \z \Z
+`e match-test
+`*if ($s =~ /1999/) {
+  print "party!\n";
+
+}
+`e case-insensitive-match-test
+"Lorem" =~ /lorem/i
+`e modifiers
+i m s p x
+`e substitution
+`*my $s = "do re mi mi mi";
+
+$s =~ s/mi/ma/g;
+`e match-prematch-postmatch
+`*if ($s =~ /\d{4}/p) {
+  $match = ${^MATCH};
+  $prematch = ${^PREMATCH};
+  $postmatch = ${^POSTMATCH};
+
+}
+`e group-capture
+$rx = qr/(\d{4})-(\d{2})-(\d{2})/;
+"2010-06-03" =~ $rx;
+
+($yr, $mo, $dy) = ($1, $2, $3);
+`e named-group-capture
+$s = "foo.txt";
+
+$s =~ /^(?<file>.+)\.(?<suffix>.+)$/;
+
+
+$+{"file"}
+
+$+{"suffix"}
+`e scan
+`*my $s = "dolor sit amet";
+@a = $s =~ m/\w+/g;
+`e backreference-in-match-and-substitution
+"do do" =~ /(\w+) \1/
+
+`*my $s = "do re";
+
+$s =~ s/(\w+) (\w+)/$2 $1/;
+`e recursive-regex
+/\(([^()]*|(?R))\)/
+`e date-time-type
+Time::Piece if `*use Time::Piece in effect, otherwise tm array
+`e current-date-time
+`*use Time::Piece;
+
+`*my $t = localtime(time);
+`*my $utc = gmtime(time);
+`e to-unix-epoch-from-unix-epoch
+`*use Time::Local;
+`*use Time::Piece;
+
+`*my $epoch = timelocal($t);
+`*my $t2 = localtime(1304442000);
+`e current-unix-epoch
+$epoch = time;
+`e strftime
+`*use Time::Piece;
+
+
+$t = localtime(time);
+
+$fmt = "%Y-%m-%d %H:%M:%S";
+print $t->strftime($fmt);
+`e default-format-example
+Tue Aug 23 19:35:19 2011
+`e strptime
+`*use Time::Local;
+`*use Time::Piece;
+
+
+$s = "2011-05-03 10:00:00";
+
+$fmt = "%Y-%m-%d %H:%M:%S";
+
+$t = Time::Piece->strptime($s,$fmt);
+`e parse-date-w-o-format
+# cpan -i Date::Parse
+`*use Date::Parse;
+
+
+$epoch = str2time("July 7, 1999");
+`e date-subtraction
+Time::Seconds object if `*use Time::Piece in effect; not meaningful to subtract tm arrays
+`e add-duration
+`*use Time::Seconds;
+
+
+$now = localtime(time);
+
+$now += 10 * ONE_MINUTE() + 3;
+`e local-timezone
+Time::Piece has local timezone if created with localtime and UTC timezone if created with gmtime; tm arrays have no timezone or offset info
+`e arbitrary-timezone
+
+`e timezone-name-offset-from-utc-is-daylight-savings
+# cpan -i DateTime
+`*use DateTime;
+`*use DateTime::TimeZone;
+
+
+$dt = DateTime->now();
+
+$tz = DateTime::TimeZone->new(
+  name=>"local");
+
+
+$tz->name;
+
+$tz->offset_for_datetime($dt) /
+  3600;
+
+$tz->is_dst_for_datetime($dt);
+`e microseconds
+`*use Time::HiRes qw(gettimeofday);
+
+
+($sec, $usec) = gettimeofday;
+`e sleep
+# a float argument will be truncated
+
+# to an integer:
+sleep 1;
+`e timeout
+eval {
+  $SIG{ALRM}= `*sub {die "timeout!";};
+  alarm 5;
+  sleep 10;
+
+};
+alarm 0;
+`e literal
+@a = (1, 2, 3, 4);
+`e quote-words
+@a = qw(do re mi);
+`e size
+$#a + 1 or
+scalar(@a)
+`e empty-test
+!@a
+`e lookup
+$a[0]
+
+# returns last element:
+$a[-1]
+`e update
+$a[0] = "lorem";
+`e out-of-bounds-behavior
+@a = ();
+# evaluates as undef:
+$a[10];
+# increases array size to 11:
+$a[10] = "lorem";
+`e index-of-element
+`*use List::Util 'first';
+
+@a = qw(x y z w);
+
+$i = first {$a[$_] eq "y"} (0..$#a);
+`e slice
+# select 3rd and 4th elements:
+@a[2..3]
+splice(@a, 2, 2)
+`e slice-to-end
+@a[1..$#a]
+`e manipulate-back
+@a = (6, 7, 8);
+push @a, 9;
+pop @a;
+`e manipulate-front
+@a = (6, 7, 8);
+unshift @a, 5;
+shift @a;
+`e concatenate
+@a = (1, 2, 3);
+@a2 = (@a, (4, 5, 6));
+push @a, (4,5,6);
+`e replicate
+@a = (undef) x 10;
+`e copy
+`*use Storable 'dclone'
+
+`*my @a = (1,2,[3,4]);
+`*my $a2 = \@a;
+`*my @a3 = @a;
+`*my @a4 = @{dclone(\@a)};
+`e arrays-as-function-arguments
+each element passed as separate argument; use reference to pass array as single argument
+`e iterate-over-elements
+for $i (1, 2, 3) { print "$i\n" }
+`e iterate-over-indices-and-elements
+none; use range iteration from 0 to $#a and use index to look up value in the loop body
+`e iterate-over-range
+for $i (1..1_000_000) {
+  code
+
+}
+`e instantiate-range-as-array
+@a = 1..10;
+`e reverse
+@a = (1, 2, 3);
+
+reverse @a;
+@a = reverse @a;
+`e sort
+@a = qw(b A a B);
+
+sort @a;
+@a = sort @a;
+sort { lc($a) cmp lc($b) } @a;
+`e dedupe
+`*use List::MoreUtils 'uniq';
+
+`*my @a = (1, 2, 2, 3);
+
+`*my @a2 = uniq @a;
+@a = uniq @a;
+`e membership
+7 ~~ @a
+`e intersection
+
+`e union
+
+`e relative-complement-symmetric-difference
+
+`e map
+map { $_ * $_ } (1,2,3)
+`e filter
+grep { $_ > 1 } (1,2,3)
+`e reduce
+`*use List::Util 'reduce';
+
+
+reduce { $x + $y } 0, (1,2,3)
+`e universal-and-existential-tests
+# cpan -i List::MoreUtils
+`*use List::MoreUtils qw(all any);
+
+
+all { $_ % 2 == 0 } (1,2,3,4)
+
+any { $_ % 2 == 0 } (1,2,3,4)
+`e shuffle-and-sample
+`*use List::Util 'shuffle';
+
+@a = (1, 2, 3, 4);
+
+shuffle(@a);
+none
+`e zip
+# cpan -i List::MoreUtils
+`*use List::MoreUtils 'zip';
+
+@nums = (1, 2, 3);
+@lets = qw(a b c);
+# flat array of 6 elements:
+@a = zip @nums, @lets;
+`e literal
+%d = ( "t" => 1, "f" => 0 );
+
+# barewords permitted in front of =>
+
+# under '`*use strict'
+`e size
+scalar(keys %d)
+`e lookup
+$d{"t"}
+
+# barewords permitted inside { }
+
+# under '`*use strict'
+`e out-of-bounds-behavior
+%d = ();
+evaluates as undef:
+$d{"lorem"};
+adds key/value pair:
+$d{"lorem"} = "ipsum";
+`e is-key-present
+exists $d{"y"}
+`e delete-entry
+%d = ( 1 => "t", 0 => "f" );
+delete $d{1};
+`e from-array-of-pairs-from-even-length-array
+@a = (1,"a",2,"b",3,"c");
+%d = @a;
+`e merge
+%d1 = (a=>1, b=>2);
+%d2 = (b=>3, c=>4);
+%d1 = (%d1, %d2);
+`e invert
+%to_num = (t=>1, f=>0);
+%to_let = reverse %to_num;
+`e iteration
+while (($k, $v) = each %d) {
+  code
+
+}
+`e keys-and-values-as-arrays
+keys %d
+values %d
+`e sort-by-values
+foreach $k (sort
+  { $d{$a} <=> $d{$b} } keys %d) {
+
+  print "$k: $d{$k}\n";
+
+}
+`e default-value-computed-value
+`*my %counts;
+$counts{'foo'} += 1
+
+define a tied hash for computed values and defaults other than zero or empty string
+`e define-function
+`*sub add3 { $_[0] + $_[1] + $_[2] }
+
+`*sub add3 {
+  `*my ($x1, $x2, $x3) = @_;
+  $x1 + $x2 + $x3;
+
+}
+`e invoke-function
+add3(1, 2, 3);
+
+# parens are optional:
+
+add3 1, 2, 3;
+`e apply-function-to-array
+@a = (2, 3);
+
+
+add3(1, @a);
+# arrays are always expanded when used
+# as arguments
+`e missing-argument-behavior
+set to undef
+`e default-argument
+`*sub my_log {
+  `*my $x = shift;
+  `*my $base = shift // 10;
+
+  log($x) / log($base);
+
+}
+
+
+my_log(42);
+
+my_log(42, exp(1));
+`e variable-number-of-arguments
+`*sub first_and_last {
+
+  `*if ( @_ >= 1 ) {
+    print "first: $_[0]\n";
+  }
+
+  `*if ( @_ >= 2 ) {
+    print "last: $_[-1]\n";
+  }
+
+}
+`e named-parameters
+none
+`e pass-number-or-string-by-reference
+`*sub foo {
+  $_[0] += 1;
+  $_[1] .= "ly";
+
+}
+
+`*my $n = 7;
+`*my $s = "hard";
+
+foo($n, $s);
+`e pass-array-or-dictionary-by-reference
+`*sub foo {
+  $_[0][2] = 5;
+  $_[1]{"f"} = -1;
+
+}
+
+`*my @a = (1,2,3);
+`*my %d = ("t"=> 1, "f" => 0);
+
+foo(\@a, \%d);
+`e return-value
+`*return arg or last expression evaluated
+`e multiple-return-values
+`*sub first_and_second {
+  `*return ($_[0], $_[1]);
+
+}
+
+@a = (1,2,3);
+
+($x, $y) = first_and_second(@a);
+`e lambda-declaration
+$sqr = `*sub { $_[0] * $_[0] }
+`e lambda-invocation
+$sqr->(2)
+`e function-as-value
+`*my $func = \&add;
+`e function-with-private-state
+`*use feature state;
+
+`*sub counter {
+  state $i = 0;
+  ++$i;
+
+}
+
+print counter() . "\n";
+`e closure
+`*sub make_counter {
+  `*my $i = 0;
+  `*return `*sub { ++$i };
+
+}
+
+`*my $nays = make_counter;
+print $nays->() . "\n";
+`e generator
+none
+`e decorator
+
+`e operator-as-function
+
+`e if
+`*if ( 0 == $n ) {
+  print "no hits\n"
+
+} elsif ( 1 == $n ) {
+  print "one hit\n"
+
+} else {
+  print "$n hits\n"
+
+}
+`e switch
+`*use feature 'switch';
+
+
+given ($n) {
+  when (0) { print "no hits\n"; }
+  when (1) { print "one hit\n"; }
+  default { print "$n hits\n"; }
+
+}
+`e while
+`*while ( $i < 100 ) { $i++ }
+`e c-style-for
+`*for ( $i=0; $i <= 10; $i++ ) {
+  print "$i\n";
+
+}
+`e break-continue-redo
+`*last `*next `*redo
+`e control-structure-keywords
+`*do `*else `*elsif `*for `*foreach `*goto `*if `*unless `*until `*while
+`e what-do-does
+executes following block and returns value of last statement executed
+`e statement-modifiers
+print "positive\n" `*if $i > 0;
+print "nonzero\n" `*unless $i == 0;
+`e raise-exception
+die "bad arg";
+`e re-raise-exception
+
+`e catch-exception
+eval { risky };
+`*if ($@) {
+  print "risky failed: $@\n";
+
+}
+`e global-variable-for-last-exception
+$EVAL_ERROR: $@
+$OS_ERROR: $!
+$CHILD_ERROR: $?
+`e define-exception
+none
+`e catch-exception-by-type
+none
+`e finally
+none
+`e start-thread
+`*use threads;
+
+
+$func = `*sub { sleep 10 };
+
+$thr = threads->new($func);
+`e wait-on-thread
+$thr->join;

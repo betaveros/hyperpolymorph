@@ -1,0 +1,888 @@
+`e versions-used
+5.4; 5.5
+`e show-version
+`$[php --version]
+`e implicit-prologue
+none
+`e interpreter
+`$[php -f foo.php]
+`e repl
+`$[php -a]
+`e command-line-program
+`$[php -r 'echo "hi\n";']
+`e block-delimiters
+{}
+`e statement-terminator
+;
+
+statements must be semicolon terminated inside {}
+`e source-code-encoding
+none
+`e end-of-line-comment
+// comment
+# comment
+`e multiple-line-comment
+/* comment line
+another line */
+`e local-variable
+# in function body:
+$v = `=NULL;
+$a = [];
+$d = [];
+$x = 1;
+`.list($y, $z) = [2, 3];
+`e regions-which-define-lexical-scope
+top level:
+  function or method body
+nestable (with use clause):
+  anonymous function body
+`e global-variable
+`*list($g1, $g2) = [7, 8];
+`*function swap_globals() {
+  `*global $g1, $g2;
+  `*list($g1, $g2) = [$g2, $g1];
+}
+`e constant
+`*define("PI", 3.14);
+`e assignment
+$v = 1;
+`e parallel-assignment
+list($x, $y, $z) = [1 ,2, 3];
+# 3 is discarded:
+list($x, $y) = [1, 2, 3];
+# $z set to NULL:
+`*list($x, $y, $z) = [1, 2];
+`e swap
+`*list($x, $y) = [$y, $x];
+`e compound-assignment-arithmetic-string-logical-bit
++= -= *= `(none) /= %= **=
+.= `(none)
+&= |= `(none)
+<<= >>= &= |= ^=
+`e increment-and-decrement
+$x = 1;
+$y = ++$x;
+$z = --$y;
+`e null
+`=NULL # case insensitive
+`e null-test
+`*is_null($v)
+! `*isset($v)
+`e undefined-variable-access
+`=NULL
+`e conditional-expression
+$x > 0 ? $x : -$x
+`e true-and-false
+`=TRUE `=FALSE # case insensitive
+`e falsehoods
+`=FALSE `=NULL 0 0.0 "" "0" []
+`e logical-operators
+&& || !
+`(lower precedence:)
+`*and `*or `*xor
+`e relational-operators
+== != or <> > < >= <=
+no conversion: === !==
+`e compare-strings
+== != or <> > < >= <=
+no conversion: === !==
+`e min-and-max
+min(1, 2, 3)
+
+max(1, 2, 3)
+
+$a = [1, 2, 3]
+
+min($a)
+
+max($a)
+`e three-value-comparison
+none
+`e arithmetic-operators
++ - * / none %
+`e integer-division
+(int)(13 / 5)
+`e divmod
+none
+`e integer-division-by-zero
+returns FALSE with warning
+`e float-division
+13 / 5
+`e float-division-by-zero
+returns FALSE with warning
+`e power
+pow(2, 32)
+`e sqrt
+sqrt(2)
+`e sqrt-1
+NaN
+`e transcendental-functions
+exp log sin cos tan asin acos atan atan2
+`e transcendental-constants
+M_PI M_E
+`e float-truncation
+(int)$x
+
+round($x)
+
+ceil($x)
+
+floor($x)
+`e absolute-value
+abs($x)
+`e integer-overflow
+converted to float
+`e float-overflow
+INF
+`e rational-construction
+none
+`e rational-decomposition
+none
+`e complex-construction
+none
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+none
+`e random-number-uniform-integer-uniform-float-normal-float
+rand(0,99)
+
+lcg_value()
+none
+`e random-seed
+srand(17);
+
+none
+`e bit-operators
+<< >> & | ^ ~
+`e binary-octal-and-hex-literals
+0b101010
+
+052
+
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+base_convert("42", 10, 7);
+
+base_convert("60", 7, 10);
+`e string-type
+string
+`e string-literal
+"don't say \"no\""
+'don\'t say "no"'
+`e newline-in-literal
+'first line
+
+second line'
+
+
+"first line
+
+second line"
+`e literal-escapes
+double quoted:
+
+\f \n \r \t \v \xhh \$ \" \\ \ooo
+
+single quoted:
+
+\' \\
+`e custom-delimiters
+none
+`e here-document
+$word = "amet";
+
+
+$s = <<<EOF
+
+lorem ipsum
+
+dolor sit $word
+
+EOF;
+`e variable-interpolation
+$count = 3;
+
+$item = "ball";
+echo "$count ${item}s\n";
+`e expression-interpolation
+none
+`e format
+$fmt = "lorem %s %d %f";
+
+sprintf($fmt, "ipsum", 13, 3.7);
+`e are-strings-mutable
+$s = "bar";
+
+$s2 = $s;
+# sets s to "baz"; s2 is unchanged:
+
+$s[2] = "z";
+`e copy-string
+$s2 = $s;
+`e concatenate
+$s = "Hello, ";
+
+$s2 = $s . "World!";
+`e replicate-string
+$hbar = str_repeat("-", 80);
+`e translate-case
+strtoupper("lorem")
+
+strtolower("LOREM")
+`e capitalize-string-words
+ucfirst("lorem")
+
+ucwords("lorem ipsum")
+`e trim
+trim(" lorem ")
+
+ltrim(" lorem")
+
+rtrim("lorem ")
+`e pad-on-right-on-left-centered
+str_pad("lorem", 10)
+
+str_pad("lorem", 10, " ", STR_PAD_LEFT)
+
+str_pad("lorem", 10, " ", STR_PAD_BOTH)
+`e number-to-string
+"value: " . 8
+`e string-to-number
+7 + "12"
+
+73.9 + ".037"
+`e join
+$a = ["do", "re", "mi", "fa"];
+
+implode(" ", $a)
+`e split
+explode(" ", "do re mi fa")
+`e split-in-two
+preg_split('/\s+/', "do re mi fa", 2)
+`e split-and-keep-delimiters
+preg_split('/(\s+)/', "do re mi fa",
+  NULL, PREG_SPLIT_DELIM_CAPTURE)
+`e string-length
+strlen("lorem")
+`e index-of-substring
+# returns FALSE if not found:
+
+strpos("do re re", "re")
+
+strrpos("do re re", "re")
+`e extract-substring
+substr("lorem ipsum", 6, 5)
+none
+none
+`e extract-character
+# syntax error to use index notation
+
+# directly on string literal:
+
+$s = "lorem ipsum";
+
+$s[6];
+`e chr-and-ord
+chr(65)
+
+ord("A")
+`e to-array-of-characters
+str_split("abcd")
+`e translate-characters
+$ins = implode(range("a", "z"));
+
+$outs = substr($ins, 13, 13) .
+  substr($ins, 0, 13);
+
+strtr("hello", $ins, $outs)
+`e delete-characters
+$vowels = str_split("aeiou");
+
+$s = "disemvowel me";
+
+$s = str_replace($vowels, "", $s);
+`e squeeze-characters
+$s = "too  much  space";
+
+$s = = preg_replace('/(\s)+/', '\1', $s);
+`e literal-custom-delimited-literal
+'/lorem|ipsum/'
+'(/etc/hosts)'
+`e character-class-abbreviations
+. \d \D \h \H \s \S \v \V \w \W
+`e anchors
+^ $ \A \b \B \z \Z
+`e match-test
+if (preg_match('/1999/', $s)) {
+  echo "party!\n";
+
+}
+`e case-insensitive-match-test
+preg_match('/lorem/i', "Lorem")
+`e modifiers
+e i m s x
+`e substitution
+$s = "do re mi mi mi";
+
+$s = preg_replace('/mi/', "ma", $s);
+`e match-prematch-postmatch
+none
+`e group-capture
+$s = "2010-06-03";
+
+$rx = '/(\d{4})-(\d{2})-(\d{2})/';
+
+preg_match($rx, $s, $m);
+
+list($_, $yr, $mo, $dy) = $m;
+`e named-group-capture
+$s = "foo.txt";
+
+$rx = '/^(?P<file>.+)\.(?P<suffix>.+)$/';
+
+preg_match($rx, $s, $m);
+
+
+$m["file"]
+
+$m["suffix"]
+`e scan
+$s = "dolor sit amet";
+
+preg_match_all('/\w+/', $s, $m);
+
+$a = $m[0];
+`e backreference-in-match-and-substitution
+preg_match('/(\w+) \1/', "do do")
+
+
+$s = "do re";
+
+$rx = '/(\w+) (\w+)/';
+
+$s = preg_replace($rx, '\2 \1', $s);
+`e recursive-regex
+'/\(([^()]*|($R))\)/'
+`e date-time-type
+DateTime
+`e current-date-time
+$t = new DateTime("now");
+
+$utc_tmz = new DateTimeZone("UTC");
+
+$utc = new DateTime("now", $utc_tmz);
+`e to-unix-epoch-from-unix-epoch
+$epoch = $t->getTimestamp();
+
+$t2 = new DateTime();
+
+$t2->setTimestamp(1304442000);
+`e current-unix-epoch
+$epoch = time();
+`e strftime
+strftime("%Y-%m-%d %H:%M:%S", $epoch);
+
+date("Y-m-d H:i:s", $epoch);
+
+$t->format("Y-m-d H:i:s");
+`e default-format-example
+no default string representation
+`e strptime
+$fmt = "Y-m-d H:i:s";
+
+$s = "2011-05-03 10:00:00";
+
+$t = DateTime::createFromFormat($fmt,
+  $s);
+`e parse-date-w-o-format
+$epoch = strtotime("July 7, 1999");
+`e date-subtraction
+DateInterval object if diff method used:
+
+$fmt = "Y-m-d H:i:s";
+
+$s = "2011-05-03 10:00:00";
+
+$then = DateTime::createFromFormat($fmt, $s);
+
+$now = new DateTime("now");
+
+$interval = $now->diff($then);
+`e add-duration
+$now = new DateTime("now");
+
+$now->add(new DateInterval("PT10M3S");
+`e local-timezone
+DateTime objects can be instantiated without specifying the timezone if a default is set:
+
+$s = "America/Los_Angeles";
+
+date_default_timezone_set($s);
+`e arbitrary-timezone
+
+`e timezone-name-offset-from-utc-is-daylight-savings
+$tmz = date_timezone_get($t);
+
+timezone_name_get($tmz);
+
+date_offset_get($t) / 3600;
+
+$t->format("I");
+`e microseconds
+list($frac, $sec) = explode(" ",
+  microtime());
+
+$usec = $frac * 1000 * 1000;
+`e sleep
+# a float argument will be truncated
+
+# to an integer:
+
+sleep(1);
+`e timeout
+use set_time_limit to limit execution time of the entire script; use stream_set_timeout to limit time spent reading from a stream opened with fopen or fsockopen
+`e literal
+$a = [1, 2, 3, 4];
+
+# older syntax:
+
+$a = array(1, 2, 3, 4);
+`e quote-words
+none
+`e size
+count($a)
+`e empty-test
+!$a
+`e lookup
+$a[0]
+
+# PHP uses the same type for arrays and
+
+# dictionaries; indices can be negative
+
+# integers or strings
+`e update
+$a[0] = "lorem";
+`e out-of-bounds-behavior
+$a = [];
+# evaluates as NULL:
+
+$a[10];
+# increases array size to one:
+
+$a[10] = "lorem";
+`e index-of-element
+$a = ["x", "y", "z", "w"];
+
+$i = array_search("y", $a);
+`e slice
+# select 3rd and 4th elements:
+none
+
+array_slice($a, 2, 2)
+`e slice-to-end
+array_slice($a, 1)
+`e manipulate-back
+$a = [6, 7, 8];
+
+array_push($a, 9);
+
+$a[] = 9; # same as array_push
+
+array_pop($a);
+`e manipulate-front
+$a = [6, 7, 8];
+
+array_unshift($a, 5);
+
+array_shift($a);
+`e concatenate
+$a = [1, 2, 3];
+
+$a2 = array_merge($a, [4, 5, 6]);
+
+$a = array_merge($a, [4, 5, 6]);
+`e replicate
+
+`e copy
+$a = [1, 2, [3, 4]];
+
+$a2 =& $a;
+none
+
+$a4 = $a;
+`e arrays-as-function-arguments
+parameter contains deep copy
+`e iterate-over-elements
+foreach ([1, 2, 3] as $i) {
+  echo "$i\n";
+
+}
+`e iterate-over-indices-and-elements
+$a = ["do", "re", "mi" "fa"];
+foreach ($a as $i => $s) {
+  echo "$s at index $i\n";
+
+}
+`e iterate-over-range
+not space efficient; use C-style for loop
+`e instantiate-range-as-array
+$a = range(1, 10);
+`e reverse
+$a = [1, 2, 3];
+
+
+array_reverse($a);
+
+$a = array_reverse($a);
+`e sort
+$a = ["b", "A", "a", "B"];
+
+none
+
+sort($a);
+none, but usort sorts in place
+`e dedupe
+$a = [1, 2, 2, 3];
+
+
+$a2 = array_unique($a);
+
+$a = array_unique($a);
+`e membership
+in_array(7, $a)
+`e intersection
+$a = [1, 2];
+
+$b = [2, 3, 4]
+
+array_intersect($a, $b)
+`e union
+$a1 = [1, 2];
+
+$a2 = [2, 3, 4];
+
+array_unique(array_merge($a1, $a2))
+`e relative-complement-symmetric-difference
+$a1 = [1, 2, 3];
+
+$a2 = [2];
+
+array_values(array_diff($a1, $a2))
+none
+`e map
+array_map(function ($x) {
+    return $x * $x;
+  }, [1, 2, 3])
+`e filter
+array_filter([1, 2, 3],
+  function ($x) {
+    return $x>1;
+  })
+`e reduce
+array_reduce([1, 2, 3],
+  function($x,$y) {
+    return $x + $y;
+  }, 0)
+`e universal-and-existential-tests
+use array_filter
+`e shuffle-and-sample
+$a = [1, 2, 3, 4];
+
+shuffle($a);
+
+array_rand($a, 2)
+`e zip
+# array of 3 pairs:
+
+$a = array_map(NULL,
+  [1, 2, 3],
+  ["a", "b", "c"]);
+`e literal
+$d = ["t" => 1, "f" => 0];
+
+# older syntax:
+
+$d = array("t" => 1, "f" => 0);
+`e size
+count($d)
+`e lookup
+$d["t"]
+`e out-of-bounds-behavior
+$d = [];
+evaluates as NULL:
+
+$d["lorem"];
+adds key/value pair:
+
+$d["lorem"] = "ipsum";
+`e is-key-present
+array_key_exists("y", $d);
+`e delete-entry
+$d = [1 => "t", 0 => "f"];
+
+unset($d[1]);
+`e from-array-of-pairs-from-even-length-array
+
+`e merge
+$d1 = ["a"=>1, "b"=>2];
+
+$d2 = ["b"=>3, "c"=>4];
+
+$d1 = array_merge($d1, $d2);
+`e invert
+$to_num = ["t"=>1, "f"=>0];
+
+$to_let = array_flip($to_num);
+`e iteration
+foreach ($d as $k => $v) {
+  code
+
+}
+`e keys-and-values-as-arrays
+array_keys($d)
+
+array_values($d)
+`e sort-by-values
+asort($d);
+
+foreach ($d as $k => $v) {
+  print "$k: $v\n";
+
+}
+`e default-value-computed-value
+$counts = [];
+
+$counts['foo'] += 1;
+
+extend ArrayObject for computed values and defaults other than zero or empty string.
+`e define-function
+function add3($x1, $x2, $x3)
+
+{
+  return $x1 + $x2 + $x3;
+
+}
+`e invoke-function
+add3(1, 2, 3);
+
+# function names are case insensitive:
+
+ADD3(1, 2, 3);
+`e apply-function-to-array
+$a = [1, 2, 3];
+
+
+call_user_func_array("add3", $a);
+`e missing-argument-behavior
+set to NULL with warning
+`e default-argument
+function my_log($x, $base=10)
+
+{
+  return log($x) / log($base);
+
+}
+
+
+my_log(42);
+
+my_log(42, M_E);
+`e variable-number-of-arguments
+function first_and_last()
+
+{
+
+  $arg_cnt = func_num_args();
+
+  if ($arg_cnt >= 1) {
+    $n = func_get_arg(0);
+    echo "first: " . $n . "\n";
+  }
+
+  if ($arg_cnt >= 2) {
+    $a = func_get_args();
+    $n = $a[$arg_cnt-1];
+    echo "last: " . $n . "\n";
+  }
+
+}
+`e named-parameters
+none
+`e pass-number-or-string-by-reference
+function foo(&$x, &$y)
+
+{
+  $x += 1;
+  $y .= "ly";
+
+}
+
+
+$n = 7;
+
+$s = "hard";
+
+foo($n, $s);
+`e pass-array-or-dictionary-by-reference
+function foo(&$x, &$y)
+
+{
+  $x[2] = 5;
+  $y["f"] = -1;
+
+}
+
+
+$a = [1, 2, 3];
+
+$d = ["t"=>1, "f"=>0];
+
+foo($a, $d);
+`e return-value
+return arg or NULL
+`e multiple-return-values
+function first_and_second(&$a)
+
+{
+  return [$a[0], $a[1]];
+
+}
+
+
+$a = [1, 2, 3];
+
+list($x, $y) =
+  first_and_second($a);
+`e lambda-declaration
+$sqr = function ($x) {
+  return $x * $x;
+
+};
+`e lambda-invocation
+$sqr(2)
+`e function-as-value
+$func = "add";
+`e function-with-private-state
+function counter()
+
+{
+  static $i = 0;
+  return ++$i;
+
+}
+
+echo counter();
+`e closure
+function make_counter()
+
+{
+  $i = 0;
+  return function () use (&$i) {
+    return ++$i;
+  };
+
+}
+
+
+$nays = make_counter();
+echo $nays();
+`e generator
+# PHP 5.5:
+function make_counter() {
+  $i = 0;
+  while (1) {
+    yield ++$i;
+  }
+
+}
+
+
+$nays = make_counter();
+# does not return a value:
+
+$nays->next();
+# runs generator if generator has not
+
+# yet yielded:
+echo $nays->current();
+`e decorator
+
+`e operator-as-function
+
+`e if
+if ( 0 == $n ) {
+  echo "no hits\n";
+
+} elseif ( 1 == $n ) {
+  echo "one hit\n";
+
+} else {
+  echo "$n hits\n";
+
+}
+`e switch
+switch ($n) {
+case 0:
+  echo "no hits\n";
+  break;
+case 1:
+  echo "one hit\n";
+  break;
+default:
+  echo "$n hits\n";
+
+}
+`e while
+while ( $i < 100 ) { $i++; }
+`e c-style-for
+for ($i = 1; $i <= 10; $i++) {
+  echo "$i\n";
+
+}
+`e break-continue-redo
+break continue none
+`e control-structure-keywords
+case default do else elseif for foreach goto if switch while
+`e what-do-does
+starts body of a do-while loop, a loop which checks the condition after the body is executed
+`e statement-modifiers
+none
+`e raise-exception
+throw new Exception("bad arg");
+`e re-raise-exception
+
+`e catch-exception
+try {
+  risky();
+
+} catch (Exception $e) {
+  echo "risky failed: ",
+    $e->getMessage(), "\n";
+
+}
+`e global-variable-for-last-exception
+none
+`e define-exception
+class Bam extends Exception
+
+{
+  function __construct()
+  {
+    parent::__construct("bam!");
+  }
+
+}
+`e catch-exception-by-type
+try {
+  throw new Bam;
+
+} catch (Bam $e) {
+  echo $e->getMessage(), "\n";
+
+}
+`e finally
+none
+`e start-thread
+none
+`e wait-on-thread
+

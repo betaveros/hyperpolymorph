@@ -1,0 +1,888 @@
+`e versions-used
+1.9; 2.0
+`e show-version
+`$[ruby --version]
+`e implicit-prologue
+none
+`e interpreter
+`$[ruby foo.rb]
+`e repl
+`$[irb]
+`e command-line-program
+`$[ruby -e 'puts "hi"']
+`e block-delimiters
+{}
+do end
+`e statement-terminator
+newline or ;
+
+newlines not separators inside (), [], {}, ````, '', "", or after binary operator or backslash: \
+`e source-code-encoding
+Ruby 2.0 source is UTF-8 by default
+
+# -*- coding: utf-8 -*-
+`e end-of-line-comment
+# comment
+`e multiple-line-comment
+=begin
+
+comment line
+
+another line
+
+=end
+`e local-variable
+v = nil
+
+a, d = [], {}
+
+x = 1
+
+y, z = 2, 3
+`e regions-which-define-lexical-scope
+top level:
+  file
+  class block
+  module block
+  method body
+
+
+nestable:
+  anonymous function body
+  anonymous block
+`e global-variable
+$g1, $g2 = 7, 8
+
+def swap_globals
+  $g1, $g2 = $g2, $g1
+
+end
+`e constant
+# warning if capitalized
+
+# identifier is reassigned
+PI = 3.14
+`e assignment
+v = 1
+`e parallel-assignment
+x, y, z = 1, 2, 3
+
+# 3 is discarded:
+
+x, y = 1, 2, 3
+
+# z set to nil:
+
+x, y, z = 1, 2
+`e swap
+x, y = y, x
+`e compound-assignment-arithmetic-string-logical-bit
++= -= *= /= none %= **=
+
++= *=
+
+&&= ||= ^=
+<<= >>= &= |= ^=
+`e increment-and-decrement
+x = 1
+# x and y not mutated:
+
+y = x.succ
+
+z = y.pred
+`e null
+nil
+`e null-test
+v == nil
+
+v.nil?
+`e undefined-variable-access
+raises NameError
+`e conditional-expression
+x > 0 ? x : -x
+`e true-and-false
+true false
+`e falsehoods
+false nil
+`e logical-operators
+&& || !
+lower precedence:
+and or not
+`e relational-operators
+== != > < >= <=
+`e compare-strings
+== != > < >= <=
+`e min-and-max
+[1, 2, 3].min
+
+[1, 2, 3].max
+`e three-value-comparison
+0 <=> 1
+"do" <=> "re"
+`e arithmetic-operators
++ - * x.fdiv(y) / %
+`e integer-division
+13 / 5
+`e divmod
+q, r = 13.divmod(5)
+`e integer-division-by-zero
+raises ZeroDivisionError
+`e float-division
+13.to_f / 5 or
+
+13.fdiv(5)
+`e float-division-by-zero
+returns -Infinity, NaN, or Infinity
+`e power
+2**32
+`e sqrt
+include Math
+
+
+sqrt(2)
+`e sqrt-1
+raises Errno::EDOM
+`e transcendental-functions
+include Math
+
+
+exp log sin cos tan asin acos atan atan2
+`e transcendental-constants
+include Math
+
+PI E
+`e float-truncation
+x.to_i
+
+x.round
+
+x.ceil
+
+x.floor
+`e absolute-value
+x.abs
+`e integer-overflow
+becomes arbitrary length integer of type Bignum
+`e float-overflow
+Infinity
+`e rational-construction
+require 'rational'
+
+
+x = Rational(22, 7)
+`e rational-decomposition
+x.numerator
+
+x.denominator
+`e complex-construction
+require 'complex'
+
+
+z = 1 + 1.414.im
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+z.real
+
+z.imag
+
+z.arg
+
+z.abs
+
+z.conj
+`e random-number-uniform-integer-uniform-float-normal-float
+rand(100)
+
+rand
+none
+`e random-seed
+srand(17)
+
+
+seed = srand
+
+srand(seed)
+`e bit-operators
+<< >> & | ^ ~
+`e binary-octal-and-hex-literals
+0b101010
+
+052
+
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+42.to_s(7)
+"60".to_i(7)
+`e string-type
+String
+`e string-literal
+"don't say \"no\""
+'don\'t say "no"'
+"don't " 'say "no"'
+`e newline-in-literal
+'first line
+
+second line'
+
+
+"first line
+
+second line"
+`e literal-escapes
+double quoted:
+
+\a \b \cx \e \f \n \r \s \t \v \xhh \ooo \uhhhh \u{hhhhh}
+
+single quoted:
+
+\' \\
+`e custom-delimiters
+s1 = %q(lorem ipsum)
+
+s2 = %Q(#{s1} dolor sit amet)
+`e here-document
+word = "amet"
+
+
+s = <<EOF
+
+lorem ipsum
+
+dolor sit #{word}
+EOF
+`e variable-interpolation
+count = 3
+
+item = "ball"
+
+puts "#{count} #{item}s"
+`e expression-interpolation
+"1 + 1 = #{1 + 1}"
+`e format
+"lorem %s %d %f" % ["ipsum", 13, 3.7]
+`e are-strings-mutable
+s = "bar"
+
+s2 = s
+# sets s and s2 to "baz":
+
+s[2] = "z"
+`e copy-string
+s = "bar"
+
+s2 = s.clone
+# s2 is not altered:
+
+s[2] = "z"
+`e concatenate
+s = "Hello, "
+
+s2 = s + "World!"
+
+# juxtaposition can be used to
+
+# concatenate literals:
+
+s2 ="Hello, " 'World!'
+`e replicate-string
+hbar = "-" * 80
+`e translate-case
+"lorem".upcase
+"LOREM".downcase
+`e capitalize-string-words
+"lorem".capitalize
+none
+`e trim
+" lorem ".strip
+" lorem".lstrip
+"lorem ".rstrip
+`e pad-on-right-on-left-centered
+"lorem".ljust(10)
+"lorem".rjust(10)
+"lorem".center(10)
+`e number-to-string
+"value: " + 8.to_s
+`e string-to-number
+7 + "12".to_i
+
+73.9 + ".037".to_f
+`e join
+%w(do re mi fa).join(' ')
+
+# implicitly converted to strings:
+
+[1, 2, 3].join(' ')
+`e split
+"do re mi fa".split
+`e split-in-two
+"do re mi fa".split(/\s+/, 2)
+`e split-and-keep-delimiters
+"do re mi fa".split(/(\s+)/)
+`e string-length
+"lorem".length
+"lorem".size
+`e index-of-substring
+# returns nil if not found:
+"do re re".index("re")
+"do re re".rindex("re")
+`e extract-substring
+"lorem ipsum"[6, 5]
+"lorem ipsum"[6..10]
+"lorem ipsum"[6...11]
+`e extract-character
+"lorem ipsum"[6]
+`e chr-and-ord
+65.chr
+"A".ord
+`e to-array-of-characters
+"abcd".split("")
+`e translate-characters
+"hello".tr("a-z", "n-za-m")
+`e delete-characters
+"disemvowel me".delete("aeiou")
+`e squeeze-characters
+"too  much  space".squeeze(" ")
+`e literal-custom-delimited-literal
+/lorem|ipsum/
+
+%r(/etc/hosts)
+`e character-class-abbreviations
+. \d \D \h \H \s \S \w \W
+`e anchors
+^ $ \A \b \B \z \Z
+`e match-test
+if /1999/.match(s)
+  puts "party!"
+end
+`e case-insensitive-match-test
+/lorem/i.match("Lorem")
+`e modifiers
+i o m x
+`e substitution
+s = "do re mi mi mi"
+
+s.gsub!(/mi/, "ma")
+`e match-prematch-postmatch
+m = /\d{4}/.match(s)
+if m
+  match = m[0]
+  prematch = m.pre_match
+  postmatch = m.post_match
+end
+`e group-capture
+rx = /(\d{4})-(\d{2})-(\d{2})/
+
+m = rx.match("2010-06-03")
+
+yr, mo, dy = m[1..3]
+`e named-group-capture
+rx = /^(?<file>.+)\.(?<suffix>.+)$/
+
+m = rx.match('foo.txt')
+
+
+m["file"]
+
+m["suffix"]
+`e scan
+a = "dolor sit amet".scan(/\w+/)
+`e backreference-in-match-and-substitution
+/(\w+) \1/.match("do do")
+
+"do re".sub(/(\w+) (\w+)/, '\2 \1')
+`e recursive-regex
+/(?<foo>\(([^()]*|\g<foo>)*\))/
+`e date-time-type
+Time
+`e current-date-time
+t = Time.now
+
+utc = Time.now.utc
+`e to-unix-epoch-from-unix-epoch
+epoch = t.to_i
+
+t2 = Time.at(1304442000)
+`e current-unix-epoch
+epoch = Time.now.to_i
+`e strftime
+t.strftime("%Y-%m-%d %H:%M:%S")
+`e default-format-example
+2011-08-23 17:44:53 -0700
+`e strptime
+require 'date'
+
+
+s = "2011-05-03 10:00:00"
+
+fmt = "%Y-%m-%d %H:%M:%S"
+
+t = Date.strptime(s, fmt).to_time
+`e parse-date-w-o-format
+require 'date'
+
+
+s = "July 7, 1999"
+
+t = Date.parse(s).to_time
+`e date-subtraction
+Float containing time difference in seconds
+`e add-duration
+require 'date/delta'
+
+
+s = "10 min, 3 s"
+
+delta = Date::Delta.parse(s).in_secs
+
+t = Time.now + delta
+`e local-timezone
+if no timezone is specified the local timezone is used
+`e arbitrary-timezone
+# gem install tzinfo
+
+require 'tzinfo'
+
+
+tmz = TZInfo::Timezone.get("Asia/Tokyo")
+
+jp_time = tmz.utc_to_local(Time.now.utc)
+`e timezone-name-offset-from-utc-is-daylight-savings
+t.zone
+
+t.utc_offset / 3600
+
+t.dst?
+`e microseconds
+t.usec
+`e sleep
+sleep(0.5)
+`e timeout
+require 'timeout'
+
+begin
+  Timeout.timeout(5) do
+    sleep(10)
+  end
+rescue Timeout::Error
+end
+`e literal
+a = [1, 2, 3, 4]
+`e quote-words
+a = %w(do re mi)
+`e size
+a.size
+
+a.length # same as size
+`e empty-test
+NoMethodError if a is nil:
+
+a.empty?
+`e lookup
+a[0]
+
+# returns last element:
+
+a[-1]
+`e update
+a[0] = "lorem"
+`e out-of-bounds-behavior
+a = []
+# evaluates as nil:
+
+a[10]
+# increases array size to 11:
+
+a[10] = "lorem"
+`e index-of-element
+a = %w(x y z w)
+
+i = a.index("y")
+`e slice
+# select 3rd and 4th elements:
+
+a[2..3]
+
+a[2, 2]
+`e slice-to-end
+a[1..-1]
+`e manipulate-back
+a = [6, 7, 8]
+
+a.push(9)
+
+a << 9 # same as push
+
+a.pop
+`e manipulate-front
+a = [6, 7, 8]
+
+a.unshift(5)
+
+a.shift
+`e concatenate
+a = [1, 2, 3]
+
+a2 = a + [4, 5, 6]
+
+a.concat([4, 5, 6])
+`e replicate
+a = [nil] * 10
+
+a = Array.new(10, nil)
+`e copy
+a = [1,2,[3,4]]
+
+a2 = a
+
+a3 = a.dup
+
+a4 = Marshal.load(Marshal.dump(a))
+`e arrays-as-function-arguments
+parameter contains address copy
+`e iterate-over-elements
+[1,2,3].each { |i| puts i }
+`e iterate-over-indices-and-elements
+a = %w(do re mi fa)
+
+a.each_with_index do |s, i|
+  puts "#{s} at index #{i}"
+
+end
+`e iterate-over-range
+(1..1_000_000).each do |i|
+  code
+end
+`e instantiate-range-as-array
+a = (1..10).to_a
+`e reverse
+a = [1, 2, 3]
+
+
+a.reverse
+
+a.reverse!
+`e sort
+a = %w(b A a B)
+
+
+a.sort
+
+a.sort!
+
+a.sort do |x, y|
+  x.downcase <=> y.downcase
+end
+`e dedupe
+a = [1, 2, 2, 3]
+
+
+a2 = a.uniq
+
+a.uniq!
+`e membership
+a.include?(7)
+`e intersection
+[1,2] & [2,3,4]
+`e union
+[1,2] | [2,3,4]
+`e relative-complement-symmetric-difference
+require 'set'
+
+
+[1,2,3] - [2]
+Set[1,2] ^ Set[2,3,4]
+`e map
+[1,2,3].map { |o| o * o }
+`e filter
+[1,2,3].select { |o| o > 1 }
+`e reduce
+[1,2,3].inject(0) { |m,o| m+o }
+`e universal-and-existential-tests
+[1,2,3,4].all? {|i| i.even? }
+
+[1,2,3,4].any? {|i| i.even? }
+`e shuffle-and-sample
+[1, 2, 3, 4].shuffle
+
+[1, 2, 3, 4].sample(2)
+`e zip
+# array of 3 pairs:
+
+a = [1,2,3].zip(["a", "b", "c"])
+`e literal
+d = { "t" => 1, "f" => 0 }
+`e size
+d.size
+
+d.length # same as size
+`e lookup
+d["t"]
+`e out-of-bounds-behavior
+d = {}
+evaluates as nil:
+
+d["lorem"]
+adds key/value pair:
+
+d["lorem"] = "ipsum"
+`e is-key-present
+d.has_key?("y")
+`e delete-entry
+d = {1 => true, 0 => false}
+
+d.delete(1)
+`e from-array-of-pairs-from-even-length-array
+a = [[1,"a"], [2,"b"], [3,"c"]]
+
+d = Hash[a]
+
+
+a = [1,"a",2,"b",3,"c"]
+
+d = Hash[*a]
+`e merge
+d1 = {"a"=>1, "b"=>2}
+
+d2 = {"b"=>3, "c"=>4}
+
+d1.merge!(d2)
+`e invert
+to_num = {"t"=>1, "f"=>0}
+
+to_let = to_num.invert
+`e iteration
+d.each do |k,v|
+  code
+end
+`e keys-and-values-as-arrays
+d.keys
+
+d.values
+`e sort-by-values
+d.sort_by {|k, v| v}.each do |k, v|
+  puts "#{k}: #{v}"
+end
+`e default-value-computed-value
+counts = Hash.new(0)
+
+counts['foo'] += 1
+
+
+factorial = Hash.new do |h,k|
+  k > 1 ? k * h[k-1] : 1
+end
+`e define-function
+def add3(x1, x2, x3)
+  x1 + x2 + x3
+end
+
+# parens are optional and customarily
+
+# omitted when defining functions
+
+# with no parameters
+`e invoke-function
+add3(1, 2, 3)
+
+# parens are optional:
+
+add3 1, 2, 3
+`e apply-function-to-array
+a = [2, 3]
+
+
+add3(1, *a)
+
+# splat operator can be used multiple
+
+# times and can appear before regular
+
+# arguments
+`e missing-argument-behavior
+raises ArgumentError if number of arguments doesn't match function arity
+`e default-argument
+def my_log(x, base=10)
+  Math.log(x) / Math.log(base)
+end
+
+
+my_log(42)
+
+my_log(42, Math::E)
+`e variable-number-of-arguments
+def first_and_last(*a)
+
+  if a.size >= 1
+    puts "first: #{a[0]}"
+  end
+
+  if a.size >= 2
+    puts "last: #{a[-1]}"
+  end
+end
+`e named-parameters
+def fequal(x, y, opts={})
+  eps = opts[:eps] || 0.01
+  (x - y).abs < eps
+end
+
+
+fequal(1.0, 1.001)
+
+fequal(1.0, 1.001, :eps=>0.1**10)
+
+# Ruby 2.0:
+def fequals(x, y, eps: 0.01)
+  (x - y).abs < eps
+
+end
+
+
+fequals(1.0, 1.001)
+
+fequals(1.0, 1.001, eps: 0.1**10)
+`e pass-number-or-string-by-reference
+not possible
+`e pass-array-or-dictionary-by-reference
+def foo(x, y)
+  x[2] = 5
+  y["f"] = -1
+
+end
+
+
+a = [1,2,3]
+
+d = {"t"=> 1, "f" => 0 }
+
+foo(a, d)
+`e return-value
+return arg or last expression evaluated
+`e multiple-return-values
+def first_and_second(a)
+  return a[0], a[1]
+end
+
+
+x, y = first_and_second([1,2,3])
+`e lambda-declaration
+sqr = lambda { |x| x * x }
+`e lambda-invocation
+sqr.call(2) or
+
+sqr[2]
+`e function-as-value
+func = lambda {|*args| add(*args)}
+`e function-with-private-state
+none
+`e closure
+def make_counter
+  i = 0
+  return lambda { i +=1; i }
+end
+
+
+nays = make_counter
+
+puts nays.call
+`e generator
+def make_counter
+  return Fiber.new do
+    i = 0
+    while true
+      i += 1
+      Fiber.yield i
+    end
+  end
+end
+
+
+nays = make_counter
+
+puts nays.resume
+`e decorator
+
+`e operator-as-function
+3.*(7)
+
+
+a = ['foo', 'bar', 'baz']
+
+a.[](2)
+`e if
+if n == 0
+  puts "no hits"
+elsif 1 == n
+  puts "one hit"
+else
+  puts "#{n} hits"
+end
+`e switch
+case n
+when 0
+  puts "no hits"
+when 1
+  puts "one hit"
+else
+  puts "#{n} hits"
+end
+`e while
+while i < 100 do
+  i += 1
+end
+`e c-style-for
+none
+`e break-continue-redo
+break next redo
+`e control-structure-keywords
+case do else elsif end for loop when while unless until
+`e what-do-does
+starts an anonymous block. Also starts the body of a loop, while, or until loop
+`e statement-modifiers
+puts "positive" if i > 0
+
+puts "nonzero" unless i == 0
+`e raise-exception
+# raises RuntimeError
+raise "bad arg"
+`e re-raise-exception
+begin
+  raise "bam!"
+rescue
+  puts "re-raising…"
+  raise
+end
+`e catch-exception
+# catches StandardError
+begin
+  risky
+rescue
+  print "risky failed: "
+  puts $!.message
+end
+`e global-variable-for-last-exception
+last exception: $!
+backtrace array of exc.: $@
+exit status of child: $?
+`e define-exception
+class Bam < Exception
+  def initialize
+    super("bam!")
+  end
+end
+`e catch-exception-by-type
+begin
+  raise Bam.new
+rescue Bam => e
+  puts e.message
+end
+`e finally
+acquire_resource
+begin
+  risky
+ensure
+  release_resource
+end
+`e start-thread
+thr = Thread.new { sleep 10 }
+`e wait-on-thread
+thr.join

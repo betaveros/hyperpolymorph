@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 body {
 	margin-top: 3em;
 }
@@ -21,10 +22,10 @@ th.section-header {
 	background: linear-gradient(to bottom, #eef, #ddf);
 }
 td.cont, td.desc { color: #000; border: 1px solid #bbb; padding: 0.3em 0.7em; }
-td.cont { font-family: monospace; min-width: 10em; }
+td.cont { font-size: 12pt; font-family: "Ubuntu Mono", monospace; min-width: 10em; }
 td.empty { background-color: #eee; }
 td.desc { font-family: sans-serif; background-color: #eee; color: black; }
-.key { color: #909; }
+.key { color: #909; font-weight: bold; }
 .op { color: #c60; }
 .val { color: #00c; }
 .builtin { color: #099; }
