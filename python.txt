@@ -231,7 +231,7 @@ hbar = '-' * 80
 `e translate-case
 'lorem'.upper()
 'LOREM'.lower()
-`e capitalize-string-words
+`e capitalize
 `*import string
 
 'lorem'.capitalize()

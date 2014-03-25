@@ -264,7 +264,7 @@ $s2 = $s;
 `e translate-case
 uc("lorem")
 lc("LOREM")
-`e capitalize-string-words
+`e capitalize
 # cpan -i Text::Autoformat
 `*use Text::Autoformat;
 

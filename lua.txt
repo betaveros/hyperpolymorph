@@ -427,7 +427,7 @@ f = io.open("/tmp/foo", "w")
 f:close()
 `e read-line
 f:read()
-`e iterate-over-a-file-by-line
+`e iterate-over-file-by-line
 for s in f:lines() do
   use s
 end
@@ -470,7 +470,7 @@ f:close()
 
 `e directory-test
 
-`e command-line-args
+`e command-line-arguments
 # arg
 
 arg[0]

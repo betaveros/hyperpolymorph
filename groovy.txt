@@ -467,7 +467,7 @@ System.out.println("Hello, World!")
 
 `e read-line
 
-`e iterate-over-a-file-by-line
+`e iterate-over-file-by-line
 
 `e chomp
 
@@ -518,7 +518,7 @@ f.canExecute()
 
 `e directory-test
 
-`e command-line-args
+`e command-line-arguments
 args.size()
 
 args[0]

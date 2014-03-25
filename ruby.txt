@@ -288,7 +288,7 @@ hbar = "-" * 80
 `e translate-case
 "lorem".upcase
 "LOREM".downcase
-`e capitalize-string-words
+`e capitalize
 "lorem".capitalize
 none
 `e trim

@@ -1,0 +1,862 @@
+`e version-used
+2.9
+`e show-version
+$ scala -version
+`e interpreter
+$ echo 'println("hello")' > hello.scala
+
+
+$ scala hello.scala
+`e shebang
+$ cat <<EOF > hello.scala
+
+#!/bin/sh
+
+exec scala $0 $@
+
+!#
+
+
+println("hello")
+
+EOF
+
+
+$ chmod +x hello.scala
+
+$ ./hello.scala
+`e bytecode-compiler-and-interpreter
+$ cat <<EOF > Hello.scala
+
+object Hello {
+  def main(args: Array[String]) {
+    println("hello")
+  }
+
+}
+
+EOF
+
+
+$ scalac Hello.scala
+
+$ scala Hello
+`e native-compiler
+none
+`e library-which-is-always-imported
+java.lang
+
+scala
+`e statement-terminator
+; or sometimes newline
+`e block-delimiters
+{ }
+`e end-of-line-comment
+// comment
+`e multiple-line-comment
+/* comment
+
+another comment */
+`e constant
+// evaluates 1 + 2 once:
+
+val n = 1 + 2
+
+// evaluates 1 + 2 each time n is used:
+
+def n = 1 + 2
+`e local-variable
+var n = 3
+
+n = 4
+
+n + 7
+`e unit-type-and-value
+Unit
+
+()
+`e conditional-expression
+val n = -3
+
+if (n < 0) -n else n
+`e branch-type-mismatch
+// expression has type Any:
+
+if (true) { "hello" } else { 3 }
+`e null
+null
+`e nullable-type
+val list = List(Some(3), null, Some(-4))
+`e null-test
+
+`e coalesce
+
+`e nullif
+
+`e expression-type-declaration
+1: Double
+`e let-in
+val z = {
+  val x = 3.0
+  val y = 2.0 * x
+  x * y
+
+}
+`e where
+none
+`e boolean-type
+Boolean
+`e true-and-false
+true false
+`e logical-operators
+&& || !
+`e relational-operators
+== != < > <= >=
+`e min-and-max
+math.min 1 2
+
+math.max 1 2
+`e integer-type
+type of integer literals:
+
+Int
+other modular types:
+
+Byte Short Long
+arbitrary precision type:
+
+BigInt
+`e integer-literal
+-4
+`e float-type
+type of float literals:
+
+Double
+other types:
+
+Float
+`e integer-operators
++ - * / %
+`e float-operators
++ - * /
+`e add-integer-and-float
+3 + 7.0
+`e divmod
+7 / 3
+
+7 % 3
+`e integer-division-by-zero
+java.lang.ArithmeticException
+`e float-division
+(7: Double) / 3
+`e float-division-by-zero
+evaluates to Infinity, NaN, or -Infinity, values which do not have literals
+`e power
+math.pow(2, 32)
+`e sqrt
+math.sqrt(2)
+`e sqrt-1
+math.sqrt(-1) evaluates to NaN, a value which has no literal
+`e transcendental-functions
+math.exp math.log
+
+math.sin math.cos math.tan
+
+math.asin math.acos math.atan math.atan2
+`e transcendental-constants
+math.Pi
+
+math.E
+`e float-truncation
+??
+
+3.14.round
+
+3.14.floor returns Double
+
+3.14.ceil returns Double
+`e absolute-value-and-signum
+math.abs(-7)
+
+math.signum(-7)
+`e integer-overflow
+modular arithmetic for all types except BigInt
+`e float-overflow
+evaluates to Infinity, a value which has no literal
+`e arbitrary-length-integer
+val n = BigInt(7)
+
+val m = BigInt(12)
+`e arbitrary-length-integer-operators
+n + m
+
+n - m
+
+n * m
+
+n / m
+
+n % m
+
+
+n == m
+
+n < m
+
+n < m
+
+n <= m
+
+n >= m
+`e rational-type
+
+`e rational-construction
+
+`e rational-decomposition
+
+`e complex-type
+
+`e complex-constants
+
+`e complex-operators
+
+`e complex-construction
+
+`e complex-decomposition
+
+`e random-number-uniform-integer-uniform-float-normal-float
+import scala.util.Random
+
+
+val rnd = Random
+
+
+rnd.nextInt(100)
+
+rnd.nextDouble
+
+rnd.nextGaussian
+`e random-seed
+import scala.util.Random
+
+
+val rnd = Random
+
+
+rnd.setSeed(17)
+none
+none
+`e bit-operators
+1 <<  4
+
+1  >>  4
+
+1 & 3
+
+1 | 3
+
+1 ^ 3
+
+~ 1
+`e binary-octal-and-hex-literals
+none
+
+052
+
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+Integer.toString(42, 7)
+
+Integer.parseInt("60", 7)
+`e string-type
+java.lang.String
+`e string-literal
+"Hello, World!"
+
+
+"""Hello, World!"""
+`e newline-in-literal
+in triple quote literal only
+`e literal-escapes
+\b \f \n \r \t \" \'
+
+\uhhhh \o \oo \ooo
+`e format
+"foo %s %d %.2f".format("bar", 7, 3.1415)
+`e concatenate
+"Hello" + ", " + "World!"
+`e replicate
+val hbar = "-" * 80
+`e translate-case
+"hello".toUpperCase
+
+"HELLO".toLowerCase
+`e capitalize
+"hello".capitalize
+`e trim
+" hello ".trim
+`e pad
+??
+
+"hello".padTo(10, " ").mkString
+`e number-to-string
+"two: " + 2.toString
+
+"pi: " + 3.14.toString
+`e string-to-number
+7 + "12".toInt
+
+73.9 + ".037".toFloat
+raises NumberFormatException if string doesn't completely parse
+`e join
+List("do", "re", "mi").mkString(" ")
+`e split
+"do re mi".split(" ")
+`e character-type
+Char
+`e character-literal
+'h'
+`e string-length
+"hello".length
+`e index-of-substring
+"hello".indexOf("hell")
+`e extract-substring
+"hello".substring(0, 4)
+`e extract-character
+"hello"(0)
+`e chr-and-ord
+'a'.toInt
+
+97.toChar
+`e date-time-type
+
+`e current-date-time
+
+`e current-unix-epoch
+
+`e literal
+val a = Array(1, 2, 3)
+`e size
+a.size
+`e lookup
+val n = a(0)
+`e update
+a(2) = 4
+`e out-of-bounds
+raises java.lang.ArrayIndexOutOfBounds
+`e literal
+// none; use constructor:
+
+List(1, 2, 3)
+`e empty-list
+Nil
+
+List()
+`e empty-test
+val list = List(1, 2, 3)
+
+
+list == Nil
+
+list.isEmpty
+`e cons
+1 :: List(2, 3)
+`e head
+List(1, 2, 3).head
+`e tail
+List(1, 2, 3).tail
+`e head-and-tail-of-empty-list
+// NoSuchElementException:
+
+Nil.head
+
+// UnsupportedOperationException:
+
+Nil.tail
+`e string-length
+List(1, 2, 3).length
+`e list-lookup
+List(1, 2, 3)(0)
+`e index-of-element
+// evaluates to 1:
+
+List(7, 8, 9).indexOf(8)
+
+// evaluates to -1:
+
+List(7, 8, 9).indexOf(10)
+`e update
+// evaluates to List(1, 4, 3):
+
+List(1, 2, 3).updated(1, 4)
+`e concatenate-two-lists-list-of-lists
+List(1, 2) ::: List(3, 4)
+
+List(1, 2) ++ List(3, 4)
+
+
+List(List(1, 2), List(3, 4)).flatten
+`e last-and-butlast
+List(1, 2, 3).last
+
+List(1, 2, 3).init
+`e take
+List(1, 2, 3).take(2)
+`e drop
+List(1, 2, 3).drop(2)
+`e iterate
+List(1, 2, 3).foreach(i => println(i))
+`e reverse
+List(1, 2, 3).reverse
+`e sort
+List(1, 3, 2, 4).sortWith((x, y) => x < y)
+
+List(1, 3, 2, 4).sortWith(_ < _)
+
+List(1, 3, 2, 4).sortWith((x, y) => x > y)
+
+List(1, 3, 2, 4).sortWith(_ > _)
+`e map
+List(1, 2, 3).map(x => 2 * x)
+
+List(1, 2, 3).map(2 * _)
+`e filter
+List(1, 2, 3).filter(x => x > 2)
+`e fold-from-left
+List(1, 2, 3).foldLeft(0)(_ + _)
+
+List(1, 2, 3).foldLeft(0)((x, y) => x + y)
+`e fold-from-right
+List(1, 2, 3).foldRight(0)(_ - _)
+`e membership
+List(1, 2, 3).contains(3)
+`e universal-test
+List(1, 2, 3).forall(_ > 2)
+`e existential-test
+List(1, 2, 3).exists(_ > 2)
+`e zip-lists
+
+`e tuple
+(1, "hello", true)
+`e tuple-element-access
+(1, "hello", true)._1
+`e pair-element-access
+(12, "December")._1
+
+(12, "December")._2
+`e define-function
+// argument types must be declared:
+
+def average(a: Double, b: Double)
+  = (a + b) / 2.0
+
+// return value type must be declared if
+// function is recursive:
+
+def factorial(n: Int): Int =
+  if (n < 1)
+    1
+  else
+    n * factorial(n - 1)
+`e invoke-function
+// 3.0:
+
+average(1, 2 + 3)
+
+// 4.5:
+
+average(1, 2) + 3
+
+// parens can be omitted when a function
+// takes no arguments; by convention parens
+// are omitted when the function has no
+// side effects
+`e define-function-with-block-body
+// braces must be used if body
+// not an expression:
+
+def print_numbers() = {
+  println("one")
+  println("two")
+
+}
+`e named-parameters
+def subtract(m: Int, s: Int) = m - s
+
+
+subtract(s = 3, m = 7)
+`e named-parameter-default-value
+def logarithm(x: Double,
+              base: Double = math.exp(1)) =
+  math.log(x) / math.log(base)
+
+
+logarithm(2.718)
+
+logarithm(10, base = 2)
+`e piecewise-defined-function
+none
+`e recursive-function
+def range(a:Int, b:Int): List[Int] =
+  if (a > b)
+    List()
+  else
+    a :: range(a + 1, b)
+`e mutually-recursive-functions
+
+`e anonymous-function
+(x: Double, y: Double) => (x + y) / 2.0
+`e infix-operator-in-prefix-position
+none
+`e function-in-infix-position
+unary methods can be used as binary operators
+`e currying
+def plus(x: Int)(y: Int) = x + y
+
+plus(3)(7)
+
+def plus2 = plus(2)
+
+plus2(7)
+`e composition
+
+`e function-composition-operator
+none
+`e lazy-evaluation
+def arg1(x: => Int, y: => Int): Int = x
+
+
+arg1(7, 1 / 0)
+`e strict-evaluation
+default behavior
+`e if
+if ( x > 0 )
+  println("pos")
+`e control-structure-keywords
+if (x > 0)
+  println("pos")
+
+else if (x < 0)
+  println("neg")
+
+else
+  println("zero")
+`e sequencing
+println("one")
+
+println("two")
+
+println("three")
+`e while
+var i = 0
+
+while (i<10) {
+  printf("%d\n", i)
+  i = i+1
+
+}
+`e for
+for (i <- 1 to 10)
+  println(i)
+`e for-in-reverse
+none
+`e list-iteration
+for (i <- List.range(1, 11).reverse)
+  println(i)
+`e loop
+none
+`e raise-error
+throw new Exception("bam!")
+`e handle-error
+import java.lang._
+ 
+
+val x = try {
+  1 / 0
+
+}
+
+catch {
+  case e: ArithmeticException => 0
+
+}
+`e type-of-exceptions
+
+`e user-defined-exception
+
+`e standard-exceptions
+
+`e assert
+assert(1 == 0)
+`e standard-file-handles
+System.in System.out System.err
+`e read-line-from-stdin
+val line = readLine()
+`e end-of-file-behavior
+
+`e chomp
+
+`e write-line-to-stdout
+println("lorem ipsum")
+`e printf
+
+`e open-file-for-reading
+import scala.io.Source
+
+
+val path = "/etc/hosts"
+
+val f = Source.fromFile(path)
+`e open-file-for-writing
+
+`e open-file-for-appending
+
+`e close-file
+import scala.io.Source
+
+
+f.close
+`e i-o-errors
+
+`e read-line
+import scala.io.Source
+
+val src = Source.fromFile("/etc/passwd")
+
+for (line <- src.getLines)
+  print(line)
+`e iterate-over-file-by-line
+
+`e read-file-into-array-of-strings
+
+`e read-file-into-string
+
+`e write-string
+
+`e write-line
+val out = new java.io.FileWriter("/tmp/test-scala")
+
+out.write("hello out\n")
+
+out.close
+`e flush-file-handle
+
+`e end-of-file-test
+
+`e get-and-set-filehandle-position
+
+`e file-exists-test-regular-file-test
+
+`e file-size
+
+`e is-file-readable-writable-executable
+
+`e set-file-permissions
+
+`e copy-file-remove-file-rename-file
+
+`e create-symlink-symlink-test-readlink
+
+`e generate-unused-file-name
+
+`e build-pathname
+
+`e dirname-and-basename
+
+`e iterate-over-directory-by-file
+
+`e make-directory
+
+`e remove-empty-directory
+
+`e remove-directory-and-contents
+
+`e directory-test
+
+`e system-temporary-file-directory
+
+`e command-line-arguments
+object Test {
+  def main(args: Array[String]) {
+    for (arg <- args)
+      println(arg)
+  }
+
+}
+`e program-name
+
+`e getopt
+
+`e get-and-set-environment-variable
+
+`e get-pid-parent-pid
+
+`e get-user-id-and-name
+
+`e exit
+
+`e set-signal-handler
+
+`e external-command
+
+`e escaped-external-command
+
+`e backticks
+
+`e namespace-example
+Baz.scala
+
+package Foo.Bar;
+
+
+class Baz {
+  def say() { println("hello"); }
+
+}
+
+Main.scala
+
+import Foo.Bar.Baz;
+
+
+object Main {
+  def main(args : Array[String]) {
+    val baz = new Baz;
+    baz.say();
+  }
+
+}
+
+to compile and run
+
+$ scalac Baz.scala
+
+$ scalac Main.scala
+
+$ scala Main
+
+hello
+`e namespaces
+
+`e file-name-restrictions
+none
+`e namespace
+
+`e namespace-creation
+
+`e namespace-alias
+
+`e namespace-separator
+
+`e subnamespace
+
+`e package-manager-setup
+
+`e package-manager-search-install-list-installed
+
+`e compile-app-using-package
+
+`e type-synonym
+type Name = String
+`e sum-type
+abstract class Color
+
+
+case object Red extends Color
+
+case object Blue extends Color
+
+case object Green extends Color
+
+
+val col = Red
+
+// this won’t compile:
+
+col < Green
+`e tuple-product-type-with-one-field
+class SpecialInt(x: Int)
+
+
+val n = new SpecialInt(7)
+`e tuple-product-type-with-two-fields
+class IntPair(a: Int, b: Int)
+
+
+val p = new IntPair(7, 11)
+`e record-product-type
+case class Customer(
+  id: Int,
+  name: String,
+  address: String
+
+)
+`e record-product-type-literal
+Customer(7,"John","Topeka, KS")
+
+
+Customer(id=7, name="John", address="Topeka, KS")
+`e generic-type
+class Twosome[A, B](a: A, b: B)
+
+
+val p = new Twosome("pi", 3.14)
+`e recursive-type
+abstract class BinaryTree
+
+case class Tree(left: BinaryTree, right: BinaryTree) extends BinaryTree
+
+case class Leaf(x: Int) extends BinaryTree
+`e pattern-match-sum-type
+val c:Color = Red;
+
+c match { case Red => "red"; case Green => "green"; case Blue => "blue" }
+`e pattern-match-product-type
+
+`e pattern-match-guard
+match { case i: Int if i < 0 => - i; case i: Int => i }
+`e pattern-match-catchall
+val c : Color = Green
+
+c match { case Red => "red"; case _ => "not red" }
+`e define-class
+class Counter {
+  private var n = 0
+  def incr(): Unit = { n = n+1 }
+  def get(): Int = { n }
+
+}
+`e create-object
+val c = new Counter
+`e invoke-method
+c.incr
+
+c.get
+`e field-access
+
+`e overload-function
+
+`e inheritance
+
+`e invoke-repl
+$ scala
+`e repl-limitations
+
+`e repl-last-value
+res0, res1, …
+`e help
+:help
+`e quit
+
+`e inspect-type
+repl displays the type of any expression entered
+`e inspect-namespace
+
+`e load-source-file
+
+`e load-package
+
+`e search-path
+
+`e set-search-path-on-command-line
+

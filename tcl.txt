@@ -437,7 +437,7 @@ set f [open "/tmp/foo" "w"]
 close $f
 `e read-line
 gets $f
-`e iterate-over-a-file-by-line
+`e iterate-over-file-by-line
 while { [gets $f s] >= 0 } {
   use s
 
@@ -486,7 +486,7 @@ file delete "/tmp/foodir"
 file delete -force "/tmp/foodir"
 `e directory-test
 file isdirectory "/tmp"
-`e command-line-args
+`e command-line-arguments
 [lindex $argv 0]
 
 [lindex $argv 1]

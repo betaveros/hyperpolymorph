@@ -456,7 +456,7 @@ f = fs.openSync("/tmp/foo", "w");
 fs.closeSync(f);
 `e read-line
 
-`e iterate-over-a-file-by-line
+`e iterate-over-file-by-line
 var fs = require('fs');
 
 
@@ -541,7 +541,7 @@ fs.rmdirSync("/tmp/foo/bar");
 
 `e directory-test
 
-`e command-line-args
+`e command-line-arguments
 process.argv.length
 
 process.argv[0]

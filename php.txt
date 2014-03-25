@@ -228,7 +228,7 @@ $hbar = str_repeat("-", 80);
 strtoupper("lorem")
 
 strtolower("LOREM")
-`e capitalize-string-words
+`e capitalize
 ucfirst("lorem")
 
 ucwords("lorem ipsum")

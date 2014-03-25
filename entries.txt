@@ -5,9 +5,12 @@ implicit-prologue: implicit prologue
 # grammar and invocation
 hello-world: hello world
 file-suffixes-source-header-object-file: file suffixes / source, header, object file
+bytecode-compiler-and-interpreter: bytecode compiler and interpreter
+native-compiler: native compiler
 interpreter: interpreter
 repl: repl
 command-line-program: command line program
+library-which-is-always-imported: library which is always imported
 block-delimiters: block delimiters
 statement-terminator: statement separator
 top-level-statements: top level statements
@@ -15,12 +18,13 @@ source-code-encoding: source code encoding
 end-of-line-comment: end-of-line comment
 multiple-line-comment: multiple line comment
 # variables and expressions
-local-variable: local variable
+local-variable: local, modifiable variable
 uninitialized-local-variable: uninitialized local variable
 regions-which-define-lexical-scope: regions which define lexical scope
 global-variable: global variable
 uninitialized-global-variable: uninitialized global variable
 constant: constant
+unit-type-and-value: unit type and value
 assignment: assignment
 parallel-assignment: parallel assignment
 swap: swap
@@ -37,9 +41,16 @@ allocate-heap: allocate heap
 uninitialized-heap: uninitialized heap
 free-heap: free heap
 null: null
+nullable-type: nullable type
 null-test: null test
+coalesce: coalesce
+nullif: nullif
 undefined-variable-access: undefined variable access
 conditional-expression: conditional expression
+branch-type-mismatch: branch type mismatch
+expression-type-declaration: expression type declaration
+let-in: let ... in ...
+where: where
 # arithmetic and logic
 boolean-type: boolean type
 true-and-false: true and false
@@ -51,11 +62,15 @@ compare-strings: compare strings
 min-and-max: min and max
 three-value-comparison: three value comparison
 integer-type: integer type
+integer-literal: integer literal
 unsigned-type: unsigned type
 float-type: float type
 fixed-type: fixed type
 arithmetic-expression: arithmetic expression
 arithmetic-operators: arithmetic operators / addition, subtraction, multiplication, float division, quotient, remainder
+integer-operators: integer operators
+float-operators: float operators
+add-integer-and-float: add integer and float
 integer-division: integer division
 divmod: divmod
 integer-division-by-zero: integer division by zero
@@ -68,13 +83,20 @@ transcendental-functions: transcendental functions
 transcendental-constants: transcendental constants / π and e
 float-truncation: float truncation
 absolute-value: absolute value
+absolute-value-and-signum: absolute value / and signum
+arbitrary-length-integer: arbitrary length integer
+arbitrary-length-integer-operators: arbitrary length integer operators
 integer-overflow: integer overflow
 float-overflow: float overflow
 float-limits-largest-finite-float-smallest-positive-float: float limits / largest finite float, smallest positive float
+rational-type: rational type
 rational-construction: rational construction
 rational-decomposition: rational decomposition
+complex-type: complex type
+complex-constants: complex constants
 complex-construction: complex construction
 complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate: complex decomposition / real and imaginary component, argument, absolute value, conjugate
+complex-operators: complex operators
 random-number-uniform-integer-uniform-float-normal-float: random number / uniform integer, uniform float, normal float
 random-seed: random seed / set, get, restore
 bit-operators: bit operators
@@ -99,7 +121,7 @@ copy-string: copy string
 concatenate-strings: concatenate strings / and append
 replicate-string: replicate string
 translate-case: translate case / to upper, to lower
-capitalize-string-words: capitalize / string, words
+capitalize: capitalize / string, words
 trim: trim / both sides, left, right
 pad: pad / on right, on left, centered
 number-to-string: number to string
@@ -176,22 +198,31 @@ sort: sort
 # lists (or most common variable-size sequential data structure)
 list-name: name
 list-declare: declare
+head-and-tail-of-empty-list: head and tail of empty list
 list-literal: literal
 initialization-list: initialization list
 quote-words: quote words
 list-size: size
 capacity-get-increase: capacity / get, increase
+empty-list: empty list
 empty-test: empty test
 empty-test-and-clear: empty test / and clear
+head: head
 list-lookup: lookup
 list-update: update
 out-of-bounds-behavior: out-of-bounds behavior
 index-of-element: index of element
+cons: cons
 slice: slice / by endpoints, by length
 slice-to-end: slice to end
+tail: tail
+last-and-butlast: last / and butlast
 manipulate-back: manipulate back
 manipulate-front: manipulate front
+take: take
+drop: drop
 concatenate: concatenate
+concatenate-two-lists-list-of-lists: concatenate / two lists, list of lists
 replicate: replicate
 copy: copy / address copy, shallow copy, deep copy
 array-as-function-arguments: array as function arguments
@@ -206,21 +237,29 @@ reverse: reverse / non-destructive, in-place
 sort: sort / non-destructive, /  / in-place, /  / custom comparision
 dedupe: dedupe / non-destructive, in-place
 membership: membership
-intersection: intersection
-union: union
-relative-complement-symmetric-difference: relative complement, symmetric difference
 map: map
 filter: filter
 reduce: reduce
+fold-from-left: fold from left
+fold-from-right: fold from right
+universal-test: universal test
+existential-test: existential test
+intersection: intersection
+union: union
+relative-complement-symmetric-difference: relative complement, symmetric difference
 min-and-max-element: min and max element
 universal-and-existential-tests: universal and existential tests
 shuffle-and-sample: shuffle and sample
 zip: zip
+zip-lists: zip lists
 # tuples
 declare-pair: declare pair
 lookup-pair-elements: lookup pair elements
 update-pair-elements: update pair elements
+pair-element-access: pair element access
+tuple: tuple
 declare-tuple: declare tuple
+tuple-element-access: tuple element access
 lookup-tuple-elements: lookup tuple elements
 update-tuple-elements: update tuple elements
 tuple-size: tuple size
@@ -247,6 +286,7 @@ default-value-computed-value: default value, computed value
 # functions
 declare-function: declare function
 define-function: define function
+define-function-with-block-body: define function with block body
 invoke-function: invoke function
 apply-function-to-array: apply function to array
 define-static-class-method: define static class method
@@ -257,6 +297,7 @@ extra-arguments: extra arguments
 default-argument: default argument
 variable-number-of-arguments: variable number of arguments
 named-parameters: named parameters
+named-parameter-default-value: named parameter default value
 pass-by-value: pass by value
 pass-by-reference: pass by reference
 pass-by-address: pass by address
@@ -265,7 +306,9 @@ pass-array-or-dictionary-by-reference: pass array or dictionary by reference
 return-value: return value
 no-return-value: no return value
 multiple-return-values: multiple return values
+piecewise-defined-function: piecewise defined function
 recursive-function: recursive function
+mutually-recursive-functions: mutually recursive functions
 anonymous-function: anonymous function
 invoke-anonymous-function: invoke anonymous function
 lambda-declaration: lambda declaration
@@ -280,12 +323,21 @@ overload-operator: overload operator
 default-scope: default scope
 default-value: default value
 nested-function-visibility: nested function visibility
+infix-operator-in-prefix-position: infix operator in prefix position
+function-in-infix-position: function in infix position
+currying: currying
+composition: composition
+function-composition-operator: function composition operator
+lazy-evaluation: lazy evaluation
+strict-evaluation: strict evaluation
 # execution control
 if: if
 dangling-else: dangling else
+sequencing: sequencing
 switch: switch
 while: while
 for: for
+for-in-reverse: for in reverse
 c-style-for: c-style for
 break: break
 break-out-of-nested-loops: break out of nested loops
@@ -296,10 +348,14 @@ control-structure-keywords: control structure keywords
 what-do-does: what do does
 statement-modifiers: statement modifiers
 generator: generator
+list-iteration: list iteration
 # exceptions
 base-exception: base exception
+type-of-exceptions: type of exceptions
 predefined-exceptions: predefined exceptions
+standard-exceptions: standard exceptions
 define-exception: define exception
+user-defined-exception: user defined exception
 raise-exception: raise exception
 re-raise-exception: re-raise exception
 handle-exception: handle exception
@@ -314,6 +370,10 @@ error-message: error message
 system-call-errno: system call errno
 finally-clause: finally clause
 exception-specification: exception specification
+assert: assert
+# errors
+raise-error: raise error
+handle-error: handle error
 # concurrency
 start-thread: start thread
 terminate-current-thread: terminate current thread
@@ -330,22 +390,32 @@ read-line-from-stdin: read line from stdin
 write-line-to-stdout: write line to stdout
 printf: printf
 open-file: open file
+open-file-for-reading: open file for reading
 open-file-for-writing: open file for writing
+open-file-for-appending: open file for appending
+end-of-file-behavior: end-of-file behavior
 close-file: close file
+i-o-errors: i/o errors
 read-line: read line
-iterate-over-a-file-by-line: iterate over a file by line
+iterate-over-file-by-line: iterate over file by line
+read-file-into-array-of-strings: read file into array of strings
+read-file-into-string: read file into string
 chomp: chomp
 read-file: read file
-write-to-file: write to file
-flush-file-handle: flush file handle
 read-from-file: read from file
 write-to-file: write to file
+write-string: write string
+flush-file-handle: flush file handle
+end-of-file-test: end-of-file test
+get-and-set-filehandle-position: get and set filehandle position
 # files
 file-exists-test-file-regular-test: file exists test, file regular test
 file-size: file size
 is-file-readable-writable-executable: is file readable, writable, executable
 set-file-permissions: set file permissions
 copy-file-remove-file-rename-file: copy file, remove file, rename file
+create-symlink-symlink-test-readlink: create symlink, symlink test, readlink
+generate-unused-file-name: generate unused file name
 # file formats
 csv: csv
 json: json
@@ -366,18 +436,34 @@ directory-test: directory test
 generate-unused-directory-name: generate unused directory name
 system-temporary-file-directory: system temporary file directory
 # processes and environment
-command-line-args: command line args
+exit: exit
+program-name: program name
+command-line-arguments: command line arguments
 signature-of-main: signature of main
 first-argument: first argument
+getopt: getopt
+get-and-set-environment-variable: get and set environment variable
+get-pid-parent-pid: get pid, parent pid
+get-user-id-and-name: get user id and name
 environment-variable: environment variable
 iterate-through-environment-variables: iterate through environment variables
 exit: exit
+set-signal-handler: set signal handler
 external-command: external command
+escaped-external-command: escaped external command
 backticks: backticks
 # libraries and namespaces
 library: library
 standard-library-name: standard library name
 declare-namespace: declare namespace
+namespace-example: namespace example
+namespaces: namespaces
+file-name-restrictions: file name restrictions
+namespace: namespace
+namespace-creation: namespace creation
+namespace-alias: namespace alias
+namespace-separator: namespace separator
+subnamespace: subnamespace
 namespace-separator: namespace separator
 multiple-namespaces-per-file: multiple namespaces per file
 namespaces-map-to-directories: namespaces map to directories
@@ -391,18 +477,33 @@ using-a-symbol-that-hasn-t-been-imported: using a symbol that hasn't been import
 application-environment: application environment
 multiple-installations: multiple installations
 package-manager: package manager
+package-manager-setup: package manager setup
+list-installed-packaged-install-a-package: list installed packaged, install a package
+package-manager-search-install-list-installed: package manager / search; install; list installed
 library-path: library path
 library-path-environment-variable: library path environment variable
-list-installed-packaged-install-a-package: list installed packaged, install a package
+compile-app-using-package: compile app using package
 # user-defined types
 typedef: typedef
+type-synonym: type synonym
+sum-type: sum type
+tuple-product-type-with-one-field: tuple product type with one field
+tuple-product-type-with-two-fields: tuple product type with two fields
 enum: enum
 struct-definition: struct definition
 struct-declaration: struct declaration
 struct-initialization: struct initialization
 struct-member-assignment: struct member assignment
 struct-member-access: struct member access
+record-product-type: record product type
+record-product-type-literal: record product type literal
+recursive-type: recursive type
+pattern-match-sum-type: pattern match sum type
+pattern-match-product-type: pattern match product type
+pattern-match-guard: pattern match guard
+pattern-match-catchall: pattern match catchall
 # generic types
+generic-type: generic type
 define-generic-type: define generic type
 instantiate-generic-type: instantiate generic type
 generic-function: generic function
@@ -437,7 +538,9 @@ anonymous-class: anonymous class
 # polymorphism
 dynamic-dispatch: dynamic dispatch
 static-dispatch: static dispatch
+overload-function: overload function
 subclass: subclass
+inheritance: inheritance
 invoking-superclass-constructor: invoking superclass constructor
 mark-class-underivable-or-method-unoverrideable: mark class underivable or method unoverrideable
 root-class: root class
@@ -481,3 +584,15 @@ debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-s
 benchmark-code: benchmark code
 profile-code: profile code
 memory-tool: memory tool
+# repl
+invoke-repl: invoke repl
+repl-limitations: repl limitations
+repl-last-value: repl last value
+help: help
+quit: quit
+inspect-type: inspect type
+inspect-namespace: inspect namespace
+load-source-file: load source file
+load-package: load package
+search-path: search path
+set-search-path-on-command-line: set search path on command line
