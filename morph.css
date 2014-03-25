@@ -1,14 +1,18 @@
 table { border-collapse: collapse; }
 th {
 	font-family: sans-serif;
-	border: 1px solid #999;
+	border: 1px solid #bbb;
 	padding: 0.3em 0.7em;
 	background-color: #eee;
 	background: linear-gradient(to bottom, #fff, #eee);
 }
-td { font-family: monospace; color: #444; border: 1px solid #999; padding: 0.3em 0.7em; }
-strong { color: #000; }
+td { font-family: monospace; color: #000; border: 1px solid #bbb; padding: 0.3em 0.7em; min-width: 10em; }
 td.desc { font-family: sans-serif; background-color: #eee; color: black; }
-.key { color: #808; }
-.val { color: #008; }
-.builtin { color: #088; }
+.key { color: #909; }
+.op { color: #c60; }
+.val { color: #00c; }
+.builtin { color: #099; }
+.note { color: #777; font-style: italic; }
+.empty { background-color: #eee; }
+.error { padding: 0 0.2em; border-radius: 0.2em; background-color: #fdd; }
+.cli:before { content: "$ "; color: #ccc; }

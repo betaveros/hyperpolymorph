@@ -1,5 +1,211 @@
-# stuff
-v: version used
-sv: show version
-prologue: implicit prologue
-minmax: min and max
+# general
+versions-used: versions used
+show-version: show version
+implicit-prologue: implicit prologue
+# grammar and invocation
+interpreter: interpreter
+repl: repl
+command-line-program: command line program
+block-delimiters: block delimiters
+statement-terminator: statement separator
+source-code-encoding: source code encoding
+end-of-line-comment: end-of-line comment
+multiple-line-comment: multiple line comment
+# variables and expressions
+local-variable: local variable
+regions-which-define-lexical-scope: regions which define lexical scope
+global-variable: global variable
+constant: constant
+assignment: assignment
+parallel-assignment: parallel assignment
+swap: swap
+compound-assignment-arithmetic-string-logical-bit: compound assignment / arithmetic, string, logical, bit
+increment-and-decrement: increment and decrement
+null: null
+null-test: null test
+undefined-variable-access: undefined variable access
+conditional-expression: conditional expression
+# arithmetic and logic
+true-and-false: true and false
+falsehoods: falsehoods
+logical-operators: logical operators
+relational-operators: relational operators
+compare-strings: compare strings
+min-and-max: min and max
+three-value-comparison: three value comparison
+arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-remainder: arithmetic operators / addition, subtraction, multiplication, float division, quotient, remainder
+integer-division: integer division
+divmod: divmod
+integer-division-by-zero: integer division by zero
+float-division: float division
+float-division-by-zero: float division by zero
+power: power
+sqrt: sqrt
+sqrt-1: sqrt -1
+transcendental-functions: transcendental functions
+transcendental-constants-and-e: transcendental constants / π and e
+float-truncation: float truncation
+absolute-value: absolute value
+integer-overflow: integer overflow
+float-overflow: float overflow
+rational-construction: rational construction
+rational-decomposition: rational decomposition
+complex-construction: complex construction
+complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate: complex decomposition / real and imaginary component, argument, absolute value, conjugate
+random-number-uniform-integer-uniform-float-normal-float: random number / uniform integer, uniform float, normal float
+random-seed-set-get-restore: random seed / set, get, restore
+bit-operators: bit operators
+binary-octal-and-hex-literals: binary, octal, and hex literals
+radix-convert-integer-to-and-from-string-with-radix: radix / convert integer to and from string with radix
+# strings
+string-type: string type
+string-literal: string literal
+newline-in-literal: newline in literal
+literal-escapes: literal escapes
+custom-delimiters: custom delimiters
+here-document: here document
+variable-interpolation: variable interpolation
+expression-interpolation: expression interpolation
+format: format
+are-strings-mutable: are strings mutable?
+copy-string: copy string
+concatenate: concatenate
+replicate: replicate
+translate-case-to-upper-to-lower: translate case / to upper, to lower
+capitalize-string-words: capitalize / string, words
+trim-both-sides-left-right: trim / both sides, left, right
+pad-on-right-on-left-centered: pad / on right, on left, centered
+number-to-string: number to string
+string-to-number: string to number
+join: join
+split: split
+split-in-two: split in two
+split-and-keep-delimiters: split and keep delimiters
+length: length
+index-of-substring-first-last: index of substring / first, last
+extract-substring-by-start-and-length-by-start-and-end-by-successive-starts: extract substring / by start and length, by start and end, by successive starts
+extract-character: extract character
+chr-and-ord: chr and ord
+to-array-of-characters: to array of characters
+translate-characters: translate characters
+delete-characters: delete characters
+squeeze-characters: squeeze characters
+# regular expressions
+literal-custom-delimited-literal: literal, custom delimited literal
+character-class-abbreviations: character class abbreviations
+anchors: anchors
+match-test: match test
+case-insensitive-match-test: case insensitive match test
+modifiers: modifiers
+substitution: substitution
+match-prematch-postmatch: match, prematch, postmatch
+group-capture: group capture
+named-group-capture: named group capture
+scan: scan
+backreference-in-match-and-substitution: backreference in match and substitution
+recursive-regex: recursive regex
+# dates and time
+date-time-type: date/time type
+current-date-time: current date/time
+to-unix-epoch-from-unix-epoch: to unix epoch, from unix epoch
+current-unix-epoch: current unix epoch
+strftime: strftime
+default-format-example: default format example
+strptime: strptime
+parse-date-w-o-format: parse date w/o format
+result-of-date-subtraction: result of date subtraction
+add-time-duration: add time duration
+local-timezone: local timezone
+arbitrary-timezone: arbitrary timezone
+timezone-name-offset-from-utc-is-daylight-savings: timezone name; offset from UTC; is daylight savings?
+microseconds: microseconds
+sleep: sleep
+timeout: timeout
+# arrays
+literal: literal
+quote-words: quote words
+size: size
+empty-test: empty test
+lookup: lookup
+update: update
+out-of-bounds-behavior: out-of-bounds behavior
+index-of-element: index of element
+slice-by-endpoints-by-length: slice / by endpoints, by length
+slice-to-end: slice to end
+manipulate-back: manipulate back
+manipulate-front: manipulate front
+concatenate: concatenate
+replicate: replicate
+copy-address-copy-shallow-copy-deep-copy: copy / address copy, shallow copy, deep copy
+arrays-as-function-arguments: arrays as function arguments
+iterate-over-elements: iterate over elements
+iterate-over-indices-and-elements: iterate over indices and elements
+iterate-over-range: iterate over range
+instantiate-range-as-array: instantiate range as array
+reverse-non-destructive-in-place: reverse / non-destructive, in-place
+sort-non-destructive-in-place-custom-comparision: sort / non-destructive, /  / in-place, /  / custom comparision
+dedupe-non-destructive-in-place: dedupe / non-destructive, in-place
+membership: membership
+intersection: intersection
+union: union
+relative-complement-symmetric-difference: relative complement, symmetric difference
+map: map
+filter: filter
+reduce: reduce
+universal-and-existential-tests: universal and existential tests
+shuffle-and-sample: shuffle and sample
+zip: zip
+# dictionaries
+literal: literal
+size: size
+lookup: lookup
+out-of-bounds-behavior: out-of-bounds behavior
+is-key-present: is key present
+delete-entry: delete entry
+from-array-of-pairs-from-even-length-array: from array of pairs, from even length array
+merge: merge
+invert: invert
+iteration: iteration
+keys-and-values-as-arrays: keys and values as arrays
+sort-by-values: sort by values
+default-value-computed-value: default value, computed value
+# functions
+define-function: define function
+invoke-function: invoke function
+apply-function-to-array: apply function to array
+missing-argument-behavior: missing argument behavior
+default-argument: default argument
+variable-number-of-arguments: variable number of arguments
+named-parameters: named parameters
+pass-number-or-string-by-reference: pass number or string by reference
+pass-array-or-dictionary-by-reference: pass array or dictionary by reference
+return-value: return value
+multiple-return-values: multiple return values
+lambda-declaration: lambda declaration
+lambda-invocation: lambda invocation
+function-as-value: function as value
+function-with-private-state: function with private state
+closure: closure
+generator: generator
+decorator: decorator
+operator-as-function: operator as function
+# execution control
+if: if
+switch: switch
+while: while
+c-style-for: c-style for
+break-continue-redo: break, continue, redo
+control-structure-keywords: control structure keywords
+what-do-does: what do does
+statement-modifiers: statement modifiers
+# exceptions
+raise-exception: raise exception
+re-raise-exception: re-raise exception
+catch-exception: catch exception
+global-variable-for-last-exception: global variable for last exception
+define-exception: define exception
+catch-exception-by-type: catch exception by type
+finally-ensure: finally/ensure
+# concurrency
+start-thread: start thread
+wait-on-thread: wait on thread
