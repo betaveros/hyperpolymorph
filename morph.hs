@@ -178,7 +178,8 @@ parseIO parser msg txt = either (ioError . userError . show) return $ parse pars
 readEntryMap name = readFile (name ++ ".txt") >>= parseIO bqEntryMap name
 readNamedEntryMap name = (,) name <$> readEntryMap name
 
-langNames = ["perl", "php", "python", "ruby", "ocaml", "f-sharp", "scala", "haskell", "cpp", "objective-c", "java", "c-sharp"]
+langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","java","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
+
 
 main = do
 	cont <- readFile "entries.txt"
