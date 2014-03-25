@@ -3,29 +3,45 @@ versions-used: versions used
 show-version: show version
 implicit-prologue: implicit prologue
 # grammar and invocation
+hello-world: hello world
+file-suffixes-source-header-object-file: file suffixes / source, header, object file
 interpreter: interpreter
 repl: repl
 command-line-program: command line program
 block-delimiters: block delimiters
 statement-terminator: statement separator
+top-level-statements: top level statements
 source-code-encoding: source code encoding
 end-of-line-comment: end-of-line comment
 multiple-line-comment: multiple line comment
 # variables and expressions
 local-variable: local variable
+uninitialized-local-variable: uninitialized local variable
 regions-which-define-lexical-scope: regions which define lexical scope
 global-variable: global variable
+uninitialized-global-variable: uninitialized global variable
 constant: constant
 assignment: assignment
 parallel-assignment: parallel assignment
 swap: swap
 compound-assignment-arithmetic-string-logical-bit: compound assignment / arithmetic, string, logical, bit
 increment-and-decrement: increment and decrement
+address: address
+dereference: dereference
+type-size: type size
+address-arithmetic: address arithmetic
+unique-pointer: unique pointer
+reference-count-pointer: reference count pointer
+weak-pointer: weak pointer
+allocate-heap: allocate heap
+uninitialized-heap: uninitialized heap
+free-heap: free heap
 null: null
 null-test: null test
 undefined-variable-access: undefined variable access
 conditional-expression: conditional expression
 # arithmetic and logic
+boolean-type: boolean type
 true-and-false: true and false
 falsehoods: falsehoods
 logical-operators: logical operators
@@ -33,7 +49,11 @@ relational-operators: relational operators
 compare-strings: compare strings
 min-and-max: min and max
 three-value-comparison: three value comparison
-arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-remainder: arithmetic operators / addition, subtraction, multiplication, float division, quotient, remainder
+integer-type: integer type
+unsigned-type: unsigned type
+float-type: float type
+fixed-type: fixed type
+arithmetic-operators: arithmetic operators / addition, subtraction, multiplication, float division, quotient, remainder
 integer-division: integer division
 divmod: divmod
 integer-division-by-zero: integer division by zero
@@ -43,17 +63,18 @@ power: power
 sqrt: sqrt
 sqrt-1: sqrt -1
 transcendental-functions: transcendental functions
-transcendental-constants-and-e: transcendental constants / π and e
+transcendental-constants: transcendental constants / π and e
 float-truncation: float truncation
 absolute-value: absolute value
 integer-overflow: integer overflow
 float-overflow: float overflow
+float-limits-largest-finite-float-smallest-positive-float: float limits / largest finite float, smallest positive float
 rational-construction: rational construction
 rational-decomposition: rational decomposition
 complex-construction: complex construction
 complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate: complex decomposition / real and imaginary component, argument, absolute value, conjugate
 random-number-uniform-integer-uniform-float-normal-float: random number / uniform integer, uniform float, normal float
-random-seed-set-get-restore: random seed / set, get, restore
+random-seed: random seed / set, get, restore
 bit-operators: bit operators
 binary-octal-and-hex-literals: binary, octal, and hex literals
 radix-convert-integer-to-and-from-string-with-radix: radix / convert integer to and from string with radix
@@ -62,38 +83,47 @@ string-type: string type
 string-literal: string literal
 newline-in-literal: newline in literal
 literal-escapes: literal escapes
+allocate-string: allocate string
+are-strings-mutable: are strings mutable?
 custom-delimiters: custom delimiters
 here-document: here document
 variable-interpolation: variable interpolation
 expression-interpolation: expression interpolation
 format: format
+compare-strings: compare strings
 are-strings-mutable: are strings mutable?
 copy-string: copy string
-concatenate: concatenate
+concatenate: concatenate / and append
 replicate: replicate
-translate-case-to-upper-to-lower: translate case / to upper, to lower
+translate-case: translate case / to upper, to lower
 capitalize-string-words: capitalize / string, words
-trim-both-sides-left-right: trim / both sides, left, right
-pad-on-right-on-left-centered: pad / on right, on left, centered
+trim: trim / both sides, left, right
+pad: pad / on right, on left, centered
 number-to-string: number to string
 string-to-number: string to number
 join: join
 split: split
 split-in-two: split in two
 split-and-keep-delimiters: split and keep delimiters
+serialize: serialize
 length: length
-index-of-substring-first-last: index of substring / first, last
-extract-substring-by-start-and-length-by-start-and-end-by-successive-starts: extract substring / by start and length, by start and end, by successive starts
+index-of-substring: index of substring / first, last
+extract-substring: extract substring / by start and length, by start and end, by successive starts
 extract-character: extract character
+character-type: character type
+character-literal: character literal
+test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter: test character / letter, digit, whitespace, uppercase letter, lowercase letter
 chr-and-ord: chr and ord
 to-array-of-characters: to array of characters
 translate-characters: translate characters
 delete-characters: delete characters
 squeeze-characters: squeeze characters
 # regular expressions
+regex-type: regex type
 literal-custom-delimited-literal: literal, custom delimited literal
 character-class-abbreviations: character class abbreviations
 anchors: anchors
+lookahead-positive-negative: lookahead / positive, negative
 match-test: match test
 case-insensitive-match-test: case insensitive match test
 modifiers: modifiers
@@ -109,42 +139,67 @@ date-time-type: date/time type
 current-date-time: current date/time
 to-unix-epoch-from-unix-epoch: to unix epoch, from unix epoch
 current-unix-epoch: current unix epoch
+date-and-time-to-string: date and time to string
+format-date: format date
 strftime: strftime
 default-format-example: default format example
 strptime: strptime
+parse-date: parse date
 parse-date-w-o-format: parse date w/o format
-result-of-date-subtraction: result of date subtraction
+date-subtraction: result of date subtraction
 add-time-duration: add time duration
+date-parts: date parts
+time-parts: time parts
 local-timezone: local timezone
 arbitrary-timezone: arbitrary timezone
 timezone-name-offset-from-utc-is-daylight-savings: timezone name; offset from UTC; is daylight savings?
 microseconds: microseconds
 sleep: sleep
 timeout: timeout
-# arrays
+# fixed-length arrays
+declare-on-stack: declare on stack
+declare-on-heap: declare on heap
+free-heap: free heap
+initialization-list: initialization list
+size: size
+lookup: lookup
+update: update
+out-of-bounds: out-of-bounds
+copy: copy
+as-function-argument: as function argument
+iterate: iterate
+sort: sort
+# (resizable) arrays
+declare: declare
 literal: literal
+initialization-list: initialization list
 quote-words: quote words
 size: size
+capacity-get-increase: capacity / get, increase
 empty-test: empty test
+empty-test-and-clear: empty test / and clear
 lookup: lookup
 update: update
 out-of-bounds-behavior: out-of-bounds behavior
 index-of-element: index of element
-slice-by-endpoints-by-length: slice / by endpoints, by length
+slice: slice / by endpoints, by length
 slice-to-end: slice to end
 manipulate-back: manipulate back
 manipulate-front: manipulate front
 concatenate: concatenate
 replicate: replicate
-copy-address-copy-shallow-copy-deep-copy: copy / address copy, shallow copy, deep copy
+copy: copy / address copy, shallow copy, deep copy
+array-as-function-arguments: array as function arguments
 arrays-as-function-arguments: arrays as function arguments
+iterate: iterate
 iterate-over-elements: iterate over elements
 iterate-over-indices-and-elements: iterate over indices and elements
 iterate-over-range: iterate over range
+indexed-iteration: indexed iteration
 instantiate-range-as-array: instantiate range as array
 reverse-non-destructive-in-place: reverse / non-destructive, in-place
-sort-non-destructive-in-place-custom-comparision: sort / non-destructive, /  / in-place, /  / custom comparision
-dedupe-non-destructive-in-place: dedupe / non-destructive, in-place
+sort: sort / non-destructive, /  / in-place, /  / custom comparision
+dedupe: dedupe / non-destructive, in-place
 membership: membership
 intersection: intersection
 union: union
@@ -152,10 +207,26 @@ relative-complement-symmetric-difference: relative complement, symmetric differe
 map: map
 filter: filter
 reduce: reduce
+min-and-max-element: min and max element
 universal-and-existential-tests: universal and existential tests
 shuffle-and-sample: shuffle and sample
 zip: zip
+# tuples
+declare-pair: declare pair
+lookup-pair-elements: lookup pair elements
+update-pair-elements: update pair elements
+declare-tuple: declare tuple
+lookup-tuple-elements: lookup tuple elements
+update-tuple-elements: update tuple elements
+tuple-size: tuple size
+create-references-for-tuple-elements: create references for tuple elements
 # dictionaries
+map-declaration: map declaration
+map-access: map access
+map-size: map size
+map-remove-element: map remove element
+map-element-not-found-result: map element not found result
+map-iterate: map iterate
 literal: literal
 size: size
 lookup: lookup
@@ -170,42 +241,203 @@ keys-and-values-as-arrays: keys and values as arrays
 sort-by-values: sort by values
 default-value-computed-value: default value, computed value
 # functions
+declare-function: declare function
 define-function: define function
 invoke-function: invoke function
 apply-function-to-array: apply function to array
+define-static-class-method: define static class method
+invoke-static-class-method: invoke static class method
+overload-function: overload function
 missing-argument-behavior: missing argument behavior
 default-argument: default argument
 variable-number-of-arguments: variable number of arguments
 named-parameters: named parameters
+pass-by-value: pass by value
+pass-by-reference: pass by reference
+pass-by-address: pass by address
 pass-number-or-string-by-reference: pass number or string by reference
 pass-array-or-dictionary-by-reference: pass array or dictionary by reference
 return-value: return value
+no-return-value: no return value
 multiple-return-values: multiple return values
+recursive-function: recursive function
+anonymous-function: anonymous function
+invoke-anonymous-function: invoke anonymous function
 lambda-declaration: lambda declaration
 lambda-invocation: lambda invocation
+closure: closure
 function-as-value: function as value
 function-with-private-state: function with private state
 closure: closure
 generator: generator
 decorator: decorator
 operator-as-function: operator as function
+overload-operator: overload operator
 # execution control
 if: if
+dangling-else: dangling else
 switch: switch
 while: while
+for: for
 c-style-for: c-style for
+break: break
+break-out-of-nested-loops: break out of nested loops
+continue: continue
+goto: goto
 break-continue-redo: break, continue, redo
 control-structure-keywords: control structure keywords
 what-do-does: what do does
 statement-modifiers: statement modifiers
 # exceptions
+base-exception: base exception
+predefined-exceptions: predefined exceptions
+define-exception: define exception
 raise-exception: raise exception
 re-raise-exception: re-raise exception
+handle-exception: handle exception
 catch-exception: catch exception
-global-variable-for-last-exception: global variable for last exception
-define-exception: define exception
 catch-exception-by-type: catch exception by type
+catch-all-handler: catch-all handler
+global-variable-for-last-exception: global variable for last exception
 finally-ensure: finally/ensure
+multiple-handlers: multiple handlers
+uncaught-exception-behavior: uncaught exception behavior
+error-message: error message
+system-call-errno: system call errno
+finally-clause: finally clause
+exception-specification: exception specification
 # concurrency
 start-thread: start thread
+terminate-current-thread: terminate current thread
+terminate-other-thread: terminate other thread
+list-threads: list threads
 wait-on-thread: wait on thread
+lock: lock
+create-message-queue: create message queue
+send-message: send message
+receive-message: receive message
+# file handles
+standard-file-handles: standard file handles
+printf: printf
+read-from-file: read from file
+write-to-file: write to file
+# files
+file-exists-test-file-regular-test: file exists test, file regular test
+file-size: file size
+is-file-readable-writable-executable: is file readable, writable, executable
+set-file-permissions: set file permissions
+copy-file-remove-file-rename-file: copy file, remove file, rename file
+# file formats
+csv: csv
+json: json
+build-xml: build xml
+parse-xml: parse xml
+parse-html: parse html
+# directories
+build-pathname: build pathname
+dirname-and-basename: dirname and basename
+absolute-pathname: absolute pathname
+iterate-over-directory-by-file: iterate over directory by file
+glob-paths: glob paths
+make-directory: make directory
+recursive-copy: recursive copy
+remove-empty-directory: remove empty directory
+remove-directory-and-contents: remove directory and contents
+directory-test: directory test
+generate-unused-directory-name: generate unused directory name
+system-temporary-file-directory: system temporary file directory
+# processes and environment
+signature-of-main: signature of main
+first-argument: first argument
+environment-variable: environment variable
+iterate-through-environment-variables: iterate through environment variables
+# libraries and namespaces
+standard-library-name: standard library name
+declare-namespace: declare namespace
+multiple-namespaces-per-file: multiple namespaces per file
+namespaces-map-to-directories: namespaces map to directories
+import-namespace: import namespace
+import-part-of-namespace: import part of namespace
+import-symbol: import symbol
+import-static-symbol: import static symbol
+import-position: import position
+using-a-symbol-that-hasn-t-been-imported: using a symbol that hasn't been imported
+application-environment: application environment
+multiple-installations: multiple installations
+package-manager: package manager
+# user-defined types
+typedef: typedef
+enum: enum
+struct-definition: struct definition
+struct-declaration: struct declaration
+struct-initialization: struct initialization
+struct-member-assignment: struct member assignment
+struct-member-access: struct member access
+# generic types
+define-generic-type: define generic type
+instantiate-generic-type: instantiate generic type
+generic-function: generic function
+generic-array: generic array
+value-parameter: value parameter
+template-parameter: template parameter
+template-specialization: template specialization
+multiple-type-parameters: multiple type parameters
+generic-type-parameters: generic type parameters
+template-parameters: template parameters
+variadic-template: variadic template
+# objects
+semantics-of: semantics of ==
+define-class: define class
+class-definition-location: class definition location
+constructor: constructor
+create-object: create object
+destructor: destructor
+destroy-object: destroy object
+define-method: define method
+invoke-method: invoke method
+define-class-method: define class method
+invoke-class-method: invoke class method
+name-of-receiver: name of receiver
+access-control: access control
+anonymous-class: anonymous class
+# polymorphism
+dynamic-dispatch: dynamic dispatch
+static-dispatch: static dispatch
+subclass: subclass
+invoking-superclass-constructor: invoking superclass constructor
+mark-class-underivable-or-method-unoverrideable: mark class underivable or method unoverrideable
+root-class: root class
+root-class-methods: root class methods
+# reflection
+get-type-class-of-object: get type class of object
+get-type-class-from-string: get type class from string
+get-type-class-from-type-identifier: get type class from type identifier
+class-name: class name
+get-methods: get methods
+has-method: has method
+invoke-method-object: invoke method object
+# net and web
+get-local-hostname-dns-lookup-reverse-dns-lookup: get local hostname, dns lookup, reverse dns lookup
+http-get: http get
+http-post: http post
+absolute-url: absolute url
+parse-url: parse url
+url-encode-decode: url encode/decode
+base64-encode-decode: base64 encode/decode
+# unit tests
+test-class: test class
+run-all-tests: run all tests
+equality-assertion: equality assertion
+approximate-assertion: approximate assertion
+exception-assertion: exception assertion
+setup: setup
+teardown: teardown
+# debugging and profiling
+flag-for-stronger-warnings: flag for stronger warnings
+suppress-warnings: suppress warnings
+treat-warnings-as-errors: treat warnings as errors
+run-debugger: run debugger
+debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-show-breakpoints-delete-breakpoint-continue-backtrace-up-stack-down-stack-print-run-quit: debugger commands / help, list source, (re)load executable, next, step, set breakpoint, show breakpoints, delete breakpoint, continue, backtrace, up stack, down stack, print, run, quit
+benchmark-code: benchmark code
+profile-code: profile code
+memory-tool: memory tool
