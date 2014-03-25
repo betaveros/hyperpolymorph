@@ -1,8 +1,0 @@
-`e v
-2.7; 3.3
-`e sv
-$ python -V
-`e prologue
-`!import os, re, sys
-`e minmax
-`*`.min(`=1, `=2, `=3)
