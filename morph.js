@@ -17,9 +17,8 @@ function makeMorpher(langs) {
 
 	for (var i = 0; i < langs.length; i++) {
 		var lang = langs[i];
-		var span = document.createElement("span");
-		span.className = "cbox";
 
+		var label = document.createElement("label");
 		var ch = document.createElement("input");
 		ch.type = "checkbox";
 		ch.onclick = checker(ch, lang);
@@ -29,9 +28,9 @@ function makeMorpher(langs) {
 			setDisplay(lang, "none");
 		}
 
-		span.appendChild(ch);
-		span.appendChild(document.createTextNode(lang));
+		label.appendChild(ch);
+		label.appendChild(document.createTextNode(lang));
 
-		morpher.appendChild(span);
+		morpher.appendChild(label);
 	}
 }
