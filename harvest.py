@@ -19,15 +19,22 @@ overrides = {
 	"compound-assignment-arithmetic-bit": "compound-assignment-arithmetic-string-logical-bit",
 	"transcendental-constants-and-e": "transcendental-constants",
 	"float-truncation-towards-zero-to-nearest-integer-towards-towards": "float-truncation",
+	"float-truncation-round-towards-zero-round-to-nearest-integer-round-down-round-up": "float-truncation",
 	"random-seed-set-get-restore": "random-seed",
+	"random-seed-how-to-set": "random-seed",
+	"bit-operators-left-shift-right-shift-and-inclusive-or-exclusive-or-complement": "bit-operators",
+	"character-escapes": "literal-escapes",
 	"translate-case-to-upper-to-lower": "translate-case",
+	"case-manipulation": "translate-case",
 	"format-string": "format",
-	"concatenate-and-append": "concatenate",
+	"string-concatenation": "concatenate-strings",
 	"trim-both-sides-left-right": "trim",
 	"pad-on-left-on-right-centered": "pad",
+	"pad-on-right-on-left-centered": "pad",
 	"pad-on-right-on-left": "pad",
 	"length": "string-length",
 	"index-of-substring-first-last": "index-of-substring",
+
 	"extract-substring-by-start-and-length-by-start-and-end-by-successive-starts": "extract-substring",
 	"date-and-time-type": "date-time-type",
 	"current-date-and-time": "current-date-time",
@@ -36,14 +43,26 @@ overrides = {
 	"date-parts": "date-parts",
 	"time-parts": "time-parts",
 	"element-index": "index-of-element",
+	"shuffle": "shuffle-and-sample",
+	"index-of-element-first-and-last-occurrence": "index-of-element",
 	"slice-by-endpoints-by-length": "slice",
-	"replicate-element": "replicate", # clash?
+	"backreference-in-regex-in-substitution-string": "backreference-in-match-and-substitution",
+	"get-date-parts": "date-parts",
+	"get-time-parts": "time-parts",
+	"dict-literal": "map-literal",
+	"dict-size": "map-size",
+	"replicate-element": "replicate",
+	"relative-complement": "relative-complement-symmetric-difference",
+	"function-declaration": "declare-function",
+	"function-invocation": "invoke-function",
+	"missing-argument-value": "missing-argument-behavior",
+	"break-and-continue": "break-continue-redo",
 	"copy-address-copy-shallow-copy-deep-copy": "copy",
-	"reverse-non-destructive-in-place": "reverse",
 	"sort-non-destructive-in-place-custom-comparision": "sort",
 	"dedupe-non-destructive-in-place": "dedupe",
 	"finally-ensure": "finally",
 	"finally-clause": "finally",
+	"namespace-declaration": "declare-namespace",
 }
 def normalize(e):
 	h = re.sub(r'\W+', '-', e.lower()).strip('-')
@@ -93,9 +112,12 @@ def parse(filename, colfilenames):
 	for f in colfiles: f.close()
 
 # to_parse_entries = [('scripting.html', 'entries.txt', False),('cpp.html', 'entries.txt'),('c.html', 'entries.txt'),('pascal.html', 'entries.txt'),('lisp.html', 'entries.txt'),('ml.html', 'entries.txt')]
-# to_parse_entries = [('scripting.html', 'entries.txt', False),('cpp.html', 'entries.cpp.txt', False)]
+# to_parse_entries = [('more.html', 'entries.more.txt', False)]
 to_parse_entries = []
-to_parse = [('scripting.html', ['perl.txt', 'php.txt', 'python.txt', 'ruby.txt']),('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt']),('cpp.html', ['cpp.txt', 'objective-c.txt', 'java.txt', 'c-sharp.txt']),('c.html', ['c.txt', 'go.txt']),('pascal.html', ['pascal.txt', 'ada.txt', 'plpgsql.txt']),('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'c-sharp.txt']),('ml.html', ['ocaml.txt', 'f-sharp.txt', 'scala.txt', 'haskell.txt']),('logic.html', ['prolog.txt', 'erlang.txt']),('stack.html', ['forth.txt', 'postscript.txt', 'factor.txt']),('shell.html', ['posix-shell.txt', 'applescript.txt', 'powershell.txt']),('data.html', ['sql.txt', 'awk.txt', 'pig.txt']),('numerical-analysis.html', ['matlab.txt', 'r.txt', 'numpy.txt']),('fortran.html', ['fortran.txt']),('computer-algebra.html', ['mathematica.txt', 'sympy.txt', 'maxima.txt', 'pari-gp.txt']),]
+# to_parse = [('scripting.html', ['perl.txt', 'php.txt', 'python.txt', 'ruby.txt']),('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt']),('cpp.html', ['cpp.txt', 'objective-c.txt', 'java.txt', 'c-sharp.txt']),('c.html', ['c.txt', 'go.txt']),('pascal.html', ['pascal.txt', 'ada.txt', 'plpgsql.txt']),('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt']),('ml.html', ['ocaml.txt', 'f-sharp.txt', 'scala.txt', 'haskell.txt']),('logic.html', ['prolog.txt', 'erlang.txt']),('stack.html', ['forth.txt', 'postscript.txt', 'factor.txt']),('shell.html', ['posix-shell.txt', 'applescript.txt', 'powershell.txt']),('data.html', ['sql.txt', 'awk.txt', 'pig.txt']),('numerical-analysis.html', ['matlab.txt', 'r.txt', 'numpy.txt']),('fortran.html', ['fortran.txt']),('computer-algebra.html', ['mathematica.txt', 'sympy.txt', 'maxima.txt', 'pari-gp.txt']),]
+to_parse = []
+to_parse = [('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt'])]
+# to_parse = [('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt'])]
 
 for ix, t in enumerate(to_parse_entries):
 	print("{}/{} parsing entries {}...".format(ix + 1, len(to_parse_entries), t[0]), end="")

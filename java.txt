@@ -1,0 +1,1171 @@
+`e version-used
+java 1.7
+`e show-version
+$ javac -version
+`e implicit-prologue
+
+`e hello-world
+$ cat Hello.java
+
+public class Hello {
+  public static void main(String[] args) {
+    System.out.println("Hello, World!");
+  }
+
+}
+
+
+$ javac Hello.java
+
+
+$ java Hello
+`e file-suffixes-source-header-object-file
+Foo.java
+none
+
+Foo.class
+
+Foo.java must define a single top level class Foo
+`e block-delimiters
+{ }
+`e statement-terminator
+;
+`e top-level-statements
+each file contains the following elements in order:
+
+
+(1) optional package directive
+
+(2) zero or more import directives
+
+(3) one public class definition and zero or more private class definitions
+`e end-of-line-comment
+// comment
+`e multiple-line-comment
+/* comment
+
+another comment */
+`e local-variable
+int i;
+int j = 3;
+`e uninitialized-local-variable
+zero initialized
+`e global-variable
+foo/Foo.java:
+package foo;
+
+// globals must be declared inside a
+// class:
+public class Foo {
+  public static int bar;
+
+}
+
+UseFoo.java:
+import foo.Foo;
+
+public class UseFoo {
+  public static void main(String[] args) {
+    System.out.println(Foo.bar);
+  }
+
+}
+`e uninitialized-global-variable
+Zero initialized.
+`e constant
+final int i = 7;
+`e assignment
+int n;
+
+n = 3;
+`e compound-assignment-arithmetic-string-logical-bit
++= -= *= /= %=
+<<= >>= &= ^= |=
+
+>>= is arithmetic right shift, >>>= is logical right shift
+`e increment-and-decrement
+int n = 1;
+int one = n++;
+int three = ++n;
+int two = --n;
+`e address
+none
+`e dereference
+none
+`e type-size
+none
+`e address-arithmetic
+none
+`e unique-pointer
+none
+`e reference-count-pointer
+none
+`e weak-pointer
+none
+`e allocate-heap
+// Primitive types are stack allocated.
+// Use a wrapper class to store on the
+// heap:
+Integer i = new Integer(0);
+`e uninitialized-heap
+zero-initialized
+`e free-heap
+garbage collected
+`e null
+null
+`e coalesce
+String s1 = s2 == null ? "was null" : s2;
+`e boolean-type
+boolean
+`e true-and-false
+true false
+`e falsehoods
+false
+`e logical-operators
+&& || !
+`e relational-operators
+== != < > <= >=
+`e integer-type
+byte n1;  // 1 byte
+short n2; // 2 bytes
+int n3;   // 4 bytes
+long n4;  // 8 bytes
+`e unsigned-type
+char n1;  //2 bytes
+`e float-type
+float x1;  // 4 bytes
+double x2; // 8 bytes
+`e fixed-type
+none
+`e arithmetic-operators
++ - * / %
+`e integer-division
+// evaluates to 2:
+
+7 / 3
+`e integer-division-by-zero
+throws java.lang.ArithmeticException
+`e float-division
+7 / (float)3
+`e float-division-by-zero-dividend-is-positive-zero-negative
+Float.POSITIVE_INFINITY
+Float.NaN
+Float.NEGATIVE_INFINITY
+
+constants with same names defined in Double
+`e power
+Math.pow(2.0, 32.0);
+`e sqrt
+Math.sqrt(2)
+`e sqrt-1
+Double.NaN
+`e transcendental-functions
+Math.exp Math.log none Math.log10
+
+Math.sin Math.cos Math.tan
+
+Math.asin Math.acos Math.atan
+
+Math.atan2
+`e transcendental-constants
+Math.E
+Math.PI
+`e float-truncation
+(long)3.77
+
+Math.round(3.77)
+
+(long)Math.floor(3.77)
+
+(long)Math.ceil(3.77)
+`e absolute-value
+Math.abs(-7)
+
+Math.abs(-7.77)
+`e integer-overflow
+modular arithmetic
+`e float-overflow
+Float.POSITIVE_INFINITY
+`e float-limits-largest-finite-float-smallest-positive-float
+Float.MAX_VALUE
+Float.MIN_VALUE
+Double.MAX_VALUE
+Double.MIN_VALUE
+`e complex-construction
+
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+
+`e random-number-uniform-integer-uniform-float-normal-float
+import java.util.Random;
+
+Random rnd = new Random();
+
+int i = rnd.nextInt(100);
+double x = rnd.nextDouble();
+double y = rnd.nextGaussian();
+`e random-seed
+import java.util.Random;
+
+Random rnd = new Random();
+
+
+rnd.setSeed(17);
+
+// seed can also be passed to constructor
+`e bit-operators
+ << >> & | ^ ~ 
+
+>> is arithmetic right shift, >>> is logical right shift
+`e binary-octal-and-hex-literals
+none in Java 1.6
+
+052
+
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+Integer.toString(42, 7)
+
+Integer.parseInt("60", 7)
+`e string-type
+java.lang.String
+`e string-literal
+"don't say\"no\""
+`e newline-in-literal
+no
+`e literal-escapes
+\b \f \n \r \t
+
+\\ \" \'
+
+\uhhhh \o \oo \ooo
+`e allocate-string
+String s = "hello";
+
+String t = new String(s);
+`e are-strings-mutable
+String objects are immutable.
+
+StringBuffer has append(), delete(), deleteCharAt(), insert(), replace(), setCharAt().
+`e copy-string
+String s = "bar";
+
+StringBuffer sb = new StringBuffer(s);
+
+sb.setCharAt(2, 'z');
+// s contains "bar"; s2 contains "baz":
+
+String s2 = sb.toString();
+`e format
+String.format("%s: %d", "Spain", 7)
+`e compare-strings
+"hello".compareTo("world")
+`e concatenate
+"hello" + " world"
+`e replicate
+import java.util.Arrays;
+
+
+char[] a = new char[80];
+
+Arrays.fill(a, '-');
+
+String s = new String(a);
+`e translate-case
+"hello".toUpperCase()
+
+"HELLO".toLowerCase()
+`e trim
+" hello ".trim()
+`e pad
+
+`e number-to-string
+Integer.toString(14)
+
+Long.toString(14)
+
+Double.toString(14.7)
+`e string-to-number
+Byte.parseByte("14")
+
+Short.parseShort("14")
+
+Integer.parseInt("14")
+
+Long.parseLong("14")
+
+Float.parseFloat("14.7")
+
+Double.parseDouble("14.7")
+`e join
+
+`e split
+"Bob Ned Amy".split(" ")
+`e serialize
+
+`e string-length
+s.length()
+`e index-of-substring
+"hello".indexOf("ll")
+`e extract-substring
+"hello".substring(2,4)
+`e character-type
+char
+Character
+`e character-literal
+char n = 'X';
+`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+
+`e regex-type
+
+`e character-class-abbreviations
+
+`e anchors
+
+`e lookahead-positive-negative
+
+`e match-test
+boolean isMatch = "hello".matches(".*ll.*");
+`e case-insensitive-match-test
+
+`e modifiers
+
+`e substitution
+String s1 = "hello".replace("ll","LL");
+
+String s2 = "hello".replaceAll("l","L");
+`e match-prematch-postmatch
+
+`e group-capture
+
+`e date-time-type
+java.util.Date
+`e current-date-time
+import java.util.Date;
+
+
+long millis = System.currentTimeMillis();
+
+Date dt = new Date(millis);
+`e to-unix-epoch-from-unix-epoch
+long epoch = dt.getTime() / 1000;
+
+
+Date dt2 = new Date(epoch * 1000);
+`e date-and-time-to-string
+dt.toString()
+`e format-date
+String s = "yyyy-MM-dd HH:mm:ss";
+
+DateFormat fmt = new SimpleDateFormat(s);
+
+String s2 = fmt.format(dt);
+`e parse-date
+String s = "2011-05-03 17:00:00";
+
+Date dt2 = fmt.parse(s);
+`e date-subtraction
+difference in milliseconds as a long:
+
+dt2.getTime() - dt.getTime()
+`e add-duration
+long day_ms = 24 * 3600 * 1000;
+
+Date dt = new Date(dt.getTime() + day_ms));
+`e date-parts
+
+`e time-parts
+
+`e declare-on-stack
+arrays must be allocated on heap
+`e declare-on-heap
+int[] a = new int[10];
+`e free-heap
+garbage collected
+`e initialization-list
+int[] a = {1,2,3};
+`e array-size
+a.length
+`e array-lookup
+a[0]
+`e array-update
+
+`e out-of-bounds
+ArrayIndexOutOfBoundsException
+`e copy
+
+`e as-function-argument
+
+`e iterate
+for (String name : names) {
+`e sort
+
+`e list-name
+java.util.ArrayList<T>
+`(The Java Collections API also provides LinkedList<T> and a few others; Vector<T> is older and slower because it is synchronized.)
+`e list-declare
+java.util.ArrayList<String> list = new java.util.ArrayList<String>();
+`e initialization-list
+
+`e list-size
+list.size()
+`e capacity-get-increase
+
+`e empty-test-and-clear
+
+`e lookup
+list.elementAt(0)
+`e update
+
+`e out-of-bounds-behavior
+throws ArrayIndexOutOfBoundsException
+`e index-of-element
+
+`e slice
+
+`e slice-to-end
+
+`e manipulate-back
+list.add("hello");
+`(or)
+list.add(list.size(), "hello");
+
+vec.removeElementAt(vec.size()-1);
+`e manipulate-front
+
+`e concatenate
+
+`e replicate
+
+`e copy
+
+`e array-as-function-argument
+
+`e iterate
+for ( String s : vec ) {
+  do something with s
+
+}
+`e indexed-iteration
+
+`e reverse
+
+`e sort
+
+`e dedupe
+
+`e membership
+
+`e intersection
+
+`e union
+
+`e relative-complement-symmetric-difference
+
+`e map
+
+`e filter
+
+`e reduce
+
+`e min-and-max-element
+
+`e universal-and-existential-tests
+
+`e shuffle-and-sample
+
+`e zip
+
+`e declare-pair
+
+`e lookup-pair-elements
+
+`e update-pair-elements
+
+`e declare-tuple
+
+`e lookup-tuple-elements
+
+`e update-tuple-elements
+
+`e tuple-size
+
+`e create-references-for-tuple-elements
+
+`e map-declaration
+java.util.TreeMap<String, Integer> m = new java.util.TreeMap<String, Integer>();
+`e map-access
+m.put("hello", 5);
+
+m.get("hello")
+`e map-size
+m.size()
+`e map-remove-element
+m.remove("hello");
+`e map-element-not-found-result
+null
+`e map-iterate
+for ( java.util.Map.Entry<String, Integer> e : m.entrySet() ) {
+  use e.getKey() or e.getValue()
+
+}
+`e declare-function
+
+`e define-function
+
+`e invoke-function
+
+`e define-static-class-method
+
+`e invoke-static-class-method
+
+`e overload-function
+yes
+`e default-argument
+use method overloading
+`e variable-number-of-arguments
+public static String concat(String first, String… rest) {
+  StringBuilder sb = new StringBuilder(first);
+  for (String arg: rest) {
+    sb.append(arg);
+  }
+  return sb.toString();
+
+}
+
+String s = Concat.concat("Hello", ", ", "World", "!");
+`e named-parameters
+none
+`e pass-by-value
+primitive types are always passed by value
+`e pass-by-reference
+objects and arrays are always passed by reference
+`e pass-by-address
+none
+`e return-value
+
+`e no-return-value
+
+`e recursive-function
+
+`e anonymous-function
+
+`e invoke-anonymous-function
+
+`e closure
+
+`e function-with-private-state
+
+`e function-as-value
+
+`e overload-operator
+none
+`e if
+if (i>0) {
+  signum = 1;
+
+} else if (i==0) {
+  signum = 0;
+
+} else {
+  signum = -1;
+
+}
+`e dangling-else
+
+`e switch
+switch(i) {
+
+case 0:
+  0;
+  break;
+
+case 1:
+  1;
+  break;
+
+default:
+  -1;
+  break;
+
+}
+`e while
+int i = 0;
+
+while (i<10) {
+…
+  i++;
+
+}
+`e for
+int n = 1;
+
+for (int i=1; i<=10; i++) {
+  n *= i;
+
+}
+`e break
+
+`e break-out-of-nested-loops
+
+`e continue
+
+`e goto
+
+`e base-exception
+Any type which implements the interface java.lang.Throwable can be thrown.
+
+
+Exceptions thrown by the language and the standard libraries derive from java.lang.Errror or java.lang.Exception.
+`e predefined-exceptions
+java.lang.Throwable
+  java.lang.Error
+  java.lang.Exception
+    java.lang.IOException
+    java.lang.RuntimeException
+      java.lang.ArithmeticException
+      java.lang.IllegalArgumentException
+      java.lang.IndexOutOfBoundsException
+      java.lang.NullPointerException
+`e raise-exception
+throw new Exception("failed");
+`e handle-exception
+try {
+  throw new Exception("failed");
+
+}
+
+catch (Exception e) {
+  System.out.println(e.getMessage());
+
+}
+`e define-exception
+
+`e re-raise-exception
+
+`e catch-all-handler
+
+`e multiple-handlers
+
+`e uncaught-exception-behavior
+
+`e error-message
+
+`e system-call-errno
+
+`e finally
+try {
+  risky code
+
+} finally {
+  perform cleanup
+
+}
+`e exception-specification
+yes
+`e start-thread
+
+`e terminate-current-thread
+
+`e terminate-other-thread
+
+`e list-threads
+
+`e wait-on-thread
+
+`e lock
+
+`e create-message-queue
+
+`e send-message
+
+`e receive-message
+
+`e standard-file-handles
+System.in
+
+System.out
+
+System.err
+`e printf
+System.out.printf("count: %d", 7);
+`e read-from-file
+import java.io.BufferedReader;
+
+import java.io.FileReader;
+
+
+BufferedReader in = new BufferedReader(new FileReader("/etc/passwd"));
+
+String line;
+
+while ((line = in.readLine()) != null) {
+  process line
+
+}
+`e write-to-file
+import java.io.BufferedWriter;
+
+import java.io.FileWriter;
+
+BufferedWriter fout = new BufferedWriter(new FileWriter("/tmp/test2"));
+
+int i;
+
+for (i=0; i<10; i++) {
+  fout.write(String.format("%d", i));
+  fout.newLine();
+
+}
+
+fout.close();
+`e file-exists-test-file-regular-test
+import java.io.File;
+
+
+File f = new File("/etc/hosts");
+
+f.exists()
+
+f.isFile()
+`e file-size
+import java.io.File;
+
+
+File f = new File("/etc/hosts");
+
+f.length()
+`e is-file-readable-writable-executable
+import java.io.File;
+
+
+File f = new File("/etc/hosts");
+
+
+f.canRead()
+
+f.canWrite()
+
+f.canExecute()
+`e set-file-permissions
+import java.io.File;
+
+
+File f = new File("/tmp/foo");
+
+// sets owner perms; to turn perms off
+// set arg to false:
+
+f.setReadable(true);
+
+f.setWritable(true);
+
+f.setExecutable(true);
+
+// if 2nd arg is false, perms are
+// for owner, group, and other:
+
+f.setReadable(true, false);
+
+f.setWritable(true, false);
+
+f.setExecutable(true, false);
+`e copy-file-remove-file-rename-file
+import java.io.File;
+
+??
+
+
+File f2 = new File("/tmp/foo");
+
+f2.delete();
+
+
+File f3 = new File("/tmp/bar");
+
+f3.renameTo(new File("/tmp/bar"));
+`e csv
+
+`e json
+
+`e build-xml
+
+`e parse-xml
+
+`e parse-html
+
+`e build-pathname
+import java.io.File;
+
+
+File root = File.listRoots()[0];
+
+File etc = new File(root, "etc");
+
+File hosts = newFile(etc, "hosts");
+
+String path = hosts.getPath();
+`e dirname-and-basename
+import java.io.File;
+
+
+File f = new File("/etc/hosts");
+
+String dirname = f.getParent();
+
+String basename = f.getName();
+`e absolute-pathname
+import java.io.File;
+
+
+File f = new File("foo");
+
+String abspath = f.getAbsolutePath();
+
+// getCanonicalPath() expands .. and .:
+
+File f2 = new File("../foo");
+
+String abspath2 = f2.getCanonicalPath();
+
+File f3 = new File("./foo");
+
+String abspath3 = f3.getCanonicalPath();
+`e iterate-over-directory-by-file
+import java.io.File;
+
+
+File dir = new File("/etc");
+
+// iterate over names:
+
+for (String name: dir.list()) {
+  System.out.println(name);
+
+}
+
+// iterate over file objects:
+
+for (File f: dir.listFiles()) {
+  System.out.println(f.getName());
+
+}
+`e glob-paths
+
+`e make-directory
+import java.io.File;
+
+
+File f = new File("/tmp/foo/bar");
+
+f.mkdirs();
+`e recursive-copy
+
+`e remove-empty-directory
+
+`e remove-directory-and-contents
+
+`e directory-test
+import java.io.File;
+
+
+File f = new File("/tmp");
+
+f.isDirectory()
+`e generate-unused-directory-name
+
+`e system-temporary-file-directory
+
+`e signature-of-main
+public class Foo {
+  public static void main(String[] args) {
+`e first-argument
+first command line argument
+`e environment-variable
+String home = System.getenv("HOME");
+`e iterate-through-environment-variables
+import java.util.Map;
+
+Map<String, String> env = System.getenv();
+
+for (String name : env.keySet()) {
+  String value = env.get(name));
+
+}
+`e standard-library-name
+Java API
+`e declare-namespace
+package foo.bar;
+
+public class Baz {
+  public static final int ANSWER = 42;
+
+}
+`e multiple-namespaces-per-file
+no
+`e namespaces-map-to-directories
+yes
+`e import-namespace
+import foo.bar.*;
+
+System.out.println(Baz.ANSWER);
+`e import-part-of-namespace
+none
+`e import-symbol
+import foo.bar.Baz;
+
+System.out.println(Baz.ANSWER);
+`e import-static-symbol
+import static foo.bar.Baz.ANSWER;
+
+System.out.println(ANSWER);
+`e import-position
+after package and before type definitions
+`e using-a-symbol-that-hasn-t-been-imported
+System.out.println(foo.bar.Baz.ANSWER);
+`e application-environment
+
+`e multiple-installations
+set JAVA_HOME environment variable to directory containing a bin subdirectory with java, javac, and other command line tools. Put $JAVA_HOME/bin at front of search path.
+`e package-manager
+
+`e typedef
+none
+`e enum
+public enum DayOfWeek { MON, TUE, WED, THU, FRI, SAT, SUN };
+
+DayOfWeek d = DayOfWeek.TUE;
+`e struct-definition
+public class MedalCount {
+  public String country;
+  public int gold;
+  public int silver;
+  public int bronze;
+
+}
+`e struct-declaration
+MedalCount spain = new MedalCount();
+`e struct-initialization
+no object literal syntax; define a constructor
+`e struct-member-assignment
+spain.country = "Spain";
+
+spain.gold = 3;
+
+spain.silver = 7;
+
+spain.bronze = 4;
+`e struct-member-access
+int spain_total = spain.gold + spain.silver + spain.bronze;
+`e define-generic-type
+public class Foo<A> {
+  public A a;
+  public Foo(A a) {
+    this.a = a;
+  }
+
+}
+`e instantiate-generic-type
+Foo<String> f = new Foo<String>("foo");
+`e generic-function
+
+`e generic-array
+not permitted. Use Object as the element type for the array or use an ArrayList.
+`e value-parameter
+
+`e template-parameter
+
+`e template-specialization
+
+`e multiple-type-parameters
+
+`e generic-type-parameters
+
+`e template-parameters
+
+`e variadic-template
+
+`e semantics-of
+object identity comparison
+`e define-class
+public class Rational {
+  public int num;
+  public int denom;
+  public Rational add(Rational o) throws Exception {
+    return new Rational(this.num*o.denom + o.num*this.denom,this.denom*o.denom);
+  }
+  public static Rational max(Rational a, Rational b) {
+    return (a.num*b.denom > a.num*b.denom) ? a : b;
+  }
+
+}
+`e class-definition-location
+top level, class block, or function block for anonymous classes
+`e constructor
+public Rational(int n, int d) throws Exception {
+  if (d == 0) {
+    throw new Exception("zero denominator");
+  }
+  if ( d < 0 ) {
+    this.num = -1 * n;
+    this.denom = -1 * d;
+  }
+  else {
+    this.num = n;
+    this.denom = d;
+  }
+
+}
+`e create-object
+Rational r = new Rational(7,3);
+`e destructor
+protected void finalize() throws Throwable {
+  super.finalize();
+
+}
+`e destroy-object
+none
+`e define-method
+public int height() {
+  return (Math.abs(this.num) > this.denom) ? Math.abs(this.num) : this.denom;
+
+}
+`e invoke-method
+r.height();
+`e define-class-method
+declare static in class definition
+`e invoke-class-method
+
+`e name-of-receiver
+this
+`e access-control
+access keywords required for methods and members:
+
+public class Foo {
+  private int privateInt;
+  protected int protectedInt;
+  public int publicInt;
+
+}
+`e anonymous-class
+(new Object() { public void hello() { System.out.println("hello!"); } }).hello();
+`e dynamic-dispatch
+dispatch dynamic by default
+`e static-dispatch
+declare as final, private, or static (i.e. make it a class method)
+`e subclass
+public class RInteger extends Rational {
+  public RInteger(int n) throws Throwable {
+    super(n, 1);
+  }
+
+}
+`e invoking-superclass-constructor
+super(n, 1);
+`e mark-class-underivable-or-method-unoverrideable
+final
+`e root-class
+java.lang.Object
+`e root-class-methods
+clone()
+
+equals()
+
+finalize()
+
+getClass()
+
+hashCode()
+
+toString()
+`e get-type-class-of-object
+o = new Object();
+
+Class c = o.getClass();
+`e get-type-class-from-string
+Class c = Class.forName("java.io.File");
+`e get-type-class-from-type-identifier
+
+`e class-name
+String name = c.getName();
+`e get-methods
+import java.lang.reflect.*;
+
+Method[] m = c.getMethods();
+`e has-method
+import java.lang.reflect.*;
+
+Class c = Class.forName("java.io.File");
+
+Method[] a = c.getMethods();
+
+boolean hasMethod = false;
+
+for (int i=0; i < a.length; i++) {
+  if (a[i].getName() == "toString") {
+    hasMethod = true;
+  }
+
+}
+`e invoke-method-object
+import java.lang.reflect.*;
+
+Class c = Class.forName("java.io.File");
+
+Method m = c.getMethod("toString");
+
+Object o = new Object();
+
+m.invoke(o);
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+
+`e http-get
+
+`e http-post
+
+`e absolute-url
+
+`e parse-url
+
+`e url-encode-decode
+import java.net.URLEncoder;
+
+import java.net.URLDecoder;
+
+
+String url = "http://www.google.com";
+
+String s = URLEncoder.encode(url, "utf8");
+
+String s2 = URLDecoder.decode(s, "utf8");
+`e base64-encode-decode
+
+`e test-class
+
+`e run-all-tests
+
+`e equality-assertion
+
+`e approximate-assertion
+
+`e exception-assertion
+
+`e setup
+
+`e teardown
+
+`e flag-for-stronger-warnings
+
+`e suppress-warnings
+
+`e treat-warnings-as-errors
+
+`e run-debugger
+
+`e debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-show-breakpoints-delete-breakpoint-continue-backtrace-up-stack-down-stack-print-run-quit
+
+`e benchmark-code
+
+`e profile-code
+
+`e memory-tool
+

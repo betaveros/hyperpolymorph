@@ -1,0 +1,1049 @@
+`e version-used
+gcc 4.2
+`e show-version
+$ gcc --version
+`e implicit-prologue
+
+`e hello-world
+$ cat hello.m
+
+#include <stdio.h>
+
+
+int main(int argc, char **argv) {
+  printf("Hello, World!\n");
+
+}
+
+
+$ gcc hello.m
+
+
+$ ./a.out
+`e file-suffixes-source-header-object-file
+Foo.m
+
+Foo.h
+
+Foo.o
+`e block-delimiters
+{ }
+`e statement-terminator
+;
+`e top-level-statements
+
+`e end-of-line-comment
+// comment
+`e multiple-line-comment
+/* comment
+
+another comment */
+`e local-variable
+int i;
+
+int j = 3;
+`e uninitialized-local-variable
+behavior is undefined.
+
+
+Most implementations do not zero-initialize stack variables, so the value will be whatever happened to be in memory.
+`e global-variable
+in foo.cpp outside of any function or class definition:
+
+int foo = 7;
+
+in bar.cpp outside of any function or class definition:
+
+extern int foo;
+`e uninitialized-global-variable
+
+`e constant
+const int i = 7;
+`e assignment
+
+`e compound-assignment-arithmetic-string-logical-bit
+
+`e increment-and-decrement
+
+`e address
+
+`e dereference
+
+`e type-size
+
+`e address-arithmetic
+
+`e unique-pointer
+
+`e reference-count-pointer
+
+`e weak-pointer
+
+`e allocate-heap
+#include <stdlib.h>
+
+
+int *ip = malloc(sizeof(int));
+`e uninitialized-heap
+
+`e free-heap
+#include <stdlib.h>
+
+
+free(ip);
+`e null
+NULL
+`e coalesce
+NSString *s1 = s2 || @"was null";
+`e boolean-type
+BOOL
+`e true-and-false
+YES NO
+`e falsehoods
+0 0.0 NULL
+`e logical-operators
+&& || !
+`e relational-operators
+== != < > <= >=
+`e integer-type
+signed char 1+ byte
+
+short int 2+ bytes
+
+int 2+ bytes
+
+long int 4+ bytes
+
+long long int 4+ bytes
+`e unsigned-type
+unsigned char: 8+
+
+unsigned short int 2 bytes+
+
+unsigned int 2 bytes+
+
+unsigned long int 4+ bytes
+
+unsigned long long int 4+ bytes
+`e float-type
+float
+
+double
+
+long double
+`e fixed-type
+none
+`e arithmetic-operators
++ - * / %
+`e integer-division
+// evaluates to 2:
+
+7 / 3
+`e integer-division-by-zero
+process sent a SIGFPE signal
+`e float-division
+7 / (float)3
+`e float-division-by-zero-dividend-is-positive-zero-negative
+inf
+
+nan
+
+-inf
+
+there are no portably defined literals or constants for the above values.
+`e power
+#include <math.h>
+
+
+pow(2.0, 32.0);
+`e sqrt
+#include <math.h>
+
+
+sqrt(2)
+`e sqrt-1
+nan
+`e transcendental-functions
+#include <math.h>
+
+
+exp log log2 log10
+
+sin cos tan
+
+asin acos atan
+
+atan2
+`e transcendental-constants
+#include <math.h>
+
+
+M_E
+
+M_PI
+`e float-truncation
+#include <math.h>
+ 
+
+double d = 3.77;
+ 
+
+long trnc = (long)d;
+
+long rnd = round(d);
+
+long flr = floorl(d);
+
+long cl = ceill(d);
+`e absolute-value
+#include <stdlib.h>  // abs()
+
+#include <math.h>  // fabs()
+
+
+int i = -7;
+
+int ai = abs(i);
+
+
+float x = -7.77;
+
+float ax = fabs(x);
+`e integer-overflow
+modular arithmetic
+
+
+The C standard does not define behavior for signed integers, however.
+`e float-overflow
+no behavior defined by standard; many implementations return inf
+`e float-limits-largest-finite-float-smallest-positive-float
+
+`e complex-construction
+
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+
+`e random-number-uniform-integer-uniform-float-normal-float
+#include <stdlib.h>
+
+// assuming 100 much smaller than RAND_MAX:
+
+int i = rand() % 100;
+
+double x = drand48();
+none
+`e random-seed
+
+`e bit-operators
+ << >> & | ^ ~ 
+`e binary-octal-and-hex-literals
+
+`e radix-convert-integer-to-and-from-string-with-radix
+
+`e string-type
+NSString* s = @"lorem ipsum";
+
+// convert to C string:
+
+const char* s2 = [s UTF8String];
+`e string-literal
+@"don't say \"no""
+`e newline-in-literal
+string literals can extend over multiple lines, but the newlines do not appear in the resulting string
+`e literal-escapes
+\a \b \f \n \r \t \v
+
+\\ \" \'
+
+\xhh \o \oo \ooo
+`e allocate-string
+NSString *s = @"hello";
+`e are-strings-mutable
+
+`e copy-string
+
+`e format
+[NSString stringWithFormat:@"%@: %d", @"Spain", 7]
+`e compare-strings
+[@"hello" compare:@"hello"]
+`e concatenate
+NSString *s1 = @"hello";
+
+NSString *s2 = @" world";
+
+NSString *s3 = [s1 stringByAppendingString:s2];
+`e replicate
+
+`e translate-case
+[@"HELLO" lowercaseString]
+`e trim
+[@" hello " stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]
+`e pad
+[@"hello" stringByPaddingToLength:10 withString:@" " startingAtIndex:0]
+`e number-to-string
+
+`e string-to-number
+[@"14" integerValue]
+
+[@"14" longLongvalue]
+
+[@"14.7" floatValue]
+
+[@"14.7" doubleValue]
+`e join
+
+`e split
+[@"Bob Ned Amy" componentsSeparatedByString:@" "]
+`e serialize
+
+`e string-length
+[s length]
+`e index-of-substring
+[@"hello" rangeOfString:@"ll"].location
+`e extract-substring
+[@"hello" substringWithRange:NSMakeRange(2, 2)]
+`e character-type
+
+`e character-literal
+
+`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+
+`e regex-type
+
+`e character-class-abbreviations
+
+`e anchors
+
+`e lookahead-positive-negative
+
+`e match-test
+NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @".*ll.*"];
+
+BOOL is_match = [pred evaluateWithObject:@"hello"];
+`e case-insensitive-match-test
+
+`e modifiers
+
+`e substitution
+
+`e match-prematch-postmatch
+
+`e group-capture
+
+`e date-time-type
+
+`e current-date-time
+
+`e to-unix-epoch-from-unix-epoch
+
+`e date-and-time-to-string
+
+`e format-date
+
+`e parse-date
+
+`e date-subtraction
+
+`e add-duration
+
+`e date-parts
+
+`e time-parts
+
+`e declare-on-stack
+int a[10];
+`e declare-on-heap
+#include <stdlib.h>
+
+int *a = calloc(10, sizeof(int));
+`e free-heap
+#include <stdlib.h>
+
+free(a);
+`e initialization-list
+NSArray *a = [NSArray arrayWithObjects:@"hello", @"goodbye", nil];
+`e list-size
+[a count]
+`e list-lookup
+[a objectAtIndex:0]
+`e list-update
+
+`e list-out-of-bounds-behavior
+raises NSRangeException exception
+`e copy
+
+`e as-function-argument
+
+`e iterate
+NSEnumerator *i = [a objectEnumerator];
+
+id o;
+
+while (o = [i nextObject]) {
+  do something with o
+
+}
+`e sort
+
+`e list-name
+NSMutableArray (?)
+`e list-declare
+NSMutableArray *a = [NSMutableArray arrayWithCapacity:10];
+`e initialization-list
+`e list-size
+[a count]
+`e capacity-get-increase
+
+`e empty-test-and-clear
+
+`e lookup
+[a objectAtIndex:0]
+`e update
+
+`e out-of-bounds-behavior
+raises NSRangeException
+`e index-of-element
+
+`e slice
+
+`e slice-to-end
+
+`e manipulate-back
+[a addObject:@"hello"];
+
+[a removeLastObject];
+`e manipulate-front
+
+`e concatenate
+
+`e replicate
+
+`e copy
+
+`e array-as-function-argument
+
+`e iterate
+NSEnumerator *i = [a objectEnumerator];
+
+id o;
+
+while (o = [i nextObject]) {
+  do something with o
+
+}
+`e indexed-iteration
+
+`e reverse
+
+`e sort
+
+`e dedupe
+
+`e membership
+
+`e intersection
+
+`e union
+
+`e relative-complement-symmetric-difference
+
+`e map
+
+`e filter
+
+`e reduce
+
+`e min-and-max-element
+
+`e universal-and-existential-tests
+
+`e shuffle-and-sample
+
+`e zip
+
+`e declare-pair
+
+`e lookup-pair-elements
+
+`e update-pair-elements
+
+`e declare-tuple
+
+`e lookup-tuple-elements
+
+`e update-tuple-elements
+
+`e tuple-size
+
+`e create-references-for-tuple-elements
+
+`e map-declaration
+NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+`e map-access
+[dict setObject:@"5" forKey:@"hello"];
+
+[dict objectForKey:@"hello"]
+`e map-size
+[dict count]
+`e map-remove-element
+[dict removeObjectForKey:@"hello"];
+`e map-element-not-found-result
+NULL
+`e map-iterate
+NSEnumerator *i = [dict keyEnumerator];
+
+id key;
+
+while ((key = [i nextObject])) {
+  do something with key
+
+}
+`e declare-function
+
+`e define-function
+
+`e invoke-function
+
+`e define-static-class-method
+
+`e invoke-static-class-method
+
+`e overload-function
+method overloading only
+`e default-argument
+none
+`e variable-number-of-arguments
+use C; use method overloading for finite arities
+`e named-parameters
++(float)weight: (float) w height: (float) h {
+  return (w * 703) / (h * h);
+
+}
+
++(float)height: (float) h weight: (float) w {
+  return [BMI weight: w height: h];
+
+}
+
+[BMI weight:155 height:70];
+
+[BMI height:70 weight:155];
+`e pass-by-value
+void use_integer(int i) {
+  function body
+
+}
+
+int i = 7;
+
+use_integer(i);
+`e pass-by-reference
+none
+`e pass-by-address
+void use_iptr(int *i) {
+  function body
+
+}
+
+int i = 7;
+
+use_iptr(&i);
+`e return-value
+
+`e no-return-value
+
+`e recursive-function
+
+`e anonymous-function
+
+`e invoke-anonymous-function
+
+`e closure
+
+`e function-with-private-state
+
+`e function-as-value
+
+`e overload-operator
+none
+`e if
+if (i>0) {
+  signum = 1;
+
+} else if (i==0) {
+  signum = 0;
+
+} else {
+  signum = -1;
+
+}
+`e dangling-else
+
+`e switch
+switch(i) {
+
+case 0:
+  0;
+  break;
+
+case 1:
+  1;
+  break;
+
+default:
+  -1;
+  break;
+
+}
+`e while
+int i = 0;
+
+while (i<10) {
+…
+  i++;
+
+}
+`e for
+int i, n;
+
+for (i=1,n=1; i<=10; i++) {
+  n *= i;
+
+}
+`e break
+
+`e break-out-of-nested-loops
+
+`e continue
+
+`e goto
+
+`e base-exception
+
+`e predefined-exceptions
+
+`e raise-exception
+NSException *exc = [NSException exceptionWithName:@"error" reason:@"failed" userInfo:nil];
+
+@throw exc;
+`e handle-exception
+@try {
+  [NSException raise:@"error" format:@"failed"];
+
+} @catch (NSException *e) {
+  printf([[e reason] UTF8String]);
+
+}
+`e define-exception
+
+`e re-raise-exception
+
+`e catch-all-handler
+
+`e multiple-handlers
+
+`e uncaught-exception-behavior
+
+`e error-message
+
+`e system-call-errno
+
+`e finally
+@try {
+  risky code
+
+} @finally {
+  perform cleanup
+
+}
+`e exception-specification
+no
+`e start-thread
+
+`e terminate-current-thread
+
+`e terminate-other-thread
+
+`e list-threads
+
+`e wait-on-thread
+
+`e lock
+
+`e create-message-queue
+
+`e send-message
+
+`e receive-message
+
+`e standard-file-handles
+
+`e printf
+printf("count: %d\n", 7);
+`e read-from-file
+NSError *error = nil;
+
+NSString *s = [NSString stringWithContentsOfFile: @"/etc/passwd" encoding:NSUTF8StringEncoding error:&error];
+
+if ( error != nil ) {
+  handle error
+
+}
+
+NSArray *a = [s componentsSeparatedByString:@"\n"];
+
+id line;
+
+while (line = [i nextObject]) {
+  process line
+
+}
+`e write-to-file
+
+`e file-exists-test-file-regular-test
+
+`e file-size
+
+`e is-file-readable-writable-executable
+
+`e set-file-permissions
+
+`e copy-file-remove-file-rename-file
+
+`e csv
+
+`e json
+
+`e build-xml
+
+`e parse-xml
+
+`e parse-html
+
+`e build-pathname
+
+`e dirname-and-basename
+
+`e absolute-pathname
+
+`e iterate-over-directory-by-file
+
+`e glob-paths
+
+`e make-directory
+
+`e recursive-copy
+
+`e remove-empty-directory
+
+`e remove-directory-and-contents
+
+`e directory-test
+
+`e generate-unused-directory-name
+
+`e system-temporary-file-directory
+
+`e signature-of-main
+int main(int argc, char **argv) {
+`e first-argument
+pathname of executable
+`e environment-variable
+NSString *home = [[[NSProcessInfo processInfo] environment] objectForKey:@"HOME"];
+`e iterate-through-environment-variables
+NSEnumerator *i = [[[NSProcessInfo processInfo] environment] keyEnumerator];
+
+id key;
+
+while ((key = [i nextObject])) {
+  use NSString key
+
+}
+`e standard-library-name
+Foundation Framework
+`e declare-namespace
+
+`e multiple-namespaces-per-file
+
+`e namespaces-map-to-directories
+
+`e import-namespace
+
+`e import-part-of-namespace
+
+`e import-symbol
+
+`e import-static-symbol
+
+`e import-position
+
+`e using-a-symbol-that-hasn-t-been-imported
+
+`e application-environment
+
+`e multiple-installations
+
+`e package-manager
+
+`e typedef
+typedef int customer_id;
+
+customer_id cid = 3;
+`e enum
+enum day_of_week { mon, tue, wed, thu, fri, sat, sun };
+
+enum day_of_week d = tue;
+`e struct-definition
+struct medal_count {
+  const char* country;
+  int gold;
+  int silver;
+  int bronze;
+
+};
+`e struct-declaration
+struct medal_count spain;
+`e struct-initialization
+struct medal_count spain = { "Spain", 3, 7, 4};
+
+struct medal_count france = { .gold = 8, .silver = 7, .bronze = 9, .country = "France" };
+`e struct-member-assignment
+spain.country = "Spain";
+
+spain.gold = 3;
+
+spain.silver = 7;
+
+spain.bronze = 4;
+`e struct-member-access
+int spain_total = spain.gold + spain.silver + spain.bronze;
+`e define-generic-type
+
+`e instantiate-generic-type
+
+`e generic-function
+
+`e generic-array
+
+`e value-parameter
+
+`e template-parameter
+
+`e template-specialization
+
+`e multiple-type-parameters
+
+`e generic-type-parameters
+
+`e template-parameters
+
+`e variadic-template
+
+`e semantics-of
+object identity comparison
+`e define-class
+Rational.h:
+
+#import <Foundation/Foundation.h>
+
+@interface Rational : NSObject {
+  int num;
+  int denom;
+
+}
+
+@property int num, denom;
+
+-(Rational*) initWith: (int) n: (int) d;
+
+-(Rational*) add: (Rational *) o;
+
+@end
+Rational.m:
+
+#include "Rational.h"
+
+@implementation Rational
+
+@synthesize num, denom;
+
+-(Rational*) add: (Rational*) o {
+  int sum_n = self.num * o.denom + o.num * self.denom;
+  int sum_d = self.denom * o.denom;
+  Rational* sum = [[Rational alloc] initWith: sum_n: sum_d];
+  return sum;
+
+}
+
+@end
+`e class-definition-location
+top level
+`e constructor
+-(Rational*) initWith: (int) n: (int) d {
+  self = [super init];
+  if (self) {
+    self.num = n;
+    self.denom = d;
+  }
+  return self;
+
+}
+`e create-object
+Rational *r = [[Rational alloc] initWith: 7: 3];
+`e destructor
+-(void) dealloc {
+  [super dealloc];
+  printf("deallocated…");
+
+}
+`e destroy-object
+[r release];
+`e define-method
+-(int) height {
+  if ( abs(self.num) > abs(self.denom) ) {
+    return abs(self.num);
+  }
+  return abs(self.denom);
+
+}
+`e invoke-method
+[r1 height];
+`e define-class-method
+precede definition with +:
+
++(Rational*) max: (Rational*) a: (Rational*) b {
+  if ( a.num * b.denom > b.num * a.denom ) {
+    return a;
+  }
+  return b;
+
+}
+`e invoke-class-method
+
+`e name-of-receiver
+self
+`e access-control
+access keywords define regions:
+
+@interface Foo : NSObject {
+  int protectedInt1;
+  int protectedInt2;
+
+@public
+  int publicInt1;
+  int publicInt2;
+
+@protected
+  int protectedInt3;
+  int protectedInt4;
+
+@private
+  int privateInt1;
+  int privateInt2;
+
+}
+
+@end
+`e anonymous-class
+none
+`e dynamic-dispatch
+dispatch always dynamic
+`e static-dispatch
+dispatch always dynamic
+`e subclass
+
+`e invoking-superclass-constructor
+
+`e mark-class-underivable-or-method-unoverrideable
+none
+`e root-class
+NSObject
+`e root-class-methods
+autorelease
+
+class
+
+conformsToProtocol:
+
+hash
+
+isEqual:
+
+isKindOfClass:
+
+isProxy
+
+performSelector:
+
+performSelector:withObject:
+
+performSelector:withObject:withObject:
+
+release
+
+respondsToSelector:
+
+retain
+
+retainCount
+
+self
+
+superclass
+`e get-type-class-of-object
+
+`e get-type-class-from-string
+
+`e get-type-class-from-type-identifier
+
+`e class-name
+
+`e get-methods
+
+`e has-method
+
+`e invoke-method-object
+
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+
+`e http-get
+
+`e http-post
+
+`e absolute-url
+
+`e parse-url
+
+`e url-encode-decode
+
+`e base64-encode-decode
+
+`e test-class
+
+`e run-all-tests
+
+`e equality-assertion
+
+`e approximate-assertion
+
+`e exception-assertion
+
+`e setup
+
+`e teardown
+
+`e flag-for-stronger-warnings
+
+`e suppress-warnings
+
+`e treat-warnings-as-errors
+
+`e run-debugger
+
+`e debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-show-breakpoints-delete-breakpoint-continue-backtrace-up-stack-down-stack-print-run-quit
+
+`e benchmark-code
+
+`e profile-code
+
+`e memory-tool
+

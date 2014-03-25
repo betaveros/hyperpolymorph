@@ -1,0 +1,588 @@
+`e version-used
+2.2
+`e show-version
+$ groovy -v
+`e interpreter
+$ echo 'println "hi!"' > hi.groovy
+
+$ groovy hi.groovy
+`e repl
+$ groovysh
+`e command-line-program
+$ groovy -e 'println "hi world!"'
+`e block-delimiters
+{}
+`e statement-terminator
+newline or ;
+
+newline not a separator inside (), [], triple quote literal, or after binary operator or backslash.
+`e are-expressions-statements
+yes
+`e end-of-line-comment
+// comment
+`e multiple-line-comment
+/* comment
+
+another comment */
+`e local-variable
+x = 1
+
+def y = 2
+
+Integer z = 3
+`e global-variable
+
+`e assignment
+x = 1
+`e parallel-assignment
+(x, y, z) = [1, 2, 3]
+
+// 3 is discarded:
+
+(x, y) = [1, 2, 3]
+
+// z is set to null:
+
+(x, y, z) = [1, 2]
+`e swap
+(x, y) = [y, x]
+`e null
+null
+`e null-test
+v == null
+`e undefined-variable-access
+raises groovy.lang.MissingPropertyException
+`e conditional-expression
+x > 0 ? x : -x
+`e true-and-false
+true false
+`e falsehoods
+false null 0 0.0 "" [] [:]
+`e logical-operators
+&& || !
+`e relational-expression
+x > 0
+`e relational-operators
+== != > < >= <=
+`e min-and-max
+[1, 2, 3].min()
+
+[1, 2, 3].max()
+
+// binary functions:
+
+Math.min(1, 2)
+
+Math.max(1, 2)
+`e arithmetic-expression
+1 + 3
+`e arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-modulus
++ - * / ?? %
+`e integer-division
+Math.floor(x / y)
+`e integer-division-by-zero
+raises java.lang.ArithmeticException
+`e float-division
+x / y
+`e float-division-by-zero
+raises java.lang.ArithmeticException
+`e power
+2 ** 32
+`e sqrt
+Math.sqrt(2)
+`e sqrt-1
+Double.NaN
+`e transcendental-functions
+Math.exp Math.log Math.sin Math.cos Math.tan Math.asin Math.acos Math.atan Math.atan2
+`e transcendental-constants
+Math.PI
+
+Math.E
+`e float-truncation
+(int)3.1
+
+Math.round(3.1)
+
+(int)Math.floor(3.1)
+
+(int)Math.ceil(3.1)
+`e absolute-value
+Math.abs(-3)
+`e integer-overflow
+becomes type java.math.BigInteger
+`e float-overflow
+Double.POSITIVE_INFINITY
+`e random-number-uniform-integer-uniform-float-normal-float
+rnd = new Random()
+
+rnd.nextInt(100)
+
+rnd.nextDouble()
+`e random-seed
+rnd = new Random()
+
+rnd.setSeed(17)
+`e bit-operators
+<< >> & | ^ ~
+`e string-literal
+"don't say \"no\""
+
+'don\'t say "no"'
+
+"""don't say "no\""""
+
+'''don't say "no"'''
+
+/don't say "no"/
+`e newline-in-literal
+// triple quote literals only:
+
+"""foo
+
+bar"""
+
+
+'''foo
+
+bar'''
+`e literal-escapes
+// single and double quotes
+// including triple quotes:
+
+\b \f \n \r \t
+\\ \" \'
+
+\uhhhh \o \oo \ooo
+
+// slash quotes:
+
+\/
+`e variable-interpolation
+count = 3
+
+item = "ball"
+
+
+"$count ${item}s"
+
+"""$count ${item}s"""
+`e expression-interpolation
+"1 + 1 = ${1 + 1}"
+
+"""1 + 1 = ${1 + 1}"""
+`e concatenate-strings
+s = "Hello, " + "World!"
+`e split
+"do re mi".split()
+`e join
+["do", "re", "mi"].join(" ")
+`e sprintf
+fmt = "lorem %s %d %.2f"
+
+String.format(fmt, "ipsum", 13, 3.7)
+`e translate-case
+"lorem".toUpperCase()
+
+"LOREM".toLowerCase()
+
+"lorem".capitalize()
+`e strip
+" lorem ".trim()
+`e pad
+"lorem".padRight(10)
+
+"lorem".padLeft(10)
+
+"lorem.center(10)
+`e string-to-number
+7 + Integer.parseInt("12")
+
+73.9 + Double.parseDouble(".037")
+`e number-to-string
+"value: " + 8
+
+// explicit conversion:
+
+8.toString()
+`e string-length
+"lorem".size()
+
+"lorem".length()
+`e index-of-substring
+"lorem ipsum".indexOf("ipsum")
+`e extract-substring
+"lorem ipsum".substring(6, 11)
+`e chr-and-ord
+(Character)65
+
+(Integer)'A'
+`e character-class-abbreviations-and-anchors
+char class abbrevs:
+
+. \d \D \s \S \w \W
+
+anchors: ^ $ \b
+`e match-test
+s = "it is 1999"
+
+
+if (s =~ /1999/) {
+  println("party!")
+
+}
+`e case-insensitive-match-test
+"Lorem" =~ /(?i)lorem/
+`e modifiers
+i s
+`e substitution
+"do re mi mi mi".replaceAll(/mi/, "ma")
+`e group-capture
+s = "2010-06-03"
+
+m = s =~ /(\d{4})-(\d{2})-(\d{2})/
+
+yr = m.group(1)
+
+mo = m.group(2)
+
+dy = m.group(3)
+`e backreference-in-match-and-substitution
+"do do" =~ /(\w+) \1/
+
+
+rx = /(\w+) (\w+)/
+
+"do re".replaceAll(rx, '$2 $1')
+`e current-date-time
+t = new Date()
+`e to-unix-epoch-from-unix-epoch
+Math.round(t.getTime() / 1000)
+
+t = new Date(1315716177 * 1000)
+`e strftime
+
+`e strptime
+
+`e parse-date-w-o-format
+
+`e date-parts
+
+`e time-parts
+
+`e build-date-time-from-parts
+
+`e sleep
+
+`e list-literal
+a = [1, 2, 3, 4]
+`e list-size
+a.size
+`e list-lookup
+a[0]
+`e list-update
+a[0] = 'lorem'
+`e list-out-of-bounds-behavior
+returns null
+`e index-of-element
+[6, 7, 7, 8].indexOf(7)
+
+[6, 7, 7, 8].lastIndexOf(7)
+// returns -1 if not found
+`e slice
+// ['b', 'c']:
+
+['a', 'b', 'c', 'd'][1..2]
+`e slice-to-end
+// ['b', 'c', 'd']:
+
+['a', 'b', 'c', 'd'][1..-1]
+`e concatenate
+[1, 2, 3] + [4, 5, 6]
+`e replicate
+a = [null] * 10
+`e manipulate-back
+a = [6, 7, 8]
+
+a.push(9)
+// also:
+
+a << 9
+
+i = a.pop()
+`e manipulate-front
+a = [6, 7, 8]
+
+a.add(0, 5)
+
+i = a.remove(0)
+`e iterate-over-elements
+for (i in [1, 2, 3, 4]) {
+  println i
+
+}
+`e reverse
+a = [1, 2, 3]
+
+a.reverse()
+`e sort
+a = [3, 1, 4, 2]
+
+a.sort()
+`e dedupe
+a = [1, 2, 2, 3]
+
+// modifies array in place:
+
+a.unique()
+`e membership
+[1, 2, 3].contains(7)
+
+![1, 2, 3].contains(7)
+`e intersection
+[1, 2].intersect([2, 3])
+`e union
+([1, 2] + [2, 3, 4]).unique()
+`e relative-complement-symmetric-difference
+[1 2 3] - [2]
+`e map
+[1, 2, 3].collect() { n -> n * n }
+`e filter
+[1, 2, 3].findAll() { x -> x > 2 }
+`e reduce
+[1, 2, 3].inject(0) { x, y -> x + y }
+`e universal-and-existential-tests
+none
+`e shuffle-and-sample
+a = [1, 2, 3, 4]
+// no return value:
+
+Collections.shuffle(a)
+`e zip
+[[1,2,3], ['a', 'b', 'c']].transpose()
+`e map-literal
+d = ["t": 1, "f": 0]
+`e map-size
+d.size()
+`e map-lookup
+d["t"]
+`e map-update
+d["t"] = 2
+`e map-out-of-bounds-behavior
+returns null
+`e is-key-present
+d.containsKey("t")
+`e delete
+
+`e iteration
+
+`e declare-function
+def (x, y) {
+  x + y
+
+}
+`e invoke-function
+add(1, 2)
+
+// parens are optional:
+
+add 1, 2
+`e missing-argument-behavior
+raises groovy.lang.MissingMethodException
+`e extra-arguments
+raises groovy.lang.MissingMethodException
+`e default-value
+
+`e variable-number-of-arguments
+
+`e return-value
+return arg or last expression evaluated
+`e multiple-return-values
+none
+`e lambda-declaration
+sqr = { x -> Math.sqrt x }
+`e lambda-invocation
+sqr(2)
+`e default-scope
+
+`e nested-function-visibility
+
+`e if
+if (n == 0) {
+  println("no hits")
+
+}
+
+else if (n == 1) {
+  println("one hit")
+
+}
+
+else {
+  println(n + " hits")
+
+}
+`e while
+while (i < 100) {
+  i += 1
+
+}
+`e break-continue-redo
+break continue
+`e for
+for (i = 0; i < 10; i++) {
+  println i
+
+}
+`e raise-exception
+throw new Exception("bad arg")
+`e catch-exception
+
+`e finally
+
+`e uncaught-exception-behavior
+
+`e generator
+
+`e standard-file-handles
+System.in
+
+System.out
+
+System.err
+`e read-line-from-stdin
+
+`e write-line-to-stdout
+print("Hello, World!\n")
+
+println("Hello, World!")
+
+System.out.print("Hello, World!\n")
+
+System.out.println("Hello, World!")
+`e open-file
+
+`e open-file-for-writing
+
+`e close-file
+
+`e read-line
+
+`e iterate-over-a-file-by-line
+
+`e chomp
+
+`e read-file
+
+`e write-to-file
+
+`e flush-file-handle
+
+`e file-exists-test-file-regular-test
+f = new File('/etc/hosts')
+
+
+f.exists()
+
+f.isFile()
+`e file-size
+f = new File('/etc/hosts')
+
+
+f.length()
+`e is-file-readable-writable-executable
+f = new File('etc/hosts')
+
+
+f.canRead()
+
+f.canWrite()
+
+f.canExecute()
+`e copy-file-remove-file-rename-file
+
+`e set-file-permissions
+
+`e temporary-file
+
+`e build-pathname
+
+`e dirname-and-basename
+
+`e iterate-over-directory-by-file
+
+`e make-directory
+
+`e remove-empty-directory
+
+`e remove-directory-and-contents
+
+`e directory-test
+
+`e command-line-args
+args.size()
+
+args[0]
+
+args[1]
+
+…
+`e environment-variable
+System.getenv("HOME")
+`e exit
+System.exit(0)
+`e external-command
+
+`e backticks
+
+`e library
+
+`e import-library
+
+`e library-path
+
+`e library-path-environment-variable
+
+`e declare-namespace
+
+`e namespace-separator
+
+`e list-installed-packaged-install-a-package
+
+`e define-class
+class Int {
+  public int value
+  Int (int n) {
+    value = n
+  }
+
+}
+`e create-object
+o = new Int(3)
+`e create-blank-object
+
+`e set-attribute
+o.value = 4
+`e get-attribute
+o.value
+`e define-method
+
+`e invoke-method
+
+`e clone-object
+
+`e object-literal
+
+`e inspect-type
+o.class
+
+o.getClass()
+`e has-method
+
+`e message-passing
+
+`e eval
+
+`e inspect-methods
+"lorem".metaClass.methods
+`e inspect-attributes
+

@@ -273,7 +273,7 @@ s2 = s.clone
 # s2 is not altered:
 
 s[2] = "z"
-`e concatenate
+`e concatenate-strings
 s = "Hello, "
 
 s2 = s + "World!"
@@ -464,11 +464,13 @@ begin
   end
 rescue Timeout::Error
 end
-`e literal
+`e list-name
+list (?)
+`e list-literal
 a = [1, 2, 3, 4]
 `e quote-words
 a = %w(do re mi)
-`e size
+`e list-size
 a.size
 
 a.length # same as size
@@ -608,15 +610,14 @@ Set[1,2] ^ Set[2,3,4]
 # array of 3 pairs:
 
 a = [1,2,3].zip(["a", "b", "c"])
-`e literal
+`e map-literal
 d = { "t" => 1, "f" => 0 }
-`e size
+`e map-size
 d.size
-
 d.length # same as size
-`e lookup
+`e map-lookup
 d["t"]
-`e out-of-bounds-behavior
+`e map-out-of-bounds-behavior
 d = {}
 evaluates as nil:
 

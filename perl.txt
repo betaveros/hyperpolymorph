@@ -256,7 +256,7 @@ $s2 = $s;
 $s =~ s/r/z/;
 `e copy-string
 $s2 = $s;
-`e concatenate
+`e concatenate-strings
 `*my $s = "Hello, ";
 `*my $s2 = $s . "World!";
 `e replicate-string
@@ -481,7 +481,10 @@ eval {
 
 };
 alarm 0;
-`e literal
+`e list-name
+variable: array
+ephemeral value: list
+`e list-literal
 @a = (1, 2, 3, 4);
 `e quote-words
 @a = qw(do re mi);
@@ -607,21 +610,17 @@ none
 @lets = qw(a b c);
 # flat array of 6 elements:
 @a = zip @nums, @lets;
-`e literal
+`e map-literal
 %d = ( "t" => 1, "f" => 0 );
-
 # barewords permitted in front of =>
-
 # under '`*use strict'
-`e size
+`e map-size
 scalar(keys %d)
-`e lookup
+`e map-lookup
 $d{"t"}
-
 # barewords permitted inside { }
-
 # under '`*use strict'
-`e out-of-bounds-behavior
+`e map-out-of-bounds-behavior
 %d = ();
 evaluates as undef:
 $d{"lorem"};

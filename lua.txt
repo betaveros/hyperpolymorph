@@ -1,0 +1,549 @@
+`e version-used
+5.1
+`e show-version
+$ lua -v
+`e interpreter
+$ lua foo.lua
+`e repl
+$ lua
+`e command-line-program
+$ lua -e 'print("hi world!")'
+`e block-delimiters
+do end
+`e statement-terminator
+newline or ;
+
+newline not separator inside {}, (), or after binary operator.
+
+
+newline can be put in "" or '' if preceded by backslash
+`e are-expressions-statements
+no
+`e end-of-line-comment
+-- comment
+`e multiple-line-comment
+--[[
+  commented out
+  also commented out
+
+]]
+`e local-variable
+local x = 1
+`e global-variable
+-- assign without using local
+
+g = 1
+
+function incr_global()
+  g = g + 1
+end
+`e assignment
+x = 1
+`e parallel-assignment
+x, y, z = 1, 2, 3
+
+-- 3 is discarded:
+
+x, y = 1, 2, 3
+
+-- z is set to nil:
+
+x, y, z = 1, 2
+`e swap
+x, y = y, x
+`e null
+nil
+`e null-test
+v == nil
+`e undefined-variable-access
+nil
+`e conditional-expression
+none
+`e true-and-false
+true false
+`e falsehoods
+false nil
+`e logical-operators
+and or not
+`e relational-expression
+x > 3
+`e relational-operators
+== ~= < > >= <=
+`e min-and-max
+math.min(1, 2, 3)
+
+math.max(1, 2, 3)
+
+
+math.min(unpack({1 ,2 ,3}))
+
+math.max(unpack({1, 2, 3}))
+`e arithmetic-expression
+1 + 3
+`e arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-modulus
++ - * / none % ^
+`e integer-division
+math.floor(x / y)
+`e integer-division-by-zero
+returns assignable value inf, nan, or -inf depending upon whether dividend is positive, zero, or negative.
+
+
+There are no literals for any of these values.
+`e float-division
+x / y
+`e float-division-by-zero
+same behavior as for integers
+`e power
+2 ^ 32
+
+math.pow(2, 32)
+`e sqrt
+math.sqrt(2)
+`e sqrt-1
+nan
+`e transcendental-functions
+math.exp math.log math.sin math.cos math.tan math.asin math.acos math.atan math.atan2
+`e transcendental-constants
+math.pi
+
+math.exp(1)
+`e float-truncation
+none
+none
+
+math.floor(3.1)
+
+math.ceil(3.1)
+`e absolute-value
+math.abs(-3)
+`e integer-overflow
+all numbers are floats
+`e float-overflow
+inf
+`e random-number-uniform-integer-uniform-float-normal-float
+math.random(100) - 1
+
+math.random()
+none
+`e random-seed
+math.randomseed(17)
+`e bit-operators
+none
+`e string-literal
+"don't say \"no\""
+
+'don\'t say "no"'
+`e newline-in-literal
+yes, if preceded by backslash
+`e literal-escapes
+single and double quotes:
+
+\a \b \f \n \r \t \v \" \' \\ \ddd
+`e variable-interpolation
+none
+`e expression-interpolation
+none
+`e concatenate-strings
+s = "Hello, " .. "World!"
+`e split
+none
+`e join
+table.concat({"do","re","mi"}, " ")
+`e sprintf
+string.format("lorem %s %d %.2f",
+  "ipsum", 13, 3.7)
+`e translate-case
+string.upper("lorem")
+
+string.lower("LOREM")
+none
+`e strip
+none
+`e pad
+none
+`e string-to-number
+7 + tonumber("12")
+
+73.9 + tonumber(".037")
+arithmetic operators attempt numeric conversion of string operands
+`e number-to-string
+"value: " .. 8
+`e string-length
+string.len("lorem")
+`e index-of-substring
+string.find("lorem ipsum", "ipsum")
+`e extract-substring
+string.sub("lorem ipsum", 7, 11)
+`e chr-and-ord
+string.char(65)
+
+string.byte("A")
+`e character-class-abbreviations-and-anchors
+char class abbrevs:
+
+. %a %c %d %l %p %s %u %w %x %z
+
+anchors: ^ $
+`e match-test
+if string.match(s, "1999") then
+  print("party!")
+end
+`e case-insensitive-match-test
+none
+`e modifiers
+none
+`e substitution
+s = "do re mi mi mi"
+
+s = string.gsub(s, "mi", "ma")
+`e group-capture
+s = "2010-06-03"
+
+rx = "(%d+)-(%d+)-(%d+)"
+
+yr, mo, dy = string.match(s, rx)
+`e backreference-in-match-and-substitution
+string.match("do do", "(%w+) %1")
+
+
+rx = "(%w+) (%w+)"
+
+string.gsub("do re", rx, "%2 %1")
+`e current-date-time
+t = os.time()
+`e to-unix-epoch-from-unix-epoch
+t
+
+t2 = 1315716177
+`e strftime
+os.date("%Y-%m-%d %H:%M:%S", t)
+`e strptime
+none
+`e parse-date-w-o-format
+none
+`e date-parts
+none
+`e time-parts
+none
+`e build-date-time-from-parts
+none
+`e sleep
+none
+`e list-literal
+a = { 1, 2, 3, 4 }
+`e list-size
+-- not well-defined if array
+-- contains nil values:
+
+# a
+`e list-lookup
+a[1]
+`e list-update
+a[1] = "lorem"
+`e list-out-of-bounds-behavior
+returns nil
+`e index-of-element
+none; use for and ipairs
+`e slice
+none
+`e slice-to-end
+none
+`e concatenate
+none
+`e replicate
+none
+`e manipulate-back
+a = {6, 7, 8}
+
+table.insert(a, 9)
+
+i = table.remove(a)
+`e manipulate-front
+a = {6, 7, 8}
+
+table.insert(a, 1, 5)
+
+i = table.remove(a, 1)
+`e iterate-over-elements
+for k,v in ipairs(a) do
+  print(v)
+end
+`e reverse
+none
+`e sort
+a = {3, 1, 4, 2}
+
+table.sort(a)
+`e dedupe
+none
+`e membership
+none
+`e intersection
+none
+`e union
+none
+`e relative-complement-symmetric-difference
+none
+`e map
+none
+`e filter
+none
+`e reduce
+none
+`e universal-and-existential-tests
+none
+`e shuffle-and-sample
+none
+`e zip
+none
+`e literal
+d = { t=1, f=0 }
+`e map-size
+size = 0
+for k, v in pairs(d) do
+  size = size + 1
+end
+`e lookup
+d.t
+
+d["t"]
+`e update
+d["t"] = 2
+
+d.t = 2
+`e out-of-bounds-behavior
+returns nil
+`e is-key-present
+d["t"] ~= nil
+`e delete
+d.t = nil
+
+d["t"] = nil
+`e iteration
+for k,v in pairs(d) do
+  use k or v
+end
+`e declare-function
+function add(x, y)
+  return x + y
+end
+`e invoke-function
+add(1, 2)
+`e missing-argument-behavior
+nil
+`e extra-arguments
+ignored
+`e default-value
+none
+`e variable-number-of-arguments
+declare function with ellipsis:
+function foo(...)
+  local arg = {...}
+`e return-value
+return arg or nil
+`e multiple-return-values
+function roots(x)
+  r = math.sqrt(x)
+  return r, -r
+end
+
+r1,r2 = roots(4)
+`e lambda-declaration
+sqr = function(x) return x*x end
+`e lambda-invocation
+sqr(2)
+`e default-scope
+global unless declared with local
+`e nested-function-visibility
+visible outside containing function
+`e if
+if n == 0 then
+  print("no hits")
+elseif n == 1 then
+  print("one hit")
+else
+  print(n .. " hits")
+end
+`e while
+while i < 100 do
+  i = i + 1
+end
+`e break-continue-redo
+break none
+`e for
+for i = 0, 9 do
+  print(i)
+end
+`e raise-exception
+error "bad arg"
+`e catch-exception
+if not pcall(risky) then
+  print "risky failed"
+end
+`e finally
+none
+`e uncaught-exception-behavior
+stderr and exit
+`e generator
+crt = coroutine.create(
+  function (n)
+    while (true) do
+      coroutine.yield(n % 2)
+      n = n + 1
+    end
+  end
+
+)
+
+
+status, retval =
+  coroutine.resume(crt, 1)
+
+if status then
+  print("parity: " .. retval)
+else
+  print("couldn't resume crt")
+end
+
+
+_, retval = coroutine.resume(crt)
+
+print("parity: " .. retval)
+`e standard-file-handles
+io.stdin
+
+io.stdout
+
+io.stderr
+`e read-line-from-stdin
+line = io.stdin:read()
+`e write-line-to-stdout
+print "Hello, World!"
+`e open-file
+f = io.open("/tmp/foo")
+`e open-file-for-writing
+f = io.open("/tmp/foo", "w")
+`e close-file
+f:close()
+`e read-line
+f:read()
+`e iterate-over-a-file-by-line
+for s in f:lines() do
+  use s
+end
+`e chomp
+none, read() and lines() remove trailing newlines
+`e read-file
+f:read("*a")
+`e write-to-file
+f:write("lorem ipsum")
+`e flush-file-handle
+f:flush()
+`e file-exists-test-file-regular-test
+none
+`e file-size
+
+`e is-file-readable-writable-executable
+
+`e copy-file-remove-file-rename-file
+none
+`e set-file-permissions
+none
+`e temporary-file
+f = io.tmpfile()
+
+f:write("lorem ipsum\n")
+
+f:close()
+??
+`e build-pathname
+
+`e dirname-and-basename
+
+`e iterate-over-directory-by-file
+
+`e make-directory
+
+`e remove-empty-directory
+
+`e remove-directory-and-contents
+
+`e directory-test
+
+`e command-line-args
+# arg
+
+arg[0]
+
+arg[1]
+…
+`e environment-variable
+os.getenv("HOME")
+`e exit
+os.exit(0)
+`e external-command
+os.execute("ls")
+`e backticks
+f = io.popen("ls")
+
+s = f:read("*a")
+`e library
+$ cat foo.lua
+
+function add(x, y) return x+y end
+`e import-library
+require 'foo'
+
+add(3,7)
+`e library-path
+package.path
+`e library-path-environment-variable
+LUA_PATH
+`e declare-namespace
+module
+`e namespace-separator
+.
+`e list-installed-packaged-install-a-package
+
+`e define-class
+
+`e create-object
+
+`e create-blank-object
+o = {}
+`e set-attribute
+o.score = 21
+`e get-attribute
+if o.score == 21 then
+  print("Blackjack!")
+
+end
+`e define-method
+function o.doubleScore(self)
+  return 2 * self.score
+
+end
+`e invoke-method
+print("Answer: " .. o:doubleScore())
+`e clone-object
+
+`e object-literal
+o = {
+  score=21,
+  doubleScore=function(self)
+    return 2*self.score
+  end
+
+}
+`e inspect-type
+type(o)
+`e has-method
+
+`e message-passing
+
+`e eval
+assert(loadstring("x = 1+1"))()
+`e inspect-methods
+
+`e inspect-attributes
+

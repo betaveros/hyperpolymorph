@@ -218,7 +218,7 @@ $s2 = $s;
 $s[2] = "z";
 `e copy-string
 $s2 = $s;
-`e concatenate
+`e concatenate-strings
 $s = "Hello, ";
 
 $s2 = $s . "World!";
@@ -440,15 +440,14 @@ $usec = $frac * 1000 * 1000;
 sleep(1);
 `e timeout
 use set_time_limit to limit execution time of the entire script; use stream_set_timeout to limit time spent reading from a stream opened with fopen or fsockopen
-`e literal
+`e list-name
+array
+`e list-literal
 $a = [1, 2, 3, 4];
-
 # older syntax:
-
 $a = array(1, 2, 3, 4);
 `e quote-words
-none
-`e size
+`e list-size
 count($a)
 `e empty-test
 !$a
@@ -603,11 +602,11 @@ $d = ["t" => 1, "f" => 0];
 # older syntax:
 
 $d = array("t" => 1, "f" => 0);
-`e size
+`e map-size
 count($d)
-`e lookup
+`e map-lookup
 $d["t"]
-`e out-of-bounds-behavior
+`e map-out-of-bounds-behavior
 $d = [];
 evaluates as NULL:
 

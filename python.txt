@@ -220,7 +220,7 @@ fmt.format('ipsum', 13, 3.7)
 no
 `e copy-string
 not necessary
-`e concatenate
+`e concatenate-strings
 s = 'Hello, '
 s2 = s + 'World!'
 
@@ -436,11 +436,13 @@ signal.signal(signal.SIGALRM,
   `*pass
 
 signal.alarm(0)
-`e literal
+`e list-name
+list
+`e list-literal
 a = [1, 2, 3, 4]
 `e quote-words
 none
-`e size
+`e list-size
 len(a)
 `e empty-test
 not a
@@ -578,13 +580,13 @@ sample(a, 2)
 `e zip
 # array of 3 pairs:
 a = zip([1,2,3], ['a', 'b', 'c'])
-`e literal
+`e map-literal
 d = { 't':1, 'f':0 }
-`e size
+`e map-size
 len(d)
-`e lookup
+`e map-lookup
 d['t']
-`e out-of-bounds-behavior
+`e map-out-of-bounds-behavior
 d = {}
 raises KeyError:
 

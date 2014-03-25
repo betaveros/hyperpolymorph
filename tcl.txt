@@ -1,0 +1,551 @@
+`e version-used
+8.5
+`e show-version
+$ tclsh
+
+% info tclversion
+`e interpreter
+$ tclsh foo.tcl
+`e repl
+$ tclsh
+`e command-line-program
+none
+`e block-delimiters
+{} or ""
+`e statement-terminator
+newline or ;
+
+newline not a separator inside {}, "", [] or after backslash: \
+`e are-expressions-statements
+no
+`e end-of-line-comment
+# comment
+`e multiple-line-comment
+if (0) {
+  commented out
+  can contain {} if balanced
+
+}
+`e local-variable
+# set variable inside procedure
+proc foo {args} {
+  set x 1
+  …
+
+}
+`e global-variable
+# set variable outside procedure
+set g 1
+
+proc incr_global {} {
+  global g
+  incr g
+
+}
+`e assignment
+set x 1
+`e parallel-assignment
+lassign {1 2 3} x y z
+
+# 3 is discarded:
+
+lassign {1 2 3} x y
+
+# z is set to "":
+
+lassign {1 2} x y z
+`e swap
+lassign "$x $y" y x
+`e null
+""
+`e null-test
+v eq ""
+`e undefined-variable-access
+error
+`e conditional-expression
+expr $x > 0 ? $x : -$x
+`e true-and-false
+1 0
+`e falsehoods
+0 "false" "no"
+most strings cause error in boolean context; nonzero numbers are true
+`e logical-operators
+&& || !
+`e relational-expression
+if {$x > 3} {…}
+# outside of conditionals use expr:
+expr $x > 3
+`e relational-operators
+== != > < >= <=
+
+# string comparison:
+
+eq ne
+`e min-and-max
+expr min(1, 2, 3)
+expr max(1, 2, 3)
+`e arithmetic-expression
+expr 1 + 3
+# expr not needed in conditionals:
+if {1 + 3} {…}
+`e arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-modulus
++ - * none / %
+`e integer-division
+expr $x / $y
+`e integer-division-by-zero
+error
+`e float-division
+expr $x * 1.0 / $y
+`e float-division-by-zero
+returns assignable value Inf if dividend is positive and -Inf if negative. Raises error if dividend is zero.
+
+
+There is a literal for Inf.
+`e power
+expr 2 ** 32
+expr pow(2, 32)
+`e sqrt
+expr sqrt(2)
+`e sqrt-1
+error
+`e transcendental-functions
+exp log sin cos tan asin acos atan atan2
+# how to use math functions:
+expr exp(2)
+expr atan2(1, 1)
+
+::tcl::mathfunc::exp 2
+
+::tcl::mathfunc::atan2 1 1
+`e transcendental-constants
+expr 4 * atan(1)
+expr exp(1)
+`e float-truncation
+expr int(3.1)
+expr round(3.1)
+expr floor(3.1)
+expr ceil(3.1)
+`e absolute-value
+expr abs(-3)
+`e integer-overflow
+arbitrary length integers introduced in 8.5
+`e float-overflow
+error
+`e random-number-uniform-integer-uniform-float-normal-float
+expr int(rand() * 100)
+expr rand()
+none
+`e random-seed
+expr srand(17)
+`e bit-operators
+<< >> & | ^ ~
+`e string-literal
+"don't say \"no\""
+
+{don't say "no"}
+`e newline-in-literal
+yes
+`e literal-escapes
+in double quotes:
+
+\a \b \f \n \r \t \v \\ \" \oooo \uhhhh \xhh
+`e variable-interpolation
+set count 3
+set item "ball"
+"$count ${item}s"
+`e expression-interpolation
+none
+`e concatenate-strings
+set s1 "Hello, "
+set s2 "World!"
+set s $s1$s2
+`e split
+split "do re mi"
+`e join
+join [list "do" "re" "mi"] " "
+`e sprintf
+set fmt "lorem %s %d %.2f"
+format $fmt "ipsum" 13 3.7
+`e translate-case
+string toupper "lorem"
+string tolower "LOREM"
+none
+`e strip
+string trim " lorem "
+string trimleft " lorem"
+string trimright "lorem "
+`e pad
+format "%10s" "lorem"
+format "%-10s" "lorem"
+`e string-to-number
+use expr to interpret as numbers:
+set x "12"
+expr 7 + $x
+set y ".037"
+expr 73.9 + $y
+`e number-to-string
+all values are strings
+`e string-length
+string length "lorem"
+`e index-of-substring
+string first "ipsum" "lorem ipsum"
+`e extract-substring
+string range "lorem ipsum" 6 10
+`e chr-and-ord
+format %c 65
+scan A %c ascii_value
+`e character-class-abbreviations-and-anchors
+char class abbrevs:
+
+. \d \D \s \S \w \W
+
+anchors: ^ $ \A \m \M \y \Y \Z
+`e match-test
+if [regexp -- {1999} $s] {
+  puts "party!"
+
+}
+`e case-insensitive-match-test
+regexp -nocase -- {lorem} "Lorem"
+`e modifiers
+-all -expanded -indices -inline
+
+-line -lineanchor -linestop -nocase
+`e substitution
+set s "do re mi mi mi"
+regsub -all -- "mi" $s "ma"
+`e group-capture
+set s "2009-06-03"
+set rx {^(\d{4})-(\d{2})-(\d{2})$}
+regexp -- $rx $s - yr mo dy
+`e backreference-in-match-and-substitution
+regexp -- {(\w+) \1} "do do"
+
+set rx {(\w+) (\w+)}
+regsub -all -- $rx "do re" {\2 \1}
+`e current-date-time
+set t [clock seconds]
+`e to-unix-epoch-from-unix-epoch
+t
+set t2 1315716177
+`e strftime
+set fmt "%Y-%m-%d %H:%M:%S"
+clock format $t -format $fmt
+`e strptime
+none
+`e parse-date-w-o-format
+set t [clock scan "July 7, 1999"]
+`e date-parts
+clock format $t -format "%Y"
+clock format $t -format "%m"
+clock format $t -format "%d"
+`e time-parts
+clock format $t -format "%H"
+clock format $t -format "%M"
+clock format $t -format "%S"
+`e build-date-time-from-parts
+none
+`e sleep
+after 500
+`e list-name
+list
+`e list-literal
+set a [list 1 2 3 4]
+set a {1 2 3 4}
+`e list-size
+llength $a
+`e list-lookup
+lindex $a 0
+`e list-update
+# provide start and end index
+
+# of elements to replace:
+set a [lreplace $a 1 1 "lorem"]
+`e out-of-bounds-behavior
+returns ""
+`e index-of-element
+lsearch {6 7 7 8} 7
+lindex [lsearch -all {6 7 7 8} 7] end
+# returns -1 if not found
+`e slice
+lrange $a 1 2
+`e slice-to-end
+lrange {"a" "b" "c" "d"} 1 end
+`e concatenate
+set a [concat {1 2 3} {4 5 6}]
+`e replicate
+lrepeat 10 ""
+`e manipulate-back
+set a {6 7 8}
+lappend a 9
+set i [lindex $a end]
+set a [lreplace $a end end]
+`e manipulate-front
+set a {6 7 8}
+set a [concat {5} $a]
+set a [lassign $a i]
+`e iterate-over-elements
+foreach i $a { puts $i }
+`e reverse
+set a {1 2 3}
+set a [lreverse $a]
+`e sort
+set a {3 1 4 2}
+set a [lsort $a]
+`e dedupe
+lsort -unique {1 2 2 3}
+`e membership
+expr {7 in $a}
+expr {7 ni $a}
+`e intersection
+package require struct::set
+
+
+::struct::set intersect {1 2} {2 3}
+`e union
+package require struct::set
+
+
+::struct::set union {1 2} {2 3 4}
+`e relative-complement-symmetric-difference
+package require struct::set
+
+
+::struct::set difference {1 2 3} {2}
+`e map
+package require struct::list
+
+proc sqr {x} {return [expr $x * $x]}
+
+::struct::list map {1 2 3} sqr
+`e filter
+package require struct::list
+
+proc gt1 {x} {return [expr $x > 1]}
+
+::struct::list filter {1 2 3} gt1
+`e reduce
+package require struct::list
+
+
+::struct::list fold {1 2 3} 0
+  ::tcl::mathop::+
+`e universal-and-existential-tests
+none
+`e shuffle-and-sample
+none
+`e zip
+none
+`e map-literal
+set d [dict create t 1 f 0]
+`e map-size
+dict size $d
+`e map-lookup
+dict get $d t
+`e map-update
+dict set d t 2
+`e map-out-of-bounds-behavior
+error
+`e is-key-present
+dict exists $d t
+`e delete
+dict unset d t
+`e iteration
+foreach {k v} $d {
+  code
+
+}
+`e declare-function
+proc add { x y } {
+  expr $x + $y
+
+}
+`e invoke-function
+add 1 2
+`e missing-argument-behavior
+error
+`e extra-arguments
+error
+`e default-value
+proc log {x {base 10 }} { body }
+`e variable-number-of-arguments
+last arg contains list of remaining values
+`e return-value
+return arg or empty string
+`e multiple-return-values
+none
+`e lambda-declaration
+set sqr {{x} {return [expr $x*$x]}}
+`e lambda-invocation
+apply $sqr 2
+`e default-scope
+local
+`e nested-function-visibility
+not visible outside containing function
+`e if
+if { 0 == $n } {
+  puts "no hits"
+
+} elseif { 1 == $n } {
+  puts "1 hit"
+
+} else {
+  puts "$n hits"
+
+}
+`e while
+while { $i < 100 } {
+  incr i
+
+}
+`e break-continue-redo
+break continue
+`e for
+for {set i 0} {$i < 10} {incr i} {
+  puts $i
+
+}
+`e raise-exception
+error "bad arg"
+`e catch-exception
+catch risky retval
+if { retval != 0 } {
+    puts "risky failed"
+
+}
+`e finally
+none
+`e uncaught-exception-behavior
+stderr and exit
+`e generator
+to be added to Tcl 8.6
+`e standard-file-handles
+stdin
+
+stdout
+
+stderr
+`e read-line-from-stdin
+gets stdin line
+`e write-line-to-stdout
+puts "Hello, World!"
+`e open-file
+set f [open "/tmp/foo"]
+`e open-file-for-writing
+set f [open "/tmp/foo" "w"]
+`e close-file
+close $f
+`e read-line
+gets $f
+`e iterate-over-a-file-by-line
+while { [gets $f s] >= 0 } {
+  use s
+
+}
+`e chomp
+string trimright $line "\r\n"
+`e read-file
+read $f
+`e write-to-file
+puts -nonewline $f "lorem ipsum"
+`e flush-file-handle
+flush $f
+`e file-exists-test-file-regular-test
+file exists "/etc/hosts"
+file isfile "/etc/hosts"
+`e file-size
+
+`e is-file-readable-writable-executable
+
+`e copy-file-remove-file-rename-file
+file copy "/tmp/foo" "/tmp/bar"
+file delete "/tmp/foo"
+file rename "/tmp/bar" "/tmp/foo"
+`e set-file-permissions
+set s "/tmp/foo"
+file attributes $s -permissions 0755
+`e temporary-file
+set tmp [::fileutil::tempfile foo]
+set f [open $tmp "w"]
+puts $f "lorem ipsum"
+close $f
+puts "tmp file: $tmp"
+`e build-pathname
+file join "/etc" "hosts"
+`e dirname-and-basename
+file dirname "/etc/hosts"
+
+file tail "/etc/hosts"
+`e iterate-over-directory-by-file
+
+`e make-directory
+file mkdir "/tmp/foo/bar"
+`e remove-empty-directory
+file delete "/tmp/foodir"
+`e remove-directory-and-contents
+file delete -force "/tmp/foodir"
+`e directory-test
+file isdirectory "/tmp"
+`e command-line-args
+[lindex $argv 0]
+
+[lindex $argv 1]
+…
+`e environment-variable
+$env(HOME)
+`e exit
+exit 0
+`e external-command
+exec ls
+`e backticks
+set f [ open |ls ]
+
+read f
+`e library
+$ cat foo.tcl
+
+proc add {x y} {expr $x + $y}
+`e import-library
+source foo.tcl
+
+add 3 7
+`e library-path
+none
+`e library-path-environment-variable
+TCLLIBPATH
+`e declare-namespace
+namespace
+`e namespace-separator
+::
+`e list-installed-packaged-install-a-package
+
+`e define-class
+
+`e create-object
+
+`e create-blank-object
+
+`e set-attribute
+
+`e get-attribute
+
+`e define-method
+
+`e invoke-method
+
+`e clone-object
+
+`e object-literal
+
+`e inspect-type
+
+`e has-method
+
+`e message-passing
+
+`e eval
+
+`e inspect-methods
+
+`e inspect-attributes
+

@@ -45,6 +45,7 @@ boolean-type: boolean type
 true-and-false: true and false
 falsehoods: falsehoods
 logical-operators: logical operators
+relational-expression: relational expression
 relational-operators: relational operators
 compare-strings: compare strings
 min-and-max: min and max
@@ -53,6 +54,7 @@ integer-type: integer type
 unsigned-type: unsigned type
 float-type: float type
 fixed-type: fixed type
+arithmetic-expression: arithmetic expression
 arithmetic-operators: arithmetic operators / addition, subtraction, multiplication, float division, quotient, remainder
 integer-division: integer division
 divmod: divmod
@@ -90,10 +92,11 @@ here-document: here document
 variable-interpolation: variable interpolation
 expression-interpolation: expression interpolation
 format: format
+sprintf: sprintf
 compare-strings: compare strings
 are-strings-mutable: are strings mutable?
 copy-string: copy string
-concatenate: concatenate / and append
+concatenate-strings: concatenate strings / and append
 replicate-string: replicate string
 translate-case: translate case / to upper, to lower
 capitalize-string-words: capitalize / string, words
@@ -106,7 +109,7 @@ split: split
 split-in-two: split in two
 split-and-keep-delimiters: split and keep delimiters
 serialize: serialize
-length: length
+string-length: string-length
 index-of-substring: index of substring / first, last
 extract-substring: extract substring / by start and length, by start and end, by successive starts
 extract-character: extract character
@@ -150,6 +153,7 @@ date-subtraction: result of date subtraction
 add-time-duration: add time duration
 date-parts: date parts
 time-parts: time parts
+build-date-time-from-parts: build date/time from parts
 local-timezone: local timezone
 arbitrary-timezone: arbitrary timezone
 timezone-name-offset-from-utc-is-daylight-savings: timezone name; offset from UTC; is daylight savings?
@@ -161,7 +165,7 @@ declare-on-stack: declare on stack
 declare-on-heap: declare on heap
 free-heap: free heap
 initialization-list: initialization list
-size: size
+array-size: size
 lookup: lookup
 update: update
 out-of-bounds: out-of-bounds
@@ -169,17 +173,18 @@ copy: copy
 as-function-argument: as function argument
 iterate: iterate
 sort: sort
-# (resizable) arrays
-declare: declare
-literal: literal
+# lists (or most common variable-size sequential data structure)
+list-name: name
+list-declare: declare
+list-literal: literal
 initialization-list: initialization list
 quote-words: quote words
-size: size
+list-size: size
 capacity-get-increase: capacity / get, increase
 empty-test: empty test
 empty-test-and-clear: empty test / and clear
-lookup: lookup
-update: update
+list-lookup: lookup
+list-update: update
 out-of-bounds-behavior: out-of-bounds behavior
 index-of-element: index of element
 slice: slice / by endpoints, by length
@@ -197,7 +202,7 @@ iterate-over-indices-and-elements: iterate over indices and elements
 iterate-over-range: iterate over range
 indexed-iteration: indexed iteration
 instantiate-range-as-array: instantiate range as array
-reverse-non-destructive-in-place: reverse / non-destructive, in-place
+reverse: reverse / non-destructive, in-place
 sort: sort / non-destructive, /  / in-place, /  / custom comparision
 dedupe: dedupe / non-destructive, in-place
 membership: membership
@@ -220,17 +225,16 @@ lookup-tuple-elements: lookup tuple elements
 update-tuple-elements: update tuple elements
 tuple-size: tuple size
 create-references-for-tuple-elements: create references for tuple elements
-# dictionaries
+# maps or dictionaries
 map-declaration: map declaration
 map-access: map access
 map-size: map size
 map-remove-element: map remove element
 map-element-not-found-result: map element not found result
 map-iterate: map iterate
-literal: literal
-size: size
-lookup: lookup
-out-of-bounds-behavior: out-of-bounds behavior
+map-literal: literal
+map-lookup: lookup
+map-out-of-bounds-behavior: out-of-bounds behavior
 is-key-present: is key present
 delete-entry: delete entry
 from-array-of-pairs-from-even-length-array: from array of pairs, from even length array
@@ -249,6 +253,7 @@ define-static-class-method: define static class method
 invoke-static-class-method: invoke static class method
 overload-function: overload function
 missing-argument-behavior: missing argument behavior
+extra-arguments: extra arguments
 default-argument: default argument
 variable-number-of-arguments: variable number of arguments
 named-parameters: named parameters
@@ -268,11 +273,13 @@ lambda-invocation: lambda invocation
 closure: closure
 function-as-value: function as value
 function-with-private-state: function with private state
-closure: closure
 generator: generator
 decorator: decorator
 operator-as-function: operator as function
 overload-operator: overload operator
+default-scope: default scope
+default-value: default value
+nested-function-visibility: nested function visibility
 # execution control
 if: if
 dangling-else: dangling else
@@ -288,6 +295,7 @@ break-continue-redo: break, continue, redo
 control-structure-keywords: control structure keywords
 what-do-does: what do does
 statement-modifiers: statement modifiers
+generator: generator
 # exceptions
 base-exception: base exception
 predefined-exceptions: predefined exceptions
@@ -318,7 +326,18 @@ send-message: send message
 receive-message: receive message
 # file handles
 standard-file-handles: standard file handles
+read-line-from-stdin: read line from stdin
+write-line-to-stdout: write line to stdout
 printf: printf
+open-file: open file
+open-file-for-writing: open file for writing
+close-file: close file
+read-line: read line
+iterate-over-a-file-by-line: iterate over a file by line
+chomp: chomp
+read-file: read file
+write-to-file: write to file
+flush-file-handle: flush file handle
 read-from-file: read from file
 write-to-file: write to file
 # files
@@ -347,16 +366,23 @@ directory-test: directory test
 generate-unused-directory-name: generate unused directory name
 system-temporary-file-directory: system temporary file directory
 # processes and environment
+command-line-args: command line args
 signature-of-main: signature of main
 first-argument: first argument
 environment-variable: environment variable
 iterate-through-environment-variables: iterate through environment variables
+exit: exit
+external-command: external command
+backticks: backticks
 # libraries and namespaces
+library: library
 standard-library-name: standard library name
 declare-namespace: declare namespace
+namespace-separator: namespace separator
 multiple-namespaces-per-file: multiple namespaces per file
 namespaces-map-to-directories: namespaces map to directories
 import-namespace: import namespace
+import-library: import library
 import-part-of-namespace: import part of namespace
 import-symbol: import symbol
 import-static-symbol: import static symbol
@@ -365,6 +391,9 @@ using-a-symbol-that-hasn-t-been-imported: using a symbol that hasn't been import
 application-environment: application environment
 multiple-installations: multiple installations
 package-manager: package manager
+library-path: library path
+library-path-environment-variable: library path environment variable
+list-installed-packaged-install-a-package: list installed packaged, install a package
 # user-defined types
 typedef: typedef
 enum: enum
@@ -391,12 +420,17 @@ define-class: define class
 class-definition-location: class definition location
 constructor: constructor
 create-object: create object
+create-blank-object: create blank object
+set-attribute: set attribute
+get-attribute: get attribute
 destructor: destructor
 destroy-object: destroy object
 define-method: define method
 invoke-method: invoke method
 define-class-method: define class method
 invoke-class-method: invoke class method
+clone-object: clone object
+object-literal: object literal
 name-of-receiver: name of receiver
 access-control: access control
 anonymous-class: anonymous class
@@ -416,6 +450,12 @@ class-name: class name
 get-methods: get methods
 has-method: has method
 invoke-method-object: invoke method object
+inspect-type: inspect type
+has-method: has method?
+message-passing: message passing
+eval: eval
+inspect-methods: inspect methods
+inspect-attributes: inspect attributes
 # net and web
 get-local-hostname-dns-lookup-reverse-dns-lookup: get local hostname, dns lookup, reverse dns lookup
 http-get: http get

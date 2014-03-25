@@ -1,0 +1,1013 @@
+`e version-used
+mono 2.10 (C# 4.0)
+`e show-version
+$ mcs --version
+`e implicit-prologue
+
+`e hello-world
+$ cat hello.cs
+
+using System;
+
+
+public class Hello {
+  public static void Main() {
+    Console.WriteLine("Hello, World!");
+  }
+
+}
+
+
+$ mcs hello.cs
+
+
+$ mono hello.exe
+`e file-suffixes-source-header-object-file
+Foo.cs
+none
+
+Foo.exe or Foo.dll
+
+although files are often named after a class they contain, this is not required
+`e block-delimiters
+{ }
+`e statement-terminator
+;
+`e top-level-statements
+
+`e end-of-line-comment
+// comment
+`e multiple-line-comment
+/* comment
+
+another comment */
+`e local-variable
+int i;
+
+int j = 3;
+`e uninitialized-local-variable
+compiler prevents use of uninitialized local variable
+`e global-variable
+
+`e uninitialized-global-variable
+
+`e constant
+const int i = 7;
+`e assignment
+
+`e compound-assignment-arithmetic-string-logical-bit
+
+`e increment-and-decrement
+
+`e address
+
+`e dereference
+
+`e type-size
+
+`e address-arithmetic
+
+`e unique-pointer
+
+`e reference-count-pointer
+
+`e weak-pointer
+
+`e allocate-heap
+object i = 0;
+`e uninitialized-heap
+
+`e free-heap
+garbage collected
+`e null
+null
+`e coalesce
+string s1 = s2 ?? "was null";
+`e boolean-type
+bool
+`e true-and-false
+true false
+`e falsehoods
+false
+`e logical-operators
+&& || !
+`e relational-operators
+== != < > <= >=
+`e integer-type
+sbyte 1 byte
+
+short 2 bytes
+
+int 4 bytes
+
+long 8 bytes
+`e unsigned-type
+byte 1 byte
+
+ushort 2 bytes
+
+uint 4 bytes
+
+ulong 8 bytes
+`e float-type
+float 4 bytes
+
+double 8 bytes
+`e fixed-type
+decimal 12 bytes
+`e arithmetic-operators
++ - * / %
+`e integer-division
+// evaluates to 2:
+
+7 / 3
+`e integer-division-by-zero
+Syntax error if divisor is a constant. Otherwise throws System.DivideByZeroException
+`e float-division
+7 / (float)3
+`e float-division-by-zero-dividend-is-positive-zero-negative
+float.PositiveInfinity
+
+float.NaN
+
+float.NegativeInfinity
+
+constants with same names defined in double
+`e power
+System.Math.Pow(2.0, 32.0);
+`e sqrt
+Math.Sqrt(2)
+`e sqrt-1
+double.NaN
+`e transcendental-functions
+using System;
+ 
+
+Math.Exp Math.Log none Math.Log10
+
+Math.Sin Math.Cos Math.Tan
+
+Math.Asin Math.Acos Math.Atan
+
+Math.Atan2
+`e transcendental-constants
+System.Math.E
+
+System.Math.PI
+`e float-truncation
+using System;
+ 
+
+(long)3.77
+
+Math.Round(3.77)
+
+Math.Floor(3.77)
+
+Math.Ceiling(3.77)
+`e absolute-value
+System.Math.Abs(-7)
+
+System.Math.Abs(-7.77)
+`e integer-overflow
+modular arithmetic
+`e float-overflow
+float.PositiveInfinity
+`e float-limits-largest-finite-float-smallest-positive-float
+float.MaxValue
+
+float.Epsilon
+
+double.MaxValue
+
+double.Epsilon
+`e complex-construction
+
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+
+`e random-number-uniform-integer-uniform-float-normal-float
+using System;
+
+
+Random rnd = new Random();
+
+
+int i = rnd.Next();
+
+double x = rnd.NextDouble();
+none
+`e random-seed
+using System;
+
+
+Random rnd = new Random(17);
+`e bit-operators
+ << >> & | ^ ~ 
+`e binary-octal-and-hex-literals
+none
+
+052
+
+0x2a
+`e radix-convert-integer-to-and-from-string-with-radix
+
+`e string-type
+string
+`e string-literal
+"don't say \"no\""
+`e newline-in-literal
+string literals can extend over multiple lines, but the newlines do not appear in the resulting string
+`e literal-escapes
+\a \b \f \n \r \t \v
+
+\\ \" \'
+
+\xhh \xhhhh \o \oo \ooo
+`e allocate-string
+string s = "hello";
+
+string t = string.Copy(s);
+`e are-strings-mutable
+
+`e copy-string
+
+`e format
+string.Format("{0}: {1}", "Spain", 7)
+`e compare-strings
+"hello".CompareTo("world")
+`e concatenate-and-append
+"hello" + " world"
+`e replicate
+
+`e translate-case
+"hello".ToUpper()
+
+HELLO".ToLower()
+`e trim
+" hello ".Trim()
+`e pad
+
+`e number-to-string
+14.ToString()
+
+14.7.ToString()
+`e string-to-number
+byte.Parse("14")
+
+short.Parse("14")
+
+int.Parse("14")
+
+long.Parse("14")
+
+float.Parse("14")
+
+double.Parse("14")
+
+decimal.Parse("14")
+`e join
+System.String.Join(", ", names)
+`e split
+string[] names = "Bob Ned Amy".Split(' ');
+`e serialize
+
+`e string-length
+s.Length
+`e index-of-substring
+"hello".IndexOf("ll")
+`e extract-substring
+"hello".Substring(2, 2)
+`e character-type
+
+`e character-literal
+
+`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+
+`e regex-type
+
+`e character-class-abbreviations
+
+`e anchors
+
+`e lookahead-positive-negative
+
+`e match-test
+using System.Text.RegularExpressions;
+
+Regex regex = new Regex("ll");
+
+bool isMatch = regex.IsMatch("hello");
+`e case-insensitive-match-test
+
+`e modifiers
+
+`e substitution
+using System.Text.RegularExpressions;
+
+Regex r1 = new Regex("ll");
+
+String s1 = r1.Replace("hello", "LL", 1);
+
+Regex r2 = new Regex("l");
+
+String s2 = r2.Replace("hello", "L");
+`e match-prematch-postmatch
+
+`e group-capture
+
+`e date-time-type
+System.DateTime
+`e current-date-time
+DateTime dt = DateTime.Now();
+`e to-unix-epoch-from-unix-epoch
+long hundredM = 100 * 1000 * 1000;
+
+long sec = dt.ToFileTimeUtc() / hundredM;
+
+long epoch = sec - 1164444480;
+
+
+long ft = (epoch + 1164444480) * hundredM;
+
+Date dt2 = DateTime.FromFiltTimeUtc(ft);
+`e date-and-time-to-string
+
+`e format-date
+String s = "yyyy-MM-dd HH:mm:ss");
+
+String s2 = dt.ToString(s);
+`e parse-date
+CultureInfo enUS =
+  new CultureInfo("en-US");
+
+
+DateTime dt2 = DateTime.ParseExact(
+  "2011-05-03 17:00:00",
+  "yyyy-MM-dd HH:mm:ss",
+  enUS);
+`e date-subtraction
+
+`e add-duration
+
+`e date-parts
+
+`e time-parts
+
+`e declare-on-stack
+arrays must be allocated on heap
+`e declare-on-heap
+int[] a = new int[10];
+`e free-heap
+garbage collected
+`e initialization-list
+int[] a = {1,2,3};
+`e list-size
+a.Length
+`e lookup
+a[0]
+`e update
+
+`e out-of-bounds
+IndexOutOfRangeException
+`e copy
+
+`e as-function-argument
+
+`e iterate
+foreach (string name in names) {
+`e sort
+
+`e list-name
+List
+`e list-declare
+using System.Collections.Generic;
+List<string> l = new List<string>();
+`e initialization-list
+
+`e list-size
+l.Count
+`e capacity-get-increase
+
+`e empty-test-and-clear
+
+`e lookup
+l[0]
+`e update
+
+`e out-of-bounds-behavior
+throws System.ArgumentOutOfRangeException
+`e index-of-element
+
+`e slice
+
+`e slice-to-end
+
+`e manipulate-back
+l.Add("hello");
+
+l.RemoveAt(l.Count - 1);
+`e manipulate-front
+
+`e concatenate
+
+`e replicate
+
+`e copy
+
+`e array-as-function-argument
+
+`e iterate
+foreach ( string s in l ) {
+  do something with s
+
+}
+`e indexed-iteration
+
+`e reverse
+
+`e sort
+
+`e dedupe
+
+`e membership
+
+`e intersection
+
+`e union
+
+`e relative-complement-symmetric-difference
+
+`e map
+
+`e filter
+
+`e reduce
+
+`e min-and-max-element
+
+`e universal-and-existential-tests
+
+`e shuffle-and-sample
+
+`e zip
+
+`e declare-pair
+using System.Collections.Generic;
+
+KeyValuePair<string,int> pr = new KeyValuePair<string,int>("hello",5);
+
+System.Console.WriteLine("{0} {1}", pr.Key, pr.Value);
+`e lookup-pair-elements
+
+`e update-pair-elements
+
+`e declare-tuple
+
+`e lookup-tuple-elements
+
+`e update-tuple-elements
+
+`e tuple-size
+
+`e create-references-for-tuple-elements
+
+`e map-declaration
+using System.Collections.Generic;
+
+Dictionary<string, int> dict = new Dictionary<string, int>();
+`e map-access
+dict.Add("hello", 5);
+
+dict["hello"]
+`e map-size
+dict.Count
+`e map-remove-element
+dict.Remove("hello");
+`e map-element-not-found-result
+throws KeyNotFoundException
+in System.Collections.Generic
+`e map-iterate
+foreach ( KeyValuePair<string,int> e in dict) {
+  use e.Key and e.Value
+
+}
+`e declare-function
+
+`e define-function
+
+`e invoke-function
+
+`e define-static-class-method
+
+`e invoke-static-class-method
+
+`e overload-function
+yes
+`e default-argument
+use method overloading
+`e variable-number-of-arguments
+public static string concat(params string[] args) {
+  return System.String.Join("",args);
+
+}
+
+string s = Concat.concat("Hello", ", ", "World", "!")
+`e named-parameters
+added in C# 4.0:
+
+static int BMI(int weight, int height) {
+  return (weight * 703) / (height * height);
+
+}
+
+BMI(weight: 123, height: 64);
+
+BMI(height: 64, weight: 123);
+`e pass-by-value
+primitive types are always passed by value
+`e pass-by-reference
+objects and arrays are always passed by reference
+
+also out parameter
+`e pass-by-address
+none
+`e return-value
+
+`e no-return-value
+
+`e recursive-function
+
+`e anonymous-function
+
+`e invoke-anonymous-function
+
+`e closure
+
+`e function-with-private-state
+
+`e function-as-value
+
+`e overload-operator
+public static Rational operator+(Rational a, Rational b) {
+  return new Rational(a.num*b.denom + b.num *a.denom,a.denom*b.denom);
+
+}
+`e if
+if (i>0) {
+  signum = 1;
+
+} else if (i==0) {
+  signum = 0;
+
+} else {
+  signum = -1;
+
+}
+`e dangling-else
+
+`e switch
+switch(i) {
+
+case 0:
+  0;
+  break;
+
+case 1:
+  1;
+  break;
+
+default:
+  -1;
+  break;
+
+}
+`e while
+int i = 0;
+
+while (i<10) {
+…
+  i++;
+
+}
+`e for
+int i, n;
+
+for (i=1,n=1; i<=10; i++) {
+  n *= i;
+
+}
+`e break
+
+`e break-out-of-nested-loops
+
+`e continue
+
+`e goto
+
+`e base-exception
+
+`e predefined-exceptions
+
+`e raise-exception
+throw new System.Exception("failed");
+`e handle-exception
+try {
+  throw new System.Exception("failed");
+
+} catch (System.Exception e) {
+  System.Console.WriteLine(e.Message);
+
+}
+`e define-exception
+
+`e re-raise-exception
+
+`e catch-all-handler
+
+`e multiple-handlers
+
+`e uncaught-exception-behavior
+
+`e error-message
+
+`e system-call-errno
+
+`e finally
+try {
+  risky code
+
+} finally {
+  perform cleanup
+
+}
+`e exception-specification
+no
+`e start-thread
+
+`e terminate-current-thread
+
+`e terminate-other-thread
+
+`e list-threads
+
+`e wait-on-thread
+
+`e lock
+
+`e create-message-queue
+
+`e send-message
+
+`e receive-message
+
+`e standard-file-handles
+
+`e printf
+System.Console.WriteLine("count: {0}", 7);
+`e read-from-file
+using System.IO;
+
+StreamReader sr = new StreamReader("/etc/passwd");
+
+string line;
+
+while ((line = sr.ReadLine()) != null) {
+  use line
+
+}
+`e write-to-file
+using System.IO;
+
+StreamWriter fout = new StreamWriter("/tmp/test3");
+
+int i;
+
+for (i=0; i<10; i++) {
+  fout.WriteLine(i.ToString());
+
+}
+
+fout.Close();
+`e file-exists-test-file-regular-test
+System.IO.File.Exists("/etc/hosts")
+`e file-size
+
+`e is-file-readable-writable-executable
+
+`e set-file-permissions
+
+`e copy-file-remove-file-rename-file
+
+`e csv
+
+`e json
+
+`e build-xml
+
+`e parse-xml
+
+`e parse-html
+
+`e build-pathname
+
+`e dirname-and-basename
+
+`e absolute-pathname
+
+`e iterate-over-directory-by-file
+
+`e glob-paths
+
+`e make-directory
+
+`e recursive-copy
+
+`e remove-empty-directory
+
+`e remove-directory-and-contents
+
+`e directory-test
+
+`e generate-unused-directory-name
+
+`e system-temporary-file-directory
+
+`e signature-of-main
+public class Foo {
+  public static void Main(string[] args) {
+`e first-argument
+first command line argument
+`e environment-variable
+using System.Environment;
+
+string home = GetEnvironmentVariable("HOME");
+
+SetEnvironmentVariable("EDITOR", "emacs");
+
+SetEnvironmentVariable("EDITOR", null);
+`e iterate-through-environment-variables
+using System.Collections;
+
+using System.Environment;
+
+IDictionary env = GetEnvironmentVariables();
+
+foreach (DictionaryEntry de in env) {
+  use de.Key or de.Value
+
+}
+`e standard-library-name
+Base Class Library
+`e declare-namespace
+namespace foo {
+  namespace bar {
+    public class Baz {
+      public const int ANSWER = 42;
+    };
+  }
+
+}
+`e multiple-namespaces-per-file
+yes
+`e namespaces-map-to-directories
+no
+`e import-namespace
+using foo.bar;
+
+System.Console.WriteLine(Baz.ANSWER);
+`e import-part-of-namespace
+none
+`e import-symbol
+none
+`e import-static-symbol
+none
+`e import-position
+outside of class definitions
+`e using-a-symbol-that-hasn-t-been-imported
+using System.Console;
+
+WriteLine(foo.bar.Baz.ANSWER);
+`e application-environment
+
+`e multiple-installations
+
+`e package-manager
+
+`e typedef
+none
+`e enum
+public enum DayOfWeek { MON, TUE, WED, THU, FRI, SAT, SUN };
+
+DayOfWeek d = DayOfWeek.TUE;
+`e struct-definition
+public class MedalCount {
+  public string country;
+  public int gold;
+  public int silver;
+  public int bronze;
+
+}
+`e struct-declaration
+MedalCount spain = new MedalCount();
+`e struct-initialization
+no object literal syntax; define a constructor
+`e struct-member-assignment
+spain.country = "Spain";
+
+spain.gold = 3;
+
+spain.silver = 7;
+
+spain.bronze = 4;
+`e struct-member-access
+int spain_total = spain.gold + spain.silver + spain.bronze;
+`e define-generic-type
+public class Foo<A> {
+  public A a;
+  public Foo(A a) {
+    this.a = a;
+  }
+
+}
+`e instantiate-generic-type
+Foo<string> f = new Foo<string>("foo");
+`e generic-function
+
+`e generic-array
+public class Bar<C> {
+  public C[] a;
+  public Bar(C c) {
+    this.a = new C[10];
+  }
+
+}
+`e value-parameter
+
+`e template-parameter
+
+`e template-specialization
+
+`e multiple-type-parameters
+
+`e generic-type-parameters
+
+`e template-parameters
+
+`e variadic-template
+
+`e semantics-of
+value comparison
+`e define-class
+public class Rational {
+  public int num;
+  public int denom;
+
+}
+`e class-definition-location
+
+`e constructor
+public Rational(int n, int d) {
+  if (0 == d) {
+    throw new System.Exception("zero denominator");
+  }
+  if (d < 0) {
+    this.num = -1 * n;
+    this.denom = -1 * d;
+  }
+  else {
+    this.num = n;
+    this.denom = d;
+  }
+
+}
+`e create-object
+Rational r = new Rational(7,3);
+`e destructor
+~Rational() {
+  perform cleanup
+
+}
+`e destroy-object
+none
+`e define-method
+public int Height() {
+  return (System.Math.Abs(this.num) > this.denom) ? System.Math.Abs(this.num) : this.denom;
+
+}
+`e invoke-method
+r.Height();
+`e define-class-method
+declare static in class definition
+`e invoke-class-method
+
+`e name-of-receiver
+this
+`e access-control
+access keywords available for methods and members:
+
+public class Foo {
+  private int privateInt1;
+  int privateInt2;
+  protected int protectedInt;
+  public int publicInt;
+
+}
+`e anonymous-class
+
+`e dynamic-dispatch
+declare as virtual in base class and override in derived class
+`e static-dispatch
+dispatch static by default; compiler error if same method defined in base and derived class and not marked virtual in base class
+`e subclass
+
+`e invoking-superclass-constructor
+
+`e mark-class-underivable-or-method-unoverrideable
+sealed
+`e root-class
+System.Object
+`e root-class-methods
+Equals()
+
+Finalize()
+
+GetHashCode()
+
+GetType()
+
+MemberwiseClone()
+
+ReferenceEquals()
+
+ToString()
+`e get-type-class-of-object
+object o = new object();
+
+System.Type t = o.GetType();
+or
+
+System.type t = typeof(o);
+`e get-type-class-from-string
+using System;
+
+Type t = Type.GetType("object");
+`e get-type-class-from-type-identifier
+System.Type t = typeof(object);
+`e class-name
+t.ToString();
+`e get-methods
+using System.Reflection;
+
+System.Type t = typeof(object);
+
+MethodInfo[] a = t.GetMethods();
+`e has-method
+null if method not found:
+
+MethodInfo m = t.GetMethod("ToString");
+`e invoke-method-object
+m.Invoke(o);
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+
+`e http-get
+
+`e http-post
+
+`e absolute-url
+
+`e parse-url
+
+`e url-encode-decode
+
+`e base64-encode-decode
+
+`e test-class
+
+`e run-all-tests
+
+`e equality-assertion
+
+`e approximate-assertion
+
+`e exception-assertion
+
+`e setup
+
+`e teardown
+
+`e flag-for-stronger-warnings
+
+`e suppress-warnings
+
+`e treat-warnings-as-errors
+
+`e run-debugger
+
+`e debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-show-breakpoints-delete-breakpoint-continue-backtrace-up-stack-down-stack-print-run-quit
+
+`e benchmark-code
+
+`e profile-code
+
+`e memory-tool
+
