@@ -1,7 +1,9 @@
 import qualified Data.Map as M
 import Control.Arrow
+import Control.Applicative ((<$>))
 import Control.Monad
 import Data.Char
+import Data.List
 import Text.Parsec
 import Text.Parsec.Char
 import Text.Parsec.Combinator
@@ -120,27 +122,34 @@ bqEntrySection = do
 bqSectionList :: CharParser [Section]
 bqSectionList = many bqEntrySection
 
+type NamedEntryMap = (String, EntryMap)
+
 -- make everything together!
 
-buildTd :: String -> EntryMap -> String
-buildTd key emap = case M.lookup key emap of
-	Nothing -> "<td class='empty'></td>"
-	Just s -> "<td>" ++ s ++ "</td>"
+buildTd :: String -> NamedEntryMap -> String
+buildTd key (name,emap) = case M.lookup key emap of
+	Nothing -> "<td class='empty " ++ name ++ "'></td>"
+	Just s -> "<td class='" ++ name ++ "'>" ++ s ++ "</td>"
 
-buildRow :: (String, String) -> [EntryMap] -> String
+buildRow :: (String, String) -> [NamedEntryMap] -> String
 buildRow (key, desc) emaps =
 	"<tr><td class='desc'>" ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
 
 makeThRow colspan cont =
 	"<tr><th colspan='" ++ show colspan ++ "'>" ++ cont ++ "</th></tr>"
 
-buildSection :: Section -> [EntryMap] -> String
+buildColumnHeads :: [NamedEntryMap] -> String
+buildColumnHeads emaps =
+	"<tr><th></th>" ++ concat ["<th class='" ++ name ++ "'>" ++ name ++ "</th>" | (name,_) <- emaps] ++ "</tr>"
+
+buildSection :: Section -> [NamedEntryMap] -> String
 buildSection (heading, assocs) emaps = unlines (
-	makeThRow (length emaps + 1) heading : [
+	makeThRow (length emaps + 1) heading :
+	buildColumnHeads emaps : [
 		buildRow assoc emaps | assoc <- assocs
 	])
 
-buildTable :: [Section] -> [EntryMap] -> String
+buildTable :: [Section] -> [NamedEntryMap] -> String
 buildTable secs emaps = unlines (["<table>"]
 	++ [buildSection sec emaps | sec <- secs]
 	++ ["</table>"])
@@ -152,20 +161,30 @@ startHTML = unlines [
 	"<meta charset='utf-8' />",
 	"<link rel='stylesheet' href='morph.css' />",
 	"</head>",
-	"<body>"
+	"<body>",
+	"<div id='morpher'></div>"
 	]
 endHTML = unlines ["</body>", "</html>"]
 
+buildJsCall names = unlines [
+	"<script type='text/javascript' src='morph.js'></script>",
+	"<script type='text/javascript'>",
+	"makeMorpher([" ++ intercalate "," ["\"" ++ name ++ "\"" | name <- names] ++ "]);",
+	"</script>"
+	]
+
 parseIO parser msg txt = either (ioError . userError . show) return $ parse parser msg txt
 
-readEntryMap name = readFile name >>= parseIO bqEntryMap name
+readEntryMap name = readFile (name ++ ".txt") >>= parseIO bqEntryMap name
+readNamedEntryMap name = (,) name <$> readEntryMap name
 
 langNames = ["perl", "php", "python", "ruby", "ocaml", "f-sharp", "scala", "haskell", "cpp", "objective-c", "java", "c-sharp"]
 
 main = do
 	cont <- readFile "entries.txt"
 	secs <- parseIO bqSectionList "(entries.txt)" cont
-	langs <- mapM (readEntryMap . (++ ".txt")) langNames
+	langs <- mapM readNamedEntryMap langNames
 	putStrLn startHTML
 	putStrLn $ buildTable secs langs
+	putStrLn $ buildJsCall langNames
 	putStrLn endHTML
