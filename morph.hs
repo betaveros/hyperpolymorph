@@ -90,7 +90,7 @@ type EntryMap = M.Map String String
 bqEntryMap :: CharParser EntryMap
 bqEntryMap = do
 	entries <- many bqEntry
-	return $ M.fromList entries
+	return . M.fromList $ filter (not . (all isSpace) . snd) entries
 
 -- parse the entry associations used to create final output
 
@@ -129,22 +129,22 @@ type NamedEntryMap = (String, EntryMap)
 buildTd :: String -> NamedEntryMap -> String
 buildTd key (name,emap) = case M.lookup key emap of
 	Nothing -> "<td class='empty " ++ name ++ "'></td>"
-	Just s -> "<td class='" ++ name ++ "'>" ++ s ++ "</td>"
+	Just s -> "<td class='cont " ++ name ++ "'>" ++ s ++ "</td>"
 
 buildRow :: (String, String) -> [NamedEntryMap] -> String
 buildRow (key, desc) emaps =
 	"<tr><td class='desc'>" ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
 
 makeThRow colspan cont =
-	"<tr><th colspan='" ++ show colspan ++ "'>" ++ cont ++ "</th></tr>"
+	"<tr><td class='invis' rowspan='2'></td><th colspan='" ++ show colspan ++ "' class='section-header'>" ++ cont ++ "</th></tr>"
 
 buildColumnHeads :: [NamedEntryMap] -> String
 buildColumnHeads emaps =
-	"<tr><th></th>" ++ concat ["<th class='" ++ name ++ "'>" ++ name ++ "</th>" | (name,_) <- emaps] ++ "</tr>"
+	"<tr>" ++ concat ["<th class='" ++ name ++ "'>" ++ name ++ "</th>" | (name,_) <- emaps] ++ "</tr>"
 
 buildSection :: Section -> [NamedEntryMap] -> String
 buildSection (heading, assocs) emaps = unlines (
-	makeThRow (length emaps + 1) heading :
+	makeThRow (length emaps) heading :
 	buildColumnHeads emaps : [
 		buildRow assoc emaps | assoc <- assocs
 	])
@@ -162,6 +162,7 @@ startHTML = unlines [
 	"<link rel='stylesheet' href='morph.css' />",
 	"</head>",
 	"<body>",
+	"<h1>Hyperpolymorph</h1>",
 	"<div id='morpher'></div>"
 	]
 endHTML = unlines ["</body>", "</html>"]
