@@ -133,7 +133,7 @@ buildTd key (name,emap) = case M.lookup key emap of
 
 buildRow :: (String, String) -> [NamedEntryMap] -> String
 buildRow (key, desc) emaps =
-	"<tr><td class='desc'>" ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
+	"<tr id='" ++ key ++ "'><td class='desc'><div class='pd'><a href='#" ++ key ++ "' class='perm'>#</a></div> " ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
 
 makeThRow colspan cont =
 	"<tr><td class='invis' rowspan='2'></td><th colspan='" ++ show colspan ++ "' class='section-header'>" ++ cont ++ "</th></tr>"
