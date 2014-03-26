@@ -373,7 +373,7 @@ IndexOutOfRangeException
 
 `e as-function-argument
 
-`e iterate
+`e iterate-over-elements
 foreach (string name in names) {
 `e sort
 
@@ -415,12 +415,12 @@ l.RemoveAt(l.Count - 1);
 
 `e array-as-function-argument
 
-`e iterate
+`e array-iterate
 foreach ( string s in l ) {
   do something with s
 
 }
-`e indexed-iteration
+`e iterate-over-indices-and-elements
 
 `e reverse
 

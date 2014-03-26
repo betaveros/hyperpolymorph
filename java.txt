@@ -395,7 +395,7 @@ ArrayIndexOutOfBoundsException
 
 `e as-function-argument
 
-`e iterate
+`e array-iterate
 for (String name : names) {
 `e sort
 
@@ -439,12 +439,12 @@ vec.removeElementAt(vec.size()-1);
 
 `e array-as-function-argument
 
-`e iterate
+`e iterate-over-elements
 for ( String s : vec ) {
   do something with s
 
 }
-`e indexed-iteration
+`e iterate-over-indices-and-elements
 
 `e reverse
 

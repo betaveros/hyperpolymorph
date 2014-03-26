@@ -224,11 +224,9 @@ replicate: replicate
 list-copy: copy / address copy, shallow copy, deep copy
 array-as-function-arguments: array as function arguments
 arrays-as-function-arguments: arrays as function arguments
-iterate: iterate
 iterate-over-elements: iterate over elements
 iterate-over-indices-and-elements: iterate over indices and elements
 iterate-over-range: iterate over range
-indexed-iteration: indexed iteration
 instantiate-range-as-array: instantiate range as array
 reverse: reverse / non-destructive, in-place
 sort: sort / non-destructive, /  / in-place, /  / custom comparision

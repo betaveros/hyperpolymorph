@@ -358,7 +358,7 @@ List.concat [[1; 2]; [3; 4]]
 
 `e drop
 
-`e iterate
+`e iterate-over-elements
 let f i =
   System.Console.WriteLine(string i)
 

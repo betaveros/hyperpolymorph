@@ -409,7 +409,7 @@ init [1, 2, 3]
 take 2 [1, 2, 3]
 `e drop
 drop 2 [1, 2, 3]
-`e iterate
+`e iterate-over-elements
 mapM_ print [1, 2, 3]
 `e reverse
 reverse [1, 2, 3]

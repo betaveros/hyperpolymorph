@@ -373,7 +373,7 @@ raises NSRangeException exception
 
 `e as-function-argument
 
-`e iterate
+`e iterate-over-elements
 NSEnumerator *i = [a objectEnumerator];
 
 id o;
@@ -420,7 +420,7 @@ raises NSRangeException
 
 `e array-as-function-argument
 
-`e iterate
+`e iterate-over-elements
 NSEnumerator *i = [a objectEnumerator];
 
 id o;
@@ -429,7 +429,7 @@ while (o = [i nextObject]) {
   do something with o
 
 }
-`e indexed-iteration
+`e iterate-over-indices-and-elements
 
 `e reverse
 

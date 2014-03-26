@@ -1,51 +1,35 @@
-`e version-used
+`e versions-used
 2.9
 `e show-version
-$ scala -version
+`$[scala -version]
 `e interpreter
-$ echo 'println("hello")' > hello.scala
-
-
-$ scala hello.scala
+`$[echo 'println("hello")' > hello.scala]
+`$[scala hello.scala]
+`e repl
+`$[scala]
 `e shebang
-$ cat <<EOF > hello.scala
-
+`$[cat <<EOF > hello.scala
 #!/bin/sh
-
 exec scala $0 $@
-
 !#
-
-
 println("hello")
+EOF]
 
-EOF
-
-
-$ chmod +x hello.scala
-
-$ ./hello.scala
+`$[chmod +x hello.scala]
+`$[./hello.scala]
 `e bytecode-compiler-and-interpreter
-$ cat <<EOF > Hello.scala
-
-object Hello {
-  def main(args: Array[String]) {
+`$[cat <<EOF > Hello.scala
+`*object Hello {
+  `*def main(args: `.Array[`.String]) {
     println("hello")
   }
-
 }
-
-EOF
-
-
-$ scalac Hello.scala
-
-$ scala Hello
+EOF]
+`$[scalac Hello.scala]
+`$[scala Hello]
 `e native-compiler
-none
 `e library-which-is-always-imported
 java.lang
-
 scala
 `e statement-terminator
 ; or sometimes newline
@@ -55,59 +39,70 @@ scala
 // comment
 `e multiple-line-comment
 /* comment
-
 another comment */
 `e constant
-// evaluates 1 + 2 once:
+`(evaluates 1 + 2 once:)
+`*val n = 1 + 2
 
-val n = 1 + 2
-
-// evaluates 1 + 2 each time n is used:
-
-def n = 1 + 2
+`(evaluates 1 + 2 each time n is used:)
+`*def n = 1 + 2
 `e local-variable
-var n = 3
+`*var n = 3
 
 n = 4
 
 n + 7
 `e unit-type-and-value
-Unit
+`.Unit
 
 ()
+`e assignment
+`*val v = 1
+`*var w = 0
+w = 1 `(returns Unit)
+`(assigns the same value to multiple variables; only works when variables are first defined:)
+`*var v1, v2 = 0
+`e parallel-assignment
+`(only works when variables are first defined:)
+`*val (x, y, z) = (1, 2, 3)
 `e conditional-expression
-val n = -3
+`*val n = -3
 
-if (n < 0) -n else n
+`*if (n < 0) -n `*else n
 `e branch-type-mismatch
-// expression has type Any:
-
-if (true) { "hello" } else { 3 }
+`(expression has type Any:)
+`*if (`=true) { "hello" } `*else { 3 }
 `e null
-null
+`.None `(type Option[T])
+`=null `(generally discouraged, but needed for Java interop)
 `e nullable-type
-val list = List(Some(3), null, Some(-4))
+`*val list = `.List(`.Some(3), `.None, `.Some(-4))
 `e null-test
-
+v.isDefined `(Option[T])
+v eq `=null `(Java null)
 `e coalesce
-
+`![throws Predef.NoSuchElementException if v is `.None:]
+v.get
+`(0 if v is None:)
+v.getOrElse(0)
 `e nullif
 
 `e expression-type-declaration
-1: Double
+1: `.Double
 `e let-in
-val z = {
-  val x = 3.0
-  val y = 2.0 * x
+`*val z = {
+  `*val x = 3.0
+  `*val y = 2.0 * x
   x * y
 
 }
 `e where
-none
 `e boolean-type
 Boolean
 `e true-and-false
-true false
+`=true `=false
+`e falsehoods
+`=false
 `e logical-operators
 && || !
 `e relational-operators
@@ -117,38 +112,35 @@ math.min 1 2
 
 math.max 1 2
 `e integer-type
-type of integer literals:
-
-Int
-other modular types:
-
-Byte Short Long
-arbitrary precision type:
-
-BigInt
+`.Int `(type of integer literals:)
+`.Byte `.Short `.Long `(other modular types:)
+`.BigInt `(arbitrary precision type:)
 `e integer-literal
 -4
 `e float-type
-type of float literals:
+`(type of float literals:)
+`.Double
 
-Double
-other types:
-
-Float
+`(other types:)
+`.Float
+`e arithmetic-operators
++ - * / `(none) %
 `e integer-operators
 + - * / %
 `e float-operators
 + - * /
 `e add-integer-and-float
 3 + 7.0
+`e integer-division
+13 / 5
 `e divmod
 7 / 3
-
 7 % 3
 `e integer-division-by-zero
-java.lang.ArithmeticException
+`![java.lang.ArithmeticException]
 `e float-division
-(7: Double) / 3
+7.toDouble / 3 `(type coercion built into Int)
+(7: `.Double) / 3 (type ascription, fueled by implicits)
 `e float-division-by-zero
 evaluates to Infinity, NaN, or -Infinity, values which do not have literals
 `e power
@@ -172,21 +164,23 @@ math.E
 
 3.14.round
 
-3.14.floor returns Double
+3.14.floor returns `.Double
 
-3.14.ceil returns Double
+3.14.ceil returns `.Double
+`e absolute-value
 `e absolute-value-and-signum
 math.abs(-7)
-
+`e absolute-value-and-signum
+math.abs(-7)
 math.signum(-7)
 `e integer-overflow
 modular arithmetic for all types except BigInt
 `e float-overflow
 evaluates to Infinity, a value which has no literal
 `e arbitrary-length-integer
-val n = BigInt(7)
+`*val n = BigInt(7)
 
-val m = BigInt(12)
+`*val m = BigInt(12)
 `e arbitrary-length-integer-operators
 n + m
 
@@ -225,10 +219,10 @@ n >= m
 `e complex-decomposition
 
 `e random-number-uniform-integer-uniform-float-normal-float
-import scala.util.Random
+`*import scala.util.Random
 
 
-val rnd = Random
+`*val rnd = Random
 
 
 rnd.nextInt(100)
@@ -237,15 +231,15 @@ rnd.nextDouble
 
 rnd.nextGaussian
 `e random-seed
-import scala.util.Random
+`*import scala.util.Random
 
 
-val rnd = Random
+`*val rnd = Random
 
 
 rnd.setSeed(17)
-none
-none
+`(none)
+`(none)
 `e bit-operators
 1 <<  4
 
@@ -259,34 +253,33 @@ none
 
 ~ 1
 `e binary-octal-and-hex-literals
-none
-
+`(none)
 052
-
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 Integer.toString(42, 7)
 
 Integer.parseInt("60", 7)
 `e string-type
-java.lang.String
+java.lang.`.String
 `e string-literal
-"Hello, World!"
+`=["Hello, World!"]
 
-
-"""Hello, World!"""
+`=["""Hello, World!"""]
 `e newline-in-literal
-in triple quote literal only
+`(in triple quote literal only)
 `e literal-escapes
-\b \f \n \r \t \" \'
+`%[\b \f \n \r \t \" \'
 
-\uhhhh \o \oo \ooo
+\uhhhh \o \oo \ooo]
+`e are-strings-mutable
+no
 `e format
-"foo %s %d %.2f".format("bar", 7, 3.1415)
+`=["foo `%[%s %d %.2f]"].format("bar", 7, 3.1415)
 `e concatenate
 "Hello" + ", " + "World!"
 `e replicate
-val hbar = "-" * 80
+`*val hbar = "-" * 80
 `e translate-case
 "hello".toUpperCase
 
@@ -307,13 +300,13 @@ val hbar = "-" * 80
 7 + "12".toInt
 
 73.9 + ".037".toFloat
-raises NumberFormatException if string doesn't completely parse
+`![raises NumberFormatException if string doesn't completely parse]
 `e join
-List("do", "re", "mi").mkString(" ")
+`.List("do", "re", "mi").mkString(" ")
 `e split
 "do re mi".split(" ")
 `e character-type
-Char
+`.Char
 `e character-literal
 'h'
 `e string-length
@@ -326,259 +319,233 @@ Char
 "hello"(0)
 `e chr-and-ord
 'a'.toInt
-
 97.toChar
+`e to-array-of-characters
+`(by implicit conversion --- via Predef.augmentString, to StringOps, or Predef.wrapString, to WrappedString)
 `e date-time-type
 
 `e current-date-time
 
 `e current-unix-epoch
 
-`e literal
-val a = Array(1, 2, 3)
-`e size
-a.size
-`e lookup
-val n = a(0)
-`e update
+`e array-initialization-list
+`*val a = `.Array(1, 2, 3)
+`e array-size
+a.length
+a.size `(via implicit conversion to ArrayOps)
+`e array-lookup
+`*val n = a(0)
+`e array-update
 a(2) = 4
-`e out-of-bounds
-raises java.lang.ArrayIndexOutOfBounds
-`e literal
-// none; use constructor:
-
-List(1, 2, 3)
+`e array-out-of-bounds
+`![raises java.lang.ArrayIndexOutOfBounds]
+`e array-iterate
+`*for (v <- a) { `(code) }
+a.foreach(v => `(code) )
+`e array-sort
+`.Array(3, 2, 1, 4).sorted
+`e list-name
+`.List
+`e list-literal
+`(none; use constructor:)
+`.List(1, 2, 3)
 `e empty-list
-Nil
-
-List()
+`.Nil
+`.List()
 `e empty-test
-val list = List(1, 2, 3)
-
-
-list == Nil
-
+`*val list = `.List(1, 2, 3)
+list == `.Nil
 list.isEmpty
 `e cons
-1 :: List(2, 3)
+1 :: `.List(2, 3)
 `e head
-List(1, 2, 3).head
+`.List(1, 2, 3).head
 `e tail
-List(1, 2, 3).tail
+`.List(1, 2, 3).tail
 `e head-and-tail-of-empty-list
-// NoSuchElementException:
-
-Nil.head
-
-// UnsupportedOperationException:
-
-Nil.tail
-`e string-length
-List(1, 2, 3).length
+`![NoSuchElementException:]
+`.Nil.head
+`![UnsupportedOperationException:]
+`.Nil.tail
+`e list-size
+`.List(1, 2, 3).length
+`.List(1, 2, 3).size
 `e list-lookup
-List(1, 2, 3)(0)
+`.List(1, 2, 3)(0)
 `e index-of-element
-// evaluates to 1:
-
-List(7, 8, 9).indexOf(8)
-
-// evaluates to -1:
-
-List(7, 8, 9).indexOf(10)
-`e update
-// evaluates to List(1, 4, 3):
-
-List(1, 2, 3).updated(1, 4)
+`(evaluates to 1:)
+`.List(7, 8, 9).indexOf(8)
+`(evaluates to -1:)
+`.List(7, 8, 9).indexOf(10)
+`e list-update
+`(evaluates to List(1, 4, 3):)
+`.List(1, 2, 3).updated(1, 4)
 `e concatenate-two-lists-list-of-lists
-List(1, 2) ::: List(3, 4)
-
-List(1, 2) ++ List(3, 4)
-
-
-List(List(1, 2), List(3, 4)).flatten
+`.List(1, 2) ::: `.List(3, 4)
+`.List(1, 2) ++ `.List(3, 4)
+`.List(`.List(1, 2), `.List(3, 4)).flatten
 `e last-and-butlast
-List(1, 2, 3).last
-
-List(1, 2, 3).init
+`.List(1, 2, 3).last
+`.List(1, 2, 3).init
 `e take
-List(1, 2, 3).take(2)
+`.List(1, 2, 3).take(2)
 `e drop
-List(1, 2, 3).drop(2)
-`e iterate
-List(1, 2, 3).foreach(i => println(i))
+`.List(1, 2, 3).drop(2)
+`e iterate-over-elements
+`.List(1, 2, 3).foreach(i => println(i))
 `e reverse
-List(1, 2, 3).reverse
+`.List(1, 2, 3).reverse
 `e sort
-List(1, 3, 2, 4).sortWith((x, y) => x < y)
-
-List(1, 3, 2, 4).sortWith(_ < _)
-
-List(1, 3, 2, 4).sortWith((x, y) => x > y)
-
-List(1, 3, 2, 4).sortWith(_ > _)
+`.List(1, 3, 2, 4).sortWith((x, y) => x < y)
+`.List(1, 3, 2, 4).sortWith(`+_ < `+_)
+`.List(1, 3, 2, 4).sortWith((x, y) => x > y)
+`.List(1, 3, 2, 4).sortWith(`+_ > `+_)
 `e map
-List(1, 2, 3).map(x => 2 * x)
-
-List(1, 2, 3).map(2 * _)
+`.List(1, 2, 3).map(x => 2 * x)
+`.List(1, 2, 3).map(2 * `+_)
 `e filter
-List(1, 2, 3).filter(x => x > 2)
+`.List(1, 2, 3).filter(x => x > 2)
 `e fold-from-left
-List(1, 2, 3).foldLeft(0)(_ + _)
-
-List(1, 2, 3).foldLeft(0)((x, y) => x + y)
+`.List(1, 2, 3).foldLeft(0)(`+_ + `+_)
+`.List(1, 2, 3).foldLeft(0)((x, y) => x + y)
+(0 /: `.List(1,2,3))(`+_ + `+_)
 `e fold-from-right
-List(1, 2, 3).foldRight(0)(_ - _)
+`.List(1, 2, 3).foldRight(0)(`+_ - `+_)
+(`.List(1,2,3) :\ 0)(`+_ + `+_)
 `e membership
-List(1, 2, 3).contains(3)
+`.List(1, 2, 3).contains(3)
 `e universal-test
-List(1, 2, 3).forall(_ > 2)
+`.List(1, 2, 3).forall(`+_ > 2)
 `e existential-test
-List(1, 2, 3).exists(_ > 2)
+`.List(1, 2, 3).exists(`+_ > 2)
 `e zip-lists
 
+`e iterate-over-range
+`(includes 1000000:)
+`*for (i <- 1 to 1000000) { `(code) }
+`(excludes 1000000:)
+`*for (i <- 0 to 1000000) { `(code) }
 `e tuple
-(1, "hello", true)
+(1, "hello", `=true)
 `e tuple-element-access
-(1, "hello", true)._1
+(1, "hello", `=true)._1
 `e pair-element-access
 (12, "December")._1
-
 (12, "December")._2
 `e define-function
-// argument types must be declared:
-
-def average(a: Double, b: Double)
+`(argument types must be declared:)
+`*def average(a: `.Double, b: `.Double)
   = (a + b) / 2.0
 
-// return value type must be declared if
-// function is recursive:
-
-def factorial(n: Int): Int =
-  if (n < 1)
+`(return value type must be declared if function is recursive:)
+`*def factorial(n: `.Int): `.Int =
+  `*if (n < 1)
     1
-  else
+  `*else
     n * factorial(n - 1)
 `e invoke-function
-// 3.0:
-
+`(3.0:)
 average(1, 2 + 3)
 
-// 4.5:
-
+`(4.5:)
 average(1, 2) + 3
 
-// parens can be omitted when a function
-// takes no arguments; by convention parens
-// are omitted when the function has no
-// side effects
+`(parens can be omitted when a function takes no arguments, mainly for Java interopability; by convention parens are omitted when the function has no side effects)
 `e define-function-with-block-body
-// braces must be used if body
-// not an expression:
-
-def print_numbers() = {
+`(braces must be used if body not an expression:)
+`*def print_numbers() = {
   println("one")
   println("two")
-
 }
 `e named-parameters
-def subtract(m: Int, s: Int) = m - s
-
+`*def subtract(m: `.Int, s: `.Int) = m - s
 
 subtract(s = 3, m = 7)
 `e named-parameter-default-value
-def logarithm(x: Double,
-              base: Double = math.exp(1)) =
+`*def logarithm(x: `.Double,
+              base: `.Double = math.exp(1)) =
   math.log(x) / math.log(base)
-
 
 logarithm(2.718)
 
 logarithm(10, base = 2)
 `e piecewise-defined-function
-none
 `e recursive-function
-def range(a:Int, b:Int): List[Int] =
-  if (a > b)
-    List()
-  else
+`*def range(a:`.Int, b:`.Int): `.List[`.Int] =
+  `*if (a > b)
+    `.List()
+  `*else
     a :: range(a + 1, b)
 `e mutually-recursive-functions
 
 `e anonymous-function
-(x: Double, y: Double) => (x + y) / 2.0
+(x: `.Double, y: `.Double) => (x + y) / 2.0
+`e overload-operator
+`(almost all operators in Scala are just methods with symbolic names:)
+`*class Rational(`*val num: `.Int, `*val denom: `.Int) {
+  `(...)
+  `*def +(o: Rational) = `*new Rational(num * o.denom + o.num * denom, denom * o.denom)
+}
 `e infix-operator-in-prefix-position
-none
 `e function-in-infix-position
 unary methods can be used as binary operators
 `e currying
-def plus(x: Int)(y: Int) = x + y
-
+`*def plus(x: `.Int)(y: `.Int) = x + y
 plus(3)(7)
 
-def plus2 = plus(2)
-
+`(must follow with underscore for partial application:)
+`*def plus2 = plus(2) `+_
 plus2(7)
 `e composition
-
+`*val f = (x: `.Int) => x + 2
+`*val g = (x: `.Int) => x * 3
+(f compose g)(4)
 `e function-composition-operator
-none
+`*val double = (x: `.Int) => 2 * x
+`*val quadruple = double compose double
+
 `e lazy-evaluation
-def arg1(x: => Int, y: => Int): Int = x
-
-
+`*def arg1(x: `+[=>] `.Int, y: `+[=>] `.Int): `.Int = x
 arg1(7, 1 / 0)
 `e strict-evaluation
-default behavior
+`(default behavior)
 `e if
-if ( x > 0 )
+`*if ( x > 0 )
   println("pos")
 `e control-structure-keywords
-if (x > 0)
+`*if (x > 0)
   println("pos")
-
-else if (x < 0)
+`*else `*if (x < 0)
   println("neg")
-
-else
+`*else
   println("zero")
 `e sequencing
 println("one")
-
 println("two")
-
 println("three")
 `e while
-var i = 0
-
-while (i<10) {
+`*var i = 0
+`*while (i < 10) {
   printf("%d\n", i)
   i = i+1
-
 }
 `e for
-for (i <- 1 to 10)
+`*for (i <- 1 to 10)
   println(i)
 `e for-in-reverse
-none
 `e list-iteration
-for (i <- List.range(1, 11).reverse)
+`*for (i <- `.List.range(1, 11).reverse)
   println(i)
 `e loop
-none
-`e raise-error
-throw new Exception("bam!")
-`e handle-error
-import java.lang._
- 
+`e raise-exception
+`*throw `*new Exception("bam!")
+`e handle-exception
+`*import java.lang.`+_
 
-val x = try {
+`*val x = `*try {
   1 / 0
-
-}
-
-catch {
-  case e: ArithmeticException => 0
-
+} `*catch {
+  `*case e: ArithmeticException => 0
 }
 `e type-of-exceptions
 
@@ -591,7 +558,7 @@ assert(1 == 0)
 `e standard-file-handles
 System.in System.out System.err
 `e read-line-from-stdin
-val line = readLine()
+`*val line = readLine()
 `e end-of-file-behavior
 
 `e chomp
@@ -601,32 +568,27 @@ println("lorem ipsum")
 `e printf
 
 `e open-file-for-reading
-import scala.io.Source
+`*import scala.io.Source
 
-
-val path = "/etc/hosts"
-
-val f = Source.fromFile(path)
+`*val path = "/etc/hosts"
+`*val f = Source.fromFile(path)
 `e open-file-for-writing
 
 `e open-file-for-appending
 
 `e close-file
-import scala.io.Source
-
+`*import scala.io.Source
 
 f.close
 `e i-o-errors
 
 `e read-line
-import scala.io.Source
-
-val src = Source.fromFile("/etc/passwd")
-
-for (line <- src.getLines)
-  print(line)
 `e iterate-over-file-by-line
+`*import scala.io.Source
 
+`*val src = Source.fromFile("/etc/passwd")
+`*for (line <- src.getLines)
+  print(line)
 `e read-file-into-array-of-strings
 
 `e read-file-into-string
@@ -634,10 +596,8 @@ for (line <- src.getLines)
 `e write-string
 
 `e write-line
-val out = new java.io.FileWriter("/tmp/test-scala")
-
+`*val out = new java.io.FileWriter("/tmp/test-scala")
 out.write("hello out\n")
-
 out.close
 `e flush-file-handle
 
@@ -676,12 +636,11 @@ out.close
 `e system-temporary-file-directory
 
 `e command-line-arguments
-object Test {
-  def main(args: Array[String]) {
-    for (arg <- args)
+`*object Test {
+  `*def main(args: `.Array[`.String]) {
+    `*for (arg <- args)
       println(arg)
   }
-
 }
 `e program-name
 
@@ -709,37 +668,31 @@ Baz.scala
 package Foo.Bar;
 
 
-class Baz {
-  def say() { println("hello"); }
-
+`*class Baz {
+  `*def say() { println("hello"); }
 }
 
 Main.scala
 
-import Foo.Bar.Baz;
+`*import Foo.Bar.Baz;
 
-
-object Main {
-  def main(args : Array[String]) {
-    val baz = new Baz;
+`*object Main {
+  `*def main(args : `.Array[`.String]) {
+    `*val baz = new Baz;
     baz.say();
   }
-
 }
 
 to compile and run
 
-$ scalac Baz.scala
-
-$ scalac Main.scala
-
-$ scala Main
-
+`$[scalac Baz.scala]
+`$[scalac Main.scala]
+`$[scala Main]
 hello
 `e namespaces
 
 `e file-name-restrictions
-none
+`(none)
 `e namespace
 
 `e namespace-creation
@@ -757,80 +710,63 @@ none
 `e compile-app-using-package
 
 `e type-synonym
-type Name = String
+type Name = `.String
 `e sum-type
-abstract class Color
+`*abstract `*class Color
+`*case `*object Red `=extends Color
+`*case `*object Blue `=extends Color
+`*case `*object Green `=extends Color
 
+`*val col = Red
 
-case object Red extends Color
-
-case object Blue extends Color
-
-case object Green extends Color
-
-
-val col = Red
-
-// this won’t compile:
-
+`(this won’t compile:)
 col < Green
 `e tuple-product-type-with-one-field
-class SpecialInt(x: Int)
-
-
-val n = new SpecialInt(7)
+`*class SpecialInt(x: `.Int)
+`*val n = new SpecialInt(7)
 `e tuple-product-type-with-two-fields
-class IntPair(a: Int, b: Int)
-
-
-val p = new IntPair(7, 11)
+`*class IntPair(a: `.Int, b: `.Int)
+`*val p = new IntPair(7, 11)
 `e record-product-type
-case class Customer(
-  id: Int,
-  name: String,
-  address: String
-
+`*case `*class Customer(
+  id: `.Int,
+  name: `.String,
+  address: `.String
 )
 `e record-product-type-literal
 Customer(7,"John","Topeka, KS")
-
-
 Customer(id=7, name="John", address="Topeka, KS")
 `e generic-type
-class Twosome[A, B](a: A, b: B)
+`*class Twosome[A, B](a: A, b: B)
 
-
-val p = new Twosome("pi", 3.14)
+`*val p = new Twosome("pi", 3.14)
 `e recursive-type
-abstract class BinaryTree
+`*abstract `*class BinaryTree
 
-case class Tree(left: BinaryTree, right: BinaryTree) extends BinaryTree
-
-case class Leaf(x: Int) extends BinaryTree
+`*case `*class Tree(left: BinaryTree, right: BinaryTree) `=extends BinaryTree
+`*case `*class Leaf(x: `.Int) `=extends BinaryTree
 `e pattern-match-sum-type
-val c:Color = Red;
+`*val c:Color = Red;
 
-c match { case Red => "red"; case Green => "green"; case Blue => "blue" }
+c `*match { `*case Red `+[=>] "red"; `*case Green `+[=>] "green"; `*case Blue `+[=>] "blue" }
 `e pattern-match-product-type
 
 `e pattern-match-guard
-match { case i: Int if i < 0 => - i; case i: Int => i }
+`*match { `*case i: `.Int `*if i < 0 `+[=>] - i; `*case i: `.Int `+[=>] i }
 `e pattern-match-catchall
-val c : Color = Green
+`*val c : Color = Green
 
-c match { case Red => "red"; case _ => "not red" }
+c `*match { `*case Red `+[=>] "red"; `*case `+_ `+[=>] "not red" }
 `e define-class
-class Counter {
-  private var n = 0
-  def incr(): Unit = { n = n+1 }
-  def get(): Int = { n }
-
+`*class Counter {
+  `*private `*var n = 0
+  `*def incr(): `.Unit = { n = n+1 }
+  `*def get(): `.Int = { n }
 }
 `e create-object
-val c = new Counter
+`*val c = new Counter
 `e invoke-method
 c.incr
-
 c.get
 `e field-access
 
@@ -839,7 +775,7 @@ c.get
 `e inheritance
 
 `e invoke-repl
-$ scala
+`$[scala]
 `e repl-limitations
 
 `e repl-last-value

@@ -517,7 +517,7 @@ const size_t LEN(4);
 int a[LEN] = {3, 2, 4, 1};
 
 reverse(a, LEN);
-`e iterate
+`e array-iterate
 const size_t LEN(4);
 int a[LEN] = {3, 2, 4, 1};
 
@@ -646,7 +646,7 @@ vector<int> a3;
 a3 = a;
 `e array-as-function-argument
 use reference or pointer to avoid copying array
-`e iterate
+`e iterate-over-elements
 #include <vector>
 
 int sum(0);
@@ -656,7 +656,7 @@ for (const auto& n: a) {
   sum += n;
 
 }
-`e indexed-iteration
+`e iterate-over-indices-and-elements
 #include <vector>
 
 
