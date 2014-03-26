@@ -64,7 +64,7 @@ bqSpecial = try $ char '`' >>
 bqMatching :: Char -> Char -> CharParser String
 bqMatching lc rc = do
 	char lc
-	ss <- manyTill (bqMatching lc rc <|> bqAtom) (char rc)
+	ss <- manyTill (((\x -> [lc] ++ x ++ [rc]) <$> bqMatching lc rc) <|> bqAtom) (char rc)
 	return $ concat ss
 
 plainMatching :: Char -> Char -> CharParser String
