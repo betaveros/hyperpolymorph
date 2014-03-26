@@ -1,14 +1,14 @@
 `e version-used
 ECMAScript 5
 `e show-version
-$ node --version
+`$[node --version]
 `e interpreter
-$ node foo.js
+`$[node foo.js]
 `e repl
-$ node
+`$[node]
 `e command-line-program
-$ node -e 'var sys = require("sys");
-  sys.puts("hi world!");'
+`$[node -e 'var sys = require("sys");
+  sys.puts("hi world!");']
 `e block-delimiters
 {}
 `e statement-terminator
@@ -23,86 +23,74 @@ yes
 // comment
 `e multiple-line-comment
 /* comment
-
 another comment */
 `e local-variable
-var x = 1;
+`*var x = 1;
 `e global-variable
-// assign without using var
+`(assign without using var)
 
 g = 1;
-
-function incr_global () { g++; }
+`*function incr_global () { g++; }
 `e assignment
 x = 1;
 `e parallel-assignment
-none
 `e swap
-tmp = x;
-
+`*var tmp = x;
 x = y;
-
 y = tmp;
 `e null
-null
+`=null
 `e null-test
-v === null
+v === `=null
 `e undefined-variable-access
-undefined
+`=undefined
 `e conditional-expression
 x > 0 ? x : -x
 `e true-and-false
-true false
+`=true `=false
 `e falsehoods
-false null undefined "" 0 NaN
+`=false `=null `=undefined "" 0 `=NaN
 `e logical-operators
 && || !
 `e relational-expression
 x > 3
 `e relational-operators
 === !== < > >= <=
-
-perform type coercion:
-
+`(perform type coercion:)
 == !=
 `e min-and-max
 Math.min(1, 2, 3)
-
 Math.max(1, 2, 3)
 
-
 Math.min.apply(Math, [1, 2, 3])
-
 Math.max.apply(Math, [1, 2, 3])
 `e arithmetic-expression
 1 + 3
-`e arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-modulus
-+ - * / none %
+`e arithmetic-operators
++ - * / `(none) %
 `e integer-division
 Math.floor(x / y)
 `e integer-division-by-zero
-returns assignable value Infinity, NaN, or -Infinity depending upon whether dividend is positive, zero, or negative.
+returns assignable value `=Infinity, `=NaN, or -`=Infinity depending upon whether dividend is positive, zero, or negative.
 
-
-There are literals for Infinity and NaN.
+There are literals for `=Infinity and `=NaN.
 `e float-division
 x / y
 `e float-division-by-zero
-same behavior as for integers
+`(same behavior as for integers)
 `e power
 Math.pow(2, 32)
 `e sqrt
 Math.sqrt(2)
 `e sqrt-1
-NaN
+`=NaN
 `e transcendental-functions
 Math.exp Math.log Math.sin Math.cos Math.tan Math.asin Math.acos Math.atan Math.atan2
 `e transcendental-constants
 Math.PI
-
 Math.E
 `e float-truncation
-none
+`(none)
 
 Math.round(3.1)
 
@@ -112,55 +100,50 @@ Math.ceil(3.1)
 `e absolute-value
 Math.abs(-3)
 `e integer-overflow
-all numbers are floats
+`(all numbers are floats)
 `e float-overflow
-Infinity
+`=Infinity
 `e random-number-uniform-integer-uniform-float-normal-float
 Math.floor(Math.random() * 100)
 
 Math.random()
-none
-`e random-seed
-none
+`(none)
 `e bit-operators
 << >> & | ^ ~
+`e binary-octal-and-hex-literals
+`(none)
+052
+0x2a
+`e radix
 `e string-literal
 "don't say \"no\""
-
 'don\'t say "no"'
 `e newline-in-literal
 yes
 `e literal-escapes
-single and double quotes:
+`(single and double quotes:)
 
 \b \f \n \r \t \v \uhhhh \xhh \" \' \\
-`e variable-interpolation
-none
-`e expression-interpolation
-none
 `e concatenate-strings
 s = "Hello, " + "World!";
 `e split
 "do re mi".split(" ")
 `e join
 ["do", "re", "mi"].join(" ")
-`e sprintf
-none
 `e translate-case
 "lorem".toUpperCase()
 "LOREM".toLowerCase()
-none
+`(none)
 `e strip
 " lorem ".trim()
 # some browsers:
 " lorem".trimLeft()
 "lorem ".trimRight()
 `e pad
-none
 `e string-to-number
-7 + parseInt("12", 10)
+7 + `.parseInt("12", 10)
 
-73.9 + parseFloat(".037")
+73.9 + `.parseFloat(".037")
 `e number-to-string
 "value: " + 8
 `e string-length
@@ -171,6 +154,9 @@ none
 "lorem ipsum".substr(6, 5)
 
 "lorem ipsum".substring(6, 11)
+`e extract-character
+"lorem ipsum".charAt(6)
+"lorem ipsum".charCodeAt(6)
 `e chr-and-ord
 String.fromCharCode(65)
 "A".charCodeAt(0)
@@ -181,20 +167,20 @@ char class abbrevs:
 
 anchors: ^ $ \b \B
 `e match-test
-if (s.match(/1999/)) {
+`*if (s.match(`=[/1999/])) {
   alert("party!");
 
 }
 `e case-insensitive-match-test
-"Lorem".match(/lorem/i)
+"Lorem".match(`=[/lorem/i])
 `e modifiers
 g i m
 `e substitution
 s = "do re mi mi mi";
 
-s.replace(/mi/g, "ma");
+s.replace(`=[/mi/g], "ma");
 `e group-capture
-rx = /^(\d{4})-(\d{2})-(\d{2})$/;
+rx = `=[/^(\d{4})-(\d{2})-(\d{2})$/];
 
 m = rx.exec('2009-06-03');
 
@@ -204,21 +190,17 @@ mo = m[2];
 
 dy = m[3];
 `e backreference-in-match-and-substitution
-/(w+) \1/.exec("do do")
+`=[/(w+) \1/].exec("do do")
 
-"do re".replace(/(\w+) (\w+)/, '$2 $1')
+"do re".replace(`=[/(\w+) (\w+)/], '$2 $1')
 `e current-date-time
-var t = new Date();
+`*var t = `*new Date();
 `e to-unix-epoch-from-unix-epoch
 Math.round(t.getTime() / 1000)
-var epoch = 1315716177;
-var t2 = new Date(epoch * 1000);
-`e strftime
-none
-`e strptime
-none
+`*var epoch = 1315716177;
+`*var t2 = new Date(epoch * 1000);
 `e parse-date-w-o-format
-var t = new Date("July 7, 1999");
+`*var t = new Date("July 7, 1999");
 `e date-parts
 t.getFullYear()
 
@@ -232,15 +214,13 @@ t.getMinutes()
 
 t.getSeconds()
 `e build-date-time-from-parts
-var yr = 1999;
-var mo = 9;
-var dy = 10;
-var hr = 23;
-var mi = 30;
-var ss = 0;
-var t = new Date(yr,mo-1,dy,hr,mi,ss);
-`e sleep
-none
+`*var yr = 1999;
+`*var mo = 9;
+`*var dy = 10;
+`*var hr = 23;
+`*var mi = 30;
+`*var ss = 0;
+`*var t = new Date(yr,mo-1,dy,hr,mi,ss);
 `e list-name
 array
 `e list-literal
@@ -252,7 +232,7 @@ a[0]
 `e update
 a[0] = "lorem"
 `e out-of-bounds-behavior
-returns undefined
+returns `=undefined
 `e index-of-element
 [6, 7, 7, 8].indexOf(7)
 
@@ -264,8 +244,6 @@ returns undefined
 ["a", "b", "c", "d"].slice(1)
 `e concatenate
 a = [1, 2, 3].concat([4, 5, 6]);
-`e replicate
-none
 `e manipulate-back
 a = [6, 7, 8];
 
@@ -279,64 +257,44 @@ a.unshift(5);
 
 i = a.shift();
 `e iterate-over-elements
-var len = a.length;
-for (var i = 0; i < len; i++ ) {
-  alert(a[i]);
-
+`*var len = a.length;
+`*for (`*var i = 0; i < len; i++ ) {
+  `.alert(a[i]);
 }
 `e reverse
-var a = [1, 2, 3];
+`*var a = [1, 2, 3];
 
 a.reverse();
 `e sort
-var a = [3, 1, 4, 2];
+`*var a = [3, 1, 4, 2];
 
 a.sort();
-`e dedupe
-none
-`e membership
-none
-`e intersection
-none
-`e union
-none
-`e relative-complement-symmetric-difference
-none
 `e map
-// callback gets 3 args:
-//   value, index, array
-
-a.map(function(x) { return x * x })
+`(callback gets 3 args: value, index, array)
+a.map(`*function(x) { `*return x * x })
 `e filter
-a.filter(function(x) { return x > 1 })
+a.filter(`*function(x) { `*return x > 1 })
 `e reduce
-a.reduce(function(m, o) {
-    return m + o;
+a.reduce(`*function(m, o) {
+    `*return m + o;
   }, 0)
 `e universal-and-existential-tests
-var a = [1, 2, 3, 4];
+`*var a = [1, 2, 3, 4];
 
-var even = function(x) {
-  return x % 2 == 0;
-
+`*var even = `*function(x) {
+  `*return x % 2 == 0;
 };
-
 
 a.every(even)
 
 a.some(even)
-`e shuffle-and-sample
-none
-`e zip
-none
 `e map-literal
 d = { "t":1, "f":0 };
-keys do not need to be quoted if they are a legal JavaScript variable name and not a reserved word
+`(keys do not need to be quoted if they are a legal JavaScript variable name and not a reserved word)
 `e map-size
-var size = 0;
-for (var k in d) {
-  if (d.hasOwnProperty(k)) size++;
-
+`*var size = 0;
+`*for (`*var k in d) {
+  `*if (d.hasOwnProperty(k)) size++;
 }
 `e map-lookup
 d.t
@@ -347,30 +305,27 @@ d["t"] = 2;
 
 d.t = 2;
 `e map-out-of-bounds-behavior
-returns undefined
+returns `=undefined
 `e is-key-present
 d.hasOwnProperty("t");
 `e delete
 delete d["t"];
 delete d.t;
 `e iteration
-for (var k in d) {
-  use k or d[k]
-
+`*for (`*var k in d) {
+  `(use k or d[k])
 }
 `e declare-function
-function add(x, y) {
+`*function add(x, y) {
   return x+y;
-
 }
 `e invoke-function
 add(1, 2)
 `e missing-argument-behavior
-undefined
+`=undefined
 `e extra-arguments
 available in arguments
 `e default-value
-none
 `e variable-number-of-arguments
 args in arguments[0], arguments[1], … with number of args in arguments.length
 `e return-value
@@ -378,78 +333,66 @@ return arg or undefined. If invoked with new and return value not an object, ret
 `e multiple-return-values
 none
 `e lambda-declaration
-sqr = function(x) { return x*x; }
+sqr = `*function(x) { return x*x; }
 `e lambda-invocation
 sqr(2)
 `e default-scope
-global unless declared with var
+global unless declared with `*var
 `e nested-function-visibility
 not visible outside containing function
 `e if
-if (0 == n) {
-  alert("no hits");
-
-} else if (1 == n) {
-  alert("1 hit");
-
-} else {
-  alert(n + " hits");
-
+`*if (0 == n) {
+  `.alert("no hits");
+} `*else `*if (1 == n) {
+  `.alert("1 hit");
+} `*else {
+  `.alert(n + " hits");
 }
 `e while
-while ( i < 100 ) {
+`*while ( i < 100 ) {
   i += 1;
-
 }
+`e break
+`*break
+`e continue
+`*continue
 `e break-continue-redo
-break continue
-`e for
-for (var i=0; i<10; i++) {
-  alert(i);
-
+`*break `*continue
+`e c-style-for
+`*for (`*var i=0; i<10; i++) {
+  `.alert(i);
 }
 `e raise-exception
-throw "bad arg";
+`*throw "bad arg";
 `e catch-exception
-try {
+`*try {
   risky();
-
-} catch (e) {
-  alert("risky failed");
-
+} `*catch (e) {
+  `.alert("risky failed");
 }
 `e finally
 acquire_resource();
-try {
+`*try {
   risky();
-
-} finally {
+} `*finally {
   release_resource();
-
 }
 `e uncaught-exception-behavior
 error to console; script terminates. Other scripts in page will execute
-`e generator
-none
-`e standard-file-handles
 
 `e read-line-from-stdin
 js:
-
-var line = readline();
+`*var line = readline();
 `e write-line-to-stdout
-var sys = require('sys');
-
+`*var sys = require('sys');
 
 sys.puts("Hello, World!");
 `e open-file
-var fs = require('fs');
-
+`*var fs = require('fs');
 
 f = fs.openSync("/tmp/foo", "r");
 `e open-file-for-writing
-var fs = require('fs');
-
+`*var fs = require('fs');
 
 f = fs.openSync("/tmp/foo", "w");
 `e close-file
@@ -457,19 +400,19 @@ fs.closeSync(f);
 `e read-line
 
 `e iterate-over-file-by-line
-var fs = require('fs');
+`*var fs = require('fs');
 
 
-var file = fs.readFileSync("/etc/hosts").toString();
+`*var file = fs.readFileSync("/etc/hosts").toString();
 
-file.split("\n").forEach(function (s) {
+file.split("\n").forEach(`*function (s) {
   use s
 
 });
 `e chomp
 
 `e read-file
-var fs = require('fs');
+`*var fs = require('fs');
 
 
 fs.readFileSync("/tmp/foo", "utf8");
@@ -478,7 +421,7 @@ fs.writeSync(f, "lorem ipsum");
 `e flush-file-handle
 none
 `e file-exists-test-file-regular-test
-var path = require('path');
+`*var path = require('path');
 
 
 path.existsSync("/etc/hosts");
@@ -487,7 +430,7 @@ path.existsSync("/etc/hosts");
 `e is-file-readable-writable-executable
 
 `e copy-file-remove-file-rename-file
-var fs = require('fs');
+`*var fs = require('fs');
 
 ??
 
@@ -495,45 +438,45 @@ fs.unlink("/tmp/foo");
 
 fs.rename("/tmp/bar", "/tmp/foo");
 `e set-file-permissions
-var fs = require('fs');
+`*var fs = require('fs');
 
 
 fs.chmod("/tmp/foo", 0755);
 `e temporary-file
 
 `e build-pathname
-var path = require('path');
+`*var path = require('path');
 
 
 path.join("/etc", "hosts");
 `e dirname-and-basename
-var path = require('path');
+`*var path = require('path');
 
 
 path.dirname("/etc/hosts");
 
 path.basename("/etc/hosts");
 `e iterate-over-directory-by-file
-var fs = require('fs');
+`*var fs = require('fs');
 
-var sys = require('sys');
+`*var sys = require('sys');
 
 
-var a = fs.readdirSync("/etc");
+`*var a = fs.readdirSync("/etc");
 
-for (var i=0; i<a.length; i++) {
+`*for (`*var i=0; i<a.length; i++) {
   sys.puts(a[i]);
 
 }
 `e make-directory
-var fs = require('fs');
+`*var fs = require('fs');
 
 
 fs.mkdirSync("/tmp/foo", 0755);
 
 fs.mkdirSync("/tmp/foo/bar", 0755);
 `e remove-empty-directory
-var fs = require('fs');
+`*var fs = require('fs');
 
 
 fs.rmdirSync("/tmp/foo/bar");
@@ -554,81 +497,74 @@ process.argv[1]
 `e exit
 process.exit(0)
 `e external-command
-var exec =
+`*var exec =
   require('child_process').exec;
 
-var child = exec('ls');
+`*var child = exec('ls');
 `e backticks
-var exec =
+`*var exec =
   require('child_process').exec;
 
-var f = function(err, fout, ferr) {
+`*var f = `*function(err, fout, ferr) {
   output in fout
 
 };
 
-var child = exec('ls', f);
+`*var child = exec('ls', f);
 `e library
-$ cat foo.js
+`$[cat foo.js]
 
-function add(x,y) {
+`*function add(x,y) {
   return x+y;
-
 }
 `e import-library
-<script src="foo.js"/>
+<`*script src=`=["foo.js"]/>
 
-
-<script>
-
-alert(add(3,7));
-
-</script>
+<`*script>
+`.alert(add(3,7));
+</`*script>
 `e library-path
-node.js, not available in repl:
+`(node.js, not available in repl:)
 
 require.paths
 `e library-path-environment-variable
-none
+
 `e declare-namespace
 
 `e namespace-separator
 
 `e list-installed-packaged-install-a-package
-$ npm ls
+`$[npm ls]
 
-$ npm install tmp
+`$[npm install tmp]
 `e define-class
 
 `e create-object
 
 `e create-blank-object
-var o = new Object(); or
+`*var o = `*new Object(); or
 
-var o = {};
+`*var o = {};
 `e set-attribute
 o.score = 21;
 `e get-attribute
-if (o.score == 21) {
-  alert("Blackjack!");
-
+`*if (o.score == 21) {
+  `.alert("Blackjack!");
 }
 `e define-method
-o.doubleScore = function() {
-  return this.score * 2;
-
+o.doubleScore = `*function() {
+  `*return this.score * 2;
 };
 `e invoke-method
-alert("Answer: " + o.doubleScore());
+`.alert("Answer: " + o.doubleScore());
 `e clone-object
-var o2 = Object.create(o);
+`*var o2 = Object.create(o);
 `e object-literal
-var o = {
+`*var o = {
   score: 21,
-  doubleScore: function() {
-    return this.score * 2;
+  doubleScore: `*function() {
+    `*return this.score * 2;
   }
-
 };
 `e inspect-type
 typeof o
@@ -637,7 +573,7 @@ typeof o.foo == 'function'
 `e message-passing
 o["foo"](1,1)
 `e eval
-x = eval("1 + 1");
+x = `.eval("1 + 1");
 `e inspect-methods
 
 `e inspect-attributes
