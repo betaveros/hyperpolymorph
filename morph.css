@@ -30,6 +30,7 @@ a.perm:hover { color: blue; }
 .key { color: #909; font-weight: bold; }
 .op { color: #c60; }
 .val { color: #00c; }
+.sval { color: #03f; }
 .builtin { color: #099; }
 .note { color: #777; font-style: italic; }
 .empty { background-color: #eee; }

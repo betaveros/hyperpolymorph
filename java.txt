@@ -421,7 +421,7 @@ throws ArrayIndexOutOfBoundsException
 
 `e slice
 
-`e slice-to-end
+`e drop
 
 `e manipulate-back
 list.add("hello");
@@ -1152,7 +1152,7 @@ String s2 = URLDecoder.decode(s, "utf8");
 
 `e teardown
 
-`e flag-for-stronger-warnings
+`e stronger-warnings
 
 `e suppress-warnings
 

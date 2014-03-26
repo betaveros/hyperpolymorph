@@ -592,7 +592,7 @@ vector<int> a({6, 7, 8, 9});
 // a2 contains {7, 8}:
 vector<int> a2(a.cbegin() + 1,
                a.cbegin() + 3);
-`e slice-to-end
+`e drop
 #include <vector>
 
 vector<int> a({6, 7, 8, 9});
@@ -1647,7 +1647,7 @@ CPPUNIT_ASSERT_EQUAL_MESSAGE("1 != 1",
 
 `e teardown
 
-`e flag-for-stronger-warnings
+`e stronger-warnings
 $ g++ -Wall foo.cpp
 `e suppress-warnings
 $ g++ -w foo.cpp

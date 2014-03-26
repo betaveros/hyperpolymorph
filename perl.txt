@@ -516,7 +516,7 @@ $i = first {$a[$_] eq "y"} (0..$#a);
 # select 3rd and 4th elements:
 @a[2..3]
 splice(@a, 2, 2)
-`e slice-to-end
+`e drop
 @a[1..$#a]
 `e manipulate-back
 @a = (6, 7, 8);
@@ -841,3 +841,748 @@ $func = `*sub { sleep 10 };
 $thr = threads->new($func);
 `e wait-on-thread
 $thr->join;
+
+`e standard-file-handles
+STDIN STDOUT STDERR
+`e read-line-from-stdin
+$line = <STDIN>;
+`e end-of-file-behavior
+returns string without newline or undef
+`e chomp
+chomp $line;
+`e write-line-to-stdout
+print "Hello, World!\n";
+`e printf
+use Math::Trig 'pi';
+
+printf("%.2f\n", pi);
+`e open-file-for-reading
+open my $f, "/etc/hosts" or die;
+`e open-file-for-writing
+open my $f, ">/tmp/test" or die;
+`e set-file-handle-encoding
+open my $fin, "<:encoding(UTF-8)", "/tmp/foo"
+  or die;
+
+open my $fout, ">:encoding(UTF-8)", "/tmp/bar"
+  or die;
+`e open-file-for-appending
+open my $f, ">>/tmp/err.log" or die;
+`e close-file
+close $f or die;
+`e close-file-implicitly
+{
+  open(my $f, ">/tmp/test") or die;
+  print $f "lorem ipsum\n";
+
+}
+`e i-o-error
+return false value
+`e encoding-error
+emit warning and replace bad byte with 4 character \xHH sequence
+`e read-line
+$line = <$f>;
+`e iterate-over-file-by-line
+while ($line = <$f>) {
+  print $line;
+
+}
+`e read-file-into-array-of-strings
+@a = <$f>;
+`e read-file-into-string
+$s = do { local $/; <$f> };
+`e write-string
+print $f "lorem ipsum";
+`e write-line
+print $f "lorem ipsum\n";
+`e flush-file-handle
+use IO::Handle;
+
+
+$f->flush();
+`e end-of-file-test
+eof($f)
+`e get-and-set-file-handle-position
+tell($f)
+seek($f, 0, SEEK_SET);
+`e open-temporary-file
+use File::Temp;
+
+
+$f = File::Temp->new();
+
+print $f "lorem ipsum\n";
+
+print "tmp file: ";
+print $f->filename . "\n";
+
+close $f or die;
+
+file is removed when file handle goes out of scope
+`e in-memory-file
+my ($f, $s);
+open($f, ">", \$s);
+print $f "lorem ipsum\n";
+$s;
+`e file-exists-test-file-regular-test
+-e "/etc/hosts"
+-f "/etc/hosts"
+`e file-size
+-s "/etc/hosts"
+`e is-file-readable-writable-executable
+-r "/etc/hosts"
+-w "/etc/hosts"
+-x "/etc/hosts"
+`e set-file-permissions
+chmod 0755, "/tmp/foo";
+`e last-modification-time
+my @data = stat('/etc/passwd');
+
+# unix epoch:
+my $t = $data['mtime'];
+`e copy-file-remove-file-rename-file
+use File::Copy;
+
+
+copy("/tmp/foo", "/tmp/bar");
+unlink "/tmp/foo";
+
+move("/tmp/bar", "/tmp/foo");
+`e create-symlink-symlink-test-readlink
+symlink "/etc/hosts", "/tmp/hosts";
+-l "/etc/hosts"
+readlink "/tmp/hosts"
+`e generate-unused-file-name
+use File::Temp;
+
+
+$f = File::Temp->new(DIR=>"/tmp",
+  TEMPLATE=>"fooXXXXX",
+  CLEANUP=>0);
+
+$path = $f->filename;
+`e parse-csv
+# cpan -i Text::CSV
+use Text::CSV;
+
+my $csv = Text::CSV->new or die;
+open my $f, $ARGV[0] or die;
+while (my $row = $csv->getline($f)) {
+  print join("\t", @$row) . "\n";
+
+}
+`e generate-csv
+# cpan -i Text::CSV
+use Text::CSV;
+
+my $csv = Text::CSV->new or die;
+
+$csv->eol ("\r\n");
+open my $f, ">foo.csv" or die;
+
+$csv->print($f, ["one", "une", "uno"]);
+
+$csv->print($f,
+  ["two", "deux", "dos"]);
+
+$f->close or die;
+`e json-generate-parse
+# cpan -i JSON
+use JSON;
+
+
+$raw = {t => 1, f => 0};
+
+$json = JSON->new->allow_nonref;
+
+$s = $json->encode($raw);
+
+$d = $json->decode($s);
+`e generate-xml
+# cpan -i XML::Writer
+use XML::Writer;
+
+my $writer = XML::Writer->new(
+  OUTPUT => STDOUT);
+
+$writer->startTag("a");
+
+$writer->startTag("b", id => "123");
+
+$writer->characters("foo");
+
+$writer->endTag("b");
+
+$writer->endTag("a");
+
+# <a><b id="123">foo</b></a>:
+
+$writer->end;
+`e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
+# cpan -i XML::XPath
+use XML::XPath;
+
+my $xml = "<a><b><c>foo</c></b></a>";
+
+# fatal error if XML not well-formed
+my $doc = XML::XPath->new(xml => $xml);
+
+my $nodes = $doc->find("/a/b/c");
+print $nodes->size . "\n";
+
+
+$node = $nodes->get_node(0);
+print $node->string_value . "\n";
+print $node->getAttribute("ref") . "\n";
+`e parse-html
+# cpan -i Mojo::DOM
+use Mojo::DOM;
+`e working-directory
+use Cwd;
+
+my $old_dir = cwd();
+
+chdir("/tmp");
+`e build-pathname
+use File::Spec;
+
+
+File::Spec->catfile("/etc", "hosts")
+`e dirname-and-basename
+use File::Basename;
+
+print dirname("/etc/hosts");
+print basename("/etc/hosts");
+`e absolute-pathname-and-tilde-expansion
+use Cwd;
+
+# symbolic links are resolved:
+
+Cwd::abs_path("foo")
+
+Cwd::abs_path("/foo")
+
+Cwd::abs_path("../foo")
+
+Cwd::abs_path(".")
+# no function for tilde expansion
+`e iterate-over-directory-by-file
+opendir(my $dh, $ARGV[0]);
+
+while (my $file = readdir($dh)) {
+  print $file . "\n";
+
+}
+
+
+closedir($dh);
+`e glob-paths
+while ( </etc/*> ) {
+  print $_ . "\n";
+
+}
+`e make-directory
+use File::Path 'make_path';
+
+
+make_path "/tmp/foo/bar";
+`e recursive-copy
+# cpan -i File::Copy::Recursive
+use File::Copy::Recursive 'dircopy';
+
+
+dircopy "/tmp/foodir",
+  "/tmp/bardir";
+`e remove-empty-directory
+rmdir "/tmp/foodir";
+`e remove-directory-and-contents
+use File::Path 'remove_tree';
+
+
+remove_tree "/tmp/foodir";
+`e directory-test
+-d "/tmp"
+`e generate-unused-directory
+use File::Temp qw(tempdir);
+
+
+$path = tempdir(DIR=>"/tmp",
+  CLEANUP=>0);
+`e system-temporary-file-directory
+use File::Spec;
+
+
+File::Spec->tmpdir
+`e command-line-arguments-and-script-name
+@ARGV
+
+$0
+`e get-and-set-environment-variable
+$ENV{"HOME"}
+
+$ENV{"PATH") = "/bin";
+`e get-pid-parent-pid
+$$
+getppid
+`e get-user-id-and-name
+$<
+getpwuid($<)
+`e exit
+exit 0;
+`e set-signal-handler
+$SIG{INT} = sub {
+  die "exiting...\n";
+
+};
+`e executable-test
+-x "/bin/ls"
+`e external-command
+system("ls -l /tmp") == 0 or
+  die "ls failed";
+`e escaped-external-command
+$path = <>;
+chomp($path);
+system("ls", "-l", $path) == 0 or
+  die "ls failed";
+`e backticks
+my $files = ``ls -l /tmp``; or
+my $files = qx(ls);
+`e command-line-options-boolean-option-option-with-argument-usage
+use Getopt::Long;
+
+my ($file, $help, $verbose);
+
+my $usage =
+  "usage: $0 [-f FILE] [-v] [ARG ...]\n";
+
+if (!GetOptions("file=s" => \$file,
+                "help" => \$help,
+                "verbose" => \$verbose)) {
+  print $usage;
+  exit 1;
+
+}
+
+if ($help) {
+  print $usage;
+  exit 0;
+
+}
+
+# After call to GetOptions() only
+
+# positional arguments are in @ARGV.
+
+#
+
+# Options can follow positional arguments.
+
+#
+
+# Long options can be preceded by one or two
+
+# hyphens. Single letters can be used if
+
+# only one long option begins with that
+
+# letter.
+
+#
+
+# Single letter options cannot be bundled
+
+# after a single hyphen.
+
+#
+
+# Single letter options must be separated
+
+# from an argument by a space or =.
+`e load-library
+require 'Foo.pm';
+
+# searches @INC for Foo.pm:
+require Foo;
+`e load-library-in-subdirectory
+require 'Foo/Bar.pm';
+
+require Foo::Bar;
+`e hot-patch
+do 'Foo.pm';
+`e load-error
+fatal error if library not found or if last expression in library does not evaluate as true; fatal error parsing library propagates to client
+`e main-routine-in-library
+unless (caller) {
+  code
+
+}
+`e library-path
+@INC
+
+push @INC, "/some/path";
+`e library-path-environment-variable
+$ PERL5LIB=~/lib perl foo.pl
+`e library-path-command-line-option
+$ perl -I ~/lib foo.pl
+`e simple-global-identifiers
+none
+`e multiple-label-identifiers
+all identifiers not declared with my
+`e label-separator
+Foo::Bar::baz();
+`e root-namespace-definition
+# outside of package or in package main:
+
+our $foo = 3;
+
+# inside package:
+
+our $::foo = 3;
+
+our $main::foo = 3;
+`e declare-namespace
+package Foo;
+require Exporter;
+our @ISA = ("Exporter");
+our @EXPORT_OK = qw(bar baz);
+`e child-namespace-declaration
+package Foo::Bar;
+`e namespace-alias
+
+`e unqualified-import-of-namespace
+# imports symbols in @EXPORT:
+use Foo;
+`e unqualified-import-of-all-subnamespaces
+
+`e unqualified-import-of-definitions
+# bar and baz must be in
+
+# @EXPORT or @EXPORT_OK:
+use Foo qw(bar baz);
+`e list-installed-packages-install-a-package
+$ perldoc perllocal
+
+$ cpan -i Moose
+`e package-specification-format
+
+`e define-class
+package Int;
+
+
+sub new {
+  my $class = shift;
+  my $v = $_[0] || 0;
+  my $self = {value => $v};
+  bless $self, $class;
+  $self;
+
+}
+
+
+sub value {
+  my $self = shift;
+  if ( @_ > 0 ) {
+    $self->{'value'} = shift;
+  }
+  $self->{'value'};
+
+}
+`e create-object
+my $i = new Int(); # or
+my $i = Int->new();
+`e instance-variable-visibility
+private; getters and setters must be explicitly defined
+`e get-and-set-instance-variable
+my $v = $i->value;
+
+$i->value($v + 1);
+`e define-method
+sub plus {
+  my $self = shift;
+  $self->value + $_[0];
+
+}
+`e invoke-method
+$i->plus(7)
+`e define-class-method
+
+`e invoke-class-method
+Counter->instances();
+`e define-class-variable
+
+`e get-and-set-class-variable
+
+`e handle-undefined-method-invocation
+our $AUTOLOAD;
+
+sub AUTOLOAD {
+  my $self = shift;
+  my $argc = scalar(@_);
+  print "no def: $AUTOLOAD"
+    . " arity: $argc\n";
+
+}
+`e alias-method
+
+`e destructor
+sub DESTROY {
+  my $self = shift;
+  my $v = $self->value;
+  print "bye, $v\n";
+
+}
+`e subclass
+package Counter;
+
+
+our @ISA = "Int";
+
+
+my $instances = 0;
+
+
+sub new {
+  my $class = shift;
+  my $self = Int->new(@_);
+  $instances += 1;
+  bless $self, $class;
+  $self;
+
+}
+
+
+sub incr {
+  my $self = shift;
+  $self->value($self->value + 1);
+
+}
+
+
+sub instances {
+  $instances;
+
+}
+`e mixin
+
+`e overload-operator
+
+`e object-id
+
+`e inspect-type
+ref([]) eq "ARRAY"
+
+returns empty string if argument not a reference; returns package name for objects
+
+`e basic-types
+SCALAR
+
+ARRAY
+
+HASH
+
+CODE
+
+REF
+
+GLOB
+
+LVALUE
+
+FORMAT
+
+IO
+
+VSTRING
+
+Regexp
+`e inspect-class
+ref($o) eq "Foo"
+`e inspect-class-hierarchy
+
+`e has-method
+$o->can("reverse")
+`e message-passing
+for $i (0..10) {
+  $meth = "phone$i";
+  $o->$meth(undef);
+
+}
+`e eval
+while(<>) {
+  print ((eval), "\n");
+
+}
+`e list-obj-object-methods
+
+`e list-object-attributes
+keys %$o;
+`e list-loaded-libraries
+# relative to directory in lib path:
+
+keys %INC
+
+# absolute path:
+
+values %INC
+`e list-loaded-namespaces
+grep { $_ =~ /::/ } keys %::
+`e inspect-namespace
+keys %URI::
+`e pretty-print
+use Data::Dumper;
+
+%d = (lorem=>1, ipsum=>[2, 3]);
+
+print Dumper(\%d);
+`e source-line-number-and-file-name
+__LINE__
+__FILE__
+`e command-line-documentation
+$ perldoc Math::Trig
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+use Sys::Hostname;
+use IO::Socket;
+
+
+$host = hostname;
+
+$ip = inet_ntoa(
+  (gethostbyname(hostname))[4]);
+
+$host2 = (gethostbyaddr(
+    inet_aton("10.45.234.23"),
+    AF_INET))[0];
+`e http-get
+use LWP::UserAgent;
+
+
+$url = "http://www.google.com";
+
+$r = HTTP::Request->new(GET=>$url);
+
+$ua = LWP::UserAgent->new;
+
+$resp = $ua->request($r);
+my $s = $resp->content();
+`e http-post
+
+`e serve-working-directory
+
+`e absolute-url-from-base-and-relative-url
+use URI;
+
+
+URI->new_abs("analytics",
+  "http://google.com");
+`e parse-url
+use URI;
+
+
+$url = "http://google.com:80/foo?q=3#bar";
+
+$up = URI->new($url);
+
+
+$protocol = $up->scheme;
+
+$hostname = $up->host;
+
+$port = $up->port;
+
+$path = $up->path;
+
+$query_str = $up->query;
+
+$fragment = $up->fragment;
+
+# flat list of alternating keys and values:
+@params = $up->query_form();
+`e url-encode-decode
+use CGI;
+
+
+CGI::escape("lorem ipsum?")
+
+CGI::unescape("lorem%20ipsum%3F")
+`e base64-encode-decode
+use MIME::Base64;
+
+open my $f, "<", "foo.png";
+my $s = do { local $/; <$f> };
+my $b64 = encode_base64($s);
+my $s2 = decode_base64($b64);
+`e test-class
+# cpan -i Test::Class Test::More
+package TestFoo;
+use Test::Class;
+use Test::More;
+use base qw(Test::Class);
+
+sub test_01 : Test {
+  ok(1, "not true!");
+
+}
+
+
+1;
+`e run-tests-run-test-method
+$ cat TestFoo.t
+
+use TestFoo;
+
+Test::Class->runtests;
+
+
+$ perl ./TestFoo.t
+`e equality-assertion
+my $s = "do re me";
+
+is($s, "do re me");
+`e approximate-assertion
+
+`e regex-assertion
+my $s = "lorem ipsum";
+
+like($s, qr/lorem/);
+`e exception-assertion
+use Test::Fatal;
+
+
+ok(exception { 1 / 0 });
+`e mock-method
+
+`e setup
+# in class TestFoo:
+sub make_fixture : Test(setup) {
+  print "setting up";
+
+};
+`e teardown
+# in class TestFoo:
+sub teardown : Test(teardown) {
+  print "tearing down";
+
+};
+`e check-syntax
+$ perl -c foo.pl
+`e stronger-warnings
+$ perl -w foo.pl
+
+$ perl -W foo.pl
+`e lint
+$ perl MO=Lint foo.pl
+`e source-cleanup
+
+`e run-debugger
+$ perl -d foo.pl
+`e debugger-commands
+h l n s b c T ?? ?? p q
+`e benchmark-code
+use Benchmark qw(:all);
+
+$t = timeit(1_000_000, '$i += 1;');
+print timestr($t);
+`e profile-code
+$ perl -d:DProf foo.pl
+
+$ dprofpp

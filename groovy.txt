@@ -292,7 +292,7 @@ returns null
 // ['b', 'c']:
 
 ['a', 'b', 'c', 'd'][1..2]
-`e slice-to-end
+`e drop
 // ['b', 'c', 'd']:
 
 ['a', 'b', 'c', 'd'][1..-1]
@@ -459,7 +459,7 @@ println("Hello, World!")
 System.out.print("Hello, World!\n")
 
 System.out.println("Hello, World!")
-`e open-file
+`e open-file-for-reading
 
 `e open-file-for-writing
 

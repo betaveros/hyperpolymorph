@@ -45,13 +45,13 @@ nestable (read only):
 `e global-variable
 g1, g2 = 7, 8
 `*def swap_globals():
-  global g1, g2
+  `*global g1, g2
   g1, g2 = g2, g1
 `e constant
 `(uppercase identifiers constant by convention)
 PI = 3.14
 `e assignment
-assignments can be chained but otherwise don't return values:
+`(assignments can be chained but otherwise don't return values:)
 v = 1
 `e parallel-assignment
 x, y, z = 1, 2, 3
@@ -213,38 +213,38 @@ random.setstate(seed)
 `e string-type
 `.str
 `e string-literal
-'don\'t say "no"'
-"don't say \"no\""
-"don't " 'say "no"'
-'''don't say "no"'''
-"""don't say "no\""""
+`=['don`%[\']t say "no"']
+`=["don't say `%[\"]no`%[\"]"]
+`=["don't " 'say "no"']
+`=['''don't say "no"''']
+`=["""don't say "no`%[\"]"""]
 `e newline-in-literal
 `(triple quote literals only:)
-'''first line
-second line'''
+`=['''first line
+second line''']
 
-"""first line
-second line"""
+`=["""first line
+second line"""]
 `e literal-escapes
 `(single and double quoted:)
-\newline \\ \' \" \a \b \f \n \r \t \v \ooo \xhh
+`%[\newline \\ \' \" \a \b \f \n \r \t \v \ooo \xhh]
 
 `(Python 3:)
-\uhhhh \Uhhhhhhhh
+`%[\uhhhh \Uhhhhhhhh]
 `e custom-delimiters
 `e here-document
 `e variable-interpolation
 count = 3
 item = 'ball'
-`.print('{count} {item}s'.format(
-  **locals()))
+`.print(`=['{count} {item}s'].format(
+  `+[**]`.locals()))
 `e expression-interpolation
 '1 + 1 = {}'.format(1 + 1)
 `e format
 `(old-style)
-'lorem %s %d %f' % ('ipsum', 13, 3.7)
+`=['lorem `%[%s %d %f]'] % ('ipsum', 13, 3.7)
 `(new-style)
-fmt = 'lorem {0} {1} {2}'
+fmt = `=['lorem `%[{0} {1} {2}]']
 fmt.format('ipsum', 13, 3.7)
 `e are-strings-mutable
 no
@@ -257,7 +257,7 @@ s2 = s + 'World!'
 `(juxtaposition can be used to concatenate literals:)
 s2 = 'Hello, ' "World!"
 `e replicate-string
-hbar = '-' * 80
+hbar = `=['-'] `+* 80
 `e translate-case
 'lorem'.upper()
 'LOREM'.lower()
@@ -288,7 +288,7 @@ string.capwords('lorem ipsum')
 `e split-in-two
 'do re mi fa'.split(`=None, 1)
 `e split-and-keep-delimiters
-re.split('(\s+)', 'do re mi fa')
+re.split(`=['(\s+)'], 'do re mi fa')
 `e string-length
 `.len('lorem')
 `e index-of-substring
@@ -326,7 +326,7 @@ outs = ins[13:] + ins[:13]
 re.sub('(\s)+', r'\1', 'too  much  space')
 `e literal-custom-delimited-literal
 re.compile('lorem|ipsum')
-none
+`(none)
 `e character-class-abbreviations
 . \d \D \s \S \w \W
 `e anchors
@@ -452,10 +452,10 @@ time.sleep(0.5)
 `e timeout
 `*import signal, time
 
-`*class Timeout(Exception): `*pass
+`*class Timeout(`.Exception): `*pass
 
 `*def timeout_handler(signo, fm):
-  raise Timeout()
+  `*raise Timeout()
 
 
 signal.signal(signal.SIGALRM,
@@ -474,12 +474,16 @@ signal.alarm(0)
 a = [1, 2, 3, 4]
 `e list-size
 `.len(a)
+`e empty-list
+[]
 `e empty-test
 `*not a
+`e head
+a[0]
 `e list-lookup
 a[0]
-`(returns last element:)
-a[-1]
+`(negative indices count from end:)
+a[-1] `(last element)
 `e list-update
 a[0] = 'lorem'
 `e list-out-of-bounds-behavior
@@ -495,8 +499,11 @@ i = a.index('y')
 `(select 3rd and 4th elements:)
 a[2:4]
 a[2:2 + 2]
-`e slice-to-end
-a[1:]
+`e drop
+a[2:]
+`e last-and-butlast
+a[-1]
+a[:-1]
 `e manipulate-back
 a = [6, 7, 8]
 
@@ -517,7 +524,7 @@ a.extend([4, 5, 6])
 `e replicate
 a = [`=None] * 10
 
-a = [`=None `*for i `*in range(0, 10)]
+a = [`=None `*for i `*in `.range(0, 10)]
 `e list-copy
 `*import copy
 
@@ -532,7 +539,7 @@ parameter contains address copy
   `.print(i)
 `e iterate-over-indices-and-elements
 a = ['do', 're', 'mi', 'fa']
-`*for i, s `*in enumerate(a):
+`*for i, s `*in `.enumerate(a):
   `.print('%s at index %d' % (s, i))
 `e iterate-over-range
 `(use range() in Python 3:)
@@ -540,13 +547,13 @@ a = ['do', 're', 'mi', 'fa']
   code
 `e instantiate-range-as-array
 a = `.range(1, 11)
-Python 3:
+`(Python 3:)
 a = `.list(`.range(1, 11))
 `e reverse
 a = [1, 2, 3]
 
-
 a[::-1]
+`.reversed(a) `(iterator)
 
 a.reverse()
 `e list-sort
@@ -572,6 +579,9 @@ a = `.list(`.set(a))
 {1,2,3} - {2}
 
 {1,2} ^ {2,3,4}
+`e min-and-max-element
+`.min([1,2,3])
+`.max([1,2,3])
 `e map
 `.map(`*lambda x: x * x, [1,2,3])
 `(or use list comprehension:)
@@ -614,8 +624,8 @@ d['lorem'] = 'ipsum'
 `e is-key-present
 'y' `*in d
 `e delete-entry
-d = {1: True, 0: False}
-del d[1]
+d = {1: `=True, 0: `=False}
+`*del d[1]
 `e from-array-of-pairs-from-even-length-array
 a = [[1,'a'], [2,'b'], [3,'c']]
 d = `.dict(a)
@@ -818,13 +828,13 @@ operator.itemgetter(2)(a)
 `e statement-modifiers
 none
 `e raise-exception
-raise Exception('bad arg')
+`*raise `.Exception('bad arg')
 `e re-raise-exception
 `*try:
-  `*raise Exception('bam!')
+  `*raise `.Exception('bam!')
 `*except:
   `.print('re-raising...')
-  raise
+  `*raise
 `e catch-exception
 `*try:
   risky()
@@ -833,12 +843,12 @@ raise Exception('bad arg')
 `e global-variable-for-last-exception
 last exception: sys.exc_info()[1]
 `e define-exception
-`*class Bam(Exception):
+`*class Bam(`.Exception):
   `*def __init__(self):
     super(Bam, self).__init__('bam!')
 `e catch-exception-by-type
 `*try:
-  raise Bam()
+  `*raise Bam()
 `*except Bam `*as e:
   `.print(e)
 `e finally
@@ -857,3 +867,683 @@ thr = sleep10()
 thr.start()
 `e wait-on-thread
 thr.join()
+
+`e standard-file-handles
+sys.stdin sys.stdout sys.stderr
+`e read-line-from-stdin
+line = sys.stdin.readline()
+`e end-of-file-behavior
+returns string without newline or ''
+`e chomp
+line = line.rstrip('\r\n')
+`e write-line-to-stdout
+`.print('Hello, World!')
+`e printf
+`*import math
+
+`.print('%.2f' % math.pi)
+`e open-file-for-reading
+f = `.open('/etc/hosts')
+`e open-file-for-writing
+f = `.open('/tmp/test', 'w')
+`e set-file-handle-encoding
+`*import codecs
+
+fin = codecs.open('/tmp/foo',
+  encoding='utf-8')
+
+fout = codecs.open('/tmp/bar', 'w',
+  encoding='utf-8')
+`e open-file-for-appending
+f = `.open('/tmp/err.log', 'a')
+`e close-file
+f.close()
+`e close-file-implicitly
+`*with `.open('/tmp/test', 'w') `*as f:
+  f.write('lorem ipsum\n')
+`e i-o-error
+`![raise `.IOError exception]
+`e encoding-error
+`![raise `.UnicodeDecodeError on read]; `![raise `.UnicodeEncodeError on write]
+`e read-line
+f.readline()
+`e iterate-over-file-by-line
+`*for line `*in f:
+  `.print(line)
+`e read-file-into-array-of-strings
+a = f.readlines()
+`e read-file-into-string
+s = f.read()
+`e write-string
+f.write('lorem ipsum')
+`e write-line
+f.write('lorem ipsum\n')
+`e flush-file-handle
+f.flush()
+`e end-of-file-test
+`(?)
+`e get-and-set-file-handle-position
+f.tell()
+
+f.seek(0)
+`e open-temporary-file
+`*import tempfile
+
+f = tempfile.NamedTemporaryFile()
+
+
+f.write('lorem ipsum\n')
+
+`.print("tmp file: %s" % f.name)
+
+
+f.close()
+
+file is removed when file handle is closed
+`e in-memory-file
+`*from StringIO `*import StringIO
+
+f = StringIO()
+
+f.write('lorem ipsum\n')
+s = f.getvalue()
+
+`(Python 3 moved StringIO to the io module)
+`e file-exists-test-file-regular-test
+os.path.exists('/etc/hosts')
+
+os.path.isfile('/etc/hosts')
+`e file-size
+os.path.getsize('/etc/hosts')
+`e is-file-readable-writable-executable
+os.access('/etc/hosts', os.R_OK)
+
+os.access('/etc/hosts', os.W_OK)
+
+os.access('/etc/hosts', os.X_OK)
+`e set-file-permissions
+os.chmod('/tmp/foo', 0755)
+`e last-modification-time
+`*from datetime `*import datetime `*as dt
+
+`(unix epoch:)
+t = os.stat('/etc/passwd').st_mtime
+
+`(datetime object:)
+t2 = dt.fromtimestamp(t)
+`e copy-file-remove-file-rename-file
+`*import shutil
+
+
+shutil.copy('/tmp/foo', '/tmp/bar')
+
+os.remove('/tmp/foo')
+
+shutil.move('/tmp/bar', '/tmp/foo')
+`e create-symlink-symlink-test-readlink
+os.symlink('/etc/hosts',
+  '/tmp/hosts')
+
+os.path.islink('/tmp/hosts')
+
+os.path.realpath('/tmp/hosts')
+`e generate-unused-file-name
+`*import tempfile
+
+f, path = tempfile.mkstemp(
+  prefix='foo',
+  dir='/tmp')
+`e parse-csv
+`*import csv
+
+`*with open('foo.csv') `*as f:
+  cr = csv.reader(f)
+  `*for row `*in cr:
+    print('\t'.join(row))
+`e generate-csv
+`*import csv
+
+`*with open('foo.csv', 'w') `*as f:
+  cw = csv.writer(f)
+  cw.writerow(['one', 'une', 'uno'])
+  cw.writerow(['two', 'deux', 'dos'])
+`e json-generate-parse
+`*import json
+
+s = json.dumps({'t': 1, 'f': 0})
+d = json.loads(s)
+`e generate-xml
+`*import xml.etree.ElementTree as ET
+
+builder = ET.TreeBuilder()
+
+builder.start('a', {})
+
+builder.start('b', {'id': '123'})
+
+builder.data('foo')
+
+builder.end('b')
+
+builder.end('a')
+et = builder.close()
+
+`(<a><b id="123">foo</b></a>:)
+
+`.print(ET.tostring(et))
+`e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
+`*from xml.etree `*import ElementTree
+
+xml = '<a><b><c ref="3">foo</c></b></a>'
+
+`![raises xml.etree.ElementTree.ParseError]
+
+`(if not well-formed:)
+doc = ElementTree.fromstring(xml)
+
+nodes = doc.findall('b/c')
+`.print(`.len(nodes))
+`.print(nodes[0].text)
+
+node = doc.find('b/c')
+`.print(node.text)
+`.print(node.attrib['ref'])
+`e parse-html
+# pip install beautifulsoup4
+`*import bs4
+
+html = `.open('foo.html').read()
+doc = bs4.BeautifulSoup(html)
+
+`*for link `*in doc.find_all('a'):
+  `.print(link.get('href'))
+`e working-directory
+old_dir = os.path.abspath('.')
+
+
+os.chdir('/tmp')
+`e build-pathname
+os.path.join('/etc', 'hosts')
+`e dirname-and-basename
+os.path.dirname('/etc/hosts')
+
+os.path.basename('/etc/hosts')
+`e absolute-pathname-and-tilde-expansion
+`(symbolic links are not resolved:)
+
+os.path.abspath('foo')
+
+os.path.abspath('/foo')
+
+os.path.abspath('../foo')
+
+os.path.abspath('./foo')
+
+os.path.expanduser('~/foo')
+`e iterate-over-directory-by-file
+`*for filename `*in os.listdir('/etc'):
+  `.print(filename)
+`e glob-paths
+`*import glob
+
+`*for path `*in glob.glob('/etc/*'):
+  `.print(path)
+`e make-directory
+dirname = '/tmp/foo/bar'
+`*if `*not os.path.isdir(dirname):
+  os.makedirs(dirname)
+`e recursive-copy
+`*import shutil
+
+
+shutil.copytree('/tmp/foodir',
+  '/tmp/bardir')
+`e remove-empty-directory
+os.rmdir('/tmp/foodir')
+`e remove-directory-and-contents
+`*import shutil
+
+
+shutil.rmtree('/tmp/foodir')
+`e directory-test
+os.path.isdir('/tmp')
+`e generate-unused-directory
+`*import tempfile
+
+path = tempfile.mkdtemp(dir='/tmp',
+  prefix='foo')
+`e system-temporary-file-directory
+`*import tempfile
+
+
+tempfile.gettempdir()
+`e command-line-arguments-and-script-name
+sys.argv[1:]
+
+sys.argv[0]
+`e get-and-set-environment-variable
+os.getenv('HOME')
+
+
+os.environ['PATH'] = '/bin'
+`e get-pid-parent-pid
+os.getpid()
+
+os.getppid()
+`e get-user-id-and-name
+`*import getpass
+
+
+os.getuid()
+
+getpass.getuser()
+`e exit
+sys.exit(0)
+`e set-signal-handler
+`*import signal
+
+`*def handler(signo, frame):
+  `.print('exiting...')
+  sys.exit(1)
+
+
+signal.signal(signal.SIGINT, handler)
+`e executable-test
+os.access('/bin/ls', os.X_OK)
+`e external-command
+`*if os.system('ls -l /tmp'):
+  `*raise `.Exception('ls failed')
+`e escaped-external-command
+`*import subprocess
+
+cmd = ['ls', '-l', '/tmp']
+`*if subprocess.call(cmd):
+  `*raise `.Exception('ls failed')
+`e backticks
+`*import subprocess
+
+cmd = ['ls', '-l', '/tmp']
+files = subprocess.check_output(cmd)
+`e command-line-options-boolean-option-option-with-argument-usage
+`*import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('positional_args',
+  nargs='*',
+  metavar='ARG')
+
+parser.add_argument('--file', '-f',
+  dest='file')
+
+parser.add_argument('--verbose', '-v',
+  dest='verbose',
+  action='store_true')
+
+args = parser.parse_args()
+
+the_file = args.file
+verbose = args.verbose
+
+`(The flags -h and --help and the usage message are generated automatically. Positional arguments are in args.positional_args. Options can follow positional arguments.)
+`e load-library
+`(searches sys.path for foo.pyc or foo.py:)
+`*import foo
+`e load-library-in-subdirectory
+`(foo must contain __init__.py file)
+`*import foo.bar
+`e hot-patch
+reload(foo)
+`e load-error
+`![raises `.ImportError if library not found; exceptions generated when parsing library propagate to client]
+`e main-routine-in-library
+`*if __name__ == '__main__':
+  `(code)
+`e library-path
+sys.path
+
+
+sys.path.append('/some/path')
+`e library-path-environment-variable
+`$[PYTHONPATH=~/lib python foo.py]
+`e library-path-command-line-option
+`e simple-global-identifiers
+built-in functions
+`e multiple-label-identifiers
+modules
+`e label-separator
+foo.bar.baz()
+`e root-namespace-definition
+`e declare-namespace
+put declarations in foo.py
+`e child-namespace-declaration
+foo must be in sys.path:
+
+`$[mkdir foo]
+`$[touch foo/__init__.py]
+`$[touch foo/bar.py]
+`e namespace-alias
+`*import foo `*as fu
+`e unqualified-import-of-namespace
+`*from foo `*import *
+`e unqualified-import-of-all-subnamespaces
+`(subnamespaces in list __all__ of foo/__init__.py are imported)
+`*from foo `*import *
+`e unqualified-import-of-definitions
+`*from foo `*import bar, baz
+`e list-installed-packages-install-a-package
+`$[pip freeze]
+`$[pip install jinja2]
+`e package-specification-format
+`(in setup.py:)
+#!/usr/bin/env python
+`*from distutils.core `*import setup
+setup(
+  name='foo',
+  author='Joe Foo',
+  version='1.0',
+  description='a package',
+  py_modules=['foo'])
+`e define-class
+`*class Int(class):
+  `*def __init__(self, v=0):
+    self.value = v
+`e create-object
+i = Int()
+i2 = Int(7)
+`e instance-variable-visibility
+public; attributes starting with underscore private by convention
+`e get-and-set-instance-variable
+v = i.value
+
+i.value = v + 1
+`e define-method
+`*def plus(self,v):
+  `*return self.value + v
+`e invoke-method
+i.plus(7)
+`e define-class-method
+@classmethod
+`*def get_instances(cls):
+  `*return Counter.instances
+`e invoke-class-method
+Counter.get_instances
+`e define-class-variable
+
+`e get-and-set-class-variable
+
+`e handle-undefined-method-invocation
+`*def __getattr__(self, name):
+  s = 'no def: ' + name + ' arity: %d'
+
+  `*return `*lambda *a: print(s % len(a))
+`e alias-method
+
+`e destructor
+`*def __del__(self):
+  `.print('bye, %d' % self.value)
+`e subclass
+`*class Counter(Int):
+
+  instances = 0
+
+  `*def __init__(self, v=0):
+    Counter.instances += 1
+    Int.__init__(self, v)
+
+  `*def incr(self):
+    self.value += 1
+`e mixin
+
+`e overload-operator
+
+`e object-id
+`.id(o)
+`e inspect-type
+`.type([]) == `.list
+`e basic-types
+`.NoneType
+`.bool
+`.int
+`.long
+`.float
+`.str
+SRE_Pattern
+datetime
+`.list
+array
+`.dict
+`.object
+`.file
+`e inspect-class
+o.__class__ == Foo
+
+`.isinstance(o, Foo)
+`e inspect-class-hierarchy
+o.__class__.__bases__
+`e has-method
+hasattr(o, 'reverse')
+`e message-passing
+`*for i `*in range(1,10):
+  getattr(o, 'phone'+`.str(i))(`=None)
+`e eval
+argument of eval must be an expression:
+`*while `=True:
+  `.print(`.eval(sys.stdin.readline()))
+`e list-obj-object-methods
+[m `*for m `*in dir(o)
+  `*if callable(getattr(o,m))]
+`e list-object-attributes
+`.dir(o)
+`e list-loaded-libraries
+
+`e list-loaded-namespaces
+`.dir()
+`e inspect-namespace
+`*import urlparse
+
+
+`.dir(urlparse)
+`e pretty-print
+`*import pprint
+
+d = {'lorem':1, 'ipsum':[2,3]}
+
+
+pprint.PrettyPrinter().pprint(d)
+`e source-line-number-and-file-name
+`*import inspect
+
+cf = inspect.currentframe()
+
+cf.f_lineno
+
+cf.f_code.co_filename
+`e command-line-documentation
+`$[pydoc math]
+
+`$[pydoc math.atan2]
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+`*import socket
+
+host = socket.gethostname()
+ip = socket.gethostbyname(host)
+host2 = socket.gethostbyaddr(ip)[0]
+`e http-get
+`*import httplib
+
+url = 'www.google.com'
+conn = httplib.HTTPConnection(url)
+
+conn.request("GET", '/')
+
+resp = conn.getresponse()
+
+`*if resp.status == httplib.OK:
+  s = resp.read()
+`e http-post
+`*import httplib
+`*import urllib
+
+url = 'www.acme.com'
+conn = httplib.HTTPConnection(url)
+data = urllib.urlencode({
+  'item': 'anvil',
+  'qty': 1})
+
+conn.request('POST', '/orders', data)
+
+resp = conn.getresponse()
+
+`*if resp.status == httplib.OK:
+  s = resp.read()
+`e serve-working-directory
+`$[python -m SimpleHTTPServer 8000]
+`e absolute-url-from-base-and-relative-url
+`*import urlparse
+
+
+urlparse.urljoin('http://google.com',
+  'analytics')
+`e parse-url
+`(Python 3 location: urllib.parse)
+`*import urlparse
+
+url = 'http://google.com:80/foo?q=3#bar'
+up = urlparse.urlparse(url)
+
+protocol = up.scheme
+hostname = up.hostname
+port = up.port
+path = up.path
+query_str = up.query
+fragment = up.fragment
+
+`(returns dict of lists:)
+params = urlparse.parse_qs(query_str)
+`e url-encode-decode
+`(Python 3 location: urllib.parse)
+`*import urllib
+
+
+urllib.quote_plus("lorem ipsum?")
+
+urllib.unquote_plus("lorem+ipsum%3F")
+`e base64-encode-decode
+`*import base64
+
+s = `.open('foo.png').read()
+b64 = base64.b64encode(s)
+s2 = base64.b64decode(b64)
+`e test-class
+`*import unittest
+
+`*class TestFoo(unittest.TestCase):
+  `*def test_01(self):
+    self.assertTrue(True, 'not True!')
+
+`*if __name__ == `=['__main__']:
+  unittest.main()
+`e run-tests-run-test-method
+`$[python test_foo.py]
+
+`$[python test_foo.py TestFoo.test_01]
+`e equality-assertion
+s = 'do re me'
+self.assertEqual('do re me',
+  s,
+  's: {}'.format(s))
+`e approximate-assertion
+x = 10.0 * (1.0 / 3.0)
+y = 10.0 / 3.0
+
+`(default for delta is 0.1**7)
+self.assertAlmostEqual(x, y, delta=0.1**6)
+`e regex-assertion
+s = 'lorem ipsum'
+`(uses re.search, not re.match:)
+self.assertRegexpMatches(s, 'lorem')
+`e exception-assertion
+a = []
+`*with self.assertRaises(IndexError):
+  a[0]
+`e mock-method
+# pip install mock
+`*import mock
+
+foo = Foo()
+
+foo.run = mock.MagicMock(return_value=7)
+
+self.assertEqual(7, foo.run(13))
+
+foo.run.assert_called_once_with(13)
+`e setup
+`(in class TestFoo:)
+`*def setUp(self):
+  `.print('setting up')
+`e teardown
+`(in class TestFoo:)
+`*def tearDown(self):
+  `.print('tearing down')
+`e check-syntax
+`*import py_compile
+
+`(precompile to bytecode:)
+
+py_compile.compile('foo.py')
+`e stronger-warnings
+`$[python -t foo.py]
+
+`$[python -3t foo.py]
+`e lint
+`$[sudo pip install pylint]
+
+`$[pylint foo.py]
+`e source-cleanup
+`$[sudo pip install pep8]
+
+`$[pep8 foo.py]
+`e run-debugger
+`$[python -m pdb foo.py]
+`e debugger-commands
+h l n s b c w u d p q
+`e benchmark-code
+`*import timeit
+
+
+timeit.timeit('i += 1',
+  'i = 0',
+  number=1000000)
+`e profile-code
+`$[python -m cProfile foo.py]
+`e java-version
+Jython 2.5
+compatible with Python 2.5 :(
+`e java-repl
+`$[jython]
+`e java-interpreter
+`$[jython]
+`e java-compiler
+`e java-prologue
+`*import java
+`e java-new
+rnd = java.util.Random()
+`e java-method
+rnd.nextFloat()
+`e java-import
+`*from java.util `*import Random
+rnd = Random()
+`e non-bundled-java-libraries
+`*import sys
+sys.path.append('path/to/mycode.jar')
+`*import MyClass
+`e java-shadowing-avoidance
+`*import java.io as javaio
+`e convert-native-array-to-java-array
+`*import jarray
+jarray.array([1, 2, 3], 'i')
+`e are-java-classes-subclassable
+yes
+`e are-java-class-open
+no

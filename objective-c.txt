@@ -404,7 +404,7 @@ raises NSRangeException
 
 `e slice
 
-`e slice-to-end
+`e drop
 
 `e manipulate-back
 [a addObject:@"hello"];
@@ -1030,7 +1030,7 @@ superclass
 
 `e teardown
 
-`e flag-for-stronger-warnings
+`e stronger-warnings
 
 `e suppress-warnings
 

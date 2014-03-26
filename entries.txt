@@ -209,17 +209,15 @@ empty-test-and-clear: empty test / and clear
 head: head
 list-lookup: lookup
 list-update: update
-out-of-bounds-behavior: out-of-bounds behavior
+list-out-of-bounds-behavior: out-of-bounds behavior
 index-of-element: index of element
 cons: cons
 slice: slice / by endpoints, by length
-slice-to-end: slice to end
-tail: tail
+take: slice from start, or take
+drop: slice to end, or drop
 last-and-butlast: last / and butlast
 manipulate-back: manipulate back
 manipulate-front: manipulate front
-take: take
-drop: drop
 concatenate: concatenate
 concatenate-two-lists-list-of-lists: concatenate / two lists, list of lists
 replicate: replicate
@@ -362,12 +360,11 @@ catch-exception: catch exception
 catch-exception-by-type: catch exception by type
 catch-all-handler: catch-all handler
 global-variable-for-last-exception: global variable for last exception
-finally-ensure: finally/ensure
+finally: finally/ensure
 multiple-handlers: multiple handlers
 uncaught-exception-behavior: uncaught exception behavior
 error-message: error message
 system-call-errno: system call errno
-finally-clause: finally clause
 exception-specification: exception specification
 assert: assert
 # errors
@@ -392,21 +389,28 @@ open-file: open file
 open-file-for-reading: open file for reading
 open-file-for-writing: open file for writing
 open-file-for-appending: open file for appending
-end-of-file-behavior: end-of-file behavior
-close-file: close file
-i-o-errors: i/o errors
+set-file-handle-encoding: set file handle encoding
 read-line: read line
-iterate-over-file-by-line: iterate over file by line
-read-file-into-array-of-strings: read file into array of strings
-read-file-into-string: read file into string
 chomp: chomp
 read-file: read file
 read-from-file: read from file
+iterate-over-file-by-line: iterate over file by line
+read-file-into-string: read file into string
+read-file-into-array-of-strings: read file into array of strings
 write-to-file: write to file
 write-string: write string
+write-line: write line
 flush-file-handle: flush file handle
+close-file: close file
+close-file-implicitly: close file implicitly
 end-of-file-test: end-of-file test
+end-of-file-behavior: end-of-file behavior
+i-o-error: i/o error
+i-o-errors: i/o errors
+encoding-error: encoding error
 get-and-set-filehandle-position: get and set filehandle position
+open-temporary-file: open temporary file
+in-memory-file: in memory file
 # files
 file-exists-test-file-regular-test: file exists test, file regular test
 file-size: file size
@@ -415,16 +419,25 @@ set-file-permissions: set file permissions
 copy-file-remove-file-rename-file: copy file, remove file, rename file
 create-symlink-symlink-test-readlink: create symlink, symlink test, readlink
 generate-unused-file-name: generate unused file name
+last-modification-time: last modification time
 # file formats
 csv: csv
+parse-csv: parse csv
+generate-csv: generate csv
+generate-xml: generate xml
+parse-html: parse html
 json: json
+json-generate-parse: json generate/parse
 build-xml: build xml
 parse-xml: parse xml
+parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query: parse xml / all nodes matching xpath query; first node matching xpath query
 parse-html: parse html
 # directories
+working-directory: working directory
 build-pathname: build pathname
 dirname-and-basename: dirname and basename
 absolute-pathname: absolute pathname
+absolute-pathname-and-tilde-expansion: absolute pathname / and tilde expansion
 iterate-over-directory-by-file: iterate over directory by file
 glob-paths: glob paths
 make-directory: make directory
@@ -432,12 +445,14 @@ recursive-copy: recursive copy
 remove-empty-directory: remove empty directory
 remove-directory-and-contents: remove directory and contents
 directory-test: directory test
+generate-unused-directory: generate unused directory
 generate-unused-directory-name: generate unused directory name
 system-temporary-file-directory: system temporary file directory
 # processes and environment
 exit: exit
 program-name: program name
 command-line-arguments: command line arguments
+command-line-arguments-and-script-name: command line arguments / and script name
 signature-of-main: signature of main
 first-argument: first argument
 getopt: getopt
@@ -448,13 +463,36 @@ environment-variable: environment variable
 iterate-through-environment-variables: iterate through environment variables
 exit: exit
 set-signal-handler: set signal handler
+executable-test: executable test
 external-command: external command
 escaped-external-command: escaped external command
 backticks: backticks
+# option parsing
+command-line-options-boolean-option-option-with-argument-usage: command line options / boolean option, option with argument, usage
 # libraries and namespaces
 library: library
+load-library: load library
+load-library-in-subdirectory: load library in subdirectory
+hot-patch: hot patch
+load-error: load error
 standard-library-name: standard library name
+main-routine-in-library: main routine in library
+library-path: library path
+library-path-environment-variable: library path environment variable
+library-path-command-line-option: library path command line option
 declare-namespace: declare namespace
+simple-global-identifiers: simple global identifiers
+multiple-label-identifiers: multiple label identifiers
+label-separator: label separator
+root-namespace-definition: root namespace definition
+declare-namespace: namespace declaration
+child-namespace-declaration: child namespace declaration
+namespace-alias: namespace alias
+unqualified-import-of-namespace: unqualified import of namespace
+unqualified-import-of-all-subnamespaces: unqualified import of all subnamespaces
+unqualified-import-of-definitions: unqualified import of definitions
+list-installed-packages-install-a-package: list installed packages, install a package
+package-specification-format: package specification format
 namespace-example: namespace example
 namespaces: namespaces
 file-name-restrictions: file name restrictions
@@ -521,6 +559,8 @@ class-definition-location: class definition location
 constructor: constructor
 create-object: create object
 create-blank-object: create blank object
+instance-variable-visibility: instance variable visibility
+get-and-set-instance-variable: get and set instance variable
 set-attribute: set attribute
 get-attribute: get attribute
 destructor: destructor
@@ -529,15 +569,23 @@ define-method: define method
 invoke-method: invoke method
 define-class-method: define class method
 invoke-class-method: invoke class method
+define-class-variable: define class variable
+get-and-set-class-variable: get and set class variable
+handle-undefined-method-invocation: handle undefined method invocation
 clone-object: clone object
 object-literal: object literal
 name-of-receiver: name of receiver
 access-control: access control
 anonymous-class: anonymous class
+alias-method: alias method
+destructor: destructor
 # polymorphism
+subclass: subclass
 dynamic-dispatch: dynamic dispatch
 static-dispatch: static dispatch
+mixin: mixin
 overload-function: overload function
+overload-operator: overload operator
 subclass: subclass
 inheritance: inheritance
 invoking-superclass-constructor: invoking superclass constructor
@@ -548,6 +596,11 @@ root-class-methods: root class methods
 get-type-class-of-object: get type class of object
 get-type-class-from-string: get type class from string
 get-type-class-from-type-identifier: get type class from type identifier
+inspect-class: inspect class
+inspect-class-hierarchy: inspect class hierarchy
+object-id: object id
+inspect-type: inspect type
+basic-types: basic types
 class-name: class name
 get-methods: get methods
 has-method: has method
@@ -558,31 +611,49 @@ message-passing: message passing
 eval: eval
 inspect-methods: inspect methods
 inspect-attributes: inspect attributes
+list-obj-object-methods: list-obj object methods
+list-object-attributes: list object attributes
+list-loaded-libraries: list loaded libraries
+list-loaded-namespaces: list loaded namespaces
+inspect-namespace: inspect namespace
+pretty-print: pretty print
+source-line-number-and-file-name: source line number and file name
+command-line-documentation: command line documentation
 # net and web
 get-local-hostname-dns-lookup-reverse-dns-lookup: get local hostname, dns lookup, reverse dns lookup
 http-get: http get
 http-post: http post
+serve-working-directory: serve working directory
 absolute-url: absolute url
+absolute-url-from-base-and-relative-url: absolute url / from base and relative url
 parse-url: parse url
 url-encode-decode: url encode/decode
 base64-encode-decode: base64 encode/decode
 # unit tests
 test-class: test class
+run-tests-run-test-method: run tests, run test method
 run-all-tests: run all tests
 equality-assertion: equality assertion
 approximate-assertion: approximate assertion
+regex-assertion: regex assertion
 exception-assertion: exception assertion
+mock-method: mock method
 setup: setup
 teardown: teardown
 # debugging and profiling
-flag-for-stronger-warnings: flag for stronger warnings
+check-syntax: check syntax
+stronger-warnings: flag for stronger warnings
+stronger-warnings: flags for stronger and strongest warnings
 suppress-warnings: suppress warnings
 treat-warnings-as-errors: treat warnings as errors
 run-debugger: run debugger
 debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-show-breakpoints-delete-breakpoint-continue-backtrace-up-stack-down-stack-print-run-quit: debugger commands / help, list source, (re)load executable, next, step, set breakpoint, show breakpoints, delete breakpoint, continue, backtrace, up stack, down stack, print, run, quit
+debugger-commands: debugger commands
 benchmark-code: benchmark code
 profile-code: profile code
 memory-tool: memory tool
+lint: lint
+source-cleanup: source cleanup
 # repl
 invoke-repl: invoke repl
 repl-limitations: repl limitations
@@ -595,3 +666,17 @@ load-source-file: load source file
 load-package: load package
 search-path: search path
 set-search-path-on-command-line: set search path on command line
+# java interoperation
+java-version: version
+java-repl: repl
+java-interpreter: interpreter
+java-compiler: compiler
+java-prologue: prologue
+java-new: new
+java-method: method
+java-import: import
+non-bundled-java-libraries: non-bundled java libraries
+java-shadowing-avoidance: shadowing avoidance
+convert-native-array-to-java-array: convert native array to java array
+are-java-classes-subclassable: are java classes subclassable?
+are-java-class-open: are java class open?

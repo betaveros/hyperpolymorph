@@ -269,7 +269,7 @@ lindex [lsearch -all {6 7 7 8} 7] end
 # returns -1 if not found
 `e slice
 lrange $a 1 2
-`e slice-to-end
+`e drop
 lrange {"a" "b" "c" "d"} 1 end
 `e concatenate
 set a [concat {1 2 3} {4 5 6}]
@@ -429,7 +429,7 @@ stderr
 gets stdin line
 `e write-line-to-stdout
 puts "Hello, World!"
-`e open-file
+`e open-file-for-reading
 set f [open "/tmp/foo"]
 `e open-file-for-writing
 set f [open "/tmp/foo" "w"]

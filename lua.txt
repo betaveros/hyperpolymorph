@@ -246,7 +246,7 @@ returns nil
 none; use for and ipairs
 `e slice
 none
-`e slice-to-end
+`e drop
 none
 `e concatenate
 none
@@ -419,7 +419,7 @@ io.stderr
 line = io.stdin:read()
 `e write-line-to-stdout
 print "Hello, World!"
-`e open-file
+`e open-file-for-reading
 f = io.open("/tmp/foo")
 `e open-file-for-writing
 f = io.open("/tmp/foo", "w")

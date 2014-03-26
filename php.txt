@@ -478,7 +478,7 @@ $i = array_search("y", $a);
 none
 
 array_slice($a, 2, 2)
-`e slice-to-end
+`e drop
 array_slice($a, 1)
 `e manipulate-back
 $a = [6, 7, 8];
@@ -885,3 +885,654 @@ none
 none
 `e wait-on-thread
 
+`e standard-file-handles
+only set by CLI; not set when reading script from stdin:
+STDIN STDOUT STDERR
+`e read-line-from-stdin
+$line = fgets(STDIN);
+`e end-of-file-behavior
+returns string without newline or FALSE
+`e chomp
+chop($line);
+`e write-line-to-stdout
+echo "Hello, World!\n";
+`e printf
+printf("%.2f\n", M_PI);
+`e open-file-for-reading
+$f = fopen("/etc/hosts", "r");
+`e open-file-for-writing
+$f = fopen("/tmp/test", "w");
+`e set-file-handle-encoding
+
+`e open-file-for-appending
+$f = fopen("/tmp/test", "a");
+`e close-file
+fclose($f);
+`e close-file-implicitly
+none
+`e i-o-error
+return false value and write warning to stderr
+`e encoding-error
+
+`e read-line
+$line = fgets($f);
+`e iterate-over-file-by-line
+while (!feof($f)) {
+  $line = fgets($f);
+  echo $line;
+
+}
+`e read-file-into-array-of-strings
+$a = file("/etc/hosts");
+`e read-file-into-string
+$s = file_get_contents(
+  "/etc/hosts");
+`e write-string
+fwrite($f, "lorem ipsum");
+`e write-line
+fwrite($f, "lorem ipsum");
+`e flush-file-handle
+CLI output isn't buffered
+
+fflush($f);
+`e end-of-file-test
+feof($f)
+`e get-and-set-file-handle-position
+ftell($f)
+
+fseek($f, 0);
+`e open-temporary-file
+$f = tmpfile();
+
+
+fwrite($f, "lorem ipsum\n");
+
+# no way to get file name
+
+
+fclose($f);
+
+file is removed when file handle is closed
+`e in-memory-file
+$meg = 1024 * 1024;
+
+$mem = "php://temp/maxmemory:$meg";
+
+$f = fopen($mem, "r+");
+
+fputs($f, "lorem ipsum");
+
+rewind($f);
+
+$s = fread($f, $meg);
+`e file-exists-test-file-regular-test
+file_exists("/etc/hosts")
+
+is_file("/etc/hosts")
+`e file-size
+filesize("/etc/hosts")
+`e is-file-readable-writable-executable
+is_readable("/etc/hosts")
+
+is_writable("/etc/hosts")
+
+is_executable("/etc/hosts")
+`e set-file-permissions
+chmod("/tmp/foo", 0755);
+`e last-modification-time
+# unix epoch:
+
+$t = stat('/etc/passwd')['mtime'];
+
+# DateTime object:
+
+$t2 = new DateTime('UTC');
+
+$t2->setTimestamp($t);
+`e copy-file-remove-file-rename-file
+copy("/tmp/foo", "/tmp/bar");
+
+unlink("/tmp/foo");
+
+rename("/tmp/bar", "/tmp/foo");
+`e create-symlink-symlink-test-readlink
+symlink("/etc/hosts", "/tmp/hosts");
+
+is_link("/etc/hosts")
+
+readlink("/tmp/hosts")
+`e generate-unused-file-name
+$path = tempnam("/tmp", "foo");
+
+$f = fopen($path, "w");
+`e parse-csv
+$f = fopen("no-header.csv", "r");
+while (($row = fgetcsv($f)) != FALSE) {
+  echo implode("\t", $row) . "\n";
+
+}
+`e generate-csv
+
+`e json-generate-parse
+$a = array("t" => 1, "f" => 0);
+
+$s = json_encode($a);
+
+$d = json_decode($s, TRUE);
+`e generate-xml
+$xml = "<a></a>";
+
+$sxe = new SimpleXMLElement($xml);
+
+$b = $sxe->addChild("b", "foo");
+
+$b->addAttribute("id", "123");
+
+# <a><b id="123">foo</b></a>:
+echo $sxe->asXML();
+`e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
+$xml = "<a><b><c ref='3'>foo</c></b></a>";
+
+# returns NULL and emits warning if not
+
+# well-formed:
+
+$doc = simplexml_load_string($xml);
+
+
+$nodes = $doc->xpath("/a/b/c");
+echo count($nodes);
+echo $nodes[0];
+
+
+$node = $nodes[0];
+echo $node;
+echo $node["ref"];
+`e parse-html
+$html = file_get_contents("foo.html");
+
+$doc = new DOMDocument;
+
+$doc->loadHTML($html);
+
+$xpath = new DOMXPath($doc);
+
+
+$nodes = $xpath->query("//a/@href");
+foreach($nodes as $href) {
+  echo $href->nodeValue;
+
+}
+`e working-directory
+$old_dir = getcwd();
+
+
+chdir("/tmp");
+`e build-pathname
+"/etc" . DIRECTORY_SEPARATOR . "hosts"
+`e dirname-and-basename
+dirname("/etc/hosts")
+
+basename("/etc/hosts")
+`e absolute-pathname-and-tilde-expansion
+# file must exist; symbolic links are
+
+# resolved:
+
+realpath("foo")
+
+realpath("/foo")
+
+realpath("../foo")
+
+realpath("./foo")
+# no function for tilde expansion
+`e iterate-over-directory-by-file
+if ($dir = opendir("/etc")) {
+  while ($file = readdir($dir)) {
+    echo "$file\n";
+  }
+  closedir($dir);
+
+}
+`e glob-paths
+foreach (glob("/etc/*") as $file) {
+  echo "$file\n";
+
+}
+`e make-directory
+mkdir("/tmp/foo/bar", 0755, TRUE);
+`e recursive-copy
+none
+`e remove-empty-directory
+rmdir("/tmp/foodir");
+`e remove-directory-and-contents
+none
+`e directory-test
+is_dir("/tmp")
+`e generate-unused-directory
+
+`e system-temporary-file-directory
+sys_get_temp_dir()
+`e command-line-arguments-and-script-name
+$argv
+
+$_SERVER["SCRIPT_NAME"]
+`e get-and-set-environment-variable
+getenv("HOME")
+
+
+putenv("PATH=/bin");
+`e get-pid-parent-pid
+posix_getpid()
+
+posix_getppid()
+`e get-user-id-and-name
+$uid = posix_getuid();
+
+$uinfo = posix_getpwuid($uid);
+
+$username = $uinfo["name"];
+`e exit
+exit(0);
+`e set-signal-handler
+
+`e executable-test
+is_executable("/bin/ls")
+`e external-command
+system("ls -l /tmp", $retval);
+if ($retval) {
+  throw new Exception("ls failed");
+
+}
+`e escaped-external-command
+$path = chop(fgets(STDIN));
+
+$safe = escapeshellarg($path);
+
+system("ls -l " . $safe, $retval);
+if ($retval) {
+  throw new Exception("ls failed");
+
+}
+`e backticks
+$files = ``ls -l /tmp``;
+`e command-line-options-boolean-option-option-with-argument-usage
+$usage = "usage: " .
+  $_SERVER["SCRIPT_NAME"] .
+  " [-f FILE] [-v] [ARG ...]\n";
+
+
+$opts = getopt("f:hv",
+  array("file:", "help", "verbose"));
+
+if (array_key_exists("h", $opts) ||
+    array_key_exists("help", $opts)) {
+  echo $usage;
+  exit(0);
+
+}
+
+
+$file = $opts["f"] ? $opts["f"] :
+  $opts["file"];
+
+if (array_key_exists("v", $opts) ||
+    array_key_exists("verbose", $opts)) {
+  $verbose = TRUE;
+
+}
+
+# Processing stops at first positional
+
+# argument.
+
+#
+
+# Unrecognized options are ignored.
+
+# An option declared to have an argument
+
+# is ignored if the argument is not
+
+# provided on the command line.
+
+#
+
+# getopt() does not modify $argv or
+
+# provide means to identify positional
+
+# arguments.
+`e load-library
+require_once("foo.php");
+`e load-library-in-subdirectory
+require_once('foo/bar.php');
+`e hot-patch
+require("foo.php");
+`e load-error
+require and require_once raise fatal error if library not found; include and include_once emit warnings
+`e main-routine-in-library
+none
+`e library-path
+$libpath = ini_get("include_path");
+
+
+ini_set("include_path",
+  $libpath . ":/some/path");
+`e library-path-environment-variable
+none
+`e library-path-command-line-option
+none
+`e simple-global-identifiers
+variables defined outside of functions or with global keyword
+`e multiple-label-identifiers
+classes, interfaces, functions, and constants
+`e label-separator
+\Foo\Bar\baz();
+`e root-namespace-definition
+\foo
+`e declare-namespace
+namespace Foo;
+`e child-namespace-declaration
+namespace Foo\Bar;
+`e namespace-alias
+use Foo as Fu;
+`e unqualified-import-of-namespace
+none, but a long module name can be shortened
+`e unqualified-import-of-all-subnamespaces
+
+`e unqualified-import-of-definitions
+only class names can be imported
+`e list-installed-packages-install-a-package
+$ pear list
+
+$ pear install Math_BigInteger
+`e package-specification-format
+
+`e define-class
+class Int
+
+{
+  public $value;
+  function __construct($int=0)
+  {
+    $this->value = $int;
+  }
+
+}
+`e create-object
+$i = new Int();
+
+$i2 = new Int(7);
+`e instance-variable-visibility
+visibility must be declared
+`e get-and-set-instance-variable
+$v = $i->value;
+
+$i->value = $v + 1;
+`e define-method
+function plus($i)
+
+{
+  return $this->value + $i;
+
+}
+`e invoke-method
+$i->plus(7)
+`e define-class-method
+
+`e invoke-class-method
+Counter::getInstances()
+`e define-class-variable
+
+`e get-and-set-class-variable
+
+`e handle-undefined-method-invocation
+function __call($name, $args)
+
+{
+  $argc = count($args);
+  echo "no def: $name " .
+    "arity: $argc\n";
+
+}
+`e alias-method
+
+`e destructor
+function __destruct()
+
+{
+  echo "bye, $this->value\n";
+
+}
+`e subclass
+class Counter extends Int
+
+{
+  private static $instances = 0;
+  function __construct($int=0)
+  {
+    Counter::$instances += 1;
+    parent::__construct($int);
+  }
+  function incr()
+  {
+    $this->value++;
+  }
+  static function getInstances()
+  {
+    return $instances;
+  }
+
+}
+`e mixin
+
+`e overload-operator
+
+`e object-id
+
+`e inspect-type
+gettype(array()) == "array"
+
+returns object for objects
+`e basic-types
+NULL
+
+boolean
+
+integer
+
+double
+
+string
+
+array
+
+object
+
+resource
+
+unknown type
+`e inspect-class
+returns FALSE if not an object:
+
+get_class($o) == "Foo"
+`e inspect-class-hierarchy
+get_parent_class($o)
+`e has-method
+method_exists($o, "reverse")
+`e message-passing
+for ($i = 1; $i <= 10; $i++) {
+  call_user_func(array($o,
+    "phone$i"), NULL);
+
+}
+`e eval
+eval evaluates to argument of return statement or NULL:
+while ($line = fgets(STDIN)) {
+  echo eval($line) . "\n";
+
+}
+`e list-obj-object-methods
+get_class_methods($o)
+`e list-object-attributes
+get_object_vars($o)
+`e list-loaded-libraries
+
+`e list-loaded-namespaces
+
+`e inspect-namespace
+
+`e pretty-print
+$d = array("lorem"=>1,
+  "ipsum"=>array(2,3));
+
+
+print_r($d);
+`e source-line-number-and-file-name
+__LINE__
+__FILE__
+`e command-line-documentation
+none
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+$host = gethostname();
+
+$ip = gethostbyname($host);
+
+$host2 = gethostbyaddr($ip);
+`e http-get
+$url = 'http://www.google.com';
+
+$s = file_get_contents($url);
+`e http-post
+
+`e serve-working-directory
+$ php -S localhost:8000
+`e absolute-url-from-base-and-relative-url
+none
+`e parse-url
+$url = "http://google.com:80/foo?q=3#bar";
+
+$up = parse_url($url);
+
+
+$protocol = $up["scheme"];
+
+$hostname = $up["host"];
+
+$port = $up["port"];
+
+$path = $up["path"];
+
+$query_str = $up["query"];
+
+$fragment = $up["fragment"];
+
+# $params is associative array; if keys
+
+# are reused, later values overwrite
+
+# earlier values
+
+parse_str($query_str, $params);
+`e url-encode-decode
+urlencode("lorem ipsum?")
+
+urldecode("lorem+ipsum%3F")
+`e base64-encode-decode
+$s = file_get_contents("foo.png");
+
+$b64 = base64_encode($s);
+
+$s2 = base64_decode($b64);
+`e test-class
+# pear install pear.phpunit.de/PHPUnit
+
+
+<?php
+Class FooTest extends
+  PHPUnit_Framework_TestCase
+
+{
+  public function test_01()
+  {
+    $this->assertTrue(true,
+      "not true!");
+  }
+
+}
+?>
+`e run-tests-run-test-method
+$ phpunit test_foo.php
+
+
+$ phpunit --filter test_01 test_foo.php
+`e equality-assertion
+$s = "do re me";
+
+$this->assertEquals($s, "do re mi");
+
+# also asserts args have same type:
+
+$this->assertSame($s, "do re mi");
+`e approximate-assertion
+$x = 10.0 * (1.0 / 3.0);
+
+$y = 10.0 / 3.0;
+
+
+$this->assertEquals($x, $y,
+  "not within delta",
+  pow(0.1, 6));
+`e regex-assertion
+$s = "lorem ipsum";
+
+$this->assertRegExp("/lorem/", $s);
+`e exception-assertion
+class Bam extends Exception {};
+
+public function test_exc {
+  $this->SetExpectedException("Bam");
+  throw new Bam("bam!");
+
+}
+`e mock-method
+$mock = $this->getMock('Foo', ['foo']);
+
+$mock->expects($this->once())
+  ->method('foo')
+  ->with(13)
+  ->will($this->returnValue(7));
+
+
+$mock->foo(13);
+`e setup
+public function setUp()
+
+{
+  echo "setting up\n";
+
+}
+`e teardown
+public function tearDown()
+
+{
+  echo "tearing down\n";
+
+}
+`e check-syntax
+$ php -l foo.php
+`e stronger-warnings
+none
+`e lint
+
+`e source-cleanup
+
+`e run-debugger
+
+`e debugger-commands
+
+`e benchmark-code
+
+`e profile-code

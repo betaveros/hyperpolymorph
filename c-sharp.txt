@@ -399,7 +399,7 @@ throws System.ArgumentOutOfRangeException
 
 `e slice
 
-`e slice-to-end
+`e drop
 
 `e manipulate-back
 l.Add("hello");
@@ -994,7 +994,7 @@ m.Invoke(o);
 
 `e teardown
 
-`e flag-for-stronger-warnings
+`e stronger-warnings
 
 `e suppress-warnings
 

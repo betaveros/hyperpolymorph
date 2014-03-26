@@ -504,7 +504,7 @@ i = a.index("y")
 a[2..3]
 
 a[2, 2]
-`e slice-to-end
+`e drop
 a[1..-1]
 `e manipulate-back
 a = [6, 7, 8]
@@ -887,3 +887,793 @@ end
 thr = Thread.new { sleep 10 }
 `e wait-on-thread
 thr.join
+
+`e standard-file-handles
+$stdin $stdout $stderr
+`e read-line-from-stdin
+line = gets
+`e end-of-file-behavior
+returns non-empty string without newline or raises EOFError
+`e chomp
+line.chomp!
+`e write-line-to-stdout
+puts "Hello, World!"
+`e printf
+printf("%.2f\n", Math::PI)
+`e open-file-for-reading
+f = File.open("/etc/hosts")
+`e open-file-for-writing
+f = File.open("/tmp/test", "w")
+`e set-file-handle-encoding
+fin = File.open("/tmp/foo", "r:utf-8")
+
+
+fout = File.open("/tmp/bar", "w:utf-8")
+`e open-file-for-appending
+f = File.open("/tmp/err.log", "a")
+`e close-file
+f.close
+`e close-file-implicitly
+File.open("/tmp/test", "w") do |f|
+  f.puts("lorem ipsum")
+
+end
+`e i-o-error
+raise IOError or subclass of SystemCallError exception
+`e encoding-error
+
+`e read-line
+f.gets
+`e iterate-over-file-by-line
+f.each do |line|
+  print(line)
+end
+`e read-file-into-array-of-strings
+a = f.lines.to_a
+`e read-file-into-string
+s = f.read
+`e write-string
+f.write("lorem ipsum")
+`e write-line
+f.puts("lorem ipsum")
+`e flush-file-handle
+f.flush
+`e end-of-file-test
+f.eof?
+`e get-and-set-file-handle-position
+f.tell
+
+f.seek(0)
+
+
+f.pos
+
+f.pos = 0
+`e open-temporary-file
+require 'tempfile'
+
+
+f = Tempfile.new('')
+
+
+f.puts "lorem ipsum"
+
+
+puts "tmp file: #{f.path}"
+
+
+f.close
+
+file is removed when file handle is garbage-collected or interpreter exits
+`e in-memory-file
+require 'stringio'
+
+
+f = StringIO.new
+
+f.puts("lorem ipsum")
+
+f.rewind
+
+s = f.read
+`e file-exists-test-file-regular-test
+File.exists?("/etc/hosts")
+File.file?("/etc/hosts")
+`e file-size
+File.size("/etc/hosts")
+`e is-file-readable-writable-executable
+File.readable?("/etc/hosts")
+File.writable?("/etc/hosts")
+File.executable?("/etc/hosts")
+`e set-file-permissions
+File.chmod(0755, "/tmp/foo")
+`e last-modification-time
+# Time object:
+
+t2 = File.stat('/etc/passwd').mtime
+
+# unix epoch:
+
+t = t2.to_i
+`e copy-file-remove-file-rename-file
+require 'fileutils'
+
+FileUtils.cp("/tmp/foo", "/tmp/bar")
+FileUtils.rm("/tmp/foo")
+FileUtils.mv("/tmp/bar", "/tmp/foo")
+`e create-symlink-symlink-test-readlink
+File.symlink("/etc/hosts",
+  "/tmp/hosts")
+File.symlink?("/etc/hosts")
+File.realpath("/tmp/hosts")
+`e generate-unused-file-name
+
+`e parse-csv
+require 'csv'
+
+CSV.foreach("foo.csv") do |row|
+  puts row.join("\t")
+end
+`e generate-csv
+require 'csv'
+
+CSV.open("foo.csv", "w") do |csv|
+  csv << ["one", "une", "uno"]
+  csv << ["two", "deux", "dos"]
+end
+`e json-generate-parse
+require 'json'
+
+
+s = {'t' => 1,'f' => 0}.to_json
+
+d = JSON.parse(s)
+`e generate-xml
+# gem install builder
+
+require 'builder'
+
+
+builder = Builder::XmlMarkup.new
+
+xml = builder.a do |child|
+  child.b("foo", :id=>"123")
+end
+
+# <a><b id="123">foo</b></a>:
+puts xml
+`e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
+require 'rexml/document'
+
+include REXML
+
+
+xml = "<a><b><c ref='3'>foo</c></b></a>"
+
+# raises REXML::ParseException if
+
+# not well-formed:
+
+doc = Document.new(xml)
+
+
+nodes = XPath.match(doc,"/a/b/c")
+
+puts nodes.size
+
+puts nodes[0].text
+
+
+node = XPath.first(doc,"/a/b/c")
+
+puts node.text
+
+puts node.attributes["ref"]
+`e parse-html
+# gem install nokogiri
+
+require 'nokogiri'
+
+
+html = File.open("foo.html").read
+
+doc = Nokogiri::HTML(html)
+
+doc = doc.xpath("//a").each do |link|
+  puts link["href"]
+end
+`e working-directory
+old_dir = Dir.pwd
+
+Dir.chdir("/tmp")
+`e build-pathname
+File.join("/etc", "hosts")
+`e dirname-and-basename
+File.dirname("/etc/hosts")
+File.basename("/etc/hosts")
+`e absolute-pathname-and-tilde-expansion
+# symbolic links are not resolved:
+File.expand_path("foo")
+File.expand_path("/foo")
+File.expand_path("../foo")
+File.expand_path("./foo")
+File.expand_path("~/foo")
+`e iterate-over-directory-by-file
+Dir.open("/etc").each do |file|
+  puts file
+end
+`e glob-paths
+Dir.glob("/etc/*").each do |path|
+  puts path
+end
+`e make-directory
+require 'fileutils'
+
+FileUtils.mkdir_p("/tmp/foo/bar")
+`e recursive-copy
+require 'fileutils'
+
+FileUtils.cp_r("/tmp/foodir",
+  "/tmp/bardir")
+`e remove-empty-directory
+File.rmdir("/tmp/foodir")
+`e remove-directory-and-contents
+require 'fileutils'
+
+FileUtils.rm_rf("/tmp/foodir")
+`e directory-test
+File.directory?("/tmp")
+`e generate-unused-directory
+require 'tmpdir'
+
+
+path = Dir.mktmpdir("/tmp/foo")
+`e system-temporary-file-directory
+require 'tmpdir'
+
+Dir.tmpdir
+`e command-line-arguments-and-script-name
+ARGV
+$0
+`e get-and-set-environment-variable
+ENV["HOME"]
+
+ENV["PATH"] = "/bin"
+`e get-pid-parent-pid
+Process.pid
+Process.ppid
+`e get-user-id-and-name
+require 'etc'
+
+Process.uid
+Etc.getpwuid(Process.uid)["name"]
+`e exit
+exit(0)
+`e set-signal-handler
+Signal.trap("INT",
+  lambda do |signo|
+    puts "exiting..."
+    exit 1
+  end
+
+)
+`e executable-test
+File.executable?("/bin/ls")
+`e external-command
+unless system("ls -l /tmp")
+  raise "ls failed"
+end
+`e escaped-external-command
+path = gets
+
+path.chomp!
+unless system("ls", "-l", path)
+  raise "ls failed"
+end
+`e backticks
+files = ``ls -l /tmp``
+unless $?.success?
+  raise "ls failed"
+end
+
+
+files = %x(ls)
+unless $?.success?
+  raise "ls failed"
+end
+`e command-line-options-boolean-option-option-with-argument-usage
+require 'optparse'
+
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner =
+    "usage: #{$0} [OPTIONS] [ARG ...]"
+
+  opts.on("-f", "--file FILE") do |arg|
+    options[:file] = arg
+  end
+
+  opts.on("-v", "--verbose") do |arg|
+    options[:verbose] = arg
+  end
+end.parse!
+
+
+file = options[:file]
+
+verbose = options[:verbose]
+
+# The flags -h and --help and the
+
+# usage message are generated
+
+# automatically.
+
+#
+
+# After calling OptionParser.parse! only
+
+# positional arguments are in ARGV.
+
+#
+
+# Options can follow positional args.
+`e load-library
+require 'foo.rb'
+
+# searches $LOAD_PATH for foo.rb, foo.so,
+
+# foo.o, foo.dll:
+
+require 'foo'
+`e load-library-in-subdirectory
+require 'foo/bar.rb'
+
+
+require 'foo/bar'
+`e hot-patch
+load 'foo.rb'
+`e load-error
+raises LoadError if library not found; exceptions generated when parsing library propagate to client
+`e main-routine-in-library
+if $0 == __FILE__
+  code
+end
+`e library-path
+# $: is synonym for $LOAD_PATH:
+$LOAD_PATH
+
+
+$LOAD_PATH << "/some/path"
+`e library-path-environment-variable
+$ RUBYLIB=~/lib ruby foo.rb
+`e library-path-command-line-option
+$ ruby -I ~/lib foo.rb
+`e simple-global-identifiers
+variables which start with $
+`e multiple-label-identifiers
+constants, classes, and modules
+`e label-separator
+Foo::Bar.baz
+`e root-namespace-definition
+# outside of class or module; only
+
+# constants in root namespace:
+
+FOO = 3
+
+# inside class or module:
+
+::FOO = 3
+`e declare-namespace
+class Foo
+  # class definition
+end
+
+module Foo
+  # module definition
+end
+`e child-namespace-declaration
+module Foo::Bar
+  # module definitions
+end
+
+module Foo
+  module Bar
+    # module definitions
+  end
+end
+
+# classes can nest inside classes or
+
+# modules; modules can nest in classes
+`e namespace-alias
+Fu = Foo.dup
+
+
+include Fu
+`e unqualified-import-of-namespace
+# inside class or module:
+include Foo
+`e unqualified-import-of-all-subnamespaces
+
+`e unqualified-import-of-definitions
+none
+`e list-installed-packages-install-a-package
+$ gem list
+
+$ gem install rails
+`e package-specification-format
+in foo.gemspec:
+
+
+spec = Gem::Specification.new do |s|
+  s.name = "foo"
+  s.authors = "Joe Foo"
+  s.version = "1.0"
+  s.summary = "a gem"
+  s.files = Dir["lib/*.rb"]
+
+end
+`e define-class
+class Int
+  attr_accessor :value
+  def initialize(i=0)
+    @value = i
+  end
+end
+`e create-object
+i = Int.new
+
+i2 = Int.new(7)
+`e instance-variable-visibility
+private by default; use attr_reader, attr_writer, attr_accessor to make public
+`e get-and-set-instance-variable
+v = i.value
+
+i.value = v + 1
+`e define-method
+def plus(i)
+  value + i
+end
+`e invoke-method
+i.plus(7)
+`e define-class-method
+
+`e invoke-class-method
+Counter.instances
+`e define-class-variable
+
+`e get-and-set-class-variable
+
+`e handle-undefined-method-invocation
+def method_missing(name, *a)
+  puts "no def: #{name}" +
+    " arity: #{a.size}"
+end
+`e alias-method
+class Point
+
+  attr_reader :x, :y, :color
+
+  alias_method :colour, :color
+
+  def initialize(x, y, color=:black)
+    @x, @y = x, y
+    @color = color
+  end
+end
+`e destructor
+val = i.value
+ObjectSpace.define_finalizer(int) {
+  puts "bye, #{val}"
+
+}
+`e subclass
+class Counter < Int
+
+  @@instances = 0
+
+  def initialize
+    @@instances += 1
+    super
+  end
+
+  def incr
+    self.value += 1
+  end
+
+  def self.instances
+    @@instances
+  end
+end
+`e mixin
+
+`e overload-operator
+class Fixnum
+  def /(n)
+    self.fdiv(n)
+  end
+end
+`e object-id
+o.object_id
+`e inspect-type
+[].class == Array
+`e basic-types
+NilClass
+
+TrueClass
+
+FalseClass
+
+Fixnum
+
+Bignum
+
+Float
+
+String
+
+Regexp
+
+Time
+
+Array
+
+Hash
+
+Object
+
+File
+`e inspect-class
+o.class == Foo
+
+o.instance_of?(Foo)
+`e inspect-class-hierarchy
+o.class.superclass
+
+o.class.included_modules
+`e has-method
+o.respond_to?("reverse")
+`e message-passing
+(1..9).each do |i|
+  o.send("phone#{i}=", nil)
+end
+`e eval
+loop do
+  puts eval(gets)
+end
+`e list-obj-object-methods
+o.methods
+`e list-object-attributes
+o.instance_variables
+`e list-loaded-libraries
+# relative to directory in lib path:
+
+$LOADED_FEATURES
+
+$"
+`e list-loaded-namespaces
+Class.constants.select do |c|
+  Module.const_get(c).class == Class
+
+end
+`e inspect-namespace
+require 'uri'
+
+
+URI.constants
+
+URI.methods
+
+URI.class_variables
+`e pretty-print
+require 'pp'
+
+
+d = {"lorem"=>1, "ipsum"=>[2,3]}
+
+
+pp d
+`e source-line-number-and-file-name
+__LINE__
+__FILE__
+`e command-line-documentation
+$ ri -c
+
+$ ri Math
+
+$ ri Math.atan2
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+require 'socket'
+
+
+hostname = Socket.gethostname
+
+
+ip = Socket.getaddrinfo(
+  Socket.gethostname,
+  "echo")[0][3]
+
+
+host2 = Socket.gethostbyaddr(ip)[0]
+`e http-get
+require 'net/http'
+
+
+url = "www.google.com"
+
+r = Net::HTTP.start(url, 80) do |f|
+  f.get("/")
+end
+if r.code == "200"
+  s = r.body
+end
+`e http-post
+
+`e serve-working-directory
+$ ruby -rwebrick -e \
+
+'WEBrick::HTTPServer.new(:Port => 8000, '\
+
+':DocumentRoot => Dir.pwd).start'
+`e absolute-url-from-base-and-relative-url
+require 'uri'
+
+URI.join("http://google.com", "analytics")
+`e parse-url
+require 'uri'
+
+
+url = "http://google.com:80/foo?q=3#bar"
+
+up = URI(url)
+
+
+protocol = up.scheme
+
+hostname = up.host
+
+port = up.port
+
+path = up.path
+
+query_str = up.query
+
+fragment = up.fragment
+
+# Ruby 1.9; returns array of pairs:
+
+params = URI.decode_www_form(query_str)
+`e url-encode-decode
+require 'cgi'
+
+CGI::escape("lorem ipsum?")
+CGI::unescape("lorem+ipsum%3F")
+`e base64-encode-decode
+require 'base64'
+
+
+s = File.open("foo.png").read
+
+b64 = Base64.encode64(s)
+
+s2 = Base64.decode64(b64)
+`e test-class
+require 'test/unit'
+
+class TestFoo < Test::Unit::TestCase
+  def test_01
+    assert(true, "not true!")
+  end
+end
+`e run-tests-run-test-method
+$ ruby test_foo.rb
+
+$ ruby test_foo.rb -n test_01
+`e equality-assertion
+s = "do re me"
+
+assert_equal("do re me", s)
+`e approximate-assertion
+x = 10.0 * (1.0 / 3.0)
+
+y = 10.0 / 3.0
+
+# default for delta is 0.001
+
+assert_in_delta(x, y, 0.1**6)
+`e regex-assertion
+s = "lorem ipsum"
+
+assert_match(/lorem/, s)
+`e exception-assertion
+assert_raises(ZeroDivisionError) do
+  1 / 0
+end
+`e mock-method
+# gem install mocha
+
+require 'mocha'
+
+
+foo = mock()
+
+foo.expects(:run).returns(7).with(13).once
+
+
+foo.run(13)
+`e setup
+# in class TestFoo:
+def setup
+  puts "setting up"
+end
+`e teardown
+# in class TestFoo:
+def teardown
+  puts "tearing down"
+end
+`e check-syntax
+$ ruby -c foo.rb
+`e stronger-warnings
+$ ruby -w foo.rb
+
+$ ruby -W2 foo.rb
+`e lint
+
+`e source-cleanup
+
+`e run-debugger
+$ sudo gem install ruby-debug
+
+$ rdebug foo.rb
+`e debugger-commands
+h l n s b c w u down p q
+`e benchmark-code
+require 'benchmark'
+
+
+n = 1_000_000
+
+i = 0
+
+puts Benchmark.measure do
+  n.times { i += 1 }
+end
+`e profile-code
+$ sudo gem install ruby-prof
+
+$ ruby-prof foo.rb
+`e java-version
+JRuby 1.7
+
+compatible with Ruby 1.9
+`e java-repl
+$ jirb
+`e java-interpreter
+$ jruby
+`e java-compiler
+$ jrubyc
+`e java-prologue
+none
+`e java-new
+rnd = java.util.Random.new
+`e java-method
+rnd.next_float
+`e java-import
+java_import java.util.Random
+
+rnd = Random.new
+`e non-bundled-java-libraries
+require 'path/to/mycode.jar'
+`e java-shadowing-avoidance
+module JavaIO
+  include_package "java.io"
+end
+`e convert-native-array-to-java-array
+[1, 2, 3].to_java(Java::int)
+`e are-java-classes-subclassable
+yes
+`e are-java-class-open
+yes
