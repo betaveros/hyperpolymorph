@@ -19,7 +19,7 @@ $ javac Hello.java
 
 
 $ java Hello
-`e file-suffixes-source-header-object-file
+`e file-suffixes
 Foo.java
 none
 
@@ -381,7 +381,7 @@ arrays must be allocated on heap
 int[] a = new int[10];
 `e free-heap
 garbage collected
-`e initialization-list
+`e array-initialization-list
 int[] a = {1,2,3};
 `e array-size
 a.length
@@ -404,7 +404,6 @@ java.util.ArrayList<T>
 `(The Java Collections API also provides LinkedList<T> and a few others; Vector<T> is older and slower because it is synchronized.)
 `e list-declare
 java.util.ArrayList<String> list = new java.util.ArrayList<String>();
-`e initialization-list
 
 `e list-size
 list.size()

@@ -22,7 +22,7 @@ $ mcs hello.cs
 
 
 $ mono hello.exe
-`e file-suffixes-source-header-object-file
+`e file-suffixes
 Foo.cs
 none
 
@@ -359,7 +359,7 @@ arrays must be allocated on heap
 int[] a = new int[10];
 `e free-heap
 garbage collected
-`e initialization-list
+`e array-initialization-list
 int[] a = {1,2,3};
 `e list-size
 a.Length
@@ -382,7 +382,6 @@ List
 `e list-declare
 using System.Collections.Generic;
 List<string> l = new List<string>();
-`e initialization-list
 
 `e list-size
 l.Count

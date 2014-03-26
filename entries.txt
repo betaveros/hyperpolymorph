@@ -4,7 +4,7 @@ show-version: show version
 implicit-prologue: implicit prologue
 # grammar and invocation
 hello-world: hello world
-file-suffixes-source-header-object-file: file suffixes / source, header, object file
+file-suffixes: file suffixes / source, header, object file
 bytecode-compiler-and-interpreter: bytecode compiler and interpreter
 native-compiler: native compiler
 interpreter: interpreter
@@ -186,21 +186,20 @@ timeout: timeout
 declare-on-stack: declare on stack
 declare-on-heap: declare on heap
 free-heap: free heap
-initialization-list: initialization list
+array-initialization-list: initialization list
 array-size: size
-lookup: lookup
-update: update
-out-of-bounds: out-of-bounds
-copy: copy
+array-lookup: lookup
+array-update: update
+array-out-of-bounds: out-of-bounds
+array-copy: array-copy
 as-function-argument: as function argument
-iterate: iterate
-sort: sort
+array-iterate: iterate
+array-sort: sort
 # lists (or most common variable-size sequential data structure)
 list-name: name
 list-declare: declare
 head-and-tail-of-empty-list: head and tail of empty list
-list-literal: literal
-initialization-list: initialization list
+list-literal: literal or initialization list
 quote-words: quote words
 list-size: size
 capacity-get-increase: capacity / get, increase
@@ -224,7 +223,7 @@ drop: drop
 concatenate: concatenate
 concatenate-two-lists-list-of-lists: concatenate / two lists, list of lists
 replicate: replicate
-copy: copy / address copy, shallow copy, deep copy
+list-copy: copy / address copy, shallow copy, deep copy
 array-as-function-arguments: array as function arguments
 arrays-as-function-arguments: arrays as function arguments
 iterate: iterate

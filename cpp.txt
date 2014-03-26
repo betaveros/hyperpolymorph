@@ -18,7 +18,7 @@ int main(int argc, char** arg) {
 
 $ g++ -std=c++0x hello.cpp
 $ ./a.out
-`e file-suffixes-source-header-object-file
+`e file-suffixes
 foo.cpp
 foo.h
 foo.o
@@ -548,7 +548,7 @@ vector<T>
 `e list-declare
 #include <vector>
 vector <int> a;
-`e initialization-list
+`e list-literal
 #include <vector>
 
 vector<int> a = {1, 2, 3};

@@ -20,7 +20,7 @@ $ gcc hello.m
 
 
 $ ./a.out
-`e file-suffixes-source-header-object-file
+`e file-suffixes
 Foo.m
 
 Foo.h
@@ -359,7 +359,7 @@ int *a = calloc(10, sizeof(int));
 #include <stdlib.h>
 
 free(a);
-`e initialization-list
+`e list-literal
 NSArray *a = [NSArray arrayWithObjects:@"hello", @"goodbye", nil];
 `e list-size
 [a count]
@@ -388,7 +388,6 @@ while (o = [i nextObject]) {
 NSMutableArray (?)
 `e list-declare
 NSMutableArray *a = [NSMutableArray arrayWithCapacity:10];
-`e initialization-list
 `e list-size
 [a count]
 `e capacity-get-increase
