@@ -70,7 +70,7 @@ bqMatching lc rc = do
 plainMatching :: Char -> Char -> CharParser String
 plainMatching lc rc = do
 	char lc
-	ss <- manyTill (plainMatching lc rc <|> plainAtom) (char rc)
+	ss <- manyTill (((\x -> [lc] ++ x ++ [rc]) <$> plainMatching lc rc) <|> plainAtom) (char rc)
 	return $ concat ss
 
 bqGroup :: CharParser String
