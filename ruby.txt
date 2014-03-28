@@ -159,7 +159,7 @@ x.round
 x.ceil
 
 x.floor
-`e absolute-value
+`e absolute-value-and-signum
 x.abs
 `e integer-overflow
 becomes arbitrary length integer of type Bignum
@@ -486,7 +486,7 @@ a[0]
 a[-1]
 `e update
 a[0] = "lorem"
-`e out-of-bounds-behavior
+`e out-of-bounds
 a = []
 # evaluates as nil:
 
@@ -526,7 +526,7 @@ a = [1, 2, 3]
 a2 = a + [4, 5, 6]
 
 a.concat([4, 5, 6])
-`e replicate
+`e list-replicate
 a = [nil] * 10
 
 a = Array.new(10, nil)
@@ -553,7 +553,7 @@ end
 (1..1_000_000).each do |i|
   code
 end
-`e instantiate-range-as-array
+`e instantiate-range-as-list
 a = (1..10).to_a
 `e reverse
 a = [1, 2, 3]
@@ -596,11 +596,11 @@ Set[1,2] ^ Set[2,3,4]
 [1,2,3].map { |o| o * o }
 `e filter
 [1,2,3].select { |o| o > 1 }
-`e reduce
+`e fold-from-left
 [1,2,3].inject(0) { |m,o| m+o }
-`e universal-and-existential-tests
+`e universal-test
 [1,2,3,4].all? {|i| i.even? }
-
+`e existential-test
 [1,2,3,4].any? {|i| i.even? }
 `e shuffle-and-sample
 [1, 2, 3, 4].shuffle
@@ -617,7 +617,7 @@ d.size
 d.length # same as size
 `e map-lookup
 d["t"]
-`e map-out-of-bounds-behavior
+`e map-out-of-bounds
 d = {}
 evaluates as nil:
 

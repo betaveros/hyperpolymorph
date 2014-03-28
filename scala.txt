@@ -1,7 +1,26 @@
 `e versions-used
-2.9
+2.10
 `e show-version
 `$[scala -version]
+`e hello-world
+`(script:)
+`.println(`=["Hello, world!"])
+
+`(object:)
+`*object Hello {
+  `*def main(args: `.Array[`.String]) {
+    `.println(`=["Hello, world!"])
+  }
+}
+
+`(object, using App trait:)
+`*object Hello `*extends App {
+  `.println(`=["Hello, world!"])
+}
+`e file-suffixes
+.scala
+`(none)
+.class
 `e interpreter
 `$[echo 'println("hello")' > hello.scala]
 `$[scala hello.scala]
@@ -19,10 +38,8 @@ EOF]
 `$[./hello.scala]
 `e bytecode-compiler-and-interpreter
 `$[cat <<EOF > Hello.scala
-`*object Hello {
-  `*def main(args: `.Array[`.String]) {
-    println("hello")
-  }
+`*object Hello `*extends App {
+  println("hello")
 }
 EOF]
 `$[scalac Hello.scala]
@@ -60,11 +77,18 @@ n + 7
 `*val v = 1
 `*var w = 0
 w = 1 `(returns Unit)
+
 `(assigns the same value to multiple variables; only works when variables are first defined:)
-`*var v1, v2 = 0
+`*val v1, v2 = 0
+`*var v3, v4 = 0
 `e parallel-assignment
 `(only works when variables are first defined:)
 `*val (x, y, z) = (1, 2, 3)
+`e compound-assignment-arithmetic-string-logical-bit
++= -= *= /= `(none) %= `(none)
++= *=
+&= |= ^=
+<<= >>= &= |= ^=
 `e conditional-expression
 `*val n = -3
 
@@ -86,7 +110,8 @@ v.get
 `(0 if v is None:)
 v.getOrElse(0)
 `e nullif
-
+`e undefined-variable-access
+`![does not compile]
 `e expression-type-declaration
 1: `.Double
 `e let-in
@@ -107,14 +132,22 @@ Boolean
 && || !
 `e relational-operators
 == != < > <= >=
+`e compare-strings
+== != < > <= >=
 `e min-and-max
-math.min 1 2
+math.min 1 2 `(or) 1 min 2
+math.max 1 2 `(or) 1 max 2
 
-math.max 1 2
+List(1, 2, 3).min
+List(1, 2, 3).max
+`e three-value-comparison
+`(defined in scala.math.Ordered[A]:)
+0 compare 1
+"do" compare "re"
 `e integer-type
-`.Int `(type of integer literals:)
-`.Byte `.Short `.Long `(other modular types:)
-`.BigInt `(arbitrary precision type:)
+`.Int `(type of integer literals)
+`.Byte `.Short `.Long `(other modular types)
+`.BigInt `(arbitrary precision type)
 `e integer-literal
 -4
 `e float-type
@@ -124,23 +157,25 @@ math.max 1 2
 `(other types:)
 `.Float
 `e arithmetic-operators
-+ - * / `(none) %
+`++ `+- `+* `+/ `(none) `+%
 `e integer-operators
-+ - * / %
+`++ `+- `+* `+/ `+%
 `e float-operators
-+ - * /
+`++ `+- `+* `+/
 `e add-integer-and-float
-3 + 7.0
+3 `++ 7.0
 `e integer-division
-13 / 5
+13 `+/ 5
 `e divmod
-7 / 3
-7 % 3
+7 `+/ 3
+7 `+% 3
+`(BigInts only:)
+`.BigInt(7) `+[/%] `.BigInt(3)
 `e integer-division-by-zero
 `![java.lang.ArithmeticException]
 `e float-division
 7.toDouble / 3 `(type coercion built into Int)
-(7: `.Double) / 3 (type ascription, fueled by implicits)
+(7: `.Double) / 3 `(type ascription, fueled by implicits)
 `e float-division-by-zero
 evaluates to Infinity, NaN, or -Infinity, values which do not have literals
 `e power
@@ -160,16 +195,10 @@ math.Pi
 
 math.E
 `e float-truncation
-??
-
+3.14.toInt `(or) 3.14.toLong
 3.14.round
-
-3.14.floor returns `.Double
-
-3.14.ceil returns `.Double
-`e absolute-value
-`e absolute-value-and-signum
-math.abs(-7)
+3.14.floor `(returns Double)
+3.14.ceil `(returns Double)
 `e absolute-value-and-signum
 math.abs(-7)
 math.signum(-7)
@@ -241,16 +270,11 @@ rnd.setSeed(17)
 `(none)
 `(none)
 `e bit-operators
-1 <<  4
-
-1  >>  4
-
+1 << 4
+1 >> 4
 1 & 3
-
 1 | 3
-
 1 ^ 3
-
 ~ 1
 `e binary-octal-and-hex-literals
 `(none)
@@ -258,16 +282,16 @@ rnd.setSeed(17)
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 Integer.toString(42, 7)
-
 Integer.parseInt("60", 7)
 `e string-type
-java.lang.`.String
+java.lang.`.String `(frequently implicitly converted to StringOps or WrappedString)
 `e string-literal
 `=["Hello, World!"]
-
 `=["""Hello, World!"""]
 `e newline-in-literal
 `(in triple quote literal only)
+`=["""first line
+second line"""]
 `e literal-escapes
 `%[\b \f \n \r \t \" \'
 
@@ -276,13 +300,13 @@ java.lang.`.String
 no
 `e format
 `=["foo `%[%s %d %.2f]"].format("bar", 7, 3.1415)
-`e concatenate
-"Hello" + ", " + "World!"
-`e replicate
+`e concatenate-strings
+`=["Hello"] + `=[", "] + `=["World!"]
+`=["Hello"] ++ `=[", "] ++ `=["World!"]
+`e replicate-string
 `*val hbar = "-" * 80
 `e translate-case
 "hello".toUpperCase
-
 "HELLO".toLowerCase
 `e capitalize
 "hello".capitalize
@@ -308,7 +332,13 @@ no
 `e character-type
 `.Char
 `e character-literal
-'h'
+`=['h']
+`e test-character
+`=['c'].isLetter
+`=['c'].isDigit
+`=['c'].isSpaceChar
+`=['c'].isUpper
+`=['c'].isLower
 `e string-length
 "hello".length
 `e index-of-substring
@@ -318,15 +348,71 @@ no
 `e extract-character
 "hello"(0)
 `e chr-and-ord
-'a'.toInt
-97.toChar
+`=['a'].toInt
+`=97.toChar
 `e to-array-of-characters
-`(by implicit conversion --- via Predef.augmentString, to StringOps, or Predef.wrapString, to WrappedString)
+`(implicit --- via Predef.augmentString, to StringOps, or Predef.wrapString, to WrappedString)
+`e regex-type
+scala.util.matching.Regex
+`e literal-custom-delimited-literal
+`*val r = `=["lorem|ipsum"].r
+`(none)
+`e character-class-abbreviations
+`%[. \c \s \S \d \D \w \W \x \O
+[:upper:] [:lower:] [:alpha:] [:alnum:] [:digit:] [:xdigit:] [:punct:] [:blank:] [:space:] [:cntrl:] [:graph:] [:print:] [:word:]]
+`e anchors
+`%[^ $ \A \b \B \< \> \Z]
+`e lookahead-positive-negative
+`%[(?= `(...) )
+(?! `(...) )
+(?<= `(...) )
+(?<! `(...) )]
+`e match-test
+`*if (`=["1999"].r.findFirstIn(s).isDefined)
+  `.println("party!")
+`e case-insensitive-match-test
+`=["`%[(?i)]lorem"].r.findFirstIn("Lorem")
+`e modifiers
+`%[(?idmsux-idmsux)]
+`e substitution
+`*val s = "do re mi mi mi"
+`*val t = "mi".r.replaceAllIn(s, "ma")
+`e match-prematch-postmatch
+`*val fm = `=["`%[\\d{4}]"].r.findFirstMatchIn(s)
+fm `*match {
+  `*case `.Some(m) `+[=>] {
+    m.matched
+    m.before
+    m.after
+  }
+  `*case `.None `+[=>] ... `(no match)
+}
+`e group-capture
+`*val rx = `=["""`%[(\d{4})]-`%[(\d{2})]-`%[(\d{2})]"""].r
+m = rx.findFirstMatchIn("2010-06-03")
+`*val `.List(yr, mo, dy) = m.get.subgroups
+
+`(only full match:)
+`*val rx(yr, mo, dy) = "2010-06-03"
+`e named-group-capture
+`*val rx = "^(.+)\\.(.+)$".r("file", "suffix")
+`*val m = rx.findFirstMatchIn("foo.txt").get
+
+m.group("file")
+m.group("suffix")
+`e scan
+`*val s = "dolor sit amet"
+`*val ss: `.Iterator[`.String] = "\\w+".r.findAllIn('\w+', s)
+`*val ms: `.Iterator[Match] = "\\w+".r.findAllMatchIn('\w+', s)
 `e date-time-type
 
 `e current-date-time
 
 `e current-unix-epoch
+
+`e declare-on-heap
+`*val a: `.Array[`.Int] = `*new `.Array(10)
+`*val b = `.Array.fill(10)(0)
 
 `e array-initialization-list
 `*val a = `.Array(1, 2, 3)
@@ -339,13 +425,17 @@ a.size `(via implicit conversion to ArrayOps)
 a(2) = 4
 `e array-out-of-bounds
 `![raises java.lang.ArrayIndexOutOfBounds]
+`e array-copy
+a.clone()
 `e array-iterate
-`*for (v <- a) { `(code) }
-a.foreach(v => `(code) )
+`*for (v `+[<-] a) { `(code) }
+a.foreach(v `+[=>] `(code) )
 `e array-sort
 `.Array(3, 2, 1, 4).sorted
 `e list-name
-`.List
+`.Seq `(generic trait)
+`.List `(immutable, preferred)
+`.ArrayBuffer, `.ListBuffer `(mutable)
 `e list-literal
 `(none; use constructor:)
 `.List(1, 2, 3)
@@ -358,6 +448,8 @@ list == `.Nil
 list.isEmpty
 `e cons
 1 :: `.List(2, 3)
+`e slice
+a.slice(2, 4)
 `e head
 `.List(1, 2, 3).head
 `e tail
@@ -370,6 +462,9 @@ list.isEmpty
 `e list-size
 `.List(1, 2, 3).length
 `.List(1, 2, 3).size
+`e capacity-get-increase
+`(none)
+a.sizeHint(10) `(ArrayBuffer, ListBuffer, or other Builder[Elem, To])
 `e list-lookup
 `.List(1, 2, 3)(0)
 `e index-of-element
@@ -380,34 +475,56 @@ list.isEmpty
 `e list-update
 `(evaluates to List(1, 4, 3):)
 `.List(1, 2, 3).updated(1, 4)
+`e list-out-of-bounds
+`![raises `.[java.lang.IndexOutOfBoundsException]]
 `e concatenate-two-lists-list-of-lists
 `.List(1, 2) ::: `.List(3, 4)
 `.List(1, 2) ++ `.List(3, 4)
 `.List(`.List(1, 2), `.List(3, 4)).flatten
+`e list-replicate
+`*val a = List.fill(10)(None)
 `e last-and-butlast
 `.List(1, 2, 3).last
 `.List(1, 2, 3).init
+`e manipulate-back
+`*val a = ListBuffer(6, 7, 8)
+a.append(9) `(or) a += 9
+
+a.remove(a.size - 1) `(returns removed value)
+a.trimEnd(1) `(does not return value)
+`e manipulate-front
+`*val a = ListBuffer(6, 7, 8)
+a.prepend(5) `(or) 5 +=: a
+a.head
+a.remove(0) `(returns removed value)
+a.trimStart(1) `(does not return value)
 `e take
 `.List(1, 2, 3).take(2)
 `e drop
 `.List(1, 2, 3).drop(2)
 `e iterate-over-elements
-`.List(1, 2, 3).foreach(i => println(i))
+`.List(1, 2, 3).foreach(i `+[=>] println(i))
+`e iterate-over-indices-and-elements
+`*val a = `.List("do", "re", "mi", "fa")
+`*for ((s, i) `+[<-] a.zipWithIndex)
+  `.println("%s at index %d".format(s, i))
 `e reverse
 `.List(1, 2, 3).reverse
 `e sort
-`.List(1, 3, 2, 4).sortWith((x, y) => x < y)
+`.List(1, 3, 2, 4).sortWith((x, y) `+[=>] x < y)
 `.List(1, 3, 2, 4).sortWith(`+_ < `+_)
-`.List(1, 3, 2, 4).sortWith((x, y) => x > y)
+`.List(1, 3, 2, 4).sortWith((x, y) `+[=>] x > y)
 `.List(1, 3, 2, 4).sortWith(`+_ > `+_)
 `e map
-`.List(1, 2, 3).map(x => 2 * x)
+`.List(1, 2, 3).map(x `+[=>] 2 * x)
 `.List(1, 2, 3).map(2 * `+_)
+`*for (x `+[<-] `.List(1, 2, 3)) `*yield 2 * x
 `e filter
-`.List(1, 2, 3).filter(x => x > 2)
+`.List(1, 2, 3).filter(x `+[=>] x > 2)
+`*for (x `+[<-] `.List(1, 2, 3); `*if x > 2) `*yield x
 `e fold-from-left
 `.List(1, 2, 3).foldLeft(0)(`+_ + `+_)
-`.List(1, 2, 3).foldLeft(0)((x, y) => x + y)
+`.List(1, 2, 3).foldLeft(0)((x, y) `+[=>] x + y)
 (0 /: `.List(1,2,3))(`+_ + `+_)
 `e fold-from-right
 `.List(1, 2, 3).foldRight(0)(`+_ - `+_)
@@ -418,13 +535,35 @@ list.isEmpty
 `.List(1, 2, 3).forall(`+_ > 2)
 `e existential-test
 `.List(1, 2, 3).exists(`+_ > 2)
-`e zip-lists
+`e intersection
+`.List(1, 2) intersect `.List(2, 3, 4) `(Sets also allow &)
+`e union
+`.List(1, 2) union `.List(2, 3, 4) `(Sets also allow |)
+`e relative-complement-symmetric-difference
+`.List(1, 2) diff `.List(2, 3, 4) `(Sets also allow &~)
 
+`(only BitSets:)
+`*import scala.collection.BitSet
+BitSet(1, 2) ^ BitSet(2, 3, 4)
+`e min-and-max-element
+`.List(1,2,3).min
+`.List(1,2,3).max
+`e shuffle-and-sample
+`*import scala.util.Random
+Random.shuffle(`.List(1, 2, 3, 4))
+`*new Random().shuffle(`.List(1, 2, 3, 4))
+
+`(none)
+`e zip
+List(1,2,3) zip List("a","b","c")
+(List(1,2,3), List("a","b","c")).zipped `(allows mapping etc. with functions taking 2 arguments rather than a 2-tuple)
 `e iterate-over-range
 `(includes 1000000:)
-`*for (i <- 1 to 1000000) { `(code) }
+`*for (i `+[<-] 1 to 1000000) { `(code) }
 `(excludes 1000000:)
-`*for (i <- 0 to 1000000) { `(code) }
+`*for (i `+[<-] 0 to 1000000) { `(code) }
+`e instantiate-range-as-list
+`.List.range(1, 11)
 `e tuple
 (1, "hello", `=true)
 `e tuple-element-access
@@ -434,6 +573,8 @@ list.isEmpty
 (12, "December")._2
 `e define-function
 `(argument types must be declared:)
+`*def add3(x1: `.Int, x2: `.Int, x3: `.Int)
+  = x1 + x2 + x3
 `*def average(a: `.Double, b: `.Double)
   = (a + b) / 2.0
 
@@ -457,6 +598,16 @@ average(1, 2) + 3
   println("one")
   println("two")
 }
+`e apply-function-to-array
+`(only for functions defined with variable number of arguments:)
+`*def firstAndLast(a: `.Int`+*) = { `(...) }
+`*val a = List(1, 2, 3)
+firstAndLast(a:`+[_*])
+`e variable-number-of-arguments
+`*def firstAndLast(a: `.Int`+*) = {
+  `*if (a.length >= 1) `.println("first: " + a.head)
+  `*if (a.length >= 2) `.println("last: " + a.last)
+}
 `e named-parameters
 `*def subtract(m: `.Int, s: `.Int) = m - s
 
@@ -479,12 +630,19 @@ logarithm(10, base = 2)
 `e mutually-recursive-functions
 
 `e anonymous-function
-(x: `.Double, y: `.Double) => (x + y) / 2.0
+(x: `.Double, y: `.Double) `+[=>] (x + y) / 2.0
+`e operator-as-function
+((`+_:`.Int) * (`+_:w.Int))(3, 7)
+
+`(implicit Numeric[T] make many math operations implicitly available)
+
+`(Seqs are automatically functions sending an index to its corresponding element)
 `e overload-operator
 `(almost all operators in Scala are just methods with symbolic names:)
 `*class Rational(`*val num: `.Int, `*val denom: `.Int) {
   `(...)
-  `*def +(o: Rational) = `*new Rational(num * o.denom + o.num * denom, denom * o.denom)
+  `*def +(o: Rational)
+    = `*new Rational(num * o.denom + o.num * denom, denom * o.denom)
 }
 `e infix-operator-in-prefix-position
 `e function-in-infix-position
@@ -497,11 +655,11 @@ plus(3)(7)
 `*def plus2 = plus(2) `+_
 plus2(7)
 `e composition
-`*val f = (x: `.Int) => x + 2
-`*val g = (x: `.Int) => x * 3
+`*val f = (x: `.Int) `+[=>] x + 2
+`*val g = (x: `.Int) `+[=>] x * 3
 (f compose g)(4)
 `e function-composition-operator
-`*val double = (x: `.Int) => 2 * x
+`*val double = (x: `.Int) `+[=>] 2 * x
 `*val quadruple = double compose double
 
 `e lazy-evaluation
@@ -530,11 +688,11 @@ println("three")
   i = i+1
 }
 `e for
-`*for (i <- 1 to 10)
+`*for (i `+[<-] 1 to 10)
   println(i)
 `e for-in-reverse
 `e list-iteration
-`*for (i <- `.List.range(1, 11).reverse)
+`*for (i `+[<-] `.List.range(1, 11).reverse)
   println(i)
 `e loop
 `e raise-exception
@@ -545,7 +703,7 @@ println("three")
 `*val x = `*try {
   1 / 0
 } `*catch {
-  `*case e: ArithmeticException => 0
+  `*case e: ArithmeticException `+[=>] 0
 }
 `e type-of-exceptions
 
@@ -587,7 +745,7 @@ f.close
 `*import scala.io.Source
 
 `*val src = Source.fromFile("/etc/passwd")
-`*for (line <- src.getLines)
+`*for (line `+[<-] src.getLines)
   print(line)
 `e read-file-into-array-of-strings
 
@@ -638,7 +796,7 @@ out.close
 `e command-line-arguments
 `*object Test {
   `*def main(args: `.Array[`.String]) {
-    `*for (arg <- args)
+    `*for (arg `+[<-] args)
       println(arg)
   }
 }
@@ -764,7 +922,7 @@ c `*match { `*case Red `+[=>] "red"; `*case `+_ `+[=>] "not red" }
   `*def get(): `.Int = { n }
 }
 `e create-object
-`*val c = new Counter
+`*val c = `*new Counter
 `e invoke-method
 c.incr
 c.get

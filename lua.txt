@@ -114,7 +114,7 @@ none
 math.floor(3.1)
 
 math.ceil(3.1)
-`e absolute-value
+`e absolute-value-and-signum
 math.abs(-3)
 `e integer-overflow
 all numbers are floats
@@ -149,7 +149,7 @@ s = "Hello, " .. "World!"
 none
 `e join
 table.concat({"do","re","mi"}, " ")
-`e sprintf
+`e format
 string.format("lorem %s %d %.2f",
   "ipsum", 13, 3.7)
 `e translate-case
@@ -240,7 +240,7 @@ a = { 1, 2, 3, 4 }
 a[1]
 `e list-update
 a[1] = "lorem"
-`e list-out-of-bounds-behavior
+`e list-out-of-bounds
 returns nil
 `e index-of-element
 none; use for and ipairs
@@ -250,7 +250,7 @@ none
 none
 `e concatenate
 none
-`e replicate
+`e list-replicate
 none
 `e manipulate-back
 a = {6, 7, 8}
@@ -288,9 +288,7 @@ none
 none
 `e filter
 none
-`e reduce
-none
-`e universal-and-existential-tests
+`e fold-from-left
 none
 `e shuffle-and-sample
 none
@@ -311,7 +309,7 @@ d["t"]
 d["t"] = 2
 
 d.t = 2
-`e out-of-bounds-behavior
+`e out-of-bounds
 returns nil
 `e is-key-present
 d["t"] ~= nil

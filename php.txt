@@ -128,7 +128,7 @@ round($x)
 ceil($x)
 
 floor($x)
-`e absolute-value
+`e absolute-value-and-signum
 abs($x)
 `e integer-overflow
 converted to float
@@ -461,7 +461,7 @@ $a[0]
 # integers or strings
 `e update
 $a[0] = "lorem";
-`e out-of-bounds-behavior
+`e out-of-bounds
 $a = [];
 # evaluates as NULL:
 
@@ -500,7 +500,7 @@ $a = [1, 2, 3];
 $a2 = array_merge($a, [4, 5, 6]);
 
 $a = array_merge($a, [4, 5, 6]);
-`e replicate
+`e list-replicate
 
 `e copy
 $a = [1, 2, [3, 4]];
@@ -524,7 +524,7 @@ foreach ($a as $i => $s) {
 }
 `e iterate-over-range
 not space efficient; use C-style for loop
-`e instantiate-range-as-array
+`e instantiate-range-as-list
 $a = range(1, 10);
 `e reverse
 $a = [1, 2, 3];
@@ -577,13 +577,15 @@ array_filter([1, 2, 3],
   function ($x) {
     return $x>1;
   })
-`e reduce
+`e fold-from-left
 array_reduce([1, 2, 3],
   function($x,$y) {
     return $x + $y;
   }, 0)
-`e universal-and-existential-tests
-use array_filter
+`e universal-test
+`(use array_filter)
+`e existential-test
+`(use array_filter)
 `e shuffle-and-sample
 $a = [1, 2, 3, 4];
 
@@ -606,7 +608,7 @@ $d = array("t" => 1, "f" => 0);
 count($d)
 `e map-lookup
 $d["t"]
-`e map-out-of-bounds-behavior
+`e map-out-of-bounds
 $d = [];
 evaluates as NULL:
 

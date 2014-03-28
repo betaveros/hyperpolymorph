@@ -7,11 +7,13 @@
 `*import os, re, sys
 `e hello-world
 `(2.x:)
-`*print "Hello, world!"
+`*print `=["Hello, world!"]
 `(3.x:)
-`.print("Hello, world!")
+`.print(`=["Hello, world!"])
 `e file-suffixes
 .py
+`(none)
+.pyc
 `e interpreter
 `$[python foo.py]
 `e repl
@@ -155,8 +157,11 @@ math.pi math.e
 `.int(`.round(x))
 math.ceil(x)
 math.floor(x)
-`e absolute-value
+`e absolute-value-and-signum
 `.abs(x)
+
+`*import math
+math.copysign(1, x) `(returns 1.0 or -1.0 for positive or negative floating zero; int zero is coerced to positive zero)
 `e arbitrary-length-integer
 `(automatically promoted)
 `e arbitrary-length-integer-operators
@@ -236,10 +241,10 @@ second line"""]
 `e variable-interpolation
 count = 3
 item = 'ball'
-`.print(`=['{count} {item}s'].format(
+`.print(`=['`%[{count}] `%[{item}]s'].format(
   `+[**]`.locals()))
 `e expression-interpolation
-'1 + 1 = {}'.format(1 + 1)
+`=['1 + 1 = `%[{}]'].format(1 + 1)
 `e format
 `(old-style)
 `=['lorem `%[%s %d %f]'] % ('ipsum', 13, 3.7)
@@ -251,8 +256,8 @@ no
 `e copy-string
 `(not necessary)
 `e concatenate-strings
-s = 'Hello, '
-s2 = s + 'World!'
+s = `=['Hello, ']
+s2 = s + `=['World!']
 
 `(juxtaposition can be used to concatenate literals:)
 s2 = 'Hello, ' "World!"
@@ -309,6 +314,13 @@ re.split(`=['(\s+)'], 'do re mi fa')
 `(essentially length-1 str)
 `e character-literal
 `(same as string)
+`e test-character
+`(operate on any strings, testing if all characters satisfy:)
+`=['c'].isalpha
+`=['c'].isdigit
+`=['c'].isspace
+`=['c'].isupper
+`=['c'].islower
 `e chr-and-ord
 `.chr(65)
 `.ord('A')
@@ -323,14 +335,14 @@ outs = ins[13:] + ins[:13]
 `e delete-characters
 "disemvowel me".translate(`=None, "aeiou")
 `e squeeze-characters
-re.sub('(\s)+', r'\1', 'too  much  space')
+re.sub(`=['(\s)+'], `=[r'\1'], 'too  much  space')
 `e literal-custom-delimited-literal
-re.compile('lorem|ipsum')
+re.compile(`=['lorem|ipsum'])
 `(none)
 `e character-class-abbreviations
-. \d \D \s \S \w \W
+`%[. \d \D \s \S \w \W]
 `e anchors
-^ $ \A \b \B \Z
+`%[^ $ \A \b \B \Z]
 `e match-test
 `*if re.search('1999', s):
   `.print('party!')
@@ -380,13 +392,13 @@ utc = datetime.datetime.utcnow()
 `e to-unix-epoch-from-unix-epoch
 `*from datetime `*import datetime `*as dt
 
-epoch = int(t.strftime("%s"))
+epoch = `.int(t.strftime("%s"))
 t2 = dt.fromtimestamp(1304442000)
 `e current-unix-epoch
 `*import datetime
 
 t = datetime.datetime.now()
-epoch = int(t.strftime("%s"))
+epoch = `.int(t.strftime("%s"))
 `e strftime
 t.strftime('%Y-%m-%d %H:%M:%S')
 `e default-format-example
@@ -486,7 +498,7 @@ a[0]
 a[-1] `(last element)
 `e list-update
 a[0] = 'lorem'
-`e list-out-of-bounds-behavior
+`e list-out-of-bounds
 a = []
 `![raises `.IndexError:]
 a[10]
@@ -521,7 +533,7 @@ a = [1, 2, 3]
 a2 = a + [4, 5, 6]
 
 a.extend([4, 5, 6])
-`e replicate
+`e list-replicate
 a = [`=None] * 10
 
 a = [`=None `*for i `*in `.range(0, 10)]
@@ -545,7 +557,7 @@ a = ['do', 're', 'mi', 'fa']
 `(use range() in Python 3:)
 `*for i `*in `.xrange(1, 1000001):
   code
-`e instantiate-range-as-array
+`e instantiate-range-as-list
 a = `.range(1, 11)
 `(Python 3:)
 a = `.list(`.range(1, 11))
@@ -590,13 +602,14 @@ a = `.list(`.set(a))
 `.filter(`*lambda x: x > 1, [1,2,3])
 `(or use list comprehension:)
 [x `*for x `*in [1,2,3] `*if x > 1]
-`e reduce
+`e fold-from-left
 `(import needed in Python 3 only)
 `*from functools `*import reduce
 
 `.reduce(`*lambda x, y: x+y, [1,2,3], 0)
-`e universal-and-existential-tests
+`e universal-test
 `.all(i % 2 == 0 `*for i `*in [1,2,3,4])
+`e existential-test
 `.any(i % 2 == 0 `*for i `*in [1,2,3,4])
 `e shuffle-and-sample
 `*from random `*import shuffle, sample
@@ -615,7 +628,7 @@ d = { 't':1, 'f':0 }
 `.len(d)
 `e map-lookup
 d['t']
-`e map-out-of-bounds-behavior
+`e map-out-of-bounds
 d = {}
 `![raises `.KeyError:]
 d['lorem']
@@ -877,7 +890,7 @@ returns string without newline or ''
 `e chomp
 line = line.rstrip('\r\n')
 `e write-line-to-stdout
-`.print('Hello, World!')
+`.print(`=['Hello, World!'])
 `e printf
 `*import math
 

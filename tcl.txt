@@ -125,7 +125,7 @@ expr int(3.1)
 expr round(3.1)
 expr floor(3.1)
 expr ceil(3.1)
-`e absolute-value
+`e absolute-value-and-signum
 expr abs(-3)
 `e integer-overflow
 arbitrary length integers introduced in 8.5
@@ -163,7 +163,7 @@ set s $s1$s2
 split "do re mi"
 `e join
 join [list "do" "re" "mi"] " "
-`e sprintf
+`e format
 set fmt "lorem %s %d %.2f"
 format $fmt "ipsum" 13 3.7
 `e translate-case
@@ -261,7 +261,7 @@ lindex $a 0
 
 # of elements to replace:
 set a [lreplace $a 1 1 "lorem"]
-`e out-of-bounds-behavior
+`e out-of-bounds
 returns ""
 `e index-of-element
 lsearch {6 7 7 8} 7
@@ -273,7 +273,7 @@ lrange $a 1 2
 lrange {"a" "b" "c" "d"} 1 end
 `e concatenate
 set a [concat {1 2 3} {4 5 6}]
-`e replicate
+`e list-replicate
 lrepeat 10 ""
 `e manipulate-back
 set a {6 7 8}
@@ -324,14 +324,12 @@ package require struct::list
 proc gt1 {x} {return [expr $x > 1]}
 
 ::struct::list filter {1 2 3} gt1
-`e reduce
+`e fold-from-left
 package require struct::list
 
 
 ::struct::list fold {1 2 3} 0
   ::tcl::mathop::+
-`e universal-and-existential-tests
-none
 `e shuffle-and-sample
 none
 `e zip
@@ -344,7 +342,7 @@ dict size $d
 dict get $d t
 `e map-update
 dict set d t 2
-`e map-out-of-bounds-behavior
+`e map-out-of-bounds
 error
 `e is-key-present
 dict exists $d t

@@ -97,7 +97,7 @@ Math.round(3.1)
 Math.floor(3.1)
 
 Math.ceil(3.1)
-`e absolute-value
+`e absolute-value-and-signum
 Math.abs(-3)
 `e integer-overflow
 `(all numbers are floats)
@@ -231,7 +231,7 @@ a.length
 a[0]
 `e update
 a[0] = "lorem"
-`e out-of-bounds-behavior
+`e out-of-bounds
 returns `=undefined
 `e index-of-element
 [6, 7, 7, 8].indexOf(7)
@@ -274,19 +274,17 @@ a.sort();
 a.map(`*function(x) { `*return x * x })
 `e filter
 a.filter(`*function(x) { `*return x > 1 })
-`e reduce
+`e fold-from-left
 a.reduce(`*function(m, o) {
     `*return m + o;
   }, 0)
-`e universal-and-existential-tests
+`e universal-test
 `*var a = [1, 2, 3, 4];
-
 `*var even = `*function(x) {
   `*return x % 2 == 0;
 };
-
 a.every(even)
-
+`e existential-test
 a.some(even)
 `e map-literal
 d = { "t":1, "f":0 };
@@ -304,7 +302,7 @@ d["t"]
 d["t"] = 2;
 
 d.t = 2;
-`e map-out-of-bounds-behavior
+`e map-out-of-bounds
 returns `=undefined
 `e is-key-present
 d.hasOwnProperty("t");

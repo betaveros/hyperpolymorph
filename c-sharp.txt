@@ -165,7 +165,7 @@ Math.Round(3.77)
 Math.Floor(3.77)
 
 Math.Ceiling(3.77)
-`e absolute-value
+`e absolute-value-and-signum
 System.Math.Abs(-7)
 
 System.Math.Abs(-7.77)
@@ -281,7 +281,7 @@ s.Length
 
 `e character-literal
 
-`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+`e test-character
 
 `e regex-type
 
@@ -393,7 +393,7 @@ l.Count
 l[0]
 `e update
 
-`e out-of-bounds-behavior
+`e out-of-bounds
 throws System.ArgumentOutOfRangeException
 `e index-of-element
 
@@ -409,7 +409,7 @@ l.RemoveAt(l.Count - 1);
 
 `e concatenate
 
-`e replicate
+`e list-replicate
 
 `e copy
 
@@ -440,11 +440,7 @@ foreach ( string s in l ) {
 
 `e filter
 
-`e reduce
-
 `e min-and-max-element
-
-`e universal-and-existential-tests
 
 `e shuffle-and-sample
 

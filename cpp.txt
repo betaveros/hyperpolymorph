@@ -179,7 +179,7 @@ long trnc = static_cast<long>(x);
 long rnd = round(x);
 long flr = floorl(x);
 long cl = ceill(x);
-`e absolute-value
+`e absolute-value-and-signum
 #include <cmath>    // fabs()
 #include <cstdlib>  // abs()
 
@@ -405,7 +405,7 @@ char
 wchar_t
 `e character-literal
 char n = 'X';
-`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+`e test-character
 // functions have this signature:
 //
 //   int (*)(int):
@@ -572,7 +572,7 @@ int n = a[0];
 int n2 = a.at(0);
 `e update
 a[2] = 4;
-`e out-of-bounds-behavior
+`e out-of-bounds
 using [] with out-of-bounds index has undefined behavior
 `e index-of-element
 #include <vector>
@@ -628,7 +628,7 @@ vector<int> a2({4, 5, 6});
 a1.insert(a1.cend(),
           a2.cbegin(),
           a2.cend());
-`e replicate
+`e list-replicate
 #include <vector>
 
 // array of 10 zeros:
@@ -720,11 +720,7 @@ if (find(a.cbegin(), a.cend(), 7) !=
 
 `e filter
 
-`e reduce
-
 `e min-and-max-element
-
-`e universal-and-existential-tests
 
 `e shuffle-and-sample
 

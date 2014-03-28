@@ -147,7 +147,7 @@ round($x, 0)
 ceil($x)
 
 floor($x)
-`e absolute-value
+`e absolute-value-and-signum
 abs($x)
 `e integer-overflow
 converted to float; `*use Math::BigInt to create arbitrary length integers
@@ -500,7 +500,7 @@ $a[0]
 $a[-1]
 `e update
 $a[0] = "lorem";
-`e out-of-bounds-behavior
+`e out-of-bounds
 @a = ();
 # evaluates as undef:
 $a[10];
@@ -530,7 +530,7 @@ shift @a;
 @a = (1, 2, 3);
 @a2 = (@a, (4, 5, 6));
 push @a, (4,5,6);
-`e replicate
+`e list-replicate
 @a = (undef) x 10;
 `e copy
 `*use Storable 'dclone'
@@ -550,7 +550,7 @@ for $i (1..1_000_000) {
   code
 
 }
-`e instantiate-range-as-array
+`e instantiate-range-as-list
 @a = 1..10;
 `e reverse
 @a = (1, 2, 3);
@@ -582,18 +582,18 @@ sort { lc($a) cmp lc($b) } @a;
 map { $_ * $_ } (1,2,3)
 `e filter
 grep { $_ > 1 } (1,2,3)
-`e reduce
+`e fold-from-left
 `*use List::Util 'reduce';
 
 
 reduce { $x + $y } 0, (1,2,3)
-`e universal-and-existential-tests
+`e universal-test
 # cpan -i List::MoreUtils
 `*use List::MoreUtils qw(all any);
-
-
 all { $_ % 2 == 0 } (1,2,3,4)
-
+`e existential-test
+# cpan -i List::MoreUtils
+`*use List::MoreUtils qw(all any);
 any { $_ % 2 == 0 } (1,2,3,4)
 `e shuffle-and-sample
 `*use List::Util 'shuffle';
@@ -620,7 +620,7 @@ scalar(keys %d)
 $d{"t"}
 # barewords permitted inside { }
 # under '`*use strict'
-`e map-out-of-bounds-behavior
+`e map-out-of-bounds
 %d = ();
 evaluates as undef:
 $d{"lorem"};

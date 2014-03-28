@@ -178,7 +178,7 @@ Math.round(3.77)
 (long)Math.floor(3.77)
 
 (long)Math.ceil(3.77)
-`e absolute-value
+`e absolute-value-and-signum
 Math.abs(-7)
 
 Math.abs(-7.77)
@@ -313,7 +313,7 @@ char
 Character
 `e character-literal
 char n = 'X';
-`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+`e test-character
 
 `e regex-type
 
@@ -415,7 +415,7 @@ list.size()
 list.elementAt(0)
 `e update
 
-`e out-of-bounds-behavior
+`e out-of-bounds
 throws ArrayIndexOutOfBoundsException
 `e index-of-element
 
@@ -433,7 +433,7 @@ vec.removeElementAt(vec.size()-1);
 
 `e concatenate
 
-`e replicate
+`e list-replicate
 
 `e copy
 
@@ -464,11 +464,7 @@ for ( String s : vec ) {
 
 `e filter
 
-`e reduce
-
 `e min-and-max-element
-
-`e universal-and-existential-tests
 
 `e shuffle-and-sample
 

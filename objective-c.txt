@@ -195,7 +195,7 @@ long rnd = round(d);
 long flr = floorl(d);
 
 long cl = ceill(d);
-`e absolute-value
+`e absolute-value-and-signum
 #include <stdlib.h>  // abs()
 
 #include <math.h>  // fabs()
@@ -305,7 +305,7 @@ NSString *s3 = [s1 stringByAppendingString:s2];
 
 `e character-literal
 
-`e test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter
+`e test-character
 
 `e regex-type
 
@@ -367,7 +367,7 @@ NSArray *a = [NSArray arrayWithObjects:@"hello", @"goodbye", nil];
 [a objectAtIndex:0]
 `e list-update
 
-`e list-out-of-bounds-behavior
+`e list-out-of-bounds
 raises NSRangeException exception
 `e copy
 
@@ -398,7 +398,7 @@ NSMutableArray *a = [NSMutableArray arrayWithCapacity:10];
 [a objectAtIndex:0]
 `e update
 
-`e out-of-bounds-behavior
+`e out-of-bounds
 raises NSRangeException
 `e index-of-element
 
@@ -414,7 +414,7 @@ raises NSRangeException
 
 `e concatenate
 
-`e replicate
+`e list-replicate
 
 `e copy
 
@@ -449,11 +449,9 @@ while (o = [i nextObject]) {
 
 `e filter
 
-`e reduce
+`e fold-from-left
 
 `e min-and-max-element
-
-`e universal-and-existential-tests
 
 `e shuffle-and-sample
 

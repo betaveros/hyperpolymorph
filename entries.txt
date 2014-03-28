@@ -82,7 +82,6 @@ sqrt-1: sqrt -1
 transcendental-functions: transcendental functions
 transcendental-constants: transcendental constants / π and e
 float-truncation: float truncation
-absolute-value: absolute value
 absolute-value-and-signum: absolute value / and signum
 arbitrary-length-integer: arbitrary length integer
 arbitrary-length-integer-operators: arbitrary length integer operators
@@ -114,7 +113,6 @@ here-document: here document
 variable-interpolation: variable interpolation
 expression-interpolation: expression interpolation
 format: format
-sprintf: sprintf
 compare-strings: compare strings
 are-strings-mutable: are strings mutable?
 copy-string: copy string
@@ -137,7 +135,7 @@ extract-substring: extract substring / by start and length, by start and end, by
 extract-character: extract character
 character-type: character type
 character-literal: character literal
-test-character-letter-digit-whitespace-uppercase-letter-lowercase-letter: test character / letter, digit, whitespace, uppercase letter, lowercase letter
+test-character: test character / letter, digit, whitespace, uppercase letter, lowercase letter
 chr-and-ord: chr and ord
 to-array-of-characters: to array of characters
 translate-characters: translate characters
@@ -190,7 +188,7 @@ array-initialization-list: initialization list
 array-size: size
 array-lookup: lookup
 array-update: update
-array-out-of-bounds: out-of-bounds
+array-out-of-bounds: out-of-bounds behavior
 array-copy: array-copy
 as-function-argument: as function argument
 array-iterate: iterate
@@ -209,7 +207,7 @@ empty-test-and-clear: empty test / and clear
 head: head
 list-lookup: lookup
 list-update: update
-list-out-of-bounds-behavior: out-of-bounds behavior
+list-out-of-bounds: out-of-bounds behavior
 index-of-element: index of element
 cons: cons
 slice: slice / by endpoints, by length
@@ -220,22 +218,21 @@ manipulate-back: manipulate back
 manipulate-front: manipulate front
 concatenate: concatenate
 concatenate-two-lists-list-of-lists: concatenate / two lists, list of lists
-replicate: replicate
+list-replicate: list-replicate
 list-copy: copy / address copy, shallow copy, deep copy
 array-as-function-arguments: array as function arguments
 arrays-as-function-arguments: arrays as function arguments
 iterate-over-elements: iterate over elements
 iterate-over-indices-and-elements: iterate over indices and elements
 iterate-over-range: iterate over range
-instantiate-range-as-array: instantiate range as array
+instantiate-range-as-list: instantiate range as list
 reverse: reverse / non-destructive, in-place
 sort: sort / non-destructive, /  / in-place, /  / custom comparision
 dedupe: dedupe / non-destructive, in-place
 membership: membership
 map: map
 filter: filter
-reduce: reduce
-fold-from-left: fold from left
+fold-from-left: fold from left (reduce)
 fold-from-right: fold from right
 universal-test: universal test
 existential-test: existential test
@@ -243,7 +240,6 @@ intersection: intersection
 union: union
 relative-complement-symmetric-difference: relative complement, symmetric difference
 min-and-max-element: min and max element
-universal-and-existential-tests: universal and existential tests
 shuffle-and-sample: shuffle and sample
 zip: zip
 zip-lists: zip lists
@@ -268,7 +264,7 @@ map-element-not-found-result: map element not found result
 map-iterate: map iterate
 map-literal: literal
 map-lookup: lookup
-map-out-of-bounds-behavior: out-of-bounds behavior
+map-out-of-bounds: out-of-bounds behavior
 is-key-present: is key present
 delete-entry: delete entry
 from-array-of-pairs-from-even-length-array: from array of pairs, from even length array
