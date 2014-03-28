@@ -164,6 +164,8 @@ startHTML = unlines [
 	"</head>",
 	"<body>",
 	"<h1>Hyperpolymorph</h1>",
+	"<p id='cc'>Based on / inspired by <a href='http://hyperpolyglot.org/'>Hyperpolyglot.org</a>; released under <a href='http://creativecommons.org/licenses/by-sa/3.0/'>CC BY-SA 3.0</a>. Work in progress!</p>",
+	"<a href='https://github.com/betaveros/hyperpolymorph'><img style='position: absolute; top: 0; right: 0; border: 0;' src='https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67' alt='Fork me on GitHub' data-canonical-src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png'></a>",
 	"<div id='morpher'></div>"
 	]
 endHTML = unlines ["</body>", "</html>"]
@@ -180,7 +182,8 @@ parseIO parser msg txt = either (ioError . userError . show) return $ parse pars
 readEntryMap name = readFile (name ++ ".txt") >>= parseIO bqEntryMap name
 readNamedEntryMap name = (,) name <$> readEntryMap name
 
-langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","clojure","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
+-- langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","clojure","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
+langNames = ["python","scala"]
 
 
 main = do
