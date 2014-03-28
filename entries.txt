@@ -648,7 +648,7 @@ profile-code: profile code
 memory-tool: memory tool
 lint: lint
 source-cleanup: source cleanup
-# repl
+# about-repl
 invoke-repl: invoke repl
 repl-limitations: repl limitations
 repl-last-value: repl last value

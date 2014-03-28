@@ -3,6 +3,7 @@ import Control.Arrow
 import Control.Applicative ((<$>))
 import Control.Monad
 import Data.Char
+import Data.Function
 import Data.List
 import Text.Parsec
 import Text.Parsec.Char
@@ -25,6 +26,8 @@ idChar = satisfy isId
 isKeyChar c = isAlphaNum c || c == '-'
 keyChar :: CharParser Char
 keyChar = satisfy isKeyChar
+
+toKey = intercalate "-" . filter (isAlphaNum . head) . groupBy ((==) `on` isAlphaNum)
 
 type CharParser = Parsec [Char] ()
 
@@ -136,8 +139,8 @@ buildRow :: (String, String) -> [NamedEntryMap] -> String
 buildRow (key, desc) emaps =
 	"<tr id='" ++ key ++ "'><td class='desc'><div class='pd'><a href='#" ++ key ++ "' class='perm'>#</a></div> " ++ desc ++ "</td>" ++ concatMap (buildTd key) emaps ++ "</tr>"
 
-makeThRow colspan cont =
-	"<tr><td class='invis' rowspan='2'></td><th colspan='" ++ show colspan ++ "' class='section-header'>" ++ cont ++ "</th></tr>"
+makeThRow colspan key cont =
+	"<tr><td class='invis' rowspan='2'></td><th colspan='" ++ show colspan ++ "' class='section-header' id='" ++ key ++ "'>" ++ cont ++ "</th></tr>"
 
 buildColumnHeads :: [NamedEntryMap] -> String
 buildColumnHeads emaps =
@@ -145,7 +148,7 @@ buildColumnHeads emaps =
 
 buildSection :: Section -> [NamedEntryMap] -> String
 buildSection (heading, assocs) emaps = unlines (
-	makeThRow (length emaps) heading :
+	makeThRow (length emaps) (toKey heading) heading :
 	buildColumnHeads emaps : [
 		buildRow assoc emaps | assoc <- assocs
 	])
@@ -155,6 +158,11 @@ buildTable secs emaps = unlines (["<table>"]
 	++ [buildSection sec emaps | sec <- secs]
 	++ ["</table>"])
 
+buildToC :: [Section] -> String
+buildToC secs = "<div id='toc'>" ++ intercalate " | " [
+	"<a href='#" ++ toKey heading ++ "'>" ++ heading ++ "</a>"
+	| (heading, _) <- secs] ++ "</div>"
+
 startHTML = unlines [
 	"<html>",
 	"<head>",
@@ -163,11 +171,13 @@ startHTML = unlines [
 	"<link rel='stylesheet' href='morph.css' />",
 	"</head>",
 	"<body>",
+	"<div id='wrapper'>",
 	"<h1>Hyperpolymorph</h1>",
 	"<p id='cc'>Based on / inspired by <a href='http://hyperpolyglot.org/'>Hyperpolyglot.org</a>; released under <a href='http://creativecommons.org/licenses/by-sa/3.0/'>CC BY-SA 3.0</a>. Work in progress!</p>",
 	"<a href='https://github.com/betaveros/hyperpolymorph'><img style='position: absolute; top: 0; right: 0; border: 0;' src='https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67' alt='Fork me on GitHub' data-canonical-src='https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png'></a>",
 	"<div id='morpher'></div>"
 	]
+footHTML = "</div>"
 endHTML = unlines ["</body>", "</html>"]
 
 buildJsCall names = unlines [
@@ -192,5 +202,7 @@ main = do
 	langs <- mapM readNamedEntryMap langNames
 	putStrLn startHTML
 	putStrLn $ buildTable secs langs
+	putStrLn footHTML
+	putStrLn $ buildToC secs
 	putStrLn $ buildJsCall langNames
 	putStrLn endHTML
