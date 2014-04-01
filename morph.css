@@ -18,6 +18,8 @@ body, h1 {
 	z-index: 1;
 }
 #toc a { color: #00c; text-decoration: none; }
+#toc a:hover { color: #06c; text-decoration: underline overline; }
+#toc a.ts { color: #099; text-decoration: underline overline; text-shadow: #0ff 0 0 0.1em; }
 #morpher {
 	background-color: #eff;
 	margin: 1em 0;

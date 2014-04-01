@@ -34,3 +34,21 @@ function makeMorpher(langs) {
 		morpher.appendChild(label);
 	}
 }
+
+var scrollsel = -1;
+function makeToCScroller(ids) {
+	var tocLinks = document.getElementById("toc").getElementsByTagName("a");
+	window.onscroll = function () {
+		var i;
+		for (i = 0; i < ids.length; i++) {
+			if (document.getElementById(ids[i]).getBoundingClientRect().top > 10)
+				break;
+		}
+		i--;
+		if (i != scrollsel) {
+			if (i != -1) tocLinks[i].className = "ts";
+			if (scrollsel != -1) tocLinks[scrollsel].className = "";
+			scrollsel = i;
+		}
+	}
+}

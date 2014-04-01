@@ -180,10 +180,11 @@ startHTML = unlines [
 footHTML = "</div>"
 endHTML = unlines ["</body>", "</html>"]
 
-buildJsCall names = unlines [
+buildJsCall names skeys = unlines [
 	"<script type='text/javascript' src='morph.js'></script>",
 	"<script type='text/javascript'>",
 	"makeMorpher([" ++ intercalate "," ["\"" ++ name ++ "\"" | name <- names] ++ "]);",
+	"makeToCScroller([" ++ intercalate "," ["\"" ++ skey ++ "\"" | skey <- skeys] ++ "]);",
 	"</script>"
 	]
 
@@ -204,5 +205,5 @@ main = do
 	putStrLn $ buildTable secs langs
 	putStrLn footHTML
 	putStrLn $ buildToC secs
-	putStrLn $ buildJsCall langNames
+	putStrLn . buildJsCall langNames $ map (toKey . fst) secs
 	putStrLn endHTML
