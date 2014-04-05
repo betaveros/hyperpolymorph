@@ -253,13 +253,16 @@ xor x y
 
 complement x
 `e binary-octal-and-hex-literals
-none
-
+`(none)
 052
-
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
-
+`*import Data.Char
+`*import Numeric
+showIntAtBase 7 intToDigit 42 ""
+`*case readInt 7 isDigit digitToInt "60" `*of
+  [(n, "")] `+[->] n
+  _ `+[->] error "Parse failed"
 `e string-type
 String `(alias for [Char])
 `e string-literal
