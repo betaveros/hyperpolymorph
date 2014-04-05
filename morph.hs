@@ -194,7 +194,7 @@ readEntryMap name = readFile (name ++ ".txt") >>= parseIO bqEntryMap name
 readNamedEntryMap name = (,) name <$> readEntryMap name
 
 -- langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","clojure","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
-langNames = ["python","scala","haskell"]
+langNames = ["perl","python","scala","haskell"]
 
 
 main = do

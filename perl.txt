@@ -4,12 +4,16 @@
 `$[perl --version]
 `e implicit-prologue
 `*use strict;
+`e hello-world
+`.print `=["Hello, world!\n"]
+`e file-suffixes
+.pl
 `e interpreter
 `$[perl foo.pl]
 `e repl
 `$[perl -de 0]
 `e command-line-program
-`$[perl -e 'print("hi\n")']
+`$[perl -e '`.print("hi\n")']
 `e block-delimiters
 {}
 `e statement-terminator
@@ -20,17 +24,16 @@
 # comment
 `e multiple-line-comment
 =for
-
 comment line
-
 another line
-
 =cut
 `e local-variable
 `*my $v;
 `*my (@a, %d);
 `*my $x = 1;
 `*my ($y, $z) = (2, 3);
+`e uninitialized-local-variable
+`=undef
 `e regions-which-define-lexical-scope
 top level:
   file
@@ -41,7 +44,7 @@ nestable:
   anonymous function body
   anonymous block
 `e global-variable
-our ($g1, $g2) = (7, 8);
+`*our ($g1, $g2) = (7, 8);
 
 `*sub swap_globals {
   ($g1, $g2) = ($g2, $g1);
@@ -58,13 +61,13 @@ $v = 1;
 
 ($x, $y) = (1, 2, 3);
 
-# $z set to undef:
+# $z set to `=undef:
 
 ($x, $y, $z) = (1, 2);
 `e swap
 ($x, $y) = ($y, $x);
 `e compound-assignment-arithmetic-string-logical-bit
-+= -= *= none /= %= **=
++= -= *= `(none) /= %= **=
 
 .= x=
 
@@ -75,59 +78,63 @@ $v = 1;
 `*my $y = ++$x;
 `*my $z = --$y;
 `e null
-undef
+`=undef
 `e null-test
 ! defined $v
 `e undefined-variable-access
-error under `*use strict; otherwise undef
+`![error under `*use strict]
+otherwise `=undef
 `e conditional-expression
 $x > 0 ? $x : -$x
 `e true-and-false
-1 ""
+`=[1 ""]
 `e falsehoods
-undef 0 0.0 "" "0" ()
+`=[undef 0 0.0 "" "0" ()]
 `e logical-operators
-&& || !
-lower precedence:
-and or xor not
+`+[&& || !]
+`(lower precedence:)
+`+[and or xor not]
 `e relational-operators
-numbers only: == != > < >= <=
+`(numbers only:) `+[== != > < >= <=]
 `e compare-strings
-eq ne gt lt ge le
+`+[eq ne gt lt ge le]
 `e min-and-max
 `*use List::Util qw(min max);
 
-
 min(1, 2, 3);
-
 max(1, 2, 3);
 
 @a = (1, 2, 3);
-
 min(@a);
-
 max(@a);
 `e three-value-comparison
-0 <=> 1
-"do" cmp "re"
+0 `+[<=>] 1
+"do" `+[cmp] "re"
+`e integer-type
+`(all numbers are floats, unless Math::BigInt is used)
+`e integer-literal
+-4
+`e float-type
+scalar
 `e arithmetic-operators
-+ - * / none %
++ - * / `(none) %
+`e float-operators
+`(as above)
 `e integer-division
-int(13 / 5)
+`.int(13 / 5)
 `e divmod
-none
 `e integer-division-by-zero
-error
+`![error]
 `e float-division
 13 / 5
 `e float-division-by-zero
-error
+`![error]
 `e power
 2**32
 `e sqrt
-sqrt(2)
+`.sqrt(2)
 `e sqrt-1
-error unless `*use Math::Complex in effect
+`![error] unless `*use Math::Complex in effect
 `e transcendental-functions
 `*use Math::Trig qw(
   tan asin acos atan);
@@ -141,14 +148,28 @@ exp log sin cos tan asin acos atan atan2
 `*use POSIX qw(ceil floor);
 
 int($x)
-
 round($x, 0)
-
 ceil($x)
-
 floor($x)
 `e absolute-value-and-signum
 abs($x)
+`e arbitrary-length-integer
+`*use Math::BigInt;
+`*my $n = Math::BigInt->new("7");
+`*my $m = Math::BigInt->new("12");
+
+`("magically" makes almost all integers arbitrary-length:)
+`*use bigint;
+`e arbitrary-length-integer-operators
+`(under use Math::BigInt without use bigint:)
+`(destructive on left operand:)
+$n->badd($m);
+$n->bsub($m);
+$n->bmul($m);
+$n->bdiv($m);
+$n->bmod($m);
+
+$n->bcmp($m); `(returns -1, 0, 1)
 `e integer-overflow
 converted to float; `*use Math::BigInt to create arbitrary length integers
 `e float-overflow
@@ -176,47 +197,39 @@ abs($z);
 
 ~$z;
 `e random-number-uniform-integer-uniform-float-normal-float
-int(rand() * 100)
-rand()
-none
+`.int(`.rand() * 100)
+`.rand()
+`(none)
 `e random-seed
-srand 17;
+`.srand 17;
 
-`*my $seed = srand;
-srand($seed);
+`*my $seed = `.srand;
+`.srand($seed);
 `e bit-operators
-<< >> & | ^ ~
+`+[<< >> & | ^ ~]
 `e binary-octal-and-hex-literals
-0b101010
-
-052
-
-0x2a
+`=0b101010
+`=052
+`=0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 # cpan -i Math::BaseCalc
 `*use Math::BaseCalc;
 
-
-$c = new Math::BaseCalc(
+$c = `*new Math::BaseCalc(
   digits => [0..6]);
-
 $c->to_base(42);
-
 $c->from_base("60");
 `e string-type
 SCALAR which is also used for numeric types and references
 `e string-literal
-"don't say \"no\""
-'don\'t say "no"'
+`=["don't say `%[\"]no`%[\"]"]
+`=['don`%[\']t say "no"']
 `e newline-in-literal
-'first line
+`=['first line
+second line']
 
-second line'
-
-
-"first line
-
-second line"
+`=["first line
+second line"]
 `e literal-escapes
 double quoted:
 
@@ -226,61 +239,52 @@ single quoted:
 
 \' \\
 `e custom-delimiters
-`*my $s1 = q(lorem ipsum);
-`*my $s2 = qq($s1 dolor sit amet);
+`*my $s1 = `=[q(lorem ipsum)];
+`*my $s2 = `=[qq(`%[$s1] dolor sit amet)];
 `e here-document
 $word = "amet";
 
 
-$s = <<EOF;
+$s = `=[<<EOF;
 lorem ipsum
-
-dolor sit $word
-
-EOF
+dolor sit `%[$word]
+EOF]
 `e variable-interpolation
 `*my $count = 3;
 `*my $item = "ball";
-print "$count ${item}s\n";
+`.print "$count ${item}s\n";
 `e expression-interpolation
 none
 `e format
-`*my $fmt = "lorem %s %d %f";
+`*my $fmt = `=["lorem %s %d %f"];
 sprintf($fmt, "ipsum", 13, 3.7)
 `e are-strings-mutable
 $s = "bar";
-
 $s2 = $s;
-# sets s to "baz"; s2 is unchanged:
-
+`(sets s to "baz"; s2 is unchanged:)
 $s =~ s/r/z/;
 `e copy-string
 $s2 = $s;
 `e concatenate-strings
 `*my $s = "Hello, ";
-`*my $s2 = $s . "World!";
+`*my $s2 = $s `+. "World!";
 `e replicate-string
-`*my $hbar = "-" x 80;
+`*my $hbar = "-" `.x 80;
 `e translate-case
-uc("lorem")
-lc("LOREM")
+`.uc("lorem")
+`.lc("LOREM")
 `e capitalize
 # cpan -i Text::Autoformat
 `*use Text::Autoformat;
-
-ucfirst("lorem")
-
-autoformat("lorem ipsum",
+`.ucfirst("lorem")
+`.autoformat("lorem ipsum",
   {case => 'title'})
 `e trim
 # cpan -i Text::Trim
 `*use Text::Trim;
 
-
 trim " lorem "
-
 ltrim " lorem"
-
 rtrim "lorem "
 `e pad-on-right-on-left-centered
 # cpan -i Text::Format
@@ -300,7 +304,7 @@ $text->center("lorem");
 
 73.9 + ".037"
 `e join
-join(" ", qw(do re mi fa))
+join(" ", `=[qw(do re mi fa)]])
 `e split
 split(/\s+/, "do re mi fa")
 `e split-in-two
@@ -310,7 +314,7 @@ split(/(\s+)/, "do re mi fa")
 `e string-length
 length("lorem")
 `e index-of-substring
-# returns -1 if not found:
+`(returns -1 if not found:)
 index("lorem ipsum", "ipsum")
 rindex("do re re", "re")
 `e extract-substring
@@ -318,9 +322,7 @@ substr("lorem ipsum", 6, 5)
 none
 none
 `e extract-character
-# can't use index notation with
-
-# strings:
+`(can't use index notation with strings:)
 substr("lorem ipsum", 6, 1)
 `e chr-and-ord
 chr(65)
@@ -340,16 +342,15 @@ $s = "too  much  space";
 
 $s =~ tr/ //s;
 `e literal-custom-delimited-literal
-/lorem|ipsum/
-qr(/etc/hosts)
+`=[/lorem|ipsum/]
+`=[qr(/etc/hosts)]
 `e character-class-abbreviations
-. \d \D \h \H \s \S \v \V \w \W
+`%[. \d \D \h \H \s \S \v \V \w \W]
 `e anchors
-^ $ \A \b \B \z \Z
+`%[^ $ \A \b \B \z \Z]
 `e match-test
 `*if ($s =~ /1999/) {
-  print "party!\n";
-
+  `.print "party!\n";
 }
 `e case-insensitive-match-test
 "Lorem" =~ /lorem/i
@@ -364,7 +365,6 @@ $s =~ s/mi/ma/g;
   $match = ${^MATCH};
   $prematch = ${^PREMATCH};
   $postmatch = ${^POSTMATCH};
-
 }
 `e group-capture
 $rx = qr/(\d{4})-(\d{2})-(\d{2})/;
@@ -413,7 +413,7 @@ $epoch = time;
 $t = localtime(time);
 
 $fmt = "%Y-%m-%d %H:%M:%S";
-print $t->strftime($fmt);
+`.print $t->strftime($fmt);
 `e default-format-example
 Tue Aug 23 19:35:19 2011
 `e strptime
@@ -469,16 +469,13 @@ $tz->is_dst_for_datetime($dt);
 
 ($sec, $usec) = gettimeofday;
 `e sleep
-# a float argument will be truncated
-
-# to an integer:
-sleep 1;
+`(a float argument will be truncated to an integer:)
+`.sleep 1;
 `e timeout
-eval {
-  $SIG{ALRM}= `*sub {die "timeout!";};
-  alarm 5;
-  sleep 10;
-
+`.eval {
+  $SIG{ALRM}= `*sub {`.die "timeout!";};
+  `.alarm 5;
+  `.sleep 10;
 };
 alarm 0;
 `e list-name
@@ -489,49 +486,47 @@ ephemeral value: list
 `e quote-words
 @a = qw(do re mi);
 `e size
-$#a + 1 or
-scalar(@a)
+$#a + 1 `(or)
+`.scalar(@a)
 `e empty-test
-!@a
+`+!@a
 `e lookup
 $a[0]
-
-# returns last element:
+`(returns last element:)
 $a[-1]
 `e update
 $a[0] = "lorem";
 `e out-of-bounds
 @a = ();
-# evaluates as undef:
+`(evaluates as undef:)
 $a[10];
-# increases array size to 11:
+`(increases array size to 11:)
 $a[10] = "lorem";
 `e index-of-element
 `*use List::Util 'first';
 
-@a = qw(x y z w);
-
-$i = first {$a[$_] eq "y"} (0..$#a);
+@a = `=[qw(x y z w)];
+$i = first {$a[$_] `+eq "y"} (0..$#a);
 `e slice
 # select 3rd and 4th elements:
 @a[2..3]
-splice(@a, 2, 2)
+`.splice(@a, 2, 2)
 `e drop
 @a[1..$#a]
 `e manipulate-back
 @a = (6, 7, 8);
-push @a, 9;
-pop @a;
+`.push @a, 9;
+`.pop @a;
 `e manipulate-front
 @a = (6, 7, 8);
-unshift @a, 5;
-shift @a;
+`.unshift @a, 5;
+`.shift @a;
 `e concatenate
 @a = (1, 2, 3);
 @a2 = (@a, (4, 5, 6));
-push @a, (4,5,6);
+`.push @a, (4,5,6);
 `e list-replicate
-@a = (undef) x 10;
+@a = (`=undef) x 10;
 `e copy
 `*use Storable 'dclone'
 
@@ -542,11 +537,11 @@ push @a, (4,5,6);
 `e arrays-as-function-arguments
 each element passed as separate argument; use reference to pass array as single argument
 `e iterate-over-elements
-for $i (1, 2, 3) { print "$i\n" }
+`*for $i (1, 2, 3) { `.print "$i\n" }
 `e iterate-over-indices-and-elements
 none; use range iteration from 0 to $#a and use index to look up value in the loop body
 `e iterate-over-range
-for $i (1..1_000_000) {
+`*for $i (1..1_000_000) {
   code
 
 }
@@ -560,9 +555,9 @@ reverse @a;
 `e sort
 @a = qw(b A a B);
 
-sort @a;
-@a = sort @a;
-sort { lc($a) cmp lc($b) } @a;
+`.sort @a;
+@a = `.sort @a;
+`.sort { lc($a) cmp lc($b) } @a;
 `e dedupe
 `*use List::MoreUtils 'uniq';
 
@@ -579,12 +574,11 @@ sort { lc($a) cmp lc($b) } @a;
 `e relative-complement-symmetric-difference
 
 `e map
-map { $_ * $_ } (1,2,3)
+`.map { $_ * $_ } (1,2,3)
 `e filter
-grep { $_ > 1 } (1,2,3)
+`.grep { $_ > 1 } (1,2,3)
 `e fold-from-left
 `*use List::Util 'reduce';
-
 
 reduce { $x + $y } 0, (1,2,3)
 `e universal-test
@@ -601,7 +595,7 @@ any { $_ % 2 == 0 } (1,2,3,4)
 @a = (1, 2, 3, 4);
 
 shuffle(@a);
-none
+`(none)
 `e zip
 # cpan -i List::MoreUtils
 `*use List::MoreUtils 'zip';
@@ -612,25 +606,23 @@ none
 @a = zip @nums, @lets;
 `e map-literal
 %d = ( "t" => 1, "f" => 0 );
-# barewords permitted in front of =>
-# under '`*use strict'
+`(barewords permitted in front of => under 'use strict')
 `e map-size
-scalar(keys %d)
+`.scalar(`.keys %d)
 `e map-lookup
 $d{"t"}
-# barewords permitted inside { }
-# under '`*use strict'
+`(barewords permitted inside { } under 'use strict')
 `e map-out-of-bounds
 %d = ();
-evaluates as undef:
+`(evaluates as undef:)
 $d{"lorem"};
-adds key/value pair:
+`(adds key/value pair:)
 $d{"lorem"} = "ipsum";
 `e is-key-present
-exists $d{"y"}
+`.exists $d{"y"}
 `e delete-entry
 %d = ( 1 => "t", 0 => "f" );
-delete $d{1};
+`.delete $d{1};
 `e from-array-of-pairs-from-even-length-array
 @a = (1,"a",2,"b",3,"c");
 %d = @a;
@@ -640,20 +632,19 @@ delete $d{1};
 %d1 = (%d1, %d2);
 `e invert
 %to_num = (t=>1, f=>0);
-%to_let = reverse %to_num;
+%to_let = `.reverse %to_num;
 `e iteration
-while (($k, $v) = each %d) {
-  code
-
+`*while (($k, $v) = `.each %d) {
+  `(code)
 }
 `e keys-and-values-as-arrays
-keys %d
-values %d
+`.keys %d
+`.values %d
 `e sort-by-values
-foreach $k (sort
-  { $d{$a} <=> $d{$b} } keys %d) {
+`*foreach $k (`.sort
+  { $d{$a} <=> $d{$b} } `.keys %d) {
 
-  print "$k: $d{$k}\n";
+  `.print "$k: $d{$k}\n";
 
 }
 `e default-value-computed-value
@@ -667,27 +658,22 @@ define a tied hash for computed values and defaults other than zero or empty str
 `*sub add3 {
   `*my ($x1, $x2, $x3) = @_;
   $x1 + $x2 + $x3;
-
 }
 `e invoke-function
 add3(1, 2, 3);
-
-# parens are optional:
-
+`(parens are optional:)
 add3 1, 2, 3;
 `e apply-function-to-array
 @a = (2, 3);
 
-
 add3(1, @a);
-# arrays are always expanded when used
-# as arguments
+`(arrays are always expanded when used as arguments)
 `e missing-argument-behavior
-set to undef
+set to `=undef
 `e default-argument
 `*sub my_log {
-  `*my $x = shift;
-  `*my $base = shift // 10;
+  `*my $x = `.shift;
+  `*my $base = `.shift // 10;
 
   log($x) / log($base);
 
@@ -701,16 +687,15 @@ my_log(42, exp(1));
 `*sub first_and_last {
 
   `*if ( @_ >= 1 ) {
-    print "first: $_[0]\n";
+    `.print "first: $_[0]\n";
   }
 
   `*if ( @_ >= 2 ) {
-    print "last: $_[-1]\n";
+    `.print "last: $_[-1]\n";
   }
 
 }
 `e named-parameters
-none
 `e pass-number-or-string-by-reference
 `*sub foo {
   $_[0] += 1;
@@ -759,7 +744,7 @@ $sqr->(2)
 
 }
 
-print counter() . "\n";
+`.print counter() . "\n";
 `e closure
 `*sub make_counter {
   `*my $i = 0;
@@ -768,40 +753,34 @@ print counter() . "\n";
 }
 
 `*my $nays = make_counter;
-print $nays->() . "\n";
+`.print $nays->() . "\n";
 `e generator
-none
 `e decorator
 
 `e operator-as-function
 
 `e if
 `*if ( 0 == $n ) {
-  print "no hits\n"
-
-} elsif ( 1 == $n ) {
-  print "one hit\n"
-
-} else {
-  print "$n hits\n"
-
+  `.print "no hits\n"
+} `*elsif ( 1 == $n ) {
+  `.print "one hit\n"
+} `*else {
+  `.print "$n hits\n"
 }
 `e switch
 `*use feature 'switch';
 
 
 given ($n) {
-  when (0) { print "no hits\n"; }
-  when (1) { print "one hit\n"; }
-  default { print "$n hits\n"; }
-
+  when (0) { `.print "no hits\n"; }
+  when (1) { `.print "one hit\n"; }
+  default { `.print "$n hits\n"; }
 }
 `e while
 `*while ( $i < 100 ) { $i++ }
 `e c-style-for
 `*for ( $i=0; $i <= 10; $i++ ) {
-  print "$i\n";
-
+  `.print "$i\n";
 }
 `e break-continue-redo
 `*last `*next `*redo
@@ -810,71 +789,61 @@ given ($n) {
 `e what-do-does
 executes following block and returns value of last statement executed
 `e statement-modifiers
-print "positive\n" `*if $i > 0;
-print "nonzero\n" `*unless $i == 0;
+`.print "positive\n" `*if $i > 0;
+`.print "nonzero\n" `*unless $i == 0;
 `e raise-exception
-die "bad arg";
+`.die "bad arg";
 `e re-raise-exception
-
 `e catch-exception
-eval { risky };
+`.eval { risky };
 `*if ($@) {
-  print "risky failed: $@\n";
-
+  `.print "risky failed: $@\n";
 }
 `e global-variable-for-last-exception
 $EVAL_ERROR: $@
 $OS_ERROR: $!
 $CHILD_ERROR: $?
 `e define-exception
-none
 `e catch-exception-by-type
-none
 `e finally
-none
 `e start-thread
 `*use threads;
 
-
 $func = `*sub { sleep 10 };
-
 $thr = threads->new($func);
 `e wait-on-thread
 $thr->join;
-
 `e standard-file-handles
 STDIN STDOUT STDERR
 `e read-line-from-stdin
-$line = <STDIN>;
+$line = `+<STDIN`+>;
 `e end-of-file-behavior
-returns string without newline or undef
+returns string without newline or `=undef
 `e chomp
 chomp $line;
 `e write-line-to-stdout
-print "Hello, World!\n";
+`.print "Hello, World!\n";
 `e printf
-use Math::Trig 'pi';
+`*use Math::Trig 'pi';
 
-printf("%.2f\n", pi);
+`.printf("%.2f\n", pi);
 `e open-file-for-reading
-open my $f, "/etc/hosts" or die;
+`.open `*my $f, "/etc/hosts" `+or `.die;
 `e open-file-for-writing
-open my $f, ">/tmp/test" or die;
+`.open `*my $f, ">/tmp/test" `+or `.die;
 `e set-file-handle-encoding
-open my $fin, "<:encoding(UTF-8)", "/tmp/foo"
-  or die;
-
-open my $fout, ">:encoding(UTF-8)", "/tmp/bar"
-  or die;
+`.open `*my $fin, "<:encoding(UTF-8)", "/tmp/foo"
+  `+or `.die;
+`.open `*my $fout, ">:encoding(UTF-8)", "/tmp/bar"
+  `+or `.die;
 `e open-file-for-appending
-open my $f, ">>/tmp/err.log" or die;
+`.open `*my $f, ">>/tmp/err.log" `+or `.die;
 `e close-file
-close $f or die;
+`.close $f `+or `.die;
 `e close-file-implicitly
 {
-  open(my $f, ">/tmp/test") or die;
-  print $f "lorem ipsum\n";
-
+  `.open(`*my $f, ">/tmp/test") `+or `.die;
+  `.print $f "lorem ipsum\n";
 }
 `e i-o-error
 return false value
@@ -883,8 +852,8 @@ emit warning and replace bad byte with 4 character \xHH sequence
 `e read-line
 $line = <$f>;
 `e iterate-over-file-by-line
-while ($line = <$f>) {
-  print $line;
+`*while ($line = <$f>) {
+  `.print $line;
 
 }
 `e read-file-into-array-of-strings
@@ -892,11 +861,11 @@ while ($line = <$f>) {
 `e read-file-into-string
 $s = do { local $/; <$f> };
 `e write-string
-print $f "lorem ipsum";
+`.print $f "lorem ipsum";
 `e write-line
-print $f "lorem ipsum\n";
+`.print $f "lorem ipsum\n";
 `e flush-file-handle
-use IO::Handle;
+`*use IO::Handle;
 
 
 $f->flush();
@@ -906,42 +875,42 @@ eof($f)
 tell($f)
 seek($f, 0, SEEK_SET);
 `e open-temporary-file
-use File::Temp;
+`*use File::Temp;
 
 
 $f = File::Temp->new();
 
-print $f "lorem ipsum\n";
+`.print $f "lorem ipsum\n";
 
-print "tmp file: ";
-print $f->filename . "\n";
+`.print "tmp file: ";
+`.print $f->filename . "\n";
 
-close $f or die;
+close $f `+or `.die;
 
 file is removed when file handle goes out of scope
 `e in-memory-file
-my ($f, $s);
-open($f, ">", \$s);
-print $f "lorem ipsum\n";
+`*my ($f, $s);
+`.open($f, ">", \$s);
+`.print $f "lorem ipsum\n";
 $s;
 `e file-exists-test-file-regular-test
--e "/etc/hosts"
--f "/etc/hosts"
+`.[-e] "/etc/hosts"
+`.[-f] "/etc/hosts"
 `e file-size
--s "/etc/hosts"
+`.[-s] "/etc/hosts"
 `e is-file-readable-writable-executable
--r "/etc/hosts"
--w "/etc/hosts"
--x "/etc/hosts"
+`.[-r] "/etc/hosts"
+`.[-w] "/etc/hosts"
+`.[-x] "/etc/hosts"
 `e set-file-permissions
-chmod 0755, "/tmp/foo";
+`.chmod 0755, "/tmp/foo";
 `e last-modification-time
-my @data = stat('/etc/passwd');
+`*my @data = `.stat('/etc/passwd');
 
 # unix epoch:
-my $t = $data['mtime'];
+`*my $t = $data['mtime'];
 `e copy-file-remove-file-rename-file
-use File::Copy;
+`*use File::Copy;
 
 
 copy("/tmp/foo", "/tmp/bar");
@@ -953,7 +922,7 @@ symlink "/etc/hosts", "/tmp/hosts";
 -l "/etc/hosts"
 readlink "/tmp/hosts"
 `e generate-unused-file-name
-use File::Temp;
+`*use File::Temp;
 
 
 $f = File::Temp->new(DIR=>"/tmp",
@@ -963,32 +932,32 @@ $f = File::Temp->new(DIR=>"/tmp",
 $path = $f->filename;
 `e parse-csv
 # cpan -i Text::CSV
-use Text::CSV;
+`*use Text::CSV;
 
-my $csv = Text::CSV->new or die;
-open my $f, $ARGV[0] or die;
-while (my $row = $csv->getline($f)) {
-  print join("\t", @$row) . "\n";
+`*my $csv = Text::CSV->new `+or `.die;
+`.open `*my $f, $ARGV[0] `+or `.die;
+`*while (`*my $row = $csv->getline($f)) {
+  `.print join("\t", @$row) . "\n";
 
 }
 `e generate-csv
 # cpan -i Text::CSV
-use Text::CSV;
+`*use Text::CSV;
 
-my $csv = Text::CSV->new or die;
+`*my $csv = Text::CSV->new `+or `.die;
 
 $csv->eol ("\r\n");
-open my $f, ">foo.csv" or die;
+`.open `*my $f, ">foo.csv" `+or `.die;
 
 $csv->print($f, ["one", "une", "uno"]);
 
 $csv->print($f,
   ["two", "deux", "dos"]);
 
-$f->close or die;
+$f->close `+or `.die;
 `e json-generate-parse
 # cpan -i JSON
-use JSON;
+`*use JSON;
 
 
 $raw = {t => 1, f => 0};
@@ -1000,9 +969,9 @@ $s = $json->encode($raw);
 $d = $json->decode($s);
 `e generate-xml
 # cpan -i XML::Writer
-use XML::Writer;
+`*use XML::Writer;
 
-my $writer = XML::Writer->new(
+`*my $writer = XML::Writer->new(
   OUTPUT => STDOUT);
 
 $writer->startTag("a");
@@ -1020,41 +989,41 @@ $writer->endTag("a");
 $writer->end;
 `e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
 # cpan -i XML::XPath
-use XML::XPath;
+`*use XML::XPath;
 
-my $xml = "<a><b><c>foo</c></b></a>";
+`*my $xml = "<a><b><c>foo</c></b></a>";
 
 # fatal error if XML not well-formed
-my $doc = XML::XPath->new(xml => $xml);
+`*my $doc = XML::XPath->new(xml => $xml);
 
-my $nodes = $doc->find("/a/b/c");
-print $nodes->size . "\n";
+`*my $nodes = $doc->find("/a/b/c");
+`.print $nodes->size . "\n";
 
 
 $node = $nodes->get_node(0);
-print $node->string_value . "\n";
-print $node->getAttribute("ref") . "\n";
+`.print $node->string_value . "\n";
+`.print $node->getAttribute("ref") . "\n";
 `e parse-html
 # cpan -i Mojo::DOM
-use Mojo::DOM;
+`*use Mojo::DOM;
 `e working-directory
-use Cwd;
+`*use Cwd;
 
-my $old_dir = cwd();
+`*my $old_dir = cwd();
 
 chdir("/tmp");
 `e build-pathname
-use File::Spec;
+`*use File::Spec;
 
 
 File::Spec->catfile("/etc", "hosts")
 `e dirname-and-basename
-use File::Basename;
+`*use File::Basename;
 
-print dirname("/etc/hosts");
-print basename("/etc/hosts");
+`.print dirname("/etc/hosts");
+`.print basename("/etc/hosts");
 `e absolute-pathname-and-tilde-expansion
-use Cwd;
+`*use Cwd;
 
 # symbolic links are resolved:
 
@@ -1067,28 +1036,28 @@ Cwd::abs_path("../foo")
 Cwd::abs_path(".")
 # no function for tilde expansion
 `e iterate-over-directory-by-file
-opendir(my $dh, $ARGV[0]);
+opendir(`*my $dh, $ARGV[0]);
 
-while (my $file = readdir($dh)) {
-  print $file . "\n";
+`*while (`*my $file = readdir($dh)) {
+  `.print $file . "\n";
 
 }
 
 
 closedir($dh);
 `e glob-paths
-while ( </etc/*> ) {
-  print $_ . "\n";
+`*while ( </etc/*> ) {
+  `.print $_ . "\n";
 
 }
 `e make-directory
-use File::Path 'make_path';
+`*use File::Path 'make_path';
 
 
 make_path "/tmp/foo/bar";
 `e recursive-copy
 # cpan -i File::Copy::Recursive
-use File::Copy::Recursive 'dircopy';
+`*use File::Copy::Recursive 'dircopy';
 
 
 dircopy "/tmp/foodir",
@@ -1096,20 +1065,20 @@ dircopy "/tmp/foodir",
 `e remove-empty-directory
 rmdir "/tmp/foodir";
 `e remove-directory-and-contents
-use File::Path 'remove_tree';
+`*use File::Path 'remove_tree';
 
 
 remove_tree "/tmp/foodir";
 `e directory-test
 -d "/tmp"
 `e generate-unused-directory
-use File::Temp qw(tempdir);
+`*use File::Temp qw(tempdir);
 
 
 $path = tempdir(DIR=>"/tmp",
   CLEANUP=>0);
 `e system-temporary-file-directory
-use File::Spec;
+`*use File::Spec;
 
 
 File::Spec->tmpdir
@@ -1128,239 +1097,179 @@ getppid
 $<
 getpwuid($<)
 `e exit
-exit 0;
+`.exit 0;
 `e set-signal-handler
-$SIG{INT} = sub {
-  die "exiting...\n";
-
+$SIG{INT} = `*sub {
+  `.die "exiting...\n";
 };
 `e executable-test
--x "/bin/ls"
+`.[-x] "/bin/ls"
 `e external-command
-system("ls -l /tmp") == 0 or
-  die "ls failed";
+`.system("ls -l /tmp") == 0 `+or
+  `.die "ls failed";
 `e escaped-external-command
 $path = <>;
-chomp($path);
-system("ls", "-l", $path) == 0 or
-  die "ls failed";
+`.chomp($path);
+`.system("ls", "-l", $path) == 0 `+or
+  `.die "ls failed";
 `e backticks
-my $files = ``ls -l /tmp``; or
-my $files = qx(ls);
+`*my $files = ``ls -l /tmp``; or
+`*my $files = qx(ls);
 `e command-line-options-boolean-option-option-with-argument-usage
-use Getopt::Long;
+`*use Getopt::Long;
 
-my ($file, $help, $verbose);
+`*my ($file, $help, $verbose);
 
-my $usage =
+`*my $usage =
   "usage: $0 [-f FILE] [-v] [ARG ...]\n";
 
-if (!GetOptions("file=s" => \$file,
+`*if (!GetOptions("file=s" => \$file,
                 "help" => \$help,
                 "verbose" => \$verbose)) {
-  print $usage;
-  exit 1;
-
+  `.print $usage;
+  `.exit 1;
 }
 
-if ($help) {
-  print $usage;
-  exit 0;
-
+`*if ($help) {
+  `.print $usage;
+  `.exit 0;
 }
 
-# After call to GetOptions() only
-
-# positional arguments are in @ARGV.
-
-#
-
-# Options can follow positional arguments.
-
-#
-
-# Long options can be preceded by one or two
-
-# hyphens. Single letters can be used if
-
-# only one long option begins with that
-
-# letter.
-
-#
-
-# Single letter options cannot be bundled
-
-# after a single hyphen.
-
-#
-
-# Single letter options must be separated
-
-# from an argument by a space or =.
+`(After call to GetOptions() only, positional arguments are in @ARGV. Options can follow positional arguments. Long options can be preceded by one or two hyphens. Single letters can be used if only one long option begins with that letter. Single letter options cannot be bundled after a single hyphen. Single letter options must be separated from an argument by a space or =.)
 `e load-library
-require 'Foo.pm';
-
+`*require 'Foo.pm';
 # searches @INC for Foo.pm:
-require Foo;
+`*require Foo;
 `e load-library-in-subdirectory
-require 'Foo/Bar.pm';
-
-require Foo::Bar;
+`*require 'Foo/Bar.pm';
+`*require Foo::Bar;
 `e hot-patch
 do 'Foo.pm';
 `e load-error
 fatal error if library not found or if last expression in library does not evaluate as true; fatal error parsing library propagates to client
 `e main-routine-in-library
-unless (caller) {
-  code
-
+`*unless (caller) {
+  `(code)
 }
 `e library-path
 @INC
-
-push @INC, "/some/path";
+`.push @INC, "/some/path";
 `e library-path-environment-variable
-$ PERL5LIB=~/lib perl foo.pl
+`$[PERL5LIB=~/lib perl foo.pl]
 `e library-path-command-line-option
-$ perl -I ~/lib foo.pl
+`$[perl -I ~/lib foo.pl]
 `e simple-global-identifiers
-none
 `e multiple-label-identifiers
-all identifiers not declared with my
+all identifiers not declared with `*my
 `e label-separator
 Foo::Bar::baz();
 `e root-namespace-definition
-# outside of package or in package main:
-
-our $foo = 3;
-
-# inside package:
-
-our $::foo = 3;
-
-our $main::foo = 3;
+`(outside of package or in package main:)
+`*our $foo = 3;
+`(inside package:)
+`*our $::foo = 3;
+`*our $main::foo = 3;
 `e declare-namespace
-package Foo;
-require Exporter;
-our @ISA = ("Exporter");
-our @EXPORT_OK = qw(bar baz);
+`*package Foo;
+`*require Exporter;
+`*our @ISA = ("Exporter");
+`*our @EXPORT_OK = qw(bar baz);
 `e child-namespace-declaration
-package Foo::Bar;
+`*package Foo::Bar;
 `e namespace-alias
 
 `e unqualified-import-of-namespace
-# imports symbols in @EXPORT:
-use Foo;
+`(imports symbols in @EXPORT:)
+`*use Foo;
 `e unqualified-import-of-all-subnamespaces
 
 `e unqualified-import-of-definitions
-# bar and baz must be in
-
-# @EXPORT or @EXPORT_OK:
-use Foo qw(bar baz);
+`(bar and baz must be in @EXPORT or @EXPORT_OK:)
+`*use Foo qw(bar baz);
 `e list-installed-packages-install-a-package
-$ perldoc perllocal
-
-$ cpan -i Moose
+`$[perldoc perllocal]
+`$[cpan -i Moose]
 `e package-specification-format
 
 `e define-class
-package Int;
-
-
-sub new {
-  my $class = shift;
-  my $v = $_[0] || 0;
-  my $self = {value => $v};
-  bless $self, $class;
+`*package Int;
+`*sub new {
+  `*my $class = `.shift;
+  `*my $v = $_[0] || 0;
+  `*my $self = {value => $v};
+  `.bless $self, $class;
   $self;
-
 }
 
-
-sub value {
-  my $self = shift;
-  if ( @_ > 0 ) {
-    $self->{'value'} = shift;
+`*sub value {
+  `*my $self = `.shift;
+  `*if ( @_ > 0 ) {
+    $self->{'value'} = `.shift;
   }
   $self->{'value'};
-
 }
 `e create-object
-my $i = new Int(); # or
-my $i = Int->new();
+`*my $i = new Int(); # or
+`*my $i = Int->new();
 `e instance-variable-visibility
 private; getters and setters must be explicitly defined
 `e get-and-set-instance-variable
-my $v = $i->value;
+`*my $v = $i->value;
 
 $i->value($v + 1);
 `e define-method
-sub plus {
-  my $self = shift;
+`*sub plus {
+  `*my $self = `.shift;
   $self->value + $_[0];
-
 }
 `e invoke-method
 $i->plus(7)
 `e define-class-method
-
 `e invoke-class-method
 Counter->instances();
 `e define-class-variable
-
 `e get-and-set-class-variable
-
 `e handle-undefined-method-invocation
-our $AUTOLOAD;
+`*our $AUTOLOAD;
 
-sub AUTOLOAD {
-  my $self = shift;
-  my $argc = scalar(@_);
-  print "no def: $AUTOLOAD"
+`*sub AUTOLOAD {
+  `*my $self = `.shift;
+  `*my $argc = `.scalar(@_);
+  `.print "no def: $AUTOLOAD"
     . " arity: $argc\n";
 
 }
 `e alias-method
 
 `e destructor
-sub DESTROY {
-  my $self = shift;
-  my $v = $self->value;
-  print "bye, $v\n";
+`*sub DESTROY {
+  `*my $self = `.shift;
+  `*my $v = $self->value;
+  `.print "bye, $v\n";
 
 }
 `e subclass
 package Counter;
 
+`*our @ISA = "Int";
+`*my $instances = 0;
 
-our @ISA = "Int";
-
-
-my $instances = 0;
-
-
-sub new {
-  my $class = shift;
-  my $self = Int->new(@_);
+`*sub new {
+  `*my $class = `.shift;
+  `*my $self = Int->new(@_);
   $instances += 1;
   bless $self, $class;
   $self;
-
 }
 
-
-sub incr {
-  my $self = shift;
+`*sub incr {
+  `*my $self = `.shift;
   $self->value($self->value + 1);
-
 }
 
 
-sub instances {
+`*sub instances {
   $instances;
-
 }
 `e mixin
 
@@ -1369,79 +1278,68 @@ sub instances {
 `e object-id
 
 `e inspect-type
-ref([]) eq "ARRAY"
+ref([]) `+eq "ARRAY"
 
 returns empty string if argument not a reference; returns package name for objects
 
 `e basic-types
 SCALAR
-
 ARRAY
-
 HASH
-
 CODE
-
 REF
-
 GLOB
-
 LVALUE
-
 FORMAT
-
 IO
-
 VSTRING
-
 Regexp
 `e inspect-class
-ref($o) eq "Foo"
+ref($o) `+eq "Foo"
 `e inspect-class-hierarchy
 
 `e has-method
 $o->can("reverse")
 `e message-passing
-for $i (0..10) {
+`*for $i (0..10) {
   $meth = "phone$i";
-  $o->$meth(undef);
+  $o->$meth(`=undef);
 
 }
 `e eval
-while(<>) {
-  print ((eval), "\n");
-
+`*while(`+[<>]) {
+  `.print ((eval), "\n");
 }
 `e list-obj-object-methods
 
 `e list-object-attributes
-keys %$o;
+`.keys %$o;
 `e list-loaded-libraries
 # relative to directory in lib path:
 
-keys %INC
+`.keys %INC
 
 # absolute path:
 
 values %INC
 `e list-loaded-namespaces
-grep { $_ =~ /::/ } keys %::
+`.grep { $_ =~ /::/ } `.keys %::
 `e inspect-namespace
-keys %URI::
+`.keys %URI::
 `e pretty-print
-use Data::Dumper;
+`*use Data::Dumper;
 
 %d = (lorem=>1, ipsum=>[2, 3]);
 
-print Dumper(\%d);
+`.print Dumper(\%d);
 `e source-line-number-and-file-name
 __LINE__
 __FILE__
 `e command-line-documentation
-$ perldoc Math::Trig
+`$[perldoc Math::Trig]
 `e get-local-hostname-dns-lookup-reverse-dns-lookup
-use Sys::Hostname;
-use IO::Socket;
+`*use Sys::Hostname;
+`*use IO::Socket;
 
 
 $host = hostname;
@@ -1453,7 +1351,7 @@ $host2 = (gethostbyaddr(
     inet_aton("10.45.234.23"),
     AF_INET))[0];
 `e http-get
-use LWP::UserAgent;
+`*use LWP::UserAgent;
 
 
 $url = "http://www.google.com";
@@ -1463,19 +1361,19 @@ $r = HTTP::Request->new(GET=>$url);
 $ua = LWP::UserAgent->new;
 
 $resp = $ua->request($r);
-my $s = $resp->content();
+`*my $s = $resp->content();
 `e http-post
 
 `e serve-working-directory
 
 `e absolute-url-from-base-and-relative-url
-use URI;
+`*use URI;
 
 
 URI->new_abs("analytics",
   "http://google.com");
 `e parse-url
-use URI;
+`*use URI;
 
 
 $url = "http://google.com:80/foo?q=3#bar";
@@ -1498,25 +1396,25 @@ $fragment = $up->fragment;
 # flat list of alternating keys and values:
 @params = $up->query_form();
 `e url-encode-decode
-use CGI;
+`*use CGI;
 
 
 CGI::escape("lorem ipsum?")
 
 CGI::unescape("lorem%20ipsum%3F")
 `e base64-encode-decode
-use MIME::Base64;
+`*use MIME::Base64;
 
-open my $f, "<", "foo.png";
-my $s = do { local $/; <$f> };
-my $b64 = encode_base64($s);
-my $s2 = decode_base64($b64);
+`.open `*my $f, "<", "foo.png";
+`*my $s = do { local $/; <$f> };
+`*my $b64 = encode_base64($s);
+`*my $s2 = decode_base64($b64);
 `e test-class
 # cpan -i Test::Class Test::More
 package TestFoo;
-use Test::Class;
-use Test::More;
-use base qw(Test::Class);
+`*use Test::Class;
+`*use Test::More;
+`*use base qw(Test::Class);
 
 sub test_01 : Test {
   ok(1, "not true!");
@@ -1526,26 +1424,23 @@ sub test_01 : Test {
 
 1;
 `e run-tests-run-test-method
-$ cat TestFoo.t
-
-use TestFoo;
-
+`$[cat TestFoo.t]
+`*use TestFoo;
 Test::Class->runtests;
 
-
-$ perl ./TestFoo.t
+`$[perl ./TestFoo.t]
 `e equality-assertion
-my $s = "do re me";
+`*my $s = "do re me";
 
 is($s, "do re me");
 `e approximate-assertion
 
 `e regex-assertion
-my $s = "lorem ipsum";
+`*my $s = "lorem ipsum";
 
 like($s, qr/lorem/);
 `e exception-assertion
-use Test::Fatal;
+`*use Test::Fatal;
 
 
 ok(exception { 1 / 0 });
@@ -1554,35 +1449,32 @@ ok(exception { 1 / 0 });
 `e setup
 # in class TestFoo:
 sub make_fixture : Test(setup) {
-  print "setting up";
+  `.print "setting up";
 
 };
 `e teardown
 # in class TestFoo:
 sub teardown : Test(teardown) {
-  print "tearing down";
+  `.print "tearing down";
 
 };
 `e check-syntax
-$ perl -c foo.pl
+`$[perl -c foo.pl]
 `e stronger-warnings
-$ perl -w foo.pl
-
-$ perl -W foo.pl
+`$[perl -w foo.pl]
+`$[perl -W foo.pl]
 `e lint
-$ perl MO=Lint foo.pl
+`$[perl MO=Lint foo.pl]
 `e source-cleanup
-
 `e run-debugger
-$ perl -d foo.pl
+`$[perl -d foo.pl]
 `e debugger-commands
 h l n s b c T ?? ?? p q
 `e benchmark-code
-use Benchmark qw(:all);
+`*use Benchmark qw(:all);
 
 $t = timeit(1_000_000, '$i += 1;');
-print timestr($t);
+`.print timestr($t);
 `e profile-code
-$ perl -d:DProf foo.pl
-
-$ dprofpp
+`$[perl -d:DProf foo.pl]
+`$[dprofpp]
