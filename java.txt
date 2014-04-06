@@ -1,24 +1,20 @@
-`e version-used
+`e versions-used
 java 1.7
 `e show-version
-$ javac -version
+`$[javac -version]
 `e implicit-prologue
-
 `e hello-world
-$ cat Hello.java
+`$[cat Hello.java]
 
-public class Hello {
-  public static void main(String[] args) {
+`*public `*class Hello {
+  `*public static `*void main(String[] args) {
     System.out.println("Hello, World!");
   }
 
 }
 
-
-$ javac Hello.java
-
-
-$ java Hello
+`$[javac Hello.java]
+`$[java Hello]
 `e file-suffixes
 Foo.java
 none
@@ -43,29 +39,27 @@ each file contains the following elements in order:
 // comment
 `e multiple-line-comment
 /* comment
-
 another comment */
 `e local-variable
-int i;
-int j = 3;
+`*int i;
+`*int j = 3;
 `e uninitialized-local-variable
 zero initialized
 `e global-variable
 foo/Foo.java:
 package foo;
 
-// globals must be declared inside a
-// class:
-public class Foo {
-  public static int bar;
+`(globals must be declared inside a class:)
+`*public `*class Foo {
+  `*public static `*int bar;
 
 }
 
 UseFoo.java:
-import foo.Foo;
+`*import foo.Foo;
 
-public class UseFoo {
-  public static void main(String[] args) {
+`*public `*class UseFoo {
+  `*public static `*void main(String[] args) {
     System.out.println(Foo.bar);
   }
 
@@ -73,9 +67,9 @@ public class UseFoo {
 `e uninitialized-global-variable
 Zero initialized.
 `e constant
-final int i = 7;
+final `*int i = 7;
 `e assignment
-int n;
+`*int n;
 
 n = 3;
 `e compound-assignment-arithmetic-string-logical-bit
@@ -84,10 +78,10 @@ n = 3;
 
 >>= is arithmetic right shift, >>>= is logical right shift
 `e increment-and-decrement
-int n = 1;
-int one = n++;
-int three = ++n;
-int two = --n;
+`*int n = 1;
+`*int one = n++;
+`*int three = ++n;
+`*int two = --n;
 `e address
 none
 `e dereference
@@ -103,50 +97,48 @@ none
 `e weak-pointer
 none
 `e allocate-heap
-// Primitive types are stack allocated.
-// Use a wrapper class to store on the
-// heap:
-Integer i = new Integer(0);
+`(Primitive types are stack allocated. Use a wrapper class to store on the heap:)
+Integer i = `*new Integer(0);
 `e uninitialized-heap
 zero-initialized
 `e free-heap
 garbage collected
 `e null
-null
+`*null
 `e coalesce
-String s1 = s2 == null ? "was null" : s2;
+String s1 = s2 == `*null ? "was null" : s2;
 `e boolean-type
-boolean
+`*boolean
 `e true-and-false
-true false
+`*true `*false
 `e falsehoods
-false
+`*false
 `e logical-operators
 && || !
 `e relational-operators
 == != < > <= >=
 `e integer-type
-byte n1;  // 1 byte
-short n2; // 2 bytes
-int n3;   // 4 bytes
-long n4;  // 8 bytes
+`*byte n1;  `(1 byte)
+`*short n2; `(2 bytes)
+`*int n3;   `(4 bytes)
+`*long n4;  `(8 bytes)
 `e unsigned-type
-char n1;  //2 bytes
+`*char n1;  `(2 bytes)
 `e float-type
-float x1;  // 4 bytes
-double x2; // 8 bytes
+`*float x1;  `(4 bytes)
+`*double x2; `(8 bytes)
 `e fixed-type
 none
 `e arithmetic-operators
 + - * / %
 `e integer-division
-// evaluates to 2:
+`(evaluates to 2:)
 
 7 / 3
 `e integer-division-by-zero
 throws java.lang.ArithmeticException
 `e float-division
-7 / (float)3
+7 / (`*float)3
 `e float-division-by-zero-dividend-is-positive-zero-negative
 Float.POSITIVE_INFINITY
 Float.NaN
@@ -171,13 +163,13 @@ Math.atan2
 Math.E
 Math.PI
 `e float-truncation
-(long)3.77
+(`*long)3.77
 
 Math.round(3.77)
 
-(long)Math.floor(3.77)
+(`*long)Math.floor(3.77)
 
-(long)Math.ceil(3.77)
+(`*long)Math.ceil(3.77)
 `e absolute-value-and-signum
 Math.abs(-7)
 
@@ -196,22 +188,22 @@ Double.MIN_VALUE
 `e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
 
 `e random-number-uniform-integer-uniform-float-normal-float
-import java.util.Random;
+`*import java.util.Random;
 
-Random rnd = new Random();
+Random rnd = `*new Random();
 
-int i = rnd.nextInt(100);
-double x = rnd.nextDouble();
-double y = rnd.nextGaussian();
+`*int i = rnd.nextInt(100);
+`*double x = rnd.nextDouble();
+`*double y = rnd.nextGaussian();
 `e random-seed
-import java.util.Random;
+`*import java.util.Random;
 
-Random rnd = new Random();
+Random rnd = `*new Random();
 
 
 rnd.setSeed(17);
 
-// seed can also be passed to constructor
+`(seed can also be passed to constructor)
 `e bit-operators
  << >> & | ^ ~ 
 
@@ -224,7 +216,6 @@ none in Java 1.6
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 Integer.toString(42, 7)
-
 Integer.parseInt("60", 7)
 `e string-type
 java.lang.String
@@ -241,7 +232,7 @@ no
 `e allocate-string
 String s = "hello";
 
-String t = new String(s);
+String t = `*new String(s);
 `e are-strings-mutable
 String objects are immutable.
 
@@ -249,10 +240,10 @@ StringBuffer has append(), delete(), deleteCharAt(), insert(), replace(), setCha
 `e copy-string
 String s = "bar";
 
-StringBuffer sb = new StringBuffer(s);
+StringBuffer sb = `*new StringBuffer(s);
 
 sb.setCharAt(2, 'z');
-// s contains "bar"; s2 contains "baz":
+`(s contains "bar"; s2 contains "baz":)
 
 String s2 = sb.toString();
 `e format
@@ -262,14 +253,14 @@ String.format("%s: %d", "Spain", 7)
 `e concatenate
 "hello" + " world"
 `e replicate
-import java.util.Arrays;
+`*import java.util.Arrays;
 
 
-char[] a = new char[80];
+`*char[] a = `*new `*char[80];
 
 Arrays.fill(a, '-');
 
-String s = new String(a);
+String s = `*new String(a);
 `e translate-case
 "hello".toUpperCase()
 
@@ -280,21 +271,14 @@ String s = new String(a);
 
 `e number-to-string
 Integer.toString(14)
-
 Long.toString(14)
-
 Double.toString(14.7)
 `e string-to-number
 Byte.parseByte("14")
-
 Short.parseShort("14")
-
 Integer.parseInt("14")
-
 Long.parseLong("14")
-
 Float.parseFloat("14.7")
-
 Double.parseDouble("14.7")
 `e join
 
@@ -309,10 +293,10 @@ s.length()
 `e extract-substring
 "hello".substring(2,4)
 `e character-type
-char
+`*char
 Character
 `e character-literal
-char n = 'X';
+`*char n = 'X';
 `e test-character
 
 `e regex-type
@@ -324,7 +308,7 @@ char n = 'X';
 `e lookahead-positive-negative
 
 `e match-test
-boolean isMatch = "hello".matches(".*ll.*");
+`*boolean isMatch = "hello".matches(".*ll.*");
 `e case-insensitive-match-test
 
 `e modifiers
@@ -340,37 +324,35 @@ String s2 = "hello".replaceAll("l","L");
 `e date-time-type
 java.util.Date
 `e current-date-time
-import java.util.Date;
+`*import java.util.Date;
 
 
-long millis = System.currentTimeMillis();
+`*long millis = System.currentTimeMillis();
 
-Date dt = new Date(millis);
+Date dt = `*new Date(millis);
 `e to-unix-epoch-from-unix-epoch
-long epoch = dt.getTime() / 1000;
+`*long epoch = dt.getTime() / 1000;
 
 
-Date dt2 = new Date(epoch * 1000);
+Date dt2 = `*new Date(epoch * 1000);
 `e date-and-time-to-string
 dt.toString()
 `e format-date
 String s = "yyyy-MM-dd HH:mm:ss";
 
-DateFormat fmt = new SimpleDateFormat(s);
+DateFormat fmt = `*new SimpleDateFormat(s);
 
 String s2 = fmt.format(dt);
 `e parse-date
 String s = "2011-05-03 17:00:00";
-
 Date dt2 = fmt.parse(s);
 `e date-subtraction
-difference in milliseconds as a long:
-
+`(difference in milliseconds as a long:)
 dt2.getTime() - dt.getTime()
 `e add-duration
-long day_ms = 24 * 3600 * 1000;
+`*long day_ms = 24 * 3600 * 1000;
 
-Date dt = new Date(dt.getTime() + day_ms));
+Date dt = `*new Date(dt.getTime() + day_ms));
 `e date-parts
 
 `e time-parts
@@ -378,11 +360,11 @@ Date dt = new Date(dt.getTime() + day_ms));
 `e declare-on-stack
 arrays must be allocated on heap
 `e declare-on-heap
-int[] a = new int[10];
+`*int[] a = `*new `*int[10];
 `e free-heap
 garbage collected
 `e array-initialization-list
-int[] a = {1,2,3};
+`*int[] a = {1,2,3};
 `e array-size
 a.length
 `e array-lookup
@@ -396,14 +378,14 @@ ArrayIndexOutOfBoundsException
 `e as-function-argument
 
 `e array-iterate
-for (String name : names) {
+`*for (String name : names) {
 `e sort
 
 `e list-name
 java.util.ArrayList<T>
 `(The Java Collections API also provides LinkedList<T> and a few others; Vector<T> is older and slower because it is synchronized.)
 `e list-declare
-java.util.ArrayList<String> list = new java.util.ArrayList<String>();
+java.util.ArrayList<String> list = `*new java.util.ArrayList<String>();
 
 `e list-size
 list.size()
@@ -440,7 +422,7 @@ vec.removeElementAt(vec.size()-1);
 `e array-as-function-argument
 
 `e iterate-over-elements
-for ( String s : vec ) {
+`*for ( String s : vec ) {
   do something with s
 
 }
@@ -487,7 +469,7 @@ for ( String s : vec ) {
 `e create-references-for-tuple-elements
 
 `e map-declaration
-java.util.TreeMap<String, Integer> m = new java.util.TreeMap<String, Integer>();
+java.util.TreeMap<String, Integer> m = `*new java.util.TreeMap<String, Integer>();
 `e map-access
 m.put("hello", 5);
 
@@ -497,9 +479,9 @@ m.size()
 `e map-remove-element
 m.remove("hello");
 `e map-element-not-found-result
-null
+`*null
 `e map-iterate
-for ( java.util.Map.Entry<String, Integer> e : m.entrySet() ) {
+`*for ( java.util.Map.Entry<String, Integer> e : m.entrySet() ) {
   use e.getKey() or e.getValue()
 
 }
@@ -518,9 +500,9 @@ yes
 `e default-argument
 use method overloading
 `e variable-number-of-arguments
-public static String concat(String first, String… rest) {
-  StringBuilder sb = new StringBuilder(first);
-  for (String arg: rest) {
+`*public static String concat(String first, String… rest) {
+  StringBuilder sb = `*new StringBuilder(first);
+  `*for (String arg: rest) {
     sb.append(arg);
   }
   return sb.toString();
@@ -555,13 +537,13 @@ none
 `e overload-operator
 none
 `e if
-if (i>0) {
+`*if (i>0) {
   signum = 1;
 
-} else if (i==0) {
+} `*else `*if (i==0) {
   signum = 0;
 
-} else {
+} `*else {
   signum = -1;
 
 }
@@ -584,17 +566,17 @@ default:
 
 }
 `e while
-int i = 0;
+`*int i = 0;
 
-while (i<10) {
+`*while (i<10) {
 …
   i++;
 
 }
 `e for
-int n = 1;
+`*int n = 1;
 
-for (int i=1; i<=10; i++) {
+`*for (`*int i=1; i<=10; i++) {
   n *= i;
 
 }
@@ -622,10 +604,10 @@ java.lang.Throwable
       java.lang.IndexOutOfBoundsException
       java.lang.NullPointerException
 `e raise-exception
-throw new Exception("failed");
+throw `*new Exception("failed");
 `e handle-exception
 try {
-  throw new Exception("failed");
+  throw `*new Exception("failed");
 
 }
 
@@ -684,29 +666,29 @@ System.err
 `e printf
 System.out.printf("count: %d", 7);
 `e read-from-file
-import java.io.BufferedReader;
+`*import java.io.BufferedReader;
 
-import java.io.FileReader;
+`*import java.io.FileReader;
 
 
-BufferedReader in = new BufferedReader(new FileReader("/etc/passwd"));
+BufferedReader in = `*new BufferedReader(`*new FileReader("/etc/passwd"));
 
 String line;
 
-while ((line = in.readLine()) != null) {
+`*while ((line = in.readLine()) != `*null) {
   process line
 
 }
 `e write-to-file
-import java.io.BufferedWriter;
+`*import java.io.BufferedWriter;
 
-import java.io.FileWriter;
+`*import java.io.FileWriter;
 
-BufferedWriter fout = new BufferedWriter(new FileWriter("/tmp/test2"));
+BufferedWriter fout = `*new BufferedWriter(`*new FileWriter("/tmp/test2"));
 
-int i;
+`*int i;
 
-for (i=0; i<10; i++) {
+`*for (i=0; i<10; i++) {
   fout.write(String.format("%d", i));
   fout.newLine();
 
@@ -714,26 +696,26 @@ for (i=0; i<10; i++) {
 
 fout.close();
 `e file-exists-test-file-regular-test
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/etc/hosts");
+File f = `*new File("/etc/hosts");
 
 f.exists()
 
 f.isFile()
 `e file-size
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/etc/hosts");
+File f = `*new File("/etc/hosts");
 
 f.length()
 `e is-file-readable-writable-executable
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/etc/hosts");
+File f = `*new File("/etc/hosts");
 
 
 f.canRead()
@@ -742,42 +724,40 @@ f.canWrite()
 
 f.canExecute()
 `e set-file-permissions
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/tmp/foo");
+File f = `*new File("/tmp/foo");
 
-// sets owner perms; to turn perms off
-// set arg to false:
+`(sets owner perms; to turn perms off set arg to false:)
 
-f.setReadable(true);
+f.setReadable(`*true);
 
-f.setWritable(true);
+f.setWritable(`*true);
 
-f.setExecutable(true);
+f.setExecutable(`*true);
 
-// if 2nd arg is false, perms are
-// for owner, group, and other:
+`(if 2nd arg is false, perms are for owner, group, and other:)
 
-f.setReadable(true, false);
+f.setReadable(`*true, `*false);
 
-f.setWritable(true, false);
+f.setWritable(`*true, `*false);
 
-f.setExecutable(true, false);
+f.setExecutable(`*true, `*false);
 `e copy-file-remove-file-rename-file
-import java.io.File;
+`*import java.io.File;
 
 ??
 
 
-File f2 = new File("/tmp/foo");
+File f2 = `*new File("/tmp/foo");
 
 f2.delete();
 
 
-File f3 = new File("/tmp/bar");
+File f3 = `*new File("/tmp/bar");
 
-f3.renameTo(new File("/tmp/bar"));
+f3.renameTo(`*new File("/tmp/bar"));
 `e csv
 
 `e json
@@ -789,68 +769,68 @@ f3.renameTo(new File("/tmp/bar"));
 `e parse-html
 
 `e build-pathname
-import java.io.File;
+`*import java.io.File;
 
 
 File root = File.listRoots()[0];
 
-File etc = new File(root, "etc");
+File etc = `*new File(root, "etc");
 
 File hosts = newFile(etc, "hosts");
 
 String path = hosts.getPath();
 `e dirname-and-basename
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/etc/hosts");
+File f = `*new File("/etc/hosts");
 
 String dirname = f.getParent();
 
 String basename = f.getName();
 `e absolute-pathname
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("foo");
+File f = `*new File("foo");
 
 String abspath = f.getAbsolutePath();
 
-// getCanonicalPath() expands .. and .:
+`(getCanonicalPath() expands .. and .:)
 
-File f2 = new File("../foo");
+File f2 = `*new File("../foo");
 
 String abspath2 = f2.getCanonicalPath();
 
-File f3 = new File("./foo");
+File f3 = `*new File("./foo");
 
 String abspath3 = f3.getCanonicalPath();
 `e iterate-over-directory-by-file
-import java.io.File;
+`*import java.io.File;
 
 
-File dir = new File("/etc");
+File dir = `*new File("/etc");
 
-// iterate over names:
+`(iterate over names:)
 
-for (String name: dir.list()) {
+`*for (String name: dir.list()) {
   System.out.println(name);
 
 }
 
-// iterate over file objects:
+`(iterate over file objects:)
 
-for (File f: dir.listFiles()) {
+`*for (File f: dir.listFiles()) {
   System.out.println(f.getName());
 
 }
 `e glob-paths
 
 `e make-directory
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/tmp/foo/bar");
+File f = `*new File("/tmp/foo/bar");
 
 f.mkdirs();
 `e recursive-copy
@@ -860,10 +840,10 @@ f.mkdirs();
 `e remove-directory-and-contents
 
 `e directory-test
-import java.io.File;
+`*import java.io.File;
 
 
-File f = new File("/tmp");
+File f = `*new File("/tmp");
 
 f.isDirectory()
 `e generate-unused-directory-name
@@ -871,18 +851,18 @@ f.isDirectory()
 `e system-temporary-file-directory
 
 `e signature-of-main
-public class Foo {
-  public static void main(String[] args) {
+`*public `*class Foo {
+  `*public static `*void main(String[] args) {
 `e first-argument
 first command line argument
 `e environment-variable
 String home = System.getenv("HOME");
 `e iterate-through-environment-variables
-import java.util.Map;
+`*import java.util.Map;
 
 Map<String, String> env = System.getenv();
 
-for (String name : env.keySet()) {
+`*for (String name : env.keySet()) {
   String value = env.get(name));
 
 }
@@ -891,8 +871,8 @@ Java API
 `e declare-namespace
 package foo.bar;
 
-public class Baz {
-  public static final int ANSWER = 42;
+`*public `*class Baz {
+  `*public static final `*int ANSWER = 42;
 
 }
 `e multiple-namespaces-per-file
@@ -900,17 +880,17 @@ no
 `e namespaces-map-to-directories
 yes
 `e import-namespace
-import foo.bar.*;
+`*import foo.bar.*;
 
 System.out.println(Baz.ANSWER);
 `e import-part-of-namespace
 none
 `e import-symbol
-import foo.bar.Baz;
+`*import foo.bar.Baz;
 
 System.out.println(Baz.ANSWER);
 `e import-static-symbol
-import static foo.bar.Baz.ANSWER;
+`*import static foo.bar.Baz.ANSWER;
 
 System.out.println(ANSWER);
 `e import-position
@@ -926,19 +906,19 @@ set JAVA_HOME environment variable to directory containing a bin subdirectory wi
 `e typedef
 none
 `e enum
-public enum DayOfWeek { MON, TUE, WED, THU, FRI, SAT, SUN };
+`*public enum DayOfWeek { MON, TUE, WED, THU, FRI, SAT, SUN };
 
 DayOfWeek d = DayOfWeek.TUE;
 `e struct-definition
-public class MedalCount {
-  public String country;
-  public int gold;
-  public int silver;
-  public int bronze;
+`*public `*class MedalCount {
+  `*public String country;
+  `*public `*int gold;
+  `*public `*int silver;
+  `*public `*int bronze;
 
 }
 `e struct-declaration
-MedalCount spain = new MedalCount();
+MedalCount spain = `*new MedalCount();
 `e struct-initialization
 no object literal syntax; define a constructor
 `e struct-member-assignment
@@ -950,17 +930,17 @@ spain.silver = 7;
 
 spain.bronze = 4;
 `e struct-member-access
-int spain_total = spain.gold + spain.silver + spain.bronze;
+`*int spain_total = spain.gold + spain.silver + spain.bronze;
 `e define-generic-type
-public class Foo<A> {
-  public A a;
-  public Foo(A a) {
+`*public `*class Foo<A> {
+  `*public A a;
+  `*public Foo(A a) {
     this.a = a;
   }
 
 }
 `e instantiate-generic-type
-Foo<String> f = new Foo<String>("foo");
+Foo<String> f = `*new Foo<String>("foo");
 `e generic-function
 
 `e generic-array
@@ -982,13 +962,13 @@ not permitted. Use Object as the element type for the array or use an ArrayList.
 `e semantics-of
 object identity comparison
 `e define-class
-public class Rational {
-  public int num;
-  public int denom;
-  public Rational add(Rational o) throws Exception {
-    return new Rational(this.num*o.denom + o.num*this.denom,this.denom*o.denom);
+`*public `*class Rational {
+  `*public `*int num;
+  `*public `*int denom;
+  `*public Rational add(Rational o) throws Exception {
+    return `*new Rational(this.num*o.denom + o.num*this.denom,this.denom*o.denom);
   }
-  public static Rational max(Rational a, Rational b) {
+  `*public static Rational max(Rational a, Rational b) {
     return (a.num*b.denom > a.num*b.denom) ? a : b;
   }
 
@@ -996,31 +976,30 @@ public class Rational {
 `e class-definition-location
 top level, class block, or function block for anonymous classes
 `e constructor
-public Rational(int n, int d) throws Exception {
-  if (d == 0) {
-    throw new Exception("zero denominator");
+`*public Rational(`*int n, `*int d) throws Exception {
+  `*if (d == 0) {
+    throw `*new Exception("zero denominator");
   }
-  if ( d < 0 ) {
+  `*if ( d < 0 ) {
     this.num = -1 * n;
     this.denom = -1 * d;
-  }
-  else {
+  } `*else {
     this.num = n;
     this.denom = d;
   }
 
 }
 `e create-object
-Rational r = new Rational(7,3);
+Rational r = `*new Rational(7,3);
 `e destructor
-protected void finalize() throws Throwable {
+protected `*void finalize() throws Throwable {
   super.finalize();
 
 }
 `e destroy-object
 none
 `e define-method
-public int height() {
+`*public `*int height() {
   return (Math.abs(this.num) > this.denom) ? Math.abs(this.num) : this.denom;
 
 }
@@ -1035,24 +1014,23 @@ this
 `e access-control
 access keywords required for methods and members:
 
-public class Foo {
-  private int privateInt;
-  protected int protectedInt;
-  public int publicInt;
+`*public `*class Foo {
+  private `*int privateInt;
+  protected `*int protectedInt;
+  `*public `*int publicInt;
 
 }
 `e anonymous-class
-(new Object() { public void hello() { System.out.println("hello!"); } }).hello();
+(`*new Object() { `*public `*void hello() { System.out.println("hello!"); } }).hello();
 `e dynamic-dispatch
 dispatch dynamic by default
 `e static-dispatch
 declare as final, private, or static (i.e. make it a class method)
 `e subclass
-public class RInteger extends Rational {
-  public RInteger(int n) throws Throwable {
+`*public `*class RInteger extends Rational {
+  `*public RInteger(`*int n) throws Throwable {
     super(n, 1);
   }
-
 }
 `e invoking-superclass-constructor
 super(n, 1);
@@ -1073,7 +1051,7 @@ hashCode()
 
 toString()
 `e get-type-class-of-object
-o = new Object();
+o = `*new Object();
 
 Class c = o.getClass();
 `e get-type-class-from-string
@@ -1083,32 +1061,32 @@ Class c = Class.forName("java.io.File");
 `e class-name
 String name = c.getName();
 `e get-methods
-import java.lang.reflect.*;
+`*import java.lang.reflect.*;
 
 Method[] m = c.getMethods();
 `e has-method
-import java.lang.reflect.*;
+`*import java.lang.reflect.*;
 
 Class c = Class.forName("java.io.File");
 
 Method[] a = c.getMethods();
 
-boolean hasMethod = false;
+`*boolean hasMethod = `*false;
 
-for (int i=0; i < a.length; i++) {
-  if (a[i].getName() == "toString") {
-    hasMethod = true;
+`*for (`*int i=0; i < a.length; i++) {
+  `*if (a[i].getName() == "toString") {
+    hasMethod = `*true;
   }
 
 }
 `e invoke-method-object
-import java.lang.reflect.*;
+`*import java.lang.reflect.*;
 
 Class c = Class.forName("java.io.File");
 
 Method m = c.getMethod("toString");
 
-Object o = new Object();
+Object o = `*new Object();
 
 m.invoke(o);
 `e get-local-hostname-dns-lookup-reverse-dns-lookup
@@ -1122,9 +1100,9 @@ m.invoke(o);
 `e parse-url
 
 `e url-encode-decode
-import java.net.URLEncoder;
+`*import java.net.URLEncoder;
 
-import java.net.URLDecoder;
+`*import java.net.URLDecoder;
 
 
 String url = "http://www.google.com";

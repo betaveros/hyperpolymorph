@@ -1,23 +1,23 @@
-`e version-used
+`e versions-used
 g++ 4.6 with -std=c++0x flag
 `e show-version
-$ g++ --version
+`$[g++ --version]
 `e implicit-prologue
 #include <iostream>
 #include <string>
 
-using namespace std;
+`*using `*namespace std;
 `e hello-world
-$ cat hello.cpp
+`$[cat hello.cpp]
 
 #include <iostream>
-using namespace std;
-int main(int argc, char** arg) {
+`*using `*namespace std;
+`*int main(`*int argc, `*char** arg) {
   cout << "Hello, World!" << endl;
 }
 
-$ g++ -std=c++0x hello.cpp
-$ ./a.out
+`$[g++ -std=c++0x hello.cpp]
+`$[./a.out]
 `e file-suffixes
 foo.cpp
 foo.h
@@ -37,48 +37,46 @@ After the preprocessor has finished processing a source file, the compilation un
 /* comment
 another comment */
 `e local-variable
-int i;
-int j = 3;
-int k(7);
+`*int i;
+`*int j = 3;
+`*int k(7);
 `e uninitialized-local-variable
 The behavior is undefined.
 
 Most implementations do not zero-initialize stack variables, so the value will be whatever happened to be in memory.
 `e global-variable
-// in foo.cpp and outside of any function
-// or class definition:
-int foo = 7;
+`(in foo.cpp and outside of any function or class definition:)
+`*int foo = 7;
 
-// in bar.cpp and outside of any function
-// or class definition:
-extern int foo;
+`(in bar.cpp and outside of any function or class definition:)
+extern `*int foo;
 `e uninitialized-global-variable
 Zero initialized: numeric types and pointers are set to zero. Classes, structs, and arrays have all of their members or elements zero-initialized recursively.
 `e constant
-const int i = 7;
+`*const `*int i = 7;
 `e assignment
-int n;
+`*int n;
 
 n = 3;
 `e compound-assignment-arithmetic-string-logical-bit
 += -= *= /= %=
 <<= >>= &= ^= |=
 `e increment-and-decrement
-int n = 1;
-int one = n++;
-int three = ++n;
-int two = --n;
+`*int n = 1;
+`*int one = n++;
+`*int three = ++n;
+`*int two = --n;
 `e address
-int i(3);
-int* ip = &i;
+`*int i(3);
+`*int* ip = &i;
 `e dereference
-int i(3);
-int* ip = &i;
-int i2 = *ip + 1;
+`*int i(3);
+`*int* ip = &i;
+`*int i2 = *ip + 1;
 `e type-size
-cout << sizeof(int) << endl;
+cout << sizeof(`*int) << endl;
 
-cout << sizeof(int*) << endl;
+cout << sizeof(`*int*) << endl;
 `e address-arithmetic
 
 `e unique-pointer
@@ -88,7 +86,7 @@ cout << sizeof(int*) << endl;
 `e weak-pointer
 
 `e allocate-heap
-int* ip = new int;
+`*int* ip = `*new `*int;
 `e uninitialized-heap
 Memory allocated by the new operator is zero-initialized.
 `e free-heap
@@ -98,44 +96,44 @@ NULL
 `e coalesce
 string s1 = s2 || "was null";
 `e boolean-type
-bool
+`*bool
 `e true-and-false
-true false
+`=true `=false
 `e falsehoods
-false 0 0.0 NULL
+`=false 0 0.0 NULL
 `e logical-operators
 && || !
 and or not
 `e relational-operators
 == != < > <= >=
 `e integer-type
-signed char n1;   // 1+ bytes
-short int n2;     // 2+ bytes
-int n3;           // 2+ bytes
-long int n4;      // 4+ bytes
-long long int n5; // 4+ bytes
+`*signed `*char n1;   `(1+ bytes)
+`*short `*int n2;     `(2+ bytes)
+`*int n3;           `(2+ bytes)
+`*long `*int n4;      `(4+ bytes)
+`*long `*long `*int n5; `(4+ bytes)
 `e unsigned-type
-unsigned char n1;          // 1+ bytes
-unsigned short int n2;     // 2+ bytes
-unsigned int n3;           // 2+ bytes
-unsigned long int n4;      // 4+ bytes
-unsigned long long int n5; // 4+ bytes
+`*unsigned `*char n1;          `(1+ bytes)
+`*unsigned `*short `*int n2;     `(2+ bytes)
+`*unsigned `*int n3;           `(2+ bytes)
+`*unsigned `*long `*int n4;      `(4+ bytes)
+`*unsigned `*long `*long `*int n5; `(4+ bytes)
 `e float-type
-float x1;       // 4 bytes
-double x2;      // 8 bytes
-long double x3; // 16 bytes
+`*float x1;       `(4 bytes)
+`*double x2;      `(8 bytes)
+`*long `*double x3; `(16 bytes)
 `e fixed-type
-none
+`(none)
 `e arithmetic-operators
 + - * / %
 `e integer-division
-// evaluates to 2:
+`(evaluates to 2:)
 
 7 / 3
 `e integer-division-by-zero
 process sent a SIGFPE signal
 `e float-division
-7 / static_cast<float>(3)
+7 / static_cast<`*float>(3)
 `e float-division-by-zero-dividend-is-positive-zero-negative
 inf
 
@@ -147,11 +145,11 @@ There are no portably defined literals or constants for the above values.
 `e power
 #include <cmath>
 
-double x = pow(2.0, 32.0);
+`*double x = pow(2.0, 32.0);
 `e sqrt
 #include <cmath>
 
-double x = sqrt(2);
+`*double x = sqrt(2);
 `e sqrt-1
 nan
 `e transcendental-functions
@@ -168,26 +166,26 @@ atan2
 `e transcendental-constants
 #include <cmath>
 
-double e = M_E;
-double pi = M_PI;
+`*double e = M_E;
+`*double pi = M_PI;
 `e float-truncation
 #include <cmath>
  
-double x = 3.7;
+`*double x = 3.7;
  
-long trnc = static_cast<long>(x);
-long rnd = round(x);
-long flr = floorl(x);
-long cl = ceill(x);
+`*long trnc = static_cast<`*long>(x);
+`*long rnd = round(x);
+`*long flr = floorl(x);
+`*long cl = ceill(x);
 `e absolute-value-and-signum
-#include <cmath>    // fabs()
-#include <cstdlib>  // abs()
+#include <cmath>    `(fabs())
+#include <cstdlib>  `(abs())
 
-int n = -7;
-int absn = abs(n);
+`*int n = -7;
+`*int absn = abs(n);
 
-double x = -7.77;
-double absx = fabs(x);
+`*double x = -7.77;
+`*double absx = fabs(x);
 `e integer-overflow
 modular arithmetic
 
@@ -213,7 +211,7 @@ LDBL_MIN
 `e complex-construction
 #include <complex>
 
-complex<double> z(1.0, 2.0);
+complex<`*double> z(1.0, 2.0);
 `e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
 z.real()
 
@@ -229,21 +227,21 @@ conj(z)
 
 default_random_engine dre;
 
-uniform_int_distribution<int> uid(0, 99);
-uniform_real_distribution<double>
+uniform_int_distribution<`*int> uid(0, 99);
+uniform_real_distribution<`*double>
   urd(0.0, 1.0);
-normal_distribution<double> nd(0.0, 1.0);
+normal_distribution<`*double> nd(0.0, 1.0);
 
-int i = uid(dre);
-double x = urd(dre);
-double y = nd(dre);
+`*int i = uid(dre);
+`*double x = urd(dre);
+`*double y = nd(dre);
 `e random-seed
 #include <random>
 
-// set seed in constructor:
+`(set seed in constructor:)
 default_random_engine dre(17);
 
-// set seed of existing engine:
+`(set seed of existing engine:)
 
 dre.seed(17);
 `e bit-operators
@@ -262,10 +260,10 @@ dre.seed(17);
 `e string-type
 string s("lorem ipsum");
 
-// convert to C string:
-const char* s2 = s.c_str();
+`(convert to C string:)
+`*const `*char* s2 = s.c_str();
 `e string-literal
-// const char*:
+`(const char*:)
 "don't say \"no\""
 `e newline-in-literal
 Newlines in string literals are ignored.
@@ -276,7 +274,7 @@ Newlines in string literals are ignored.
 
 \xhh \o \oo \ooo
 `e allocate-string
-string* s = new string("hello");
+string* s = `*new string("hello");
 `e are-strings-mutable
 string s("bar");
 
@@ -284,12 +282,11 @@ s[2] = 'z';
 `e copy-string
 string s("bar");
 
-// use assignment or copy constructor:
+`(use assignment or copy constructor:)
 string s2 = s;
 string s3(s);
 
-// s contains "baz";
-// s2 and s3 contain "bar":
+`(s contains "baz"; s2 and s3 contain "bar":)
 
 s[2] = 'z';
 `e format
@@ -303,11 +300,10 @@ string s(oss.str());
 string s1("hello");
 string s2("world");
 
-// negative if s1 lexically before s2;
-// zero if s1 and s2 are equal:
-int result1 = s1.compare(s2);
+`(negative if s1 lexically before s2; zero if s1 and s2 are equal:)
+`*int result1 = s1.compare(s2);
 
-bool result2 = s1 == s2;
+`*bool result2 = s1 == s2;
 `e concatenate
 string s("hello");
 string s2 = s + " world";
@@ -320,7 +316,7 @@ string hbar(80, '-');
 
 string s("foo");
 
-// in place:
+`(in place:)
 
 transform(s.begin(), s.end(),
           s.begin(), ::toupper);
@@ -328,7 +324,7 @@ transform(s.begin(), s.end(),
 transform(s.begin(), s.end(),
           s.begin(), ::tolower);
 
-// non-destructive:
+`(non-destructive:)
 string s2;
 
 s2.resize(s.size();
@@ -339,25 +335,25 @@ transform(s.begin(), s.end(),
 #include <algorithm>
 
 string s(" hello ");
-// trim in place on left:
+`(trim in place on left:)
 
 s.erase(
   s.begin(),
   find_if(
     s.begin(),
     s.end(),
-    not1(ptr_fun<int, int>(isspace))
+    not1(ptr_fun<`*int, `*int>(isspace))
   )
 
 );
 
-// trim in place on right:
+`(trim in place on right:)
 
 s.erase(
   find_if(
     s.rbegin(),
     s.rend(),
-    not1(ptr_fun<int, int>(isspace))
+    not1(ptr_fun<`*int, `*int>(isspace))
   ).base(),
   s.end()
 
@@ -381,9 +377,9 @@ string lpad(oss.str());
 #include <sstream>
 
 stringstream ss("7 14.3 12");
-int n1;
-double x;
-long n2;
+`*int n1;
+`*double x;
+`*long n2;
 
 
 ss >> n1 >> x >> n2;
@@ -401,15 +397,13 @@ string("hello").find("ll")
 `e extract-substring
 string("hello").substr(2, 2)
 `e character-type
-char
+`*char
 wchar_t
 `e character-literal
-char n = 'X';
+`*char n = 'X';
 `e test-character
-// functions have this signature:
-//
-//   int (*)(int):
-//
+`(functions have this signature:)
+`*int (*)(`*int)
 
 isalpha
 
@@ -437,14 +431,14 @@ wregex
 
 regex rx(".*ll.*");
 
-bool match = regex_match("hello", rx);
+`*bool match = regex_match("hello", rx);
 `e case-insensitive-match-test
 #include <regex>
 
 
 regex rx("lorem", icase);
 
-bool match = regex_match("Lorem", rx);
+`*bool match = regex_match("Lorem", rx);
 `e modifiers
 
 `e substitution
@@ -474,20 +468,20 @@ bool match = regex_match("Lorem", rx);
 `e time-parts
 
 `e declare-on-stack
-int a[10];
+`*int a[10];
 `e declare-on-heap
-int* a = new int[10];
+`*int* a = `*new `*int[10];
 `e free-heap
 delete[] a;
 `e array-initialization-list
-int a[] = {1, 2, 3};
+`*int a[] = {1, 2, 3};
 `e array-size
-int a[10];
+`*int a[10];
 
-// stack arrays only:
+`(stack arrays only:)
 size_t len = sizeof(a) / sizeof(a[0]);
 `e lookup
-int first = a[0];
+`*int first = a[0];
 `e update
 a[0] = 7;
 `e out-of-bounds
@@ -495,33 +489,33 @@ No defined behavior
 
 An out-of-bounds lookup may return the value the memory location contains; an out-of-bounds update may cause memory corruption. The system may detect an invalid address and send the process a SIGSEGV.
 `e copy
-const size_t LEN(4);
-int src[LEN] = {3, 2, 4, 1};
-int dest[LEN];
+`*const size_t LEN(4);
+`*int src[LEN] = {3, 2, 4, 1};
+`*int dest[LEN];
 
-// 3rd arg is number of bytes to copy:
+`(3rd arg is number of bytes to copy:)
 
 memcpy(dest, src, LEN * sizeof(src[0]));
 `e as-function-argument
-void
-reverse(int* a, size_t len) {
-  for (int i = 0; i < len / 2; ++i) {
-    int tmp = a[len - i - 1];
+`*void
+reverse(`*int* a, size_t len) {
+  `*for (`*int i = 0; i < len / 2; ++i) {
+    `*int tmp = a[len - i - 1];
     a[len - i - 1] = a[i];
     a[i] = tmp;
   }
 
 }
 
-const size_t LEN(4);
-int a[LEN] = {3, 2, 4, 1};
+`*const size_t LEN(4);
+`*int a[LEN] = {3, 2, 4, 1};
 
 reverse(a, LEN);
 `e array-iterate
-const size_t LEN(4);
-int a[LEN] = {3, 2, 4, 1};
+`*const size_t LEN(4);
+`*int a[LEN] = {3, 2, 4, 1};
 
-for (int i = 0; i < LEN; ++i) {
+`*for (`*int i = 0; i < LEN; ++i) {
   cout << "value at " << i << " is "
        << a[i] << endl;
 
@@ -529,16 +523,16 @@ for (int i = 0; i < LEN; ++i) {
 `e sort
 #include <cstdlib>
 
-int
-comp(const void* const void* bp) {
-  int a = *(int*)ap;
-  int b = *(int*)bp;
-  return a < b ? -1 : (a == b ? 0 : 1);
+`*int
+comp(`*const `*void* `*const `*void* bp) {
+  `*int a = *(`*int*)ap;
+  `*int b = *(`*int*)bp;
+  `*return a < b ? -1 : (a == b ? 0 : 1);
 
 }
 
-const size_t LEN(4);
-int a[LEN] = {3, 2, 1, 4};
+`*const size_t LEN(4);
+`*int a[LEN] = {3, 2, 1, 4};
 
 
 qsort(a, LEN, sizeof(a[0]), &comp);
@@ -547,29 +541,29 @@ vector<T>
 `(supports efficient random access and manipulation of end; STL also provides deque<T> and list<T>)
 `e list-declare
 #include <vector>
-vector <int> a;
+vector <`*int> a;
 `e list-literal
 #include <vector>
 
-vector<int> a = {1, 2, 3};
-vector<int> a2({7, 8, 9});
+vector<`*int> a = {1, 2, 3};
+vector<`*int> a2({7, 8, 9});
 `e list-size
 size_t len = a.size();
 `e capacity-get-increase
 size_t cap = a.capacity();
 
-// will not decrease capacity:
+`(will not decrease capacity:)
 
 a.reserve(10);
 `e empty-test-and-clear
-bool is_empty = a.empty();
+`*bool is_empty = a.empty();
 
 a.clear();
 `e lookup
-int n = a[0];
+`*int n = a[0];
 
-// can raise out_of_range:
-int n2 = a.at(0);
+`(can raise out_of_range:)
+`*int n2 = a.at(0);
 `e update
 a[2] = 4;
 `e out-of-bounds
@@ -577,52 +571,52 @@ using [] with out-of-bounds index has undefined behavior
 `e index-of-element
 #include <vector>
 
-vector<int> a({6, 7, 8, 9});
+vector<`*int> a({6, 7, 8, 9});
 
 auto iter = find(a.cbegin(), a.cend(), 8);
-if (iter != a.cend()) {
+`*if (iter != a.cend()) {
   size_t pos = *iter;
 
 }
 `e slice
 #include <vector>
 
-vector<int> a({6, 7, 8, 9});
+vector<`*int> a({6, 7, 8, 9});
 
-// a2 contains {7, 8}:
-vector<int> a2(a.cbegin() + 1,
+`(a2 contains {7, 8}:)
+vector<`*int> a2(a.cbegin() + 1,
                a.cbegin() + 3);
 `e drop
 #include <vector>
 
-vector<int> a({6, 7, 8, 9});
+vector<`*int> a({6, 7, 8, 9});
 
-// a2 contains {7, 8, 9}:
-vector<int> a2(a.cbegin() + 1, a.cend());
+`(a2 contains {7, 8, 9}:)
+vector<`*int> a2(a.cbegin() + 1, a.cend());
 `e manipulate-back
 #include <vector>
 
-vector<int> a({6, 7, 8});
+vector<`*int> a({6, 7, 8});
 
 
 a.push_back(9);
-int elem = a.pop_back();
+`*int elem = a.pop_back();
 `e manipulate-front
 #include <vector>
 
-vector<int> a({6, 7, 8});
+vector<`*int> a({6, 7, 8});
 
-// slower than manipulating back:
+`(slower than manipulating back:)
 
 a.insert(a.cbegin(), 5);
-int elem = a[0];
+`*int elem = a[0];
 
 a.erase(a.cbegin());
 `e concatenate
 #include <vector>
 
-vector<int> a1({1, 2, 3});
-vector<int> a2({4, 5, 6});
+vector<`*int> a1({1, 2, 3});
+vector<`*int> a2({4, 5, 6});
 
 
 a1.insert(a1.cend(),
@@ -631,17 +625,17 @@ a1.insert(a1.cend(),
 `e list-replicate
 #include <vector>
 
-// array of 10 zeros:
-vector<int> a(10, 0);
+`(array of 10 zeros:)
+vector<`*int> a(10, 0);
 `e copy
 #include <vector>
 
-vector<int> a({1, 2, 3});
-// copy constructor:
-vector<int> a2(a);
-vector<int> a3;
+vector<`*int> a({1, 2, 3});
+`(copy constructor:)
+vector<`*int> a2(a);
+vector<`*int> a3;
 
-// assignment performs copy:
+`(assignment performs copy:)
 
 a3 = a;
 `e array-as-function-argument
@@ -649,10 +643,10 @@ use reference or pointer to avoid copying array
 `e iterate-over-elements
 #include <vector>
 
-int sum(0);
-vector<int> a({1, 2, 3});
+`*int sum(0);
+vector<`*int> a({1, 2, 3});
 
-for (const auto& n: a) {
+`*for (`*const auto& n: a) {
   sum += n;
 
 }
@@ -660,10 +654,10 @@ for (const auto& n: a) {
 #include <vector>
 
 
-vector<int> a({6, 7, 8});
+vector<`*int> a({6, 7, 8});
 
 
-for (auto iter = a.cbegin();
+`*for (auto iter = a.cbegin();
      iter != a.cend();
      ++iter) {
 
@@ -675,14 +669,14 @@ for (auto iter = a.cbegin();
 #include <vector>
 
 
-vector<int> a({1, 2, 3});
+vector<`*int> a({1, 2, 3});
 
-vector<int> a2(a.crbegin(), a.crend());
+vector<`*int> a2(a.crbegin(), a.crend());
 `e sort
 #include <vector>
 
 
-vector<int> a({3, 2, 4, 1});
+vector<`*int> a({3, 2, 4, 1});
 
 sort(a.begin(), a.end());
 `e dedupe
@@ -691,20 +685,19 @@ sort(a.begin(), a.end());
 #include <vector>
 
 
-vector<int> a({1, 1, 2, 2, 3});
+vector<`*int> a({1, 1, 2, 2, 3});
 
-set<int> tmp(a.cbegin(), a.cend());
-// often unnecessary since sets provide
-// many of the same methods as vectors:
+set<`*int> tmp(a.cbegin(), a.cend());
+`(often unnecessary since sets provide many of the same methods as vectors:)
 
-vector<int> a2(tmp.cbegin(), tmp.cend());
+vector<`*int> a2(tmp.cbegin(), tmp.cend());
 `e membership
 #include <vector>
 
 
-vector<int> a({1, 2, 3});
+vector<`*int> a({1, 2, 3});
 
-if (find(a.cbegin(), a.cend(), 7) !=
+`*if (find(a.cbegin(), a.cend(), 7) !=
     a.cend()) {
 
   cout << "contains 7" << endl;
@@ -727,9 +720,9 @@ if (find(a.cbegin(), a.cend(), 7) !=
 `e zip
 
 `e declare-pair
-pair <string, int> p1;
+pair <string, `*int> p1;
 
-pair <string, int> p2("foo", 7);
+pair <string, `*int> p2("foo", 7);
 
 auto p3 = make_pair("foo", 7);
 `e lookup-pair-elements
@@ -743,9 +736,9 @@ p.first = "bar";
 
 p.second = 8;
 `e declare-tuple
-tuple<string, int, float> tup1;
+tuple<string, `*int, `*float> tup1;
 
-tuple<string, int, float> tup2(
+tuple<string, `*int, `*float> tup2(
   "foo", 1, 3.7);
 
 auto tup3 = make_tuple("foo", 1, 3.7);
@@ -760,7 +753,7 @@ auto tup3 = make_tuple("foo", 1, 3.7);
 `e map-declaration
 #include <map>
 
-map<string, int> m;
+map<string, `*int> m;
 `e map-access
 m["hello"] = 5;
 
@@ -772,59 +765,56 @@ m.erase(m.find("hello"));
 `e map-element-not-found-result
 returns element created by default constructor of value type
 `e map-iterate
-map<string,int>::iterator mi;
+map<string,`*int>::iterator mi;
 
-for (mi = m.begin(); mi != m.end(); ++mi) {
+`*for (mi = m.begin(); mi != m.end(); ++mi) {
   printf("%s %d", mi->first, mi->second)
 
 }
 `e declare-function
-// parameter names are optional:
-int
-add(int m, int n);
+`(parameter names are optional:)
+`*int
+add(`*int m, `*int n);
 `e define-function
-int
-add(int m, int n) {
-  return m + n;
+`*int
+add(`*int m, `*int n) {
+  `*return m + n;
 
 }
 `e invoke-function
-int sum = add(3, 7);
+`*int sum = add(3, 7);
 `e define-static-class-method
-// Ops.h:
+`(Ops.h:)
 class Ops {
 public:
-  static int add(int m, int n);
+  static `*int add(`*int m, `*int n);
 
 };
 
-// Ops.cpp:
-int Ops::add(int m, int n) {
-  return m + n;
+`(Ops.cpp:)
+`*int Ops::add(`*int m, `*int n) {
+  `*return m + n;
 
 }
 `e invoke-static-class-method
-int sum = Ops::add(3, 7);
+`*int sum = Ops::add(3, 7);
 
-// class name not needed
-// inside class namespace:
-int sum = add(3, 7);
+`(class name not needed inside class namespace:)
+`*int sum = add(3, 7);
 `e overload-function
-int add(int m, int n) {
-  return m + n;
-
+`*int add(`*int m, `*int n) {
+  `*return m + n;
 }
 
-float add(float x, float y) {
-  return x + y;
-
+`*float add(`*float x, `*float y) {
+  `*return x + y;
 }
 `e default-argument
 #include <cmath>
 
-float
-logarithm(float x, float base = 10.0) {
-  return log(x) / log(base);
+`*float
+logarithm(`*float x, `*float base = 10.0) {
+  `*return log(x) / log(base);
 
 }
 `e variable-number-of-arguments
@@ -832,106 +822,102 @@ logarithm(float x, float base = 10.0) {
 `e named-parameters
 none
 `e pass-by-value
-int add1(int n) {
-  return ++n;
+`*int add1(`*int n) {
+  `*return ++n;
 
 }
 
-int i(7);
+`*int i(7);
 
-// set i2 to 8 w/o modifying i:
-int i2 = add1(i);
+`(set i2 to 8 w/o modifying i:)
+`*int i2 = add1(i);
 `e pass-by-reference
-int add1(int& n) {
-  return ++n;
+`*int add1(`*int& n) {
+  `*return ++n;
 
 }
 
-int i(7);
+`*int i(7);
 
-// set i and i2 to 8:
-int i2 = add1(i);
+`(set i and i2 to 8:)
+`*int i2 = add1(i);
 `e pass-by-address
-int add1(int* n) {
-  return ++*n;
+`*int add1(`*int* n) {
+  `*return ++*n;
 
 }
 
-int i(7);
+`*int i(7);
 
-// set i and i2 to 8:
-int i2 = add1(&i);
+`(set i and i2 to 8:)
+`*int i2 = add1(&i);
 `e return-value
-argument of return; type must be declared
+argument of `*return; type must be declared
 `e no-return-value
-void
-message(const string& msg) {
+`*void
+message(`*const string& msg) {
   cout << msg << endl;
 
 }
 `e recursive-function
-int
-factorial(int n) {
-  if (n <= 1) {
-    return 1;
+`*int
+factorial(`*int n) {
+  `*if (n <= 1) {
+    `*return 1;
   }
-  return n * factorial(n - 1);
+  `*return n * factorial(n - 1);
 
 }
 `e anonymous-function
-auto add = [](int n, int m) {
-  return n + m;
+auto add = [](`*int n, `*int m) {
+  `*return n + m;
 
 };
 `e invoke-anonymous-function
-//on variable holding anon. function:
-int sum = add(3, 7);
+`(on variable holding anon. function:)
+`*int sum = add(3, 7);
 
-// on lambda expression:
-int sum2 = [](int n, int m) {
-  return n + m;
+`(on lambda expression:)
+`*int sum2 = [](`*int n, `*int m) {
+  `*return n + m;
 
 }(3, 7);
 `e closure
 
 `e function-with-private-state
-int
+`*int
 counter() {
-  static int i = 0;
-  return ++i;
+  static `*int i = 0;
+  `*return ++i;
 
 }
 `e function-as-value
 
 `e overload-operator
 Rational Rational::operator+(Rational& o) {
-  return Rational(this->num * o.denom + o.num * this->denom, this->denom * o.denom);
+  `*return Rational(this->num * o.denom + o.num * this->denom, this->denom * o.denom);
 
 }
 `e if
-int signum;
+`*int signum;
 
-if (n > 0) {
+`*if (n > 0) {
   signum = 1;
 
-}
-else if (n == 0) {
+} `*else `*if (n == 0) {
   signum = 0;
-
-}
-else {
+} `*else {
   signum = -1;
-
 }
 `e dangling-else
-if (n == 0)
-  if (m == 0)
+`*if (n == 0)
+  `*if (m == 0)
     cout << "n and m are zero" << endl;
-  else
+  `*else
     cout << "n is zero; m isn't" << endl;
 `e switch
-const int INVALID_BINARY_DIGIT(-1);
-int bin_digit;
+`*const `*int INVALID_BINARY_DIGIT(-1);
+`*int bin_digit;
 
 switch(n) {
 case 0:
@@ -944,41 +930,41 @@ default:
 
 }
 `e while
-int i(1), fact(1), n(10);
+`*int i(1), fact(1), n(10);
 
-while (i < n) {
+`*while (i < n) {
   fact *= i;
   ++i;
 
 }
 `e for
-int fact, n(10);
+`*int fact, n(10);
 
-for (int i = 1, fact = 1; i <= n; ++i) {
+`*for (`*int i = 1, fact = 1; i <= n; ++i) {
   fact *= i;
 
 }
 `e break
-int data[4] = {3, 2, 0, 1};
-int i;
-bool has_zero(false);
+`*int data[4] = {3, 2, 0, 1};
+`*int i;
+`*bool has_zero(`=false);
 
-for (i = 0; i < 4; ++i) {
-  if (data[i] == 0) {
-    has_zero = true;
+`*for (i = 0; i < 4; ++i) {
+  `*if (data[i] == 0) {
+    has_zero = `=true;
     break;
   }
 
 }
 `e break-out-of-nested-loops
-int data[2][2] = {{3, 2}, {0, 1}};
-int i, j;
-bool has_zero(false);
+`*int data[2][2] = {{3, 2}, {0, 1}};
+`*int i, j;
+`*bool has_zero(`=false);
 
-for (i = 0; i < 2; ++i) {
-  for (j = 0; j < 2; ++j) {
-    if (data[i][j] == 0) {
-      has_zero = true;
+`*for (i = 0; i < 2; ++i) {
+  `*for (j = 0; j < 2; ++j) {
+    `*if (data[i][j] == 0) {
+      has_zero = `=true;
       goto end_of_loops;
     }
   }
@@ -987,10 +973,10 @@ for (i = 0; i < 2; ++i) {
 
 :end_of_loops
 `e continue
-int a[4] = {3, 2, 0, 1};
+`*int a[4] = {3, 2, 0, 1};
 
-for (int i = 0; i < 4; ++i) {
-  if (a[i] == 0) {
+`*for (`*int i = 0; i < 4; ++i) {
+  `*if (a[i] == 0) {
     continue;
   }
   cout << 1.0 / a[i] << endl;
@@ -1026,8 +1012,8 @@ exception
 #include <cstdlib>
 #include <stdexcept>
 
-void risky() {
-  if (rand() < 10) {
+`*void risky() {
+  `*if (rand() < 10) {
     throw runtime_error("bam!");
   }
 
@@ -1039,7 +1025,7 @@ try {
   risky();
 
 }
-catch (const exception &e) {
+catch (`*const exception &e) {
   cout << e.what() << endl;
 
 }
@@ -1060,7 +1046,7 @@ try {
   risky();
 
 }
-catch (const exception& e) {
+catch (`*const exception& e) {
   cout << "an error occurred..." << endl;
   throw;
 
@@ -1084,12 +1070,12 @@ try {
   risky();
 
 }
-catch (const system_error &e) {
+catch (`*const system_error &e) {
   cout << "system error: " << e.name()
        << endl;
 
 }
-catch (const exception &e) {
+catch (`*const exception &e) {
   cout << "exception: " << e.what()
        << endl;
 
@@ -1107,8 +1093,8 @@ try {
   risky();
 
 }
-catch (const exception &e) {
-  const char *msg = e.what();
+catch (`*const exception &e) {
+  `*const `*char *msg = e.what();
 
 }
 `e system-call-errno
@@ -1118,20 +1104,17 @@ try {
   risky();
 
 }
-catch (const system_error &e) {
-  int err_code_val = e.code().value();
+catch (`*const system_error &e) {
+  `*int err_code_val = e.code().value();
 
 }
 `e finally
 none
 `e exception-specification
-// Use noexcept to declare that a function
-// does not raise exceptions;
-// declaring which exceptions a function
-// raises is deprecated in C++11.
-int
-add(int a, int b) noexcept {
-  return a + b;
+`(Use noexcept to declare that a function does not raise exceptions; declaring which exceptions a function raises is deprecated in C++11.)
+`*int
+add(`*int a, `*int b) noexcept {
+  `*return a + b;
 
 }
 `e start-thread
@@ -1169,37 +1152,33 @@ string line;
 
 ifstream f("/etc/passwd");
 
-if (f.is_open()) {
-  while (!f.eof()) {
+`*if (f.is_open()) {
+  `*while (!f.eof()) {
     getline(f, line);
-    process line
+    `(process line)
   }
   f.close();
-  if ( 0 != f.fail() ) {
-    handle error
+  `*if ( 0 != f.fail() ) {
+    `(handle error)
   }
-
-}
-
-else {
-  handle error
-
+} `*else {
+  `(handle error)
 }
 `e write-to-file
 #include <fstream>
 
 ofstream f("/tmp/test4");
 
-int i;
+`*int i;
 
-for (i = 0; i < 10; ++i) {
+`*for (i = 0; i < 10; ++i) {
   f << i << endl;
 
 }
 
 f.close();
 
-if (0 != f.fail()) {
+`*if (0 != f.fail()) {
   handle error
 
 }
@@ -1234,16 +1213,13 @@ string s2 = basename("/etc/hosts");
 #include <climits>
 #include <cstdlib>
 
-char buf[PATH_MAX];
+`*char buf[PATH_MAX];
 
-if (realpath("..", buf) == NULL) {
+`*if (realpath("..", buf) == NULL) {
   throw exception();
 
-}
-
-else {
+} `*else {
   string path(buf);
-
 }
 `e iterate-over-directory-by-file
 
@@ -1264,13 +1240,13 @@ else {
 `e system-temporary-file-directory
 
 `e signature-of-main
-int main(int argc, char** argv) {
+`*int main(`*int argc, `*char** argv) {
 `e first-argument
 pathname of executable
 `e environment-variable
 #include <stdlib.h>
 
-char* home = getenv("HOME");
+`*char* home = getenv("HOME");
 
 setenv("EDITOR", "emacs", 1);
 
@@ -1280,10 +1256,10 @@ unsetenv("EDITOR");
 `e standard-library-name
 C++ Standard Library
 `e declare-namespace
-namespace foo {
-  namespace bar {
+`*namespace foo {
+  `*namespace bar {
     class Baz {
-      static const int ANSWER = 42;
+      static `*const `*int ANSWER = 42;
     };
   }
 
@@ -1293,15 +1269,15 @@ yes
 `e namespaces-map-to-directories
 no
 `e import-namespace
-using namespace foo::bar;
+`*using `*namespace foo::bar;
 
 cout << Baz::ANSWER << endl;
 `e import-part-of-namespace
-using namespace foo;
+`*using `*namespace foo;
 
 cout << bar::Baz::ANSWER << endl;
 `e import-symbol
-using foo::bar::Baz;
+`*using foo::bar::Baz;
 
 cout << Baz::ANSWER << endl;
 `e import-static-symbol
@@ -1317,7 +1293,7 @@ cout << foo::bar::Baz::ANSWER << endl;
 `e package-manager
 
 `e typedef
-typedef int customer_id;
+typedef `*int customer_id;
 
 customer_id cid = 3;
 `e enum
@@ -1328,10 +1304,10 @@ day_of_week d = tue;
 class MedalCount {
 
 public:
-  const char *country;
-  int gold;
-  int silver;
-  int bronze;
+  `*const `*char *country;
+  `*int gold;
+  `*int silver;
+  `*int bronze;
 
 };
 `e struct-declaration
@@ -1347,7 +1323,7 @@ spain.silver = 7;
 
 spain.bronze = 4;
 `e struct-member-access
-int spain_total = spain.gold + spain.silver + spain.bronze;
+`*int spain_total = spain.gold + spain.silver + spain.bronze;
 `e define-generic-type
 template <class A>
 
@@ -1371,7 +1347,7 @@ Foo<string> f = Foo<string>("foo");
 template <class C>
 
 C add(C a, C b) {
-  return a + b;
+  `*return a + b;
 
 }
 `e generic-array
@@ -1384,10 +1360,10 @@ public:
 
 };
 `e value-parameter
-template <int N>
+template <`*int N>
 
-int add(int i) {
-  return N+i;
+`*int add(`*int i) {
+  `*return N+i;
 
 }
  
@@ -1416,11 +1392,11 @@ Pair<A, B>::Pair(A a, B b) :
   a(a), b(b) { }
   
 
-Pair<int, string> p =
-  Pair<int, string>(7, "foo");
+Pair<`*int, string> p =
+  Pair<`*int, string>(7, "foo");
 `e generic-type-parameters
-Pair<int, Foo<string> > p =
-  Pair<int, Foo<string> >(
+Pair<`*int, Foo<string> > p =
+  Pair<`*int, Foo<string> >(
     7, Foo<string>("foo"));
 `e template-parameters
 
@@ -1433,8 +1409,8 @@ Rational.hpp:
 
 class Rational {
  public:
-  int num, denom;
-  Rational(int num, int denom);
+  `*int num, denom;
+  Rational(`*int num, `*int denom);
   virtual ~Rational();
   Rational operator+(Rational& addend);
   static Rational max(Rational& a, Rational& b);
@@ -1443,27 +1419,25 @@ class Rational {
 `e class-definition-location
 top level, class block, or function block
 `e constructor
-Rational::Rational(int n, int d) : num(n), denom(d) {
-  if (denom == 0) {
+Rational::Rational(`*int n, `*int d) : num(n), denom(d) {
+  `*if (denom == 0) {
     throw "zero denominator";
   }
-  int div = gcd(n,d);
+  `*int div = gcd(n,d);
   num = num / div;
   denom = denom / div;
-
 }
 `e create-object
 Rational r1(7, 3);
 
-Rational* r2 = new Rational(8, 5);
+Rational* r2 = `*new Rational(8, 5);
 `e destructor
 Rational::~Rational() {};
 `e destroy-object
 delete r2;
 `e define-method
-int Rational::height() {
-  return (abs(num) > abs(denom)) ? abs(num) : abs(denom);
-
+`*int Rational::height() {
+  `*return (abs(num) > abs(denom)) ? abs(num) : abs(denom);
 }
 `e invoke-method
 r1.height();
@@ -1479,20 +1453,20 @@ this
 access keywords define regions:
 
 class Foo {
-  int privateInt1;
-  int privateInt2;
+  `*int privateInt1;
+  `*int privateInt2;
 
 public:
-  int publicInt1;
-  int publicInt2;
+  `*int publicInt1;
+  `*int publicInt2;
 
 protected:
-  int protectedInt1;
-  int protectedInt2;
+  `*int protectedInt1;
+  `*int protectedInt2;
 
 private:
-  int privateInt3;
-  int privateInt4;
+  `*int privateInt3;
+  `*int privateInt4;
 
 };
 `e anonymous-class
@@ -1504,12 +1478,12 @@ dispatch static by default
 `e subclass
 class Integer : public Rational {
  public:
-  Integer(int n);
+  Integer(`*int n);
   virtual ~Integer();
 
 };
 `e invoking-superclass-constructor
-Integer::Integer(int n) : Rational(n, 1) {
+Integer::Integer(`*int n) : Rational(n, 1) {
 
 }
 `e mark-class-underivable-or-method-unoverrideable
@@ -1547,7 +1521,7 @@ typeid(Foo).name()
 `e base64-encode-decode
 
 `e test-class
-$ cat > test_foo.cpp
+`$[cat > test_foo.cpp]
 
 #include <cppunit/TestCaller.h>
 
@@ -1558,28 +1532,28 @@ $ cat > test_foo.cpp
 #include "test_foo.h"
 
 
-using namespace CppUnit;
+`*using `*namespace CppUnit;
 
 
-void TestFoo::test_01() {
+`*void TestFoo::test_01() {
   CPPUNIT_ASSERT_EQUAL(1, 1);
 
 }
 
 
 Test* TestFoo::suite() {
-  TestSuite* suiteOfTests = new TestSuite("Foo");
+  TestSuite* suiteOfTests = `*new TestSuite("Foo");
   suiteOfTests->addTest(
-  new TestCaller<TestFoo>(
+  `*new TestCaller<TestFoo>(
     "test_01",
     &TestFoo::test_01));
 
-  return suiteOfTests;
+  `*return suiteOfTests;
 
 }
 
 
-$ cat > test_foo.h
+`$[cat > test_foo.h]
 
 #include <cppunit/TestCase.h>
 
@@ -1587,34 +1561,26 @@ $ cat > test_foo.h
 class TestFoo: public CppUnit::TestCase {
 
 public:
-  void test_01();
+  `*void test_01();
 
   static CppUnit::Test* suite();
 
 };
 `e run-all-tests
-$ cat > test_runner.cpp
+`$[cat > test_runner.cpp]
 
 #include <cppunit/ui/text/TestRunner.h>
-
 #include "test_foo.h"
 
-
-int main( int argc, char** argv)
-
-{
+`*int main( `*int argc, `*char** argv) {
   CppUnit::TextUi::TestRunner runner;
   runner.addTest(TestFoo::suite());
   runner.run();
-  return 0;
-
+  `*return 0;
 }
 
-
-$ sudo apt-get install libcppunit-dev
-
-
-$ cat > Makefile
+`$[sudo apt-get install libcppunit-dev]
+`$[cat > Makefile]
 
 test_runner: test_runner.o test_foo.o
         g++ -o $@ $^ -lcppunit
@@ -1624,7 +1590,7 @@ check: test_runner
         ./test_runner
 
 
-$ make check
+`$[make check]
 `e equality-assertion
 #include <cppunit/TestCase.h>
 
@@ -1644,16 +1610,16 @@ CPPUNIT_ASSERT_EQUAL_MESSAGE("1 != 1",
 `e teardown
 
 `e stronger-warnings
-$ g++ -Wall foo.cpp
+`$[g++ -Wall foo.cpp]
 `e suppress-warnings
-$ g++ -w foo.cpp
+`$[g++ -w foo.cpp]
 `e treat-warnings-as-errors
-$ g++ -Werror foo.cpp
+`$[g++ -Werror foo.cpp]
 `e run-debugger
-$ g++ -g -o foo foo.cpp
+`$[g++ -g -o foo foo.cpp]
 
 
-$ gdb foo
+`$[gdb foo]
 
 (gdb) b main
 
@@ -1680,18 +1646,18 @@ $ gdb foo
 gprof does not work on Mac OS X:
 
 
-$ g++ -pg -o foo foo.cpp
+`$[g++ -pg -o foo foo.cpp]
 
 
-$ ./foo
+`$[./foo]
 
 
-$ gprof foo
+`$[gprof foo]
 `e memory-tool
-$ sudo apt-get install valgrind
+`$[sudo apt-get install valgrind]
 
 
-$ g++ -o foo foo.cpp
+`$[g++ -o foo foo.cpp]
 
 
-$ valgrind ./foo
+`$[valgrind ./foo]
