@@ -37,12 +37,26 @@ another comment -}
 `e constant
 n = 3
 `e local-variable
-`(Haskell is purely functional and all normal variables are immutable; mutable variables may be simulated with Control.Monad.State:)
-`*import Control.Monad.State
-execState (`*do
+`(Haskell is purely functional and all normal variables are immutable. A maximally functional version of mutable variables may be simulated with Control.Monad.Trans.State, of the transformers package:)
+`*import Control.Monad.Trans.State
+evalState (`*do
   set 4
   modify (+1)
   fmap (+7) get) 3
+`(runState returns (result, state); evalState returns result; execState returns state)
+`(A more destructive version uses STRefs in a STRef monad or IORefs in the IO monad:)
+`*import Data.IORef
+`*do
+  n `+[<-] newIORef 3
+  writeIORef n 4
+  fmap (+7) $ readIORef n
+
+`*import Data.STRef
+`*import Control.Monad.ST
+runST $ `*do
+  n `+[<-] newSTRef 3
+  writeSTRef n 4
+  fmap (+7) $ readSTRef n
 `e unit-type-and-value
 ()
 ()
@@ -53,7 +67,7 @@ n = -3
 `![compilation error:]
 `*if `=True `*then "hello" `*else 3
 `e null
-`.Nothing
+`.Nothing `(type Maybe a)
 `e nullable-type
 list = [`.Just 3, `.Nothing, `.Just (-4)]
 `e null-test
@@ -78,7 +92,7 @@ fromMaybe 0 foo
 `e let-in
 z = `*let x = 3.0
         y = 2.0 * x
-    in x * y
+    `*in x * y
 `e where
 z = x * y
   `*where x = 3.0
@@ -889,20 +903,19 @@ $ cabal list --installed
 `e type-synonym
 `*type Name = String
 `e sum-type
-`*data Color = Red | Green | Blue
-
+`*data Color = Red | Green | Blue `*deriving (Eq, Ord, Show)
 col = Red
 
-`![won't compile:]
-col < Green
+print col `(Red)
+col < Green `(True)
 `e tuple-product-type-with-one-field
-`*data SpecialIntType = SpecialInt Integer
+`*data SpecialIntType = SpecialInt `.Integer
+n = SpecialInt 7
 
-
+`*newtype SpecialIntType = SpecialInt { runSpecialInt :: `.Integer }
 n = SpecialInt 7
 `e tuple-product-type-with-two-fields
 `*data IntPairType = IntPair Integer Integer
-
 
 p = IntPair 7 11
 `e record-product-type
@@ -910,16 +923,15 @@ p = IntPair 7 11
   customerId `+[::] Integer,
   name `+[::] String,
   address `+[::] String
-
 }
 `e record-product-type-literal
 Customer {
   customerId=7,
   name="John",
-  address="Topeka, KS" }
+  address="Topeka, KS"
+}
 `e generic-type
 `*data TwosomeType a b = Twosome a b
-
 
 p = Twosome ("pi", 3.14)
 `e recursive-type
