@@ -61,6 +61,7 @@ bqSpecial = try $ char '`' >>
 	<|> (char '=' >> fmap (makeSpanTag "val") bqGroup)
 	<|> (char '%' >> fmap (makeSpanTag "sval") bqGroup)
 	<|> (char '!' >> fmap (makeSpanTag "error") bqGroup)
+	<|> (char '#' >> fmap (makeSpanTag "preproc") bqGroup)
 	<|> (fmap makeNote $ plainMatching '(' ')')
 	)
 

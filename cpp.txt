@@ -3,14 +3,14 @@ g++ 4.6 with -std=c++0x flag
 `e show-version
 `$[g++ --version]
 `e implicit-prologue
-#include <iostream>
-#include <string>
+`#[#include <iostream>]
+`#[#include <string>]
 
 `*using `*namespace std;
 `e hello-world
 `$[cat hello.cpp]
 
-#include <iostream>
+`#[#include <iostream>]
 `*using `*namespace std;
 `*int main(`*int argc, `*char** arg) {
   cout << "Hello, World!" << endl;
@@ -49,7 +49,7 @@ Most implementations do not zero-initialize stack variables, so the value will b
 `*int foo = 7;
 
 `(in bar.cpp and outside of any function or class definition:)
-extern `*int foo;
+`*extern `*int foo;
 `e uninitialized-global-variable
 Zero initialized: numeric types and pointers are set to zero. Classes, structs, and arrays have all of their members or elements zero-initialized recursively.
 `e constant
@@ -90,22 +90,22 @@ cout << sizeof(`*int*) << endl;
 `e uninitialized-heap
 Memory allocated by the new operator is zero-initialized.
 `e free-heap
-delete i;
+`*delete i;
 `e null
-NULL
+`.NULL
 `e coalesce
-string s1 = s2 || "was null";
+`.string s1 = s2 || "was null";
 `e boolean-type
 `*bool
 `e true-and-false
 `=true `=false
 `e falsehoods
-`=false 0 0.0 NULL
+`=false `=0 `=[0.0] `.NULL
 `e logical-operators
-&& || !
-and or not
+`+[&& || !]
+`+[and or not]
 `e relational-operators
-== != < > <= >=
+`+[== != < > <= >=]
 `e integer-type
 `*signed `*char n1;   `(1+ bytes)
 `*short `*int n2;     `(2+ bytes)
@@ -143,17 +143,17 @@ nan
 
 There are no portably defined literals or constants for the above values.
 `e power
-#include <cmath>
+`#[#include <cmath>]
 
 `*double x = pow(2.0, 32.0);
 `e sqrt
-#include <cmath>
+`#[#include <cmath>]
 
 `*double x = sqrt(2);
 `e sqrt-1
 nan
 `e transcendental-functions
-#include <cmath>
+`#[#include <cmath>]
 
 
 exp log log2 log10
@@ -164,12 +164,12 @@ asin acos atan
 
 atan2
 `e transcendental-constants
-#include <cmath>
+`#[#include <cmath>]
 
 `*double e = M_E;
 `*double pi = M_PI;
 `e float-truncation
-#include <cmath>
+`#[#include <cmath>]
  
 `*double x = 3.7;
  
@@ -178,8 +178,8 @@ atan2
 `*long flr = floorl(x);
 `*long cl = ceill(x);
 `e absolute-value-and-signum
-#include <cmath>    `(fabs())
-#include <cstdlib>  `(abs())
+`#[#include <cmath>]    `(fabs())
+`#[#include <cstdlib>]  `(abs())
 
 `*int n = -7;
 `*int absn = abs(n);
@@ -194,7 +194,7 @@ The C standard does not define behavior for signed integers, however.
 `e float-overflow
 no behavior defined by standard; many implementations return inf
 `e float-limits-largest-finite-float-smallest-positive-float
-#include <cfloat>
+`#[#include <cfloat>]
 
 
 FLT_MAX
@@ -209,7 +209,7 @@ LDBL_MAX
 
 LDBL_MIN
 `e complex-construction
-#include <complex>
+`#[#include <complex>]
 
 complex<`*double> z(1.0, 2.0);
 `e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
@@ -223,7 +223,7 @@ abs(z)
 
 conj(z)
 `e random-number-uniform-integer-uniform-float-normal-float
-#include <random>
+`#[#include <random>]
 
 default_random_engine dre;
 
@@ -236,7 +236,7 @@ normal_distribution<`*double> nd(0.0, 1.0);
 `*double x = urd(dre);
 `*double y = nd(dre);
 `e random-seed
-#include <random>
+`#[#include <random>]
 
 `(set seed in constructor:)
 default_random_engine dre(17);
@@ -258,7 +258,7 @@ dre.seed(17);
 `e radix-convert-integer-to-and-from-string-with-radix
 
 `e string-type
-string s("lorem ipsum");
+`.string s("lorem ipsum");
 
 `(convert to C string:)
 `*const `*char* s2 = s.c_str();
@@ -274,47 +274,47 @@ Newlines in string literals are ignored.
 
 \xhh \o \oo \ooo
 `e allocate-string
-string* s = `*new string("hello");
+`.string* s = `*new string("hello");
 `e are-strings-mutable
-string s("bar");
+`.string s("bar");
 
-s[2] = 'z';
+s[2] = `=['z'];
 `e copy-string
-string s("bar");
+`.string s("bar");
 
 `(use assignment or copy constructor:)
-string s2 = s;
-string s3(s);
+`.string s2 = s;
+`.string s3(s);
 
 `(s contains "baz"; s2 and s3 contain "bar":)
 
 s[2] = 'z';
 `e format
-#include <sstream>
+`#[#include <sstream>]
 
 ostringstream oss;
 
 oss << "Spain: " << 7;
-string s(oss.str());
+`.string s(oss.str());
 `e compare-strings
-string s1("hello");
-string s2("world");
+`.string s1("hello");
+`.string s2("world");
 
 `(negative if s1 lexically before s2; zero if s1 and s2 are equal:)
 `*int result1 = s1.compare(s2);
 
 `*bool result2 = s1 == s2;
 `e concatenate
-string s("hello");
-string s2 = s + " world";
+`.string s("hello");
+`.string s2 = s + " world";
 
 s += " world";
 `e replicate
-string hbar(80, '-');
+`.string hbar(80, '-');
 `e translate-case
-#include <algorithm>
+`#[#include <algorithm>]
 
-string s("foo");
+`.string s("foo");
 
 `(in place:)
 
@@ -325,16 +325,16 @@ transform(s.begin(), s.end(),
           s.begin(), ::tolower);
 
 `(non-destructive:)
-string s2;
+`.string s2;
 
 s2.resize(s.size();
 
 transform(s.begin(), s.end(),
           s2.begin(), ::toupper);
 `e trim
-#include <algorithm>
+`#[#include <algorithm>]
 
-string s(" hello ");
+`.string s(" hello ");
 `(trim in place on left:)
 
 s.erase(
@@ -359,22 +359,22 @@ s.erase(
 
 );
 `e pad
-#include <iomanip>
-#include <sstream>
+`#[#include <iomanip>]
+`#[#include <sstream>]
 
-string s("hello");
-string rpad(s);
+`.string s("hello");
+`.string rpad(s);
 
-rpad += string(10 - s.length(), ' ');
+rpad += `.string(10 - s.length(), ' ');
 
 ostringstream oss;
 
 oss << setw(10) << s;
-string lpad(oss.str());
+`.string lpad(oss.str());
 `e number-to-string
 
 `e string-to-number
-#include <sstream>
+`#[#include <sstream>]
 
 stringstream ss("7 14.3 12");
 `*int n1;
@@ -390,12 +390,12 @@ ss >> n1 >> x >> n2;
 `e serialize
 
 `e string-length
-string s("hello");
+`.string s("hello");
 size_t len = s.length();
 `e index-of-substring
-string("hello").find("ll")
+`.string("hello").find("ll")
 `e extract-substring
-string("hello").substr(2, 2)
+`.string("hello").substr(2, 2)
 `e character-type
 `*char
 wchar_t
@@ -426,14 +426,14 @@ wregex
 
 (?!subpattern)
 `e match-test
-#include <regex>
+`#[#include <regex>]
 
 
 regex rx(".*ll.*");
 
 `*bool match = regex_match("hello", rx);
 `e case-insensitive-match-test
-#include <regex>
+`#[#include <regex>]
 
 
 regex rx("lorem", icase);
@@ -472,7 +472,7 @@ regex rx("lorem", icase);
 `e declare-on-heap
 `*int* a = `*new `*int[10];
 `e free-heap
-delete[] a;
+`*delete[] a;
 `e array-initialization-list
 `*int a[] = {1, 2, 3};
 `e array-size
@@ -521,7 +521,7 @@ reverse(a, LEN);
 
 }
 `e sort
-#include <cstdlib>
+`#[#include <cstdlib>]
 
 `*int
 comp(`*const `*void* `*const `*void* bp) {
@@ -540,10 +540,10 @@ qsort(a, LEN, sizeof(a[0]), &comp);
 vector<T>
 `(supports efficient random access and manipulation of end; STL also provides deque<T> and list<T>)
 `e list-declare
-#include <vector>
+`#[#include <vector>]
 vector <`*int> a;
 `e list-literal
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a = {1, 2, 3};
 vector<`*int> a2({7, 8, 9});
@@ -569,7 +569,7 @@ a[2] = 4;
 `e out-of-bounds
 using [] with out-of-bounds index has undefined behavior
 `e index-of-element
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a({6, 7, 8, 9});
 
@@ -579,7 +579,7 @@ auto iter = find(a.cbegin(), a.cend(), 8);
 
 }
 `e slice
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a({6, 7, 8, 9});
 
@@ -587,14 +587,14 @@ vector<`*int> a({6, 7, 8, 9});
 vector<`*int> a2(a.cbegin() + 1,
                a.cbegin() + 3);
 `e drop
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a({6, 7, 8, 9});
 
 `(a2 contains {7, 8, 9}:)
 vector<`*int> a2(a.cbegin() + 1, a.cend());
 `e manipulate-back
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a({6, 7, 8});
 
@@ -602,7 +602,7 @@ vector<`*int> a({6, 7, 8});
 a.push_back(9);
 `*int elem = a.pop_back();
 `e manipulate-front
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a({6, 7, 8});
 
@@ -613,7 +613,7 @@ a.insert(a.cbegin(), 5);
 
 a.erase(a.cbegin());
 `e concatenate
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a1({1, 2, 3});
 vector<`*int> a2({4, 5, 6});
@@ -623,12 +623,12 @@ a1.insert(a1.cend(),
           a2.cbegin(),
           a2.cend());
 `e list-replicate
-#include <vector>
+`#[#include <vector>]
 
 `(array of 10 zeros:)
 vector<`*int> a(10, 0);
 `e copy
-#include <vector>
+`#[#include <vector>]
 
 vector<`*int> a({1, 2, 3});
 `(copy constructor:)
@@ -641,7 +641,7 @@ a3 = a;
 `e array-as-function-argument
 use reference or pointer to avoid copying array
 `e iterate-over-elements
-#include <vector>
+`#[#include <vector>]
 
 `*int sum(0);
 vector<`*int> a({1, 2, 3});
@@ -651,7 +651,7 @@ vector<`*int> a({1, 2, 3});
 
 }
 `e iterate-over-indices-and-elements
-#include <vector>
+`#[#include <vector>]
 
 
 vector<`*int> a({6, 7, 8});
@@ -666,23 +666,23 @@ vector<`*int> a({6, 7, 8});
 
 }
 `e reverse
-#include <vector>
+`#[#include <vector>]
 
 
 vector<`*int> a({1, 2, 3});
 
 vector<`*int> a2(a.crbegin(), a.crend());
 `e sort
-#include <vector>
+`#[#include <vector>]
 
 
 vector<`*int> a({3, 2, 4, 1});
 
 sort(a.begin(), a.end());
 `e dedupe
-#include <set>
+`#[#include <set>]
 
-#include <vector>
+`#[#include <vector>]
 
 
 vector<`*int> a({1, 1, 2, 2, 3});
@@ -692,7 +692,7 @@ set<`*int> tmp(a.cbegin(), a.cend());
 
 vector<`*int> a2(tmp.cbegin(), tmp.cend());
 `e membership
-#include <vector>
+`#[#include <vector>]
 
 
 vector<`*int> a({1, 2, 3});
@@ -720,9 +720,9 @@ vector<`*int> a({1, 2, 3});
 `e zip
 
 `e declare-pair
-pair <string, `*int> p1;
+pair <`.string, `*int> p1;
 
-pair <string, `*int> p2("foo", 7);
+pair <`.string, `*int> p2("foo", 7);
 
 auto p3 = make_pair("foo", 7);
 `e lookup-pair-elements
@@ -736,9 +736,9 @@ p.first = "bar";
 
 p.second = 8;
 `e declare-tuple
-tuple<string, `*int, `*float> tup1;
+tuple<`.string, `*int, `*float> tup1;
 
-tuple<string, `*int, `*float> tup2(
+tuple<`.string, `*int, `*float> tup2(
   "foo", 1, 3.7);
 
 auto tup3 = make_tuple("foo", 1, 3.7);
@@ -751,9 +751,9 @@ auto tup3 = make_tuple("foo", 1, 3.7);
 `e create-references-for-tuple-elements
 
 `e map-declaration
-#include <map>
+`#[#include <map>]
 
-map<string, `*int> m;
+map<`.string, `*int> m;
 `e map-access
 m["hello"] = 5;
 
@@ -765,7 +765,7 @@ m.erase(m.find("hello"));
 `e map-element-not-found-result
 returns element created by default constructor of value type
 `e map-iterate
-map<string,`*int>::iterator mi;
+map<`.string,`*int>::iterator mi;
 
 `*for (mi = m.begin(); mi != m.end(); ++mi) {
   printf("%s %d", mi->first, mi->second)
@@ -810,7 +810,7 @@ public:
   `*return x + y;
 }
 `e default-argument
-#include <cmath>
+`#[#include <cmath>]
 
 `*float
 logarithm(`*float x, `*float base = 10.0) {
@@ -855,7 +855,7 @@ none
 argument of `*return; type must be declared
 `e no-return-value
 `*void
-message(`*const string& msg) {
+message(`*const `.string& msg) {
   cout << msg << endl;
 
 }
@@ -990,10 +990,10 @@ Any type can be thrown.
 
 All exceptions thrown by the language or the standard library derive from exception, defined in <exception>.
 `e predefined-exceptions
-#include <exception>
-#include <stdexcept>
-#include <system_error>
-#include <typeinfo>
+`#[#include <exception>]
+`#[#include <stdexcept>]
+`#[#include <system_error>]
+`#[#include <typeinfo>]
 
 
 exception
@@ -1009,8 +1009,8 @@ exception
   bad_exception
   bad_alloc
 `e raise-exception
-#include <cstdlib>
-#include <stdexcept>
+`#[#include <cstdlib>]
+`#[#include <stdexcept>]
 
 `*void risky() {
   `*if (rand() < 10) {
@@ -1019,7 +1019,7 @@ exception
 
 }
 `e handle-exception
-#include <stdexcept>
+`#[#include <stdexcept>]
 
 try {
   risky();
@@ -1030,7 +1030,7 @@ catch (`*const exception &e) {
 
 }
 `e define-exception
-#include <stdexcept>
+`#[#include <stdexcept>]
 
 class Bam : public runtime_error {
 public:
@@ -1040,7 +1040,7 @@ public:
 
 throw Bam();
 `e re-raise-exception
-#include <stdexcept>
+`#[#include <stdexcept>]
 
 try {
   risky();
@@ -1052,7 +1052,7 @@ catch (`*const exception& e) {
 
 }
 `e catch-all-handler
-#include <stdexcept>
+`#[#include <stdexcept>]
 
 try {
   risky();
@@ -1064,7 +1064,7 @@ catch (...) {
 
 }
 `e multiple-handlers
-#include <stdexcept>
+`#[#include <stdexcept>]
 
 try {
   risky();
@@ -1087,7 +1087,7 @@ catch (...) {
 `e uncaught-exception-behavior
 calls terminate() which by default calls abort()
 `e error-message
-#include <exception>
+`#[#include <exception>]
 
 try {
   risky();
@@ -1098,7 +1098,7 @@ catch (`*const exception &e) {
 
 }
 `e system-call-errno
-#include <system_error>
+`#[#include <system_error>]
 
 try {
   risky();
@@ -1146,9 +1146,9 @@ clog
 `e printf
 cout << "count: " << 7 << endl;
 `e read-from-file
-#include <fstream>
+`#[#include <fstream>]
 
-string line;
+`.string line;
 
 ifstream f("/etc/passwd");
 
@@ -1165,7 +1165,7 @@ ifstream f("/etc/passwd");
   `(handle error)
 }
 `e write-to-file
-#include <fstream>
+`#[#include <fstream>]
 
 ofstream f("/tmp/test4");
 
@@ -1205,13 +1205,13 @@ f.close();
 `e build-pathname
 
 `e dirname-and-basename
-#include <libgen.h>
+`#[#include <libgen.h>]
 
-string s1 = dirname("/etc/hosts");
-string s2 = basename("/etc/hosts");
+`.string s1 = dirname("/etc/hosts");
+`.string s2 = basename("/etc/hosts");
 `e absolute-pathname
-#include <climits>
-#include <cstdlib>
+`#[#include <climits>]
+`#[#include <cstdlib>]
 
 `*char buf[PATH_MAX];
 
@@ -1219,7 +1219,7 @@ string s2 = basename("/etc/hosts");
   throw exception();
 
 } `*else {
-  string path(buf);
+  `.string path(buf);
 }
 `e iterate-over-directory-by-file
 
@@ -1244,7 +1244,7 @@ string s2 = basename("/etc/hosts");
 `e first-argument
 pathname of executable
 `e environment-variable
-#include <stdlib.h>
+`#[#include <stdlib.h>]
 
 `*char* home = getenv("HOME");
 
@@ -1342,7 +1342,7 @@ Foo<A>::Foo(A a) : a(a) {
 
 }
 `e instantiate-generic-type
-Foo<string> f = Foo<string>("foo");
+Foo<`.string> f = Foo<`.string>("foo");
 `e generic-function
 template <class C>
 
@@ -1392,12 +1392,12 @@ Pair<A, B>::Pair(A a, B b) :
   a(a), b(b) { }
   
 
-Pair<`*int, string> p =
-  Pair<`*int, string>(7, "foo");
+Pair<`*int, `.string> p =
+  Pair<`*int, `.string>(7, "foo");
 `e generic-type-parameters
-Pair<`*int, Foo<string> > p =
-  Pair<`*int, Foo<string> >(
-    7, Foo<string>("foo"));
+Pair<`*int, Foo<`.string> > p =
+  Pair<`*int, Foo<`.string> >(
+    7, Foo<`.string>("foo"));
 `e template-parameters
 
 `e variadic-template
@@ -1434,7 +1434,7 @@ Rational* r2 = `*new Rational(8, 5);
 `e destructor
 Rational::~Rational() {};
 `e destroy-object
-delete r2;
+`*delete r2;
 `e define-method
 `*int Rational::height() {
   `*return (abs(num) > abs(denom)) ? abs(num) : abs(denom);
@@ -1523,13 +1523,13 @@ typeid(Foo).name()
 `e test-class
 `$[cat > test_foo.cpp]
 
-#include <cppunit/TestCaller.h>
+`#[#include <cppunit/TestCaller.h>]
 
-#include <cppunit/TestCase.h>
+`#[#include <cppunit/TestCase.h>]
 
-#include <cppunit/TestSuite.h>
+`#[#include <cppunit/TestSuite.h>]
 
-#include "test_foo.h"
+`#[#include "test_foo.h"]
 
 
 `*using `*namespace CppUnit;
@@ -1555,7 +1555,7 @@ Test* TestFoo::suite() {
 
 `$[cat > test_foo.h]
 
-#include <cppunit/TestCase.h>
+`#[#include <cppunit/TestCase.h>]
 
 
 class TestFoo: public CppUnit::TestCase {
@@ -1569,8 +1569,8 @@ public:
 `e run-all-tests
 `$[cat > test_runner.cpp]
 
-#include <cppunit/ui/text/TestRunner.h>
-#include "test_foo.h"
+`#[#include <cppunit/ui/text/TestRunner.h>]
+`#[#include "test_foo.h"]
 
 `*int main( `*int argc, `*char** argv) {
   CppUnit::TextUi::TestRunner runner;
@@ -1592,7 +1592,7 @@ check: test_runner
 
 `$[make check]
 `e equality-assertion
-#include <cppunit/TestCase.h>
+`#[#include <cppunit/TestCase.h>]
 
 
 CPPUNIT_ASSERT_EQUAL(1, 1);

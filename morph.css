@@ -52,4 +52,4 @@ a.perm:hover { color: blue; }
 .empty { background-color: #eee; }
 .error { display: block; padding: 0 0.2em; border-radius: 0.2em; color: #900; background-color: #fdd; }
 .cli:before { content: "$ "; color: #ccc; }
-
+.preproc { color: #090; }
