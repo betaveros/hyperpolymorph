@@ -110,8 +110,6 @@ v.get
 `(0 if v is None:)
 v.getOrElse(0)
 `e nullif
-`e undefined-variable-access
-`![does not compile]
 `e expression-type-declaration
 1: `.Double
 `e let-in
@@ -629,7 +627,7 @@ logarithm(10, base = 2)
     a :: range(a + 1, b)
 `e mutually-recursive-functions
 
-`e anonymous-function
+`e lambda
 (x: `.Double, y: `.Double) `+[=>] (x + y) / 2.0
 `e operator-as-function
 ((`+_:`.Int) * (`+_:w.Int))(3, 7)

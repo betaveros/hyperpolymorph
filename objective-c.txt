@@ -550,9 +550,9 @@ use_iptr(&i);
 
 `e recursive-function
 
-`e anonymous-function
+`e lambda
 
-`e invoke-anonymous-function
+`e invoke-lambda
 
 `e closure
 

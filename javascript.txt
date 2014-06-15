@@ -1,4 +1,4 @@
-`e version-used
+`e versions-used
 ECMAScript 5
 `e show-version
 `$[node --version]
@@ -41,8 +41,10 @@ y = tmp;
 `e null
 `=null
 `e null-test
-v === `=null
-`e undefined-variable-access
+`*typeof v === `=["undefined"] && v === `=[null]
+`e uninitialized-local-variable
+`=undefined
+`e uninitialized-global-variable
 `=undefined
 `e conditional-expression
 x > 0 ? x : -x
@@ -116,14 +118,13 @@ Math.random()
 0x2a
 `e radix
 `e string-literal
-"don't say \"no\""
-'don\'t say "no"'
+`=["don't say \"no\""]
+`=['don\'t say "no"']
 `e newline-in-literal
 yes
 `e literal-escapes
 `(single and double quotes:)
-
-\b \f \n \r \t \v \uhhhh \xhh \" \' \\
+`%[\b \f \n \r \t \v \uhhhh \xhh \" \' \\]
 `e concatenate-strings
 s = "Hello, " + "World!";
 `e split
@@ -145,21 +146,20 @@ s = "Hello, " + "World!";
 
 73.9 + `.parseFloat(".037")
 `e number-to-string
-"value: " + 8
+`=["value: "] + 8
 `e string-length
-"lorem".length
+`=["lorem"].length
 `e index-of-substring
-"lorem ipsum".indexOf("ipsum")
+`=["lorem ipsum"].indexOf(`=["ipsum"])
 `e extract-substring
-"lorem ipsum".substr(6, 5)
-
-"lorem ipsum".substring(6, 11)
+`=["lorem ipsum"].substr(6, 5)
+`=["lorem ipsum"].substring(6, 11)
 `e extract-character
-"lorem ipsum".charAt(6)
-"lorem ipsum".charCodeAt(6)
+`=["lorem ipsum"].charAt(6)
+`=["lorem ipsum"].charCodeAt(6)
 `e chr-and-ord
 String.fromCharCode(65)
-"A".charCodeAt(0)
+`=["A"].charCodeAt(0)
 `e character-class-abbreviations-and-anchors
 char class abbrevs:
 
@@ -169,7 +169,6 @@ anchors: ^ $ \b \B
 `e match-test
 `*if (s.match(`=[/1999/])) {
   alert("party!");
-
 }
 `e case-insensitive-match-test
 "Lorem".match(`=[/lorem/i])
@@ -177,21 +176,15 @@ anchors: ^ $ \b \B
 g i m
 `e substitution
 s = "do re mi mi mi";
-
 s.replace(`=[/mi/g], "ma");
 `e group-capture
 rx = `=[/^(\d{4})-(\d{2})-(\d{2})$/];
-
 m = rx.exec('2009-06-03');
-
 yr = m[1];
-
 mo = m[2];
-
 dy = m[3];
 `e backreference-in-match-and-substitution
 `=[/(w+) \1/].exec("do do")
-
 "do re".replace(`=[/(\w+) (\w+)/], '$2 $1')
 `e current-date-time
 `*var t = `*new Date();
@@ -203,15 +196,11 @@ Math.round(t.getTime() / 1000)
 `*var t = new Date("July 7, 1999");
 `e date-parts
 t.getFullYear()
-
 t.getMonth() + 1
-
-t.getDate() # getDay() is day of week
+t.getDate() `(getDay() is day of week)
 `e time-parts
 t.getHours()
-
 t.getMinutes()
-
 t.getSeconds()
 `e build-date-time-from-parts
 `*var yr = 1999;
@@ -227,17 +216,22 @@ array
 a = [1, 2, 3, 4]
 `e list-size
 a.length
-`e lookup
+`e empty-list
+[]
+`e empty-test
+a.length === 0
+`e head
 a[0]
-`e update
+`e list-lookup
+a[0]
+`e list-update
 a[0] = "lorem"
-`e out-of-bounds
+`e list-out-of-bounds
 returns `=undefined
 `e index-of-element
 [6, 7, 7, 8].indexOf(7)
-
 [6, 7, 7, 8].lastIndexOf(7)
-// returns -1 if not found
+`(returns -1 if not found)
 `e slice
 ["a", "b", "c", "d"].slice(1,3)
 `e drop
@@ -246,15 +240,11 @@ returns `=undefined
 a = [1, 2, 3].concat([4, 5, 6]);
 `e manipulate-back
 a = [6, 7, 8];
-
 a.push(9);
-
 i = a.pop();
 `e manipulate-front
 a = [6, 7, 8];
-
 a.unshift(5);
-
 i = a.shift();
 `e iterate-over-elements
 `*var len = a.length;
@@ -263,11 +253,9 @@ i = a.shift();
 }
 `e reverse
 `*var a = [1, 2, 3];
-
 a.reverse();
 `e sort
 `*var a = [3, 1, 4, 2];
-
 a.sort();
 `e map
 `(callback gets 3 args: value, index, array)
@@ -307,8 +295,8 @@ returns `=undefined
 `e is-key-present
 d.hasOwnProperty("t");
 `e delete
-delete d["t"];
-delete d.t;
+`*delete d["t"];
+`*delete d.t;
 `e iteration
 `*for (`*var k in d) {
   `(use k or d[k])
@@ -330,7 +318,7 @@ args in arguments[0], arguments[1], … with number of args in arguments.length
 return arg or undefined. If invoked with new and return value not an object, returns this
 `e multiple-return-values
 none
-`e lambda-declaration
+`e lambda
 sqr = `*function(x) { return x*x; }
 `e lambda-invocation
 sqr(2)

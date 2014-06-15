@@ -77,7 +77,9 @@ x, y = y, x
 `=None
 `e null-test
 v `*is `=None `(slightly preferable to ==, as the latter can be overridden)
-`e undefined-variable-access
+`e uninitialized-local-variable
+`![raises `.NameError]
+`e uninitialized-global-variable
 `![raises `.NameError]
 `e conditional-expression
 x `*if x > 0 `*else -x
@@ -752,7 +754,7 @@ foo(a, d)
   `*return a[0], a[1]
 
 x, y = first_and_second([1,2,3])
-`e lambda-declaration
+`e lambda
 `(body must be an expression:)
 sqr = `*lambda x: x * x
 `e lambda-invocation

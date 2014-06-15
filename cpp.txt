@@ -868,7 +868,7 @@ factorial(`*int n) {
   `*return n * factorial(n - 1);
 
 }
-`e anonymous-function
+`e lambda
 auto add = [](`*int n, `*int m) {
   `*return n + m;
 

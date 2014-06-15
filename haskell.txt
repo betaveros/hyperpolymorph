@@ -544,7 +544,7 @@ to_s Blue = "blue"
 range a b = `*if a > b `*then [] `*else a : range (a+1) b
 `e mutually-recursive-functions
 
-`e anonymous-function
+`e lambda
 `+\x y `+[->] (x+y) / 2.0
 `e infix-operator-in-prefix-position
 ( * ) 3 4

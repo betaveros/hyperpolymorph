@@ -50,7 +50,9 @@ x = 1
 null
 `e null-test
 v == null
-`e undefined-variable-access
+`e uninitialized-local-variable
+raises groovy.lang.MissingPropertyException
+`e uninitialized-global-variable
 raises groovy.lang.MissingPropertyException
 `e conditional-expression
 x > 0 ? x : -x
@@ -396,7 +398,7 @@ raises groovy.lang.MissingMethodException
 return arg or last expression evaluated
 `e multiple-return-values
 none
-`e lambda-declaration
+`e lambda
 sqr = { x -> Math.sqrt x }
 `e lambda-invocation
 sqr(2)

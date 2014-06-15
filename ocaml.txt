@@ -460,7 +460,7 @@ else a :: range (a+1) b;;
 let rec even n = if n = 0 then true else odd (n-1)
 
 and odd n = if n = 0 then false else even (n-1);;
-`e anonymous-function
+`e lambda
 fun x -> fun y -> (x +. y) /. 2.0
 `e infix-operator-in-prefix-position
 ( * ) 3 4;;

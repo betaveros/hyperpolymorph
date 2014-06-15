@@ -55,7 +55,9 @@ x, y = y, x
 nil
 `e null-test
 v == nil
-`e undefined-variable-access
+`e uninitialized-local-variable
+nil
+`e uninitialized-global-variable
 nil
 `e conditional-expression
 none
@@ -346,7 +348,7 @@ function roots(x)
 end
 
 r1,r2 = roots(4)
-`e lambda-declaration
+`e lambda
 sqr = function(x) return x*x end
 `e lambda-invocation
 sqr(2)

@@ -60,7 +60,9 @@ lassign "$x $y" y x
 ""
 `e null-test
 v eq ""
-`e undefined-variable-access
+`e uninitialized-local-variable
+error
+`e uninitialized-global-variable
 error
 `e conditional-expression
 expr $x > 0 ? $x : -$x
@@ -372,7 +374,7 @@ last arg contains list of remaining values
 return arg or empty string
 `e multiple-return-values
 none
-`e lambda-declaration
+`e lambda
 set sqr {{x} {return [expr $x*$x]}}
 `e lambda-invocation
 apply $sqr 2

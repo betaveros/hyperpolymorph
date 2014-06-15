@@ -19,10 +19,10 @@ end-of-line-comment: end-of-line comment
 multiple-line-comment: multiple line comment
 # variables and expressions
 local-variable: local, modifiable variable
-uninitialized-local-variable: uninitialized local variable
+uninitialized-local-variable: uninitialized local variable (when accessed)
 regions-which-define-lexical-scope: regions which define lexical scope
 global-variable: global variable
-uninitialized-global-variable: uninitialized global variable
+uninitialized-global-variable: uninitialized global variable (when accessed)
 constant: constant
 unit-type-and-value: unit type and value
 assignment: assignment
@@ -45,7 +45,6 @@ nullable-type: nullable type
 null-test: null test
 coalesce: coalesce
 nullif: nullif
-undefined-variable-access: undefined variable access
 conditional-expression: conditional expression
 branch-type-mismatch: branch type mismatch
 expression-type-declaration: expression type declaration
@@ -302,8 +301,8 @@ recursive-function: recursive function
 mutually-recursive-functions: mutually recursive functions
 anonymous-function: anonymous function
 invoke-anonymous-function: invoke anonymous function
-lambda-declaration: lambda declaration
-lambda-invocation: lambda invocation
+lambda: lambda (anonymous function) declaration
+lambda-invocation: lambda (anonymous function) invocation
 closure: closure
 function-as-value: function as value
 function-with-private-state: function with private state

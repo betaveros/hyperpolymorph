@@ -532,7 +532,7 @@ none
 
 `e recursive-function
 
-`e anonymous-function
+`e lambda
 
 `e invoke-anonymous-function
 
