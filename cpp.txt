@@ -833,6 +833,11 @@ factorial(`*int n) {
 `*auto add = [](`*int n, `*int m) {
   `*return n + m;
 };
+`(with explicit type annotation and capture-by-reference:)
+`#[#include <functional>]
+std::function<`*int(`*int)> fibo = [&](`*int x){
+    `*return x <= 1 ? x : fibo(x-1) + fibo(x-2);
+};
 `e invoke-anonymous-function
 `(on variable holding anon. function:)
 `*int sum = add(3, 7);
