@@ -1,38 +1,26 @@
 `e version-used
 4.0
 `e show-version
-$ ocaml -version
+`$[ocaml -version]
 `e interpreter
-$ echo 'print_endline "hello"' > hello.ml
-
-
-$ ocaml hello.ml
+`$[echo 'print_endline "hello"' > hello.ml]
+`$[ocaml hello.ml]
 `e shebang
-$ cat <<EOF > hello.ml
-
+`$[cat <<EOF > hello.ml]
 #!/usr/bin/env ocaml
-
-
 print_endline "hello";;
-
 EOF
 
-
-$ chmod +x hello.ml
-
-$ ./hello.ml
+`$[chmod +x hello.ml]
+`$[./hello.ml]
 `e bytecode-compiler-and-interpreter
-$ echo 'print_endline "hello";;' > hello.ml
-
-$ ocamlc -o hello hello.ml
-
-$ ocamlrun hello
+`$[echo 'print_endline "hello";;' > hello.ml]
+`$[ocamlc -o hello hello.ml]
+`$[ocamlrun hello]
 `e native-compiler
-$ echo 'print_endline "hello";;' > hello.ml
-
-$ ocamlopt hello.ml -o hello
-
-$ ./hello
+`$[echo 'print_endline "hello";;' > hello.ml]
+`$[ocamlopt hello.ml -o hello]
+`$[./hello]
 `e library-which-is-always-imported
 Pervasives
 `e statement-terminator
@@ -42,106 +30,92 @@ Pervasives
 
 begin expr ; … end
 `e end-of-line-comment
-none
 `e multiple-line-comment
 (* comment
-
 another comment *)
 `e constant
-let n = 1 + 2;;
+`*let n = 1 + 2;;
 `e local-variable
-let n = ref 3;;
-
+`*let n = `*ref 3;;
 n := 4;;
-
 !n + 7;;
 `e unit-type-and-value
 unit
-
 ()
 `e conditional-expression
-let n = -3;;
-
-let absn = if n < 0 then -n else n;;
+`*let n = -3;;
+`*let absn = `*if n < 0 `*then -n `*else n;;
 `e branch-type-mismatch
-(* compilation error: *)
+`![compilation error:]
 
-if true then "hello" else 3;;
+`*if `=true `*then "hello" `*else 3;;
 `e null
-None
+`.None `(type 'a option)
 `e nullable-type
-type list_option_int = int option list;;
+`*type list_option_int = `.int option list;;
 
 
-let list = [Some 3; None; Some (-4)];;
+`*let list = [`.Some 3; `.None; `.Some (-4)];;
 `e null-test
-match foo with
-  | None -> true
-  | _ -> false;;
+`*match foo `*with
+  | `.None -> `=true
+  | _ -> `=false;;
 `e coalesce
-match foo with
-  | None -> 0
-  | Some n -> n;;
+`*match foo `*with
+  | `.None -> 0
+  | `.Some n -> n;;
 `e nullif
-match foo with
-  | -999 -> None
-  | n -> Some n;;
+`*match foo `*with
+  | -999 -> `.None
+  | n -> `.Some n;;
 `e expression-type-declaration
-float 1
+`.float 1
 `e let-in
-let z =
-  let x = 3.0 in
-  let y = 2.0 *. x in
+`*let z =
+  `*let x = 3.0 in
+  `*let y = 2.0 *. x in
   x *. y;;
 `e where
 none
 `e boolean-type
 bool
 `e true-and-false
-true false
+`=true `=false
 `e logical-operators
 && || not
 `e relational-operators
-= <> < > <= >=
+`+[= <> < > <= >=]
+`[== !=] `(warning: == and != test for "physical equality")
 `e min-and-max
 min 1 2
-
 max 1 2
 `e integer-type
-int
-
-other integer types:
-
+`.int
+`(other integer types:)
 int32 int64 nativeint
 `e integer-literal
-int, int64, and nativeint literals:
-
+`.int, int64, and nativeint literals:
 12 12L 12n
-
-literals can contain underscores:
-
+`(literals can contain underscores:)
 1_000_000
-
-this parses as an expression:
-
+`(this parses as an expression:)
 -4
 `e float-type
-float
+`.float
 `e integer-operators
-+ - * / mod
-mod is an infix operator
+`+[+ - * /] `*mod
+`(mod is an infix operator, and is signed like % or rem in other languages)
 `e float-operators
-+. -. *. /.
+`+[+. -. *. /.]
 `e add-integer-and-float
-float 3 +. 7.0
+`.float 3 `+[+.] 7.0
 `e divmod
-7 / 3
-
-7 mod 3
+7 `+/ 3
+7 `*mod 3
 `e integer-division-by-zero
 raises Division_by_zero
 `e float-division
-float 7 /. float 3
+`.float 7 /. `.float 3
 `e float-division-by-zero
 infinity nan or neg_infinity
 `e power
@@ -150,28 +124,21 @@ infinity nan or neg_infinity
 sqrt 2.0
 `e sqrt-1
 sqrt (-1.0):
-
 nan
 `e transcendental-functions
 exp log
-
 sin cos tan
-
 asin acos atan atan2
 `e transcendental-constants
 4.0 *. atan 1.0
-
 exp 1.0
 `e float-truncation
 truncate 3.14
-none
-
-floor 3.14 returns float
-
-ceil 3.14 returns float
+`(none)
+floor 3.14 `(returns float)
+ceil 3.14 `(returns float)
 `e absolute-value-and-signum
 abs (-7)
-
 abs_float (-7.0)
 no signum
 `e integer-overflow
@@ -181,78 +148,50 @@ infinity
 `e arbitrary-length-integer
 open Big_int;;
 
-
-let n = big_int_of_int 7;;
-
-let m = big_int_of_int 12;;
+`*let n = big_int_of_int 7;;
+`*let m = big_int_of_int 12;;
 `e arbitrary-length-integer-operators
 add_big_int n m
-
 sub_big_int n m
-
 mult_big_int n m
-
 div_big_int n m (* quotient *)
-
 mod_big_int n m
-
-
 eq_big_int n m
-
 lt_big_int n m
-
 gt_big_int n m
-
 le_big_int n m
-
 ge_big_int n m
 `e rational-type
-
 `e rational-construction
-
 `e rational-decomposition
-
 `e complex-type
 Complex.t
 `e complex-constants
 Complex.zero
-
 Complex.one
-
 Complex.i
 `e complex-operators
 Complex.add z w;;
-
 Complex.sub z w;;
-
 Complex.mul z w;;
-
 Complex.div z w;;
 `e complex-construction
 {Complex.re=1.0; Complex.im=2.0}
 `e complex-decomposition
-let z = {Complex.re=1.0; Complex.im=2.0};;
-
+`*let z = {Complex.re=1.0; Complex.im=2.0};;
 
 z.Complex.re;;
-
 z.Complex.im;;
-
 Complex.arg z;;
-
 Complex.norm z;;
-
 Complex.conj z;;
 `e random-number-uniform-integer-uniform-float-normal-float
 Random.int 100
-
 Random.float 1.0
-none
+`(none)
 `e random-seed
 Random.init 17;;
-
-let seed = Random.get_state();;
-
+`*let seed = Random.get_state();;
 Random.set_state seed;;
 `e bit-operators
 1 lsl 4
@@ -267,27 +206,25 @@ Random.set_state seed;;
 
 lnot 1
 `e binary-octal-and-hex-literals
-0b101010
-
-0o52
-
-0x2a
+`=0b101010
+`=0o52
+`=0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 
 `e string-type
 string
 `e string-literal
-"Hello, World!"
+`=["Hello, World!"]
 `e newline-in-literal
 no
 `e literal-escapes
-\b \n \r \t \" \' \\
+`%[\b \n \r \t \" \' \\]
 
-\ooo \xhh
+`%[\ooo \xhh]
 `e format
 
-`e concatenate
-"Hello" ^ ", " ^ "World!"
+`e concatenate-strings
+`=["Hello"] `+^ `=[", "] `+^ `=["World!"]
 `e replicate
 String.make 80 '-'
 `e translate-case
@@ -301,13 +238,13 @@ String.trim " hello "
 `e pad
 
 `e number-to-string
-"two: " ^ string_of_int 2
+`=["two: "] `+^ string_of_int `=2
 
-"pi: " ^ float_of_string 3.14
+`=["pi: "] `+^ float_of_string `=[3.14]
 `e string-to-number
-7 + int_of_string "12"
+`=[7] `++ int_of_string `=["12"]
 
-73.9 +. float_of_string ".037"
+`=[73.9] `+[+.] float_of_string `=[".037"]
 `e join
 
 `e split
@@ -315,7 +252,7 @@ String.trim " hello "
 `e character-type
 char
 `e character-literal
-'h'
+`=['h']
 `e string-length
 String.length "hello"
 `e index-of-substring
@@ -323,7 +260,7 @@ String.length "hello"
 `e extract-substring
 String.sub "hello" 0 4
 `e extract-character
-"hello".[0]
+`=["hello"].[0]
 `e chr-and-ord
 Char.code 'a'
 
@@ -353,7 +290,7 @@ time();;
 `e empty-list
 []
 `e empty-test
-let list = [1; 2; 3];;
+`*let list = [1; 2; 3];;
 
 
 list == []
@@ -387,7 +324,7 @@ List.concat [[1; 2]; [3; 4]]
 `e drop
 
 `e iterate-over-elements
-let f i =
+`*let f i =
   print_endline (string_of_int i);;
 
 
@@ -415,15 +352,15 @@ List.exists (fun x -> x > 2) [1; 2; 3];;
 `e zip-lists
 
 `e tuple
-(1, "hello", true)
+(1, "hello", `=true)
 `e tuple-element-access
-match (1, "hello", true) with _, x, _ -> x
+`*match (1, "hello", `=true) `*with _, x, _ -> x
 `e pair-element-access
 fst (12, "December")
 
 snd (12, "December")
 `e define-function
-let average a b = ( a +. b ) /. 2.0;;
+`*let average a b = ( a +. b ) /. 2.0;;
 `e invoke-function
 (* 4.5: *)
 
@@ -435,31 +372,31 @@ average 1.0 (2.0 +. 3.0);;
 `e define-function-with-block-body
 
 `e named-parameters
-let subtract ~m ~s = m - s;;
+`*let subtract ~m ~s = m - s;;
 
 
 subtract ~s: 3 ~m: 7;;
 `e named-parameter-default-value
-let logarithm ?(base = (exp 1.0)) x = log x /. (log base);;
+`*let logarithm ?(base = (exp 1.0)) x = log x /. (log base);;
 
 
 logarithm 2.718;;
 
 logarithm ~base: 2.0 10.0;;
 `e piecewise-defined-function
-let to_s = function Red -> "red"
+`*let to_s = function Red -> "red"
   | Green -> "green"
   | Blue -> "blue";;
 `e recursive-function
-let rec range a b =
+`*let rec range a b =
 
-if a > b then []
+`*if a > b `*then []
 
-else a :: range (a+1) b;;
+`*else a :: range (a+1) b;;
 `e mutually-recursive-functions
-let rec even n = if n = 0 then true else odd (n-1)
+`*let rec even n = `*if n = 0 `*then `=true `*else odd (n-1)
 
-and odd n = if n = 0 then false else even (n-1);;
+and odd n = `*if n = 0 `*then `=false `*else even (n-1);;
 `e lambda
 fun x -> fun y -> (x +. y) /. 2.0
 `e infix-operator-in-prefix-position
@@ -467,29 +404,28 @@ fun x -> fun y -> (x +. y) /. 2.0
 `e function-in-infix-position
 none
 `e currying
-let plus2 = (+) 2;;
+`*let plus2 = (+) 2;;
 `e composition
 
 `e function-composition-operator
 none
 `e lazy-evaluation
-let arg1 x y = x;;
+`*let arg1 x y = x;;
 
 
 arg1 7 (lazy (1/0) );;
 `e strict-evaluation
 default behavior
 `e if
-if x > 0 then
+`*if x > 0 `*then
   print_endline "pos";;
 `e control-structure-keywords
-if x > 0 then
+`*if x > 0 `*then
   print_endline "pos"
-
-else
-  if x < 0 then
+`*else
+  `*if x < 0 `*then
     print_endline "neg"
-  else
+  `*else
     print_endline "zero";;
 `e sequencing
 print_endline "one";
@@ -498,7 +434,7 @@ print_endline "two";
 
 print_endline "three";;
 `e while
-let i = ref 0;;
+`*let i = ref 0;;
 
 
 while !i < 10 do
@@ -508,21 +444,21 @@ while !i < 10 do
 done;;
 `e for
 for i = 1 to 10 do
-  let s = string_of_int i in
+  `*let s = string_of_int i in
   print_endline s
 
 done;;
 `e for-in-reverse
 for i = 10 downto 1 do
-  let s = string_of_int i in
+  `*let s = string_of_int i in
   print_endline s
 
 done;;
 `e list-iteration
 none
 `e loop
-let rec loop i =
-  if i <= 10 then begin
+`*let rec loop i =
+  `*if i <= 10 `*then begin
     print_endline (string_of_int i);
     loop (i+1)
   end in
@@ -534,11 +470,11 @@ or
 
 failwith "bam!";;
 `e handle-error
-let x = try 1 / 0 with Division_by_zero -> 0;;
+`*let x = `*try 1 / 0 `*with Division_by_zero -> 0;;
 `e type-of-exceptions
 exn
 `e user-defined-exception
-exception Foo of string;;
+exception Foo `*of string;;
 
 raise (Foo "invalid input");;
 `e standard-exceptions
@@ -550,9 +486,9 @@ Not_found
 
 Invalid_argument string
 
-Match_failure (string, int, int)
+Match_failure (string, `.int, `.int)
 
-Assert_failure (string, int, int)
+Assert_failure (string, `.int, `.int)
 
 Out_of_memory
 
@@ -562,7 +498,7 @@ assert(1 = 0);;
 `e standard-file-handles
 stdin stdout stderr
 `e read-line-from-stdin
-let line = read_line();;
+`*let line = read_line();;
 `e end-of-file-behavior
 raises End_of_file
 `e chomp
@@ -572,9 +508,9 @@ print_endline "lorem ipsum";;
 `e printf
 
 `e open-file-for-reading
-let f = open_in "/etc/passwd";;
+`*let f = open_in "/etc/passwd";;
 `e open-file-for-writing
-let f = open_out "/tmp/ocaml.out";;
+`*let f = open_out "/tmp/ocaml.out";;
 `e open-file-for-appending
 
 `e close-file
@@ -582,9 +518,9 @@ let f = open_out "/tmp/ocaml.out";;
 `e i-o-errors
 
 `e read-line
-let ic = open_in "/etc/passwd" in
+`*let ic = open_in "/etc/passwd" in
 
-let line = input_line ic in
+`*let line = input_line ic in
 
 print_endline line;;
 `e iterate-over-file-by-line
@@ -598,7 +534,7 @@ print_endline line;;
 `e write-line
 open Printf
 
-let oc = open_out "/tmp/test-ocaml" in
+`*let oc = open_out "/tmp/test-ocaml" in
 
 fprintf oc "hello out\n";
 
@@ -613,8 +549,8 @@ close_out oc;;
 open Unix
 
 
-try Some (stat "/etc/hosts") with
-  Unix_error (ENOENT, _, _) -> None
+`*try `.Some (stat "/etc/hosts") `*with
+  Unix_error (ENOENT, _, _) -> `.None
 
 
 (stat "/etc/hosts").st_kind = S_REG
@@ -624,14 +560,14 @@ try Some (stat "/etc/hosts") with
 open Unix
 
 
-try access "/tmp/bar" [R_OK]; true with
-  Unix.Unix_error (EACCES, _, _) -> false;;
+`*try access "/tmp/bar" [R_OK]; `=true `*with
+  Unix.Unix_error (EACCES, _, _) -> `=false;;
 
-try access "/tmp/bar" [W_OK]; true with
-  Unix.Unix_error (EACCES, _, _) -> false;;
+`*try access "/tmp/bar" [W_OK]; `=true `*with
+  Unix.Unix_error (EACCES, _, _) -> `=false;;
 
-try access "/tmp/bar" [X_OK]; true with
-  Unix.Unix_error (EACCES, _, _) -> false;;
+`*try access "/tmp/bar" [X_OK]; `=true `*with
+  Unix.Unix_error (EACCES, _, _) -> `=false;;
 `e set-file-permissions
 open Unix
 
@@ -712,13 +648,13 @@ putenv "PATH" "/bin"
 open Unix
 
 
-let pid = getpid()
+`*let pid = getpid()
 
-let ppid = getppid()
+`*let ppid = getppid()
 `e get-user-id-and-name
-let uid = getuid()
+`*let uid = getuid()
 
-let username =
+`*let username =
   (getpwuid (getuid())).pw_name
 `e exit
 exit 0
@@ -758,8 +694,8 @@ sig
 end =
 
 struct
-  let msg = "attack"
-  let display_instruction () = print_endline msg
+  `*let msg = "attack"
+  `*let display_instruction () = print_endline msg
 
 end
 in client source:
@@ -782,64 +718,64 @@ $ opam list --installed
 `e compile-app-using-package
 
 `e type-synonym
-type name = string;;
+`*type name = string;;
 `e sum-type
-type color = Red | Green | Blue;;
+`*type color = Red | Green | Blue;;
 
 
-let col = Red;;
+`*let col = Red;;
 
 (* evaluates to true: *)
 
 col < Green;;
 `e tuple-product-type-with-one-field
-type special_int = SpecialInt of int;;
+`*type special_int = SpecialInt `*of `.int;;
 
 
-let n = SpecialInt 7;;
+`*let n = SpecialInt 7;;
 `e tuple-product-type-with-two-fields
-type int_pair = IntPair of int * int;;
+`*type int_pair = IntPair `*of `.int * `.int;;
 
 
-let p = IntPair (7, 11);;
+`*let p = IntPair (7, 11);;
 `e record-product-type
-type customer = {
-  id: int;
+`*type customer = {
+  id: `.int;
   name: string;
   address: string
 
 };;
 `e record-product-type-literal
-let cust = {
+`*let cust = {
   id=7;
   name="John";
   address="Topeka, KS"
 
 };;
 `e generic-type
-type ('a, 'b) twosome =
-  Twosome of 'a * 'b;;
+`*type ('a, 'b) twosome =
+  Twosome `*of 'a * 'b;;
 
 
-let p = Twosome ("pi", 3.14);;
+`*let p = Twosome ("pi", 3.14);;
 `e recursive-type
-type binary_tree =
-  | Leaf of int
-  | Tree of binary_tree * binary_tree;;
+`*type binary_tree =
+  | Leaf `*of `.int
+  | Tree `*of binary_tree * binary_tree;;
 `e pattern-match-sum-type
-let col = Red;;
+`*let col = Red;;
 
 
-let s = match col with
+`*let s = `*match col `*with
   | Red -> "red"
   | Blue -> "blue"
   | Green -> "green";;
 `e pattern-match-product-type
 
 `e pattern-match-guard
-match i with j when i < 0 -> -j | j -> j;;
+`*match i `*with j `*when i < 0 -> -j | j -> j;;
 `e pattern-match-catchall
-let to_s c = match c with Red -> "red" | _ -> "not red";;
+`*let to_s c = `*match c `*with Red -> "red" | _ -> "not red";;
 
 to_s Green;;
 `e define-class
@@ -850,7 +786,7 @@ class counter = object
 
 end;;
 `e create-object
-let c = new counter;;
+`*let c = new counter;;
 `e invoke-method
 c#incr;;
 
