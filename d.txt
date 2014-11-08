@@ -1,0 +1,551 @@
+`e versions-used
+D 2.066.0
+`e show-version
+`$[dmd -v]
+`e implicit-prologue
+`e hello-world
+`$[cat hello.d]
+`*import std.stdio;
+
+`*void main() {
+  writeln(`=["Hello world!"]);
+}
+`e file-suffixes
+foo.d
+`e block-delimiters
+{ }
+`e statement-terminator
+;
+`e top-level-statements
+`e end-of-line-comment
+// comment
+`e multiple-line-comment
+/* comment
+another comment */
+`e local-variable
+`*int i;
+`*int j = 3;
+`e uninitialized-local-variable
+`e global-variable
+`e uninitialized-global-variable
+`e constant
+`(compile-time/manifest constant:)
+`*enum `*int i = 7;
+`(must be constant in the entire program:)
+`*immutable `*int j = 7;
+`(not changeable through this pointer:)
+`*const `*int k = 7;
+`e assignment
+`*int n;
+
+n = 3;
+`e compound-assignment-arithmetic-string-logical-bit
+`+[+= -= *= /= %= ^^=]
+`+[<<= >>= &= ^= |=]
+`e increment-and-decrement
+`e address
+`e dereference
+`e type-size
+(`*int*).sizeof
+`e address-arithmetic
+
+`e unique-pointer
+
+`e reference-count-pointer
+
+`e weak-pointer
+
+`e allocate-heap
+`e uninitialized-heap
+`e free-heap
+`e null
+`e coalesce
+`e boolean-type
+`*bool
+`e true-and-false
+`=true `=false
+`e falsehoods
+`=false `=0 `=[0.0] `.NULL
+`e logical-operators
+`+[&& || !]
+`e relational-operators
+`+[== != < > <= >=]
+`+[!<>= <> <>= !<= !< !>= !> !<>] `(handles NaN differently)
+`*is `+!`*is
+`e integer-type
+`*byte n1;  `(1 byte)
+`*short n2; `(2 bytes)
+`*int n3;   `(4 bytes)
+`*long n4;  `(8 bytes)
+`e unsigned-type
+`*ubyte n1;  `(1 byte)
+`*ushort n2; `(2 bytes)
+`*uint n3;   `(4 bytes)
+`*ulong n4;  `(8 bytes)
+`e float-type
+`*float x1;  `(4 bytes)
+`*double x2; `(8 bytes)
+`*real x3;   `(largest in hardware)
+`e fixed-type
+`(none)
+`e arithmetic-operators
+`+[+ - * / % ^^]
+`e integer-division
+`(evaluates to 2:)
+7 / 3
+`e integer-division-by-zero
+`e float-division
+`e float-division-by-zero-dividend-is-positive-zero-negative
+`*double.infinity
+`*double.nan
+-`*double.infinity
+`e power
+`e sqrt
+`e sqrt-1
+nan
+`e transcendental-functions
+`*import std.math;
+
+exp log log2 log10
+sin cos tan
+asin acos atan
+atan2
+`e transcendental-constants
+`*import std.math;
+
+E PI
+`e float-truncation
+`#[#include <cmath>]
+`*double x = 3.7;
+
+`*long trnc = `*cast(`*long)(x);
+`*double rnd = round(x);
+`*long lrnd = lround(x);
+`*double flr = floor(x);
+`*double cl = ceil(x);
+`e absolute-value-and-signum
+`*import std.math;
+
+`*int n = -7;
+`*int absn = abs(n);
+
+`*double x = -7.77;
+`*double absx = fabs(x);
+`e integer-overflow
+modular arithmetic, see http://dlang.org/expression.html#AddExpression
+`e float-overflow
+IEEE 754
+`e float-limits-largest-finite-float-smallest-positive-float
+`*float.max
+`*float.min_normal
+`*double.max
+`*double.min_normal
+`*real.max
+`*real.min_normal
+`e complex-construction
+`(built-in (deprecated))
+`*cfloat c = 1 + 3.14 * 1.0i;
+`*cdouble z = 1 + 3.14 * 1.0i;
+
+`(modern)
+`*import std.complex;
+
+`*auto c = complex(2.0);
+`*auto z = complex(1, 3.14L);
+`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+`(built-in (deprecated))
+
+`(modern)
+z.re
+z.im
+`e random-number-uniform-integer-uniform-float-normal-float
+`e random-seed
+`e bit-operators
+<< >> & | ^ ~
+`e binary-octal-and-hex-literals
+`=[0b0101010]
+`=[052]
+`=[0x2a]
+`e radix-convert-integer-to-and-from-string-with-radix
+
+`e string-type
+`*char[] s = "lorem ipsum";
+`e string-literal
+`(char[]:)
+`=["don't say `%[\"]no`%[\"]"]
+`e newline-in-literal
+`e literal-escapes
+`%[\a \b \f \n \r \t \v]
+`%[\\ \" \']
+`%[\xhh \o \oo \ooo]
+`e allocate-string
+`.string* s = `*new string("hello");
+`e are-strings-mutable
+`.string s("bar");
+
+s[2] = `=['z'];
+`e copy-string
+`.string s("bar");
+
+`(use assignment or copy constructor:)
+`.string s2 = s;
+`.string s3(s);
+
+`(s contains "baz"; s2 and s3 contain "bar":)
+
+s[2] = 'z';
+`e format
+`e compare-strings
+`+[== != < > <= >=]
+`e concatenate
+`(same as arrays:)
+`.string s = "hello";
+`.string s2 = s ~ " world";
+
+s ~= " world";
+`e replicate
+`e translate-case
+`e trim
+`e pad
+`e number-to-string
+`e string-to-number
+`e join
+`e split
+`e serialize
+`e string-length
+`*const `*char[] s = "hello";
+`*int len = s.length;
+`e index-of-substring
+`e extract-substring
+`e character-type
+`*char
+`e character-literal
+`*char n = 'X';
+`e test-character
+`e regex-type
+`e character-class-abbreviations
+. \d \D \s \S \w \W
+`e anchors
+^ $ \b \B
+`e lookahead-positive-negative
+`e match-test
+`e case-insensitive-match-test
+
+`e modifiers
+
+`e substitution
+
+`e match-prematch-postmatch
+
+`e group-capture
+
+`e date-time-type
+
+`e current-date-time
+
+`e to-unix-epoch-from-unix-epoch
+
+`e date-and-time-to-string
+
+`e format-date
+
+`e parse-date
+
+`e date-subtraction
+
+`e add-duration
+
+`e date-parts
+
+`e time-parts
+
+`e declare-on-stack
+`*int[10] a;
+`e declare-on-heap
+`*int[] a;
+a.length = 10;
+`e free-heap
+`e array-initialization-list
+`*int a[3] = [1, 2, 3];
+`e array-size
+`*int a[10];
+a.length;
+`e lookup
+`*int first = a[0];
+`e update
+a[0] = 7;
+`e out-of-bounds
+RangeError if detected
+`e copy
+`e as-function-argument
+`e array-iterate
+`e sort
+`*import std.algorithm;
+
+`*bool comp(`*int a, `*int b) @safe `*pure `*nothrow {
+  `*return a < b ? -1 : (a == b ? 0 : 1);
+}
+
+`*int[] arr = [3, 2, 1, 4];
+sort!("a > b")(arr);
+sort!(comp)(arr);
+`e list-name
+T[]
+`e list-declare
+`e list-literal
+[1, 2, 3]
+`e list-size
+a.length
+`e capacity-get-increase
+`e empty-test-and-clear
+`e lookup
+`e update
+`e out-of-bounds
+`e index-of-element
+`e slice
+`e drop
+`e manipulate-back
+`e manipulate-front
+`e concatenate
+`e list-replicate
+`e copy
+`e array-as-function-argument
+`e iterate-over-elements
+`*int sum = 0;
+`*int[3] a = [1, 2, 3];
+
+`*foreach (n; a) {
+  sum += n;
+}
+`e iterate-over-indices-and-elements
+`*int[3] a = [6, 7, 8];
+`*foreach (i, n; a) {
+  writeln("value at ", i, " is ", n);
+}
+`e reverse
+`e sort
+`e dedupe
+`e membership
+`e intersection
+
+`e union
+
+`e relative-complement-symmetric-difference
+
+`e map
+
+`e filter
+
+`e min-and-max-element
+
+`e shuffle-and-sample
+
+`e zip
+
+`e declare-pair
+`e lookup-pair-elements
+`e update-pair-elements
+`e declare-tuple
+`e lookup-tuple-elements
+
+`e update-tuple-elements
+
+`e tuple-size
+
+`e create-references-for-tuple-elements
+
+`e map-declaration
+`e map-access
+`e map-size
+`e map-remove-element
+`e map-element-not-found-result
+`e map-iterate
+`e declare-function
+`(parameter names are optional:)
+`*int
+add(`*int m, `*int n);
+`e define-function
+`*int
+add(`*int m, `*int n) {
+  `*return m + n;
+
+}
+`e invoke-function
+`*int sum = add(3, 7);
+`e define-static-class-method
+`e default-argument
+`e variable-number-of-arguments
+
+`e named-parameters
+`e pass-by-value
+`e pass-by-reference
+`e pass-by-address
+`e return-value
+`e no-return-value
+`e recursive-function
+`*int
+factorial(`*int n) {
+  `*if (n <= 1) {
+    `*return 1;
+  }
+  `*return n * factorial(n - 1);
+}
+`e lambda
+`e invoke-anonymous-function
+`e closure
+`e function-with-private-state
+`e function-as-value
+`e overload-operator
+`*ref Rational opBinary(`*string op)(`*in Rational o)
+  if (op == "+") {
+    `*return Rational(`*this.num * o.denom + o.num * `*this.denom, `*this.denom * o.denom);
+}
+`e if
+`*int signum;
+`*if (n > 0) {
+  signum = 1;
+} `*else `*if (n == 0) {
+  signum = 0;
+} `*else {
+  signum = -1;
+}
+`e dangling-else
+`e switch
+`e while
+`e for
+`e break
+`e break-out-of-nested-loops
+`e continue
+`e goto
+`e base-exception
+`e predefined-exceptions
+`e handle-exception
+`e define-exception
+`e re-raise-exception
+`e catch-all-handler
+`e multiple-handlers
+`e uncaught-exception-behavior
+`e error-message
+`e system-call-errno
+`e finally
+`e exception-specification
+`e start-thread
+`e terminate-current-thread
+`e terminate-other-thread
+`e list-threads
+`e wait-on-thread
+`e lock
+`e create-message-queue
+`e send-message
+`e receive-message
+`e standard-file-handles
+`e printf
+`e read-from-file
+`e write-to-file
+`e file-exists-test-file-regular-test
+`e file-size
+`e is-file-readable-writable-executable
+`e set-file-permissions
+`e copy-file-remove-file-rename-file
+`e csv
+`e json
+`e build-xml
+`e parse-xml
+`e parse-html
+`e build-pathname
+`e dirname-and-basename
+`e absolute-pathname
+`e iterate-over-directory-by-file
+`e glob-paths
+`e make-directory
+`e recursive-copy
+`e remove-empty-directory
+`e remove-directory-and-contents
+`e directory-test
+`e generate-unused-directory-name
+`e system-temporary-file-directory
+`e signature-of-main
+`e first-argument
+`e environment-variable
+`e iterate-through-environment-variables
+`e standard-library-name
+`e declare-namespace
+`e multiple-namespaces-per-file
+`e namespaces-map-to-directories
+`e import-namespace
+`e import-part-of-namespace
+`e import-symbol
+`e import-static-symbol
+`e import-position
+`e using-a-symbol-that-hasn-t-been-imported
+`e application-environment
+`e multiple-installations
+`e package-manager
+`e typedef
+`e enum
+`e struct-definition
+`e struct-declaration
+`e struct-initialization
+`e struct-member-assignment
+`e struct-member-access
+`e define-generic-type
+`e instantiate-generic-type
+`e generic-function
+`e generic-array
+`e value-parameter
+`e template-parameter
+`e template-specialization
+`e multiple-type-parameters
+`e generic-type-parameters
+`e template-parameters
+`e variadic-template
+`e semantics-of
+`e define-class
+`e class-definition-location
+`e constructor
+`e create-object
+`e destructor
+`e destroy-object
+`e define-method
+`e invoke-method
+`e define-class-method
+`e invoke-class-method
+`e name-of-receiver
+`e access-control
+`e anonymous-class
+`e dynamic-dispatch
+`e static-dispatch
+`e subclass
+`e invoking-superclass-constructor
+`e mark-class-underivable-or-method-unoverrideable
+`e root-class
+`e root-class-methods
+`e get-type-class-of-object
+`e get-type-class-from-string
+`e get-type-class-from-type-identifier
+`e class-name
+`e get-methods
+`e has-method
+`e invoke-method-object
+`e get-local-hostname-dns-lookup-reverse-dns-lookup
+`e http-get
+`e http-post
+`e absolute-url
+`e parse-url
+`e url-encode-decode
+`e base64-encode-decode
+`e test-class
+`e run-all-tests
+`e equality-assertion
+`e approximate-assertion
+`e exception-assertion
+`e setup
+`e teardown
+`e stronger-warnings
+`e suppress-warnings
+`e treat-warnings-as-errors
+`e run-debugger
+`e debugger-commands-help-list-source-re-load-executable-next-step-set-breakpoint-show-breakpoints-delete-breakpoint-continue-backtrace-up-stack-down-stack-print-run-quit
+`e benchmark-code
+`e profile-code
+`e memory-tool
