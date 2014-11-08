@@ -4,6 +4,7 @@ import Control.Monad
 import Data.Char
 import Data.Function
 import Data.List
+import System.Environment
 import Text.Parsec
 
 -- utility HTML-making functions
@@ -200,13 +201,12 @@ readNamedEntryMap :: String -> IO (String, EntryMap)
 readNamedEntryMap name = (,) name <$> readEntryMap name
 
 -- langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","clojure","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
-langNames :: [String]
-langNames = ["ruby","python","javascript","cpp","d","java","ocaml","haskell","coffeescript","perl","php","scala"]
 
 main :: IO ()
 main = do
     cont <- readFile "entries.txt"
     secs <- parseIO bqSectionList "(entries.txt)" cont
+    langNames <- getArgs
     langs <- mapM readNamedEntryMap langNames
     putStrLn startHTML
     putStrLn $ buildTable secs langs
