@@ -12,7 +12,7 @@ none
 `$[ruby -e 'puts "hi"']
 `e block-delimiters
 {}
-do end
+`*do `*end
 `e statement-terminator
 newline or ;
 
@@ -53,47 +53,42 @@ nestable:
 `e global-variable
 $g1, $g2 = 7, 8
 
-def swap_globals
+`*def swap_globals
   $g1, $g2 = $g2, $g1
 
-end
+`*end
 `e constant
-# warning if capitalized
-
-# identifier is reassigned
+`(warning if capitalized identifier is reassigned)
 PI = 3.14
 `e assignment
 v = 1
 `e parallel-assignment
 x, y, z = 1, 2, 3
 
-# 3 is discarded:
+`(3 is discarded:)
 
 x, y = 1, 2, 3
 
-# z set to nil:
+`(z set to nil:)
 
 x, y, z = 1, 2
 `e swap
 x, y = y, x
 `e compound-assignment-arithmetic-string-logical-bit
-+= -= *= /= none %= **=
-
-+= *=
-
-&&= ||= ^=
-<<= >>= &= |= ^=
+`+[+= -= *= /=] `(none) `+[%= **=]
+`+[+= *=]
+`+[&&= ||= ^=]
+`+[<<= >>= &= |= ^=]
 `e increment-and-decrement
 x = 1
-# x and y not mutated:
 
+`(x and y not mutated:)
 y = x.succ
-
 z = y.pred
 `e null
-nil
+`=nil
 `e null-test
-v == nil
+v `+[==] `=nil
 
 v.nil?
 `e uninitialized-local-variable
@@ -101,95 +96,82 @@ v.nil?
 `e uninitialized-global-variable
 `![raises NameError]
 `e conditional-expression
-x > 0 ? x : -x
+x `+> 0 `+? x `+: -x
 `e true-and-false
-true false
+`=true `=false
 `e falsehoods
-false nil
+`=false `=nil
 `e logical-operators
-&& || !
-lower precedence:
-and or not
+`+[&& || !]
+`(lower precedence:)
+`*[and or not]
 `e relational-operators
-== != > < >= <=
+`+[== != > < >= <=]
 `e compare-strings
-== != > < >= <=
+`+[== != > < >= <=]
 `e min-and-max
 [1, 2, 3].min
-
 [1, 2, 3].max
 `e three-value-comparison
-0 <=> 1
-"do" <=> "re"
+0 `+[<=>] 1
+"do" `+[<=>] "re"
 `e arithmetic-operators
 + - * x.fdiv(y) / %
 `e integer-division
-13 / 5
+13 `+/ 5
 `e divmod
 q, r = 13.divmod(5)
 `e integer-division-by-zero
-raises ZeroDivisionError
+`![raises `.ZeroDivisionError]
 `e float-division
-13.to_f / 5 or
-
+13.to_f `+/ 5
+`(or)
 13.fdiv(5)
 `e float-division-by-zero
 returns -Infinity, NaN, or Infinity
 `e power
-2**32
+`=2`+[**]`=32
 `e sqrt
-include Math
-
+`*include Math
 
 sqrt(2)
 `e sqrt-1
-raises Errno::EDOM
+`![raises Math::DomainError]
 `e transcendental-functions
-include Math
-
+`*include Math
 
 exp log sin cos tan asin acos atan atan2
 `e transcendental-constants
-include Math
+`*include Math
 
 PI E
 `e float-truncation
 x.to_i
-
 x.round
-
 x.ceil
-
 x.floor
 `e absolute-value-and-signum
 x.abs
 `e integer-overflow
-becomes arbitrary length integer of type Bignum
+`(becomes arbitrary length integer of type Bignum)
 `e float-overflow
 Infinity
 `e rational-construction
-require 'rational'
-
+`.require 'rational'
 
 x = Rational(22, 7)
 `e rational-decomposition
 x.numerator
-
 x.denominator
 `e complex-construction
-require 'complex'
-
+`.require 'complex'
 
 z = 1 + 1.414.im
 `e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
 z.real
-
 z.imag
-
 z.arg
-
 z.abs
-
 z.conj
 `e random-number-uniform-integer-uniform-float-normal-float
 rand(100)
@@ -204,99 +186,78 @@ seed = srand
 
 srand(seed)
 `e bit-operators
-<< >> & | ^ ~
+`+[<< >> & | ^ ~]
 `e binary-octal-and-hex-literals
-0b101010
-
-052
-
-0x2a
+`=0b101010
+`=052
+`=0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
-42.to_s(7)
-"60".to_i(7)
+`=42.to_s(`=7)
+`=["60"].to_i(`=7)
 `e string-type
 String
 `e string-literal
-"don't say \"no\""
-'don\'t say "no"'
-"don't " 'say "no"'
+`=["don't say `%[\"]no`%[\"]"]
+`=['don`%[\']t say "no"']
+`=["don't " 'say "no"']
 `e newline-in-literal
 'first line
-
 second line'
 
-
 "first line
-
 second line"
 `e literal-escapes
-double quoted:
+`(double quoted:)
+`%[\a \b \cx \e \f \n \r \s \t \v \xhh \ooo \uhhhh \u{hhhhh}]
 
-\a \b \cx \e \f \n \r \s \t \v \xhh \ooo \uhhhh \u{hhhhh}
-
-single quoted:
-
-\' \\
+`(single quoted:)
+`%[\' \\]
 `e custom-delimiters
 s1 = %q(lorem ipsum)
 
 s2 = %Q(#{s1} dolor sit amet)
 `e here-document
-word = "amet"
-
-
-s = <<EOF
-
+word = `=["amet"]
+s = `=[<<EOF
 lorem ipsum
-
-dolor sit #{word}
-EOF
+dolor sit `%[#{word}]
+EOF]
 `e variable-interpolation
 count = 3
-
 item = "ball"
-
-puts "#{count} #{item}s"
+puts `=["`%[#{count} #{item}]s"]
 `e expression-interpolation
-"1 + 1 = #{1 + 1}"
+`=["1 + 1 = `%[#{1 + 1}]"]
 `e format
-"lorem %s %d %f" % ["ipsum", 13, 3.7]
+`=["lorem `%[%s %d %f]"] `+% ["ipsum", 13, 3.7]
 `e are-strings-mutable
 s = "bar"
-
 s2 = s
-# sets s and s2 to "baz":
-
+`(sets s and s2 to "baz":)
 s[2] = "z"
 `e copy-string
 s = "bar"
-
 s2 = s.clone
-# s2 is not altered:
-
+`(s2 is not altered:)
 s[2] = "z"
 `e concatenate-strings
 s = "Hello, "
-
 s2 = s + "World!"
 
-# juxtaposition can be used to
-
-# concatenate literals:
-
-s2 ="Hello, " 'World!'
+`(juxtaposition can be used to concatenate literals:)
+s2 = "Hello, " 'World!'
 `e replicate-string
-hbar = "-" * 80
+hbar = `=["-"] `+* 80
 `e translate-case
-"lorem".upcase
-"LOREM".downcase
+`=["lorem"].upcase
+`=["LOREM"].downcase
 `e capitalize
-"lorem".capitalize
-none
+`=["lorem"].capitalize
+`(none)
 `e trim
-" lorem ".strip
-" lorem".lstrip
-"lorem ".rstrip
+`=[" lorem "].strip
+`=[" lorem"].lstrip
+`=["lorem "].rstrip
 `e pad-on-right-on-left-centered
 "lorem".ljust(10)
 "lorem".rjust(10)
@@ -308,10 +269,9 @@ none
 
 73.9 + ".037".to_f
 `e join
-%w(do re mi fa).join(' ')
+`=[%w(do re mi fa)].join(' ')
 
-# implicitly converted to strings:
-
+`(implicitly converted to strings:)
 [1, 2, 3].join(' ')
 `e split
 "do re mi fa".split
@@ -352,9 +312,9 @@ none
 `e anchors
 ^ $ \A \b \B \z \Z
 `e match-test
-if /1999/.match(s)
+`*if /1999/.match(s)
   puts "party!"
-end
+`*end
 `e case-insensitive-match-test
 /lorem/i.match("Lorem")
 `e modifiers
@@ -365,11 +325,11 @@ s = "do re mi mi mi"
 s.gsub!(/mi/, "ma")
 `e match-prematch-postmatch
 m = /\d{4}/.match(s)
-if m
+`*if m
   match = m[0]
   prematch = m.pre_match
   postmatch = m.post_match
-end
+`*end
 `e group-capture
 rx = /(\d{4})-(\d{2})-(\d{2})/
 
@@ -397,11 +357,9 @@ a = "dolor sit amet".scan(/\w+/)
 Time
 `e current-date-time
 t = Time.now
-
 utc = Time.now.utc
 `e to-unix-epoch-from-unix-epoch
 epoch = t.to_i
-
 t2 = Time.at(1304442000)
 `e current-unix-epoch
 epoch = Time.now.to_i
@@ -410,135 +368,102 @@ t.strftime("%Y-%m-%d %H:%M:%S")
 `e default-format-example
 2011-08-23 17:44:53 -0700
 `e strptime
-require 'date'
-
+`.require 'date'
 
 s = "2011-05-03 10:00:00"
-
 fmt = "%Y-%m-%d %H:%M:%S"
-
 t = Date.strptime(s, fmt).to_time
 `e parse-date-w-o-format
-require 'date'
-
+`.require 'date'
 
 s = "July 7, 1999"
-
 t = Date.parse(s).to_time
 `e date-subtraction
 Float containing time difference in seconds
 `e add-duration
-require 'date/delta'
-
+`.require 'date/delta'
 
 s = "10 min, 3 s"
-
 delta = Date::Delta.parse(s).in_secs
-
 t = Time.now + delta
 `e local-timezone
-if no timezone is specified the local timezone is used
+`*if no timezone is specified the local timezone is used
 `e arbitrary-timezone
 # gem install tzinfo
-
-require 'tzinfo'
-
+`.require 'tzinfo'
 
 tmz = TZInfo::Timezone.get("Asia/Tokyo")
-
 jp_time = tmz.utc_to_local(Time.now.utc)
 `e timezone-name-offset-from-utc-is-daylight-savings
 t.zone
-
 t.utc_offset / 3600
-
 t.dst?
 `e microseconds
 t.usec
 `e sleep
 sleep(0.5)
 `e timeout
-require 'timeout'
+`.require 'timeout'
 
-begin
-  Timeout.timeout(5) do
+`*begin
+  Timeout.timeout(5) `*do
     sleep(10)
-  end
-rescue Timeout::Error
-end
+  `*end
+`*rescue Timeout::Error
+`*end
 `e list-name
-list (?)
+Array
 `e list-literal
 a = [1, 2, 3, 4]
 `e quote-words
 a = %w(do re mi)
 `e list-size
 a.size
-
-a.length # same as size
+a.length `(same as size)
 `e empty-test
-NoMethodError if a is nil:
-
+`![NoMethodError if a is nil:]
 a.empty?
 `e lookup
 a[0]
-
-# returns last element:
-
+`(returns last element:)
 a[-1]
 `e update
 a[0] = "lorem"
 `e out-of-bounds
 a = []
-# evaluates as nil:
-
+`(evaluates as nil:)
 a[10]
-# increases array size to 11:
-
+`(increases array size to 11:)
 a[10] = "lorem"
 `e index-of-element
 a = %w(x y z w)
-
 i = a.index("y")
 `e slice
-# select 3rd and 4th elements:
-
+`(select 3rd and 4th elements:)
 a[2..3]
-
 a[2, 2]
 `e drop
 a[1..-1]
 `e manipulate-back
 a = [6, 7, 8]
-
 a.push(9)
-
-a << 9 # same as push
-
+a << 9 `(same as push)
 a.pop
 `e manipulate-front
 a = [6, 7, 8]
-
 a.unshift(5)
-
 a.shift
 `e concatenate
 a = [1, 2, 3]
-
 a2 = a + [4, 5, 6]
-
 a.concat([4, 5, 6])
 `e list-replicate
 a = [nil] * 10
-
 a = Array.new(10, nil)
 `e copy
 a = [1,2,[3,4]]
-
 a2 = a
-
 a3 = a.dup
-
 a4 = Marshal.load(Marshal.dump(a))
 `e arrays-as-function-arguments
 parameter contains address copy
@@ -547,40 +472,32 @@ parameter contains address copy
 `e iterate-over-indices-and-elements
 a = %w(do re mi fa)
 
-a.each_with_index do |s, i|
+a.each_with_index `*do |s, i|
   puts "#{s} at index #{i}"
-
-end
+`*end
 `e iterate-over-range
-(1..1_000_000).each do |i|
+(1..1_000_000).each `*do |i|
   code
-end
+`*end
 `e instantiate-range-as-list
 a = (1..10).to_a
 `e reverse
 a = [1, 2, 3]
 
-
 a.reverse
-
 a.reverse!
 `e sort
 a = %w(b A a B)
 
-
 a.sort
-
 a.sort!
-
-a.sort do |x, y|
+a.sort `*do |x, y|
   x.downcase <=> y.downcase
-end
+`*end
 `e dedupe
 a = [1, 2, 2, 3]
 
-
 a2 = a.uniq
-
 a.uniq!
 `e membership
 a.include?(7)
@@ -589,8 +506,7 @@ a.include?(7)
 `e union
 [1,2] | [2,3,4]
 `e relative-complement-symmetric-difference
-require 'set'
-
+`.require 'set'
 
 [1,2,3] - [2]
 Set[1,2] ^ Set[2,3,4]
@@ -601,203 +517,157 @@ Set[1,2] ^ Set[2,3,4]
 `e fold-from-left
 [1,2,3].inject(0) { |m,o| m+o }
 `e universal-test
-[1,2,3,4].all? {|i| i.even? }
+[1,2,3,4].all? { |i| i.even? }
 `e existential-test
-[1,2,3,4].any? {|i| i.even? }
+[1,2,3,4].any? { |i| i.even? }
 `e shuffle-and-sample
 [1, 2, 3, 4].shuffle
-
 [1, 2, 3, 4].sample(2)
 `e zip
-# array of 3 pairs:
-
+`(array of 3 pairs:)
 a = [1,2,3].zip(["a", "b", "c"])
 `e map-literal
 d = { "t" => 1, "f" => 0 }
 `e map-size
 d.size
-d.length # same as size
+d.length `(same as size)
 `e map-lookup
 d["t"]
 `e map-out-of-bounds
 d = {}
-evaluates as nil:
-
+`(evaluates as nil:)
 d["lorem"]
-adds key/value pair:
-
+`(adds key/value pair:)
 d["lorem"] = "ipsum"
 `e is-key-present
 d.has_key?("y")
 `e delete-entry
-d = {1 => true, 0 => false}
-
+d = {1 => `=true, 0 => false}
 d.delete(1)
 `e from-array-of-pairs-from-even-length-array
 a = [[1,"a"], [2,"b"], [3,"c"]]
-
 d = Hash[a]
-
-
 a = [1,"a",2,"b",3,"c"]
-
 d = Hash[*a]
 `e merge
 d1 = {"a"=>1, "b"=>2}
-
 d2 = {"b"=>3, "c"=>4}
-
 d1.merge!(d2)
 `e invert
-to_num = {"t"=>1, "f"=>0}
-
+to_num = {"t" =>1, "f"=>0}
 to_let = to_num.invert
 `e iteration
-d.each do |k,v|
-  code
-end
+d.each `*do |k,v|
+  `(code)
+`*end
 `e keys-and-values-as-arrays
 d.keys
-
 d.values
 `e sort-by-values
-d.sort_by {|k, v| v}.each do |k, v|
+d.sort_by {|k, v| v}.each `*do |k, v|
   puts "#{k}: #{v}"
-end
+`*end
 `e default-value-computed-value
 counts = Hash.new(0)
-
 counts['foo'] += 1
-
-
-factorial = Hash.new do |h,k|
+factorial = Hash.new `*do |h,k|
   k > 1 ? k * h[k-1] : 1
-end
+`*end
 `e define-function
-def add3(x1, x2, x3)
+`*def add3(x1, x2, x3)
   x1 + x2 + x3
-end
-
-# parens are optional and customarily
-
-# omitted when defining functions
-
-# with no parameters
+`*end
+`(parens are optional and customarily omitted when defining functions with no parameters)
 `e invoke-function
 add3(1, 2, 3)
-
-# parens are optional:
-
+`(parens are optional:)
 add3 1, 2, 3
 `e apply-function-to-array
 a = [2, 3]
-
-
 add3(1, *a)
-
-# splat operator can be used multiple
-
-# times and can appear before regular
-
-# arguments
+`(splat operator can be used multiple times and can appear before regular arguments)
 `e missing-argument-behavior
-raises ArgumentError if number of arguments doesn't match function arity
+`![raises ArgumentError if number of arguments doesn't match function arity]
 `e default-argument
-def my_log(x, base=10)
+`*def my_log(x, base=10)
   Math.log(x) / Math.log(base)
-end
-
+`*end
 
 my_log(42)
-
 my_log(42, Math::E)
 `e variable-number-of-arguments
-def first_and_last(*a)
-
-  if a.size >= 1
+`*def first_and_last(*a)
+  `*if a.size >= 1
     puts "first: #{a[0]}"
-  end
-
-  if a.size >= 2
+  `*end
+  `*if a.size >= 2
     puts "last: #{a[-1]}"
-  end
-end
+  `*end
+`*end
 `e named-parameters
-def fequal(x, y, opts={})
+`*def fequal(x, y, opts={})
   eps = opts[:eps] || 0.01
   (x - y).abs < eps
-end
-
+`*end
 
 fequal(1.0, 1.001)
-
 fequal(1.0, 1.001, :eps=>0.1**10)
 
-# Ruby 2.0:
-def fequals(x, y, eps: 0.01)
+`(Ruby 2.0:)
+`*def fequals(x, y, eps: 0.01)
   (x - y).abs < eps
-
-end
-
+`*end
 
 fequals(1.0, 1.001)
-
 fequals(1.0, 1.001, eps: 0.1**10)
 `e pass-number-or-string-by-reference
 not possible
 `e pass-array-or-dictionary-by-reference
-def foo(x, y)
+`*def foo(x, y)
   x[2] = 5
   y["f"] = -1
-
-end
-
+`*end
 
 a = [1,2,3]
-
 d = {"t"=> 1, "f" => 0 }
-
 foo(a, d)
 `e return-value
 return arg or last expression evaluated
 `e multiple-return-values
-def first_and_second(a)
-  return a[0], a[1]
-end
-
+`*def first_and_second(a)
+  `*return a[0], a[1]
+`*end
 
 x, y = first_and_second([1,2,3])
 `e lambda
-sqr = lambda { |x| x * x }
+sqr = `*lambda { |x| x * x }
 `e lambda-invocation
-sqr.call(2) or
-
+sqr.call(2)
+`(or)
 sqr[2]
 `e function-as-value
-func = lambda {|*args| add(*args)}
+func = `*lambda {|*args| add(*args)}
 `e function-with-private-state
 none
 `e closure
-def make_counter
+`*def make_counter
   i = 0
-  return lambda { i +=1; i }
-end
-
+  `*return `*lambda { i +=1; i }
+`*end
 
 nays = make_counter
 
 puts nays.call
 `e generator
-def make_counter
-  return Fiber.new do
+`*def make_counter
+  `*return Fiber.new `*do
     i = 0
-    while true
+    `*while `=true
       i += 1
       Fiber.yield i
-    end
-  end
-end
-
+    `*end
+  `*end
+`*end
 
 nays = make_counter
 
@@ -805,86 +675,84 @@ puts nays.resume
 `e decorator
 
 `e operator-as-function
-3.*(7)
-
+3.`+*(7)
 
 a = ['foo', 'bar', 'baz']
 
-a.[](2)
+a.`+[[]](2)
 `e if
-if n == 0
+`*if n == 0
   puts "no hits"
-elsif 1 == n
+`*elsif 1 == n
   puts "one hit"
-else
+`*else
   puts "#{n} hits"
-end
+`*end
 `e switch
-case n
-when 0
+`*case n
+`*when 0
   puts "no hits"
-when 1
+`*when 1
   puts "one hit"
-else
+`*else
   puts "#{n} hits"
-end
+`*end
 `e while
-while i < 100 do
+`*while i < 100 `*do
   i += 1
-end
+`*end
 `e c-style-for
 none
 `e break-continue-redo
-break next redo
+`*break `*next `*redo
 `e control-structure-keywords
-case do else elsif end for loop when while unless until
+`*case `*do `*else `*elsif `*end for `*loop `*when `*while `*unless `*until
 `e what-do-does
 starts an anonymous block. Also starts the body of a loop, while, or until loop
 `e statement-modifiers
-puts "positive" if i > 0
-
-puts "nonzero" unless i == 0
+puts "positive" `*if i > 0
+puts "nonzero" `*unless i == 0
 `e raise-exception
-# raises RuntimeError
-raise "bad arg"
+`![raises RuntimeError]
+`*raise "bad arg"
 `e re-raise-exception
-begin
-  raise "bam!"
-rescue
+`*begin
+  `*raise "bam!"
+`*rescue
   puts "re-raising…"
-  raise
-end
+  `*raise
+`*end
 `e catch-exception
-# catches StandardError
-begin
+`(catches StandardError)
+`*begin
   risky
-rescue
+`*rescue
   print "risky failed: "
   puts $!.message
-end
+`*end
 `e global-variable-for-last-exception
 last exception: $!
 backtrace array of exc.: $@
 exit status of child: $?
 `e define-exception
-class Bam < Exception
-  def initialize
+`*class Bam < Exception
+  `*def initialize
     super("bam!")
-  end
-end
+  `*end
+`*end
 `e catch-exception-by-type
-begin
-  raise Bam.new
-rescue Bam => e
+`*begin
+  `*raise Bam.new
+`*rescue Bam => e
   puts e.message
-end
+`*end
 `e finally
 acquire_resource
-begin
+`*begin
   risky
 ensure
   release_resource
-end
+`*end
 `e start-thread
 thr = Thread.new { sleep 10 }
 `e wait-on-thread
@@ -895,7 +763,7 @@ $stdin $stdout $stderr
 `e read-line-from-stdin
 line = gets
 `e end-of-file-behavior
-returns non-empty string without newline or raises EOFError
+returns non-empty string without newline or `![raises EOFError]
 `e chomp
 line.chomp!
 `e write-line-to-stdout
@@ -916,20 +784,20 @@ f = File.open("/tmp/err.log", "a")
 `e close-file
 f.close
 `e close-file-implicitly
-File.open("/tmp/test", "w") do |f|
+File.open("/tmp/test", "w") `*do |f|
   f.puts("lorem ipsum")
 
-end
+`*end
 `e i-o-error
-raise IOError or subclass of SystemCallError exception
+`![raise IOError or subclass of SystemCallError exception]
 `e encoding-error
 
 `e read-line
 f.gets
 `e iterate-over-file-by-line
-f.each do |line|
+f.each `*do |line|
   print(line)
-end
+`*end
 `e read-file-into-array-of-strings
 a = f.lines.to_a
 `e read-file-into-string
@@ -952,31 +820,19 @@ f.pos
 
 f.pos = 0
 `e open-temporary-file
-require 'tempfile'
-
+`.require 'tempfile'
 
 f = Tempfile.new('')
-
-
 f.puts "lorem ipsum"
-
-
 puts "tmp file: #{f.path}"
 
-
-f.close
-
-file is removed when file handle is garbage-collected or interpreter exits
+`(file is removed when file handle is garbage-collected or interpreter exits)
 `e in-memory-file
-require 'stringio'
-
+`.require 'stringio'
 
 f = StringIO.new
-
 f.puts("lorem ipsum")
-
 f.rewind
-
 s = f.read
 `e file-exists-test-file-regular-test
 File.exists?("/etc/hosts")
@@ -990,15 +846,12 @@ File.executable?("/etc/hosts")
 `e set-file-permissions
 File.chmod(0755, "/tmp/foo")
 `e last-modification-time
-# Time object:
-
+`(Time object:)
 t2 = File.stat('/etc/passwd').mtime
-
-# unix epoch:
-
+`(unix epoch:)
 t = t2.to_i
 `e copy-file-remove-file-rename-file
-require 'fileutils'
+`.require 'fileutils'
 
 FileUtils.cp("/tmp/foo", "/tmp/bar")
 FileUtils.rm("/tmp/foo")
@@ -1011,79 +864,59 @@ File.realpath("/tmp/hosts")
 `e generate-unused-file-name
 
 `e parse-csv
-require 'csv'
+`.require 'csv'
 
-CSV.foreach("foo.csv") do |row|
+CSV.foreach("foo.csv") `*do |row|
   puts row.join("\t")
-end
+`*end
 `e generate-csv
-require 'csv'
+`.require 'csv'
 
-CSV.open("foo.csv", "w") do |csv|
+CSV.open("foo.csv", "w") `*do |csv|
   csv << ["one", "une", "uno"]
   csv << ["two", "deux", "dos"]
-end
+`*end
 `e json-generate-parse
-require 'json'
-
+`.require 'json'
 
 s = {'t' => 1,'f' => 0}.to_json
-
 d = JSON.parse(s)
 `e generate-xml
 # gem install builder
 
-require 'builder'
-
+`.require 'builder'
 
 builder = Builder::XmlMarkup.new
-
-xml = builder.a do |child|
+xml = builder.a `*do |child|
   child.b("foo", :id=>"123")
-end
+`*end
 
-# <a><b id="123">foo</b></a>:
+`(<a><b id="123">foo</b></a>:)
 puts xml
 `e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
-require 'rexml/document'
+`.require 'rexml/document'
 
-include REXML
-
+`*include REXML
 
 xml = "<a><b><c ref='3'>foo</c></b></a>"
-
-# raises REXML::ParseException if
-
-# not well-formed:
-
+`![raises REXML::ParseException if not well-formed:]
 doc = Document.new(xml)
-
-
 nodes = XPath.match(doc,"/a/b/c")
-
 puts nodes.size
-
 puts nodes[0].text
-
-
 node = XPath.first(doc,"/a/b/c")
-
 puts node.text
-
 puts node.attributes["ref"]
 `e parse-html
 # gem install nokogiri
 
-require 'nokogiri'
-
+`.require 'nokogiri'
 
 html = File.open("foo.html").read
-
 doc = Nokogiri::HTML(html)
-
-doc = doc.xpath("//a").each do |link|
+doc = doc.xpath("//a").each `*do |link|
   puts link["href"]
-end
+`*end
 `e working-directory
 old_dir = Dir.pwd
 
@@ -1101,42 +934,41 @@ File.expand_path("../foo")
 File.expand_path("./foo")
 File.expand_path("~/foo")
 `e iterate-over-directory-by-file
-Dir.open("/etc").each do |file|
+Dir.open("/etc").each `*do |file|
   puts file
-end
+`*end
 `e glob-paths
-Dir.glob("/etc/*").each do |path|
+Dir.glob("/etc/*").each `*do |path|
   puts path
-end
+`*end
 `e make-directory
-require 'fileutils'
+`.require 'fileutils'
 
 FileUtils.mkdir_p("/tmp/foo/bar")
 `e recursive-copy
-require 'fileutils'
+`.require 'fileutils'
 
 FileUtils.cp_r("/tmp/foodir",
   "/tmp/bardir")
 `e remove-empty-directory
 File.rmdir("/tmp/foodir")
 `e remove-directory-and-contents
-require 'fileutils'
+`.require 'fileutils'
 
 FileUtils.rm_rf("/tmp/foodir")
 `e directory-test
 File.directory?("/tmp")
 `e generate-unused-directory
-require 'tmpdir'
-
+`.require 'tmpdir'
 
 path = Dir.mktmpdir("/tmp/foo")
 `e system-temporary-file-directory
-require 'tmpdir'
+`.require 'tmpdir'
 
 Dir.tmpdir
 `e command-line-arguments-and-script-name
-ARGV
-$0
+`.ARGV
+`.[$0]
 `e get-and-set-environment-variable
 ENV["HOME"]
 
@@ -1145,7 +977,7 @@ ENV["PATH"] = "/bin"
 Process.pid
 Process.ppid
 `e get-user-id-and-name
-require 'etc'
+`.require 'etc'
 
 Process.uid
 Etc.getpwuid(Process.uid)["name"]
@@ -1153,105 +985,83 @@ Etc.getpwuid(Process.uid)["name"]
 exit(0)
 `e set-signal-handler
 Signal.trap("INT",
-  lambda do |signo|
+  `*lambda `*do |signo|
     puts "exiting..."
     exit 1
-  end
-
+  `*end
 )
 `e executable-test
 File.executable?("/bin/ls")
 `e external-command
-unless system("ls -l /tmp")
-  raise "ls failed"
-end
+`*unless system("ls -l /tmp")
+  `*raise "ls failed"
+`*end
 `e escaped-external-command
 path = gets
 
 path.chomp!
-unless system("ls", "-l", path)
-  raise "ls failed"
-end
+`*unless system("ls", "-l", path)
+  `*raise "ls failed"
+`*end
 `e backticks
 files = ``ls -l /tmp``
-unless $?.success?
-  raise "ls failed"
-end
-
+`*unless `.[$?].success?
+  `*raise "ls failed"
+`*end
 
 files = %x(ls)
-unless $?.success?
-  raise "ls failed"
-end
+`*unless `.[$?].success?
+  `*raise "ls failed"
+`*end
 `e command-line-options-boolean-option-option-with-argument-usage
-require 'optparse'
-
+`.require 'optparse'
 
 options = {}
-OptionParser.new do |opts|
+OptionParser.new `*do |opts|
   opts.banner =
     "usage: #{$0} [OPTIONS] [ARG ...]"
 
-  opts.on("-f", "--file FILE") do |arg|
+  opts.on("-f", "--file FILE") `*do |arg|
     options[:file] = arg
-  end
+  `*end
 
-  opts.on("-v", "--verbose") do |arg|
+  opts.on("-v", "--verbose") `*do |arg|
     options[:verbose] = arg
-  end
-end.parse!
+  `*end
+`*end.parse!
 
 
 file = options[:file]
 
 verbose = options[:verbose]
 
-# The flags -h and --help and the
-
-# usage message are generated
-
-# automatically.
-
-#
-
-# After calling OptionParser.parse! only
-
-# positional arguments are in ARGV.
-
-#
-
-# Options can follow positional args.
+`(The flags -h and --help and the usage message are generated automatically. After calling OptionParser.parse! only positional arguments are in ARGV. Options can follow positional args.)
 `e load-library
-require 'foo.rb'
+`.require 'foo.rb'
 
-# searches $LOAD_PATH for foo.rb, foo.so,
+`(searches $LOAD_PATH for foo.rb, foo.so, foo.o, foo.dll:)
 
-# foo.o, foo.dll:
-
-require 'foo'
+`.require 'foo'
 `e load-library-in-subdirectory
-require 'foo/bar.rb'
+`.require 'foo/bar.rb'
 
-
-require 'foo/bar'
+`.require 'foo/bar'
 `e hot-patch
 load 'foo.rb'
 `e load-error
-raises LoadError if library not found; exceptions generated when parsing library propagate to client
+`![raises `.LoadError if library not found; exceptions generated when parsing library propagate to client]
 `e main-routine-in-library
-if $0 == __FILE__
-  code
-end
+`*if `.[$0] == `.[__FILE__]
+  `(code)
+`*end
 `e library-path
-# $: is synonym for $LOAD_PATH:
-$LOAD_PATH
-
-
-$LOAD_PATH << "/some/path"
+`($: is synonym for $LOAD_PATH:)
+`.[$LOAD_PATH]
+`.[$LOAD_PATH] << "/some/path"
 `e library-path-environment-variable
-$ RUBYLIB=~/lib ruby foo.rb
+`$[RUBYLIB=~/lib ruby foo.rb]
 `e library-path-command-line-option
-$ ruby -I ~/lib foo.rb
+`$[ruby -I ~/lib foo.rb]
 `e simple-global-identifiers
 variables which start with $
 `e multiple-label-identifiers
@@ -1259,75 +1069,64 @@ constants, classes, and modules
 `e label-separator
 Foo::Bar.baz
 `e root-namespace-definition
-# outside of class or module; only
-
-# constants in root namespace:
+`(outside of class or module; only constants in root namespace:)
 
 FOO = 3
 
-# inside class or module:
+`(inside class or module:)
 
 ::FOO = 3
 `e declare-namespace
-class Foo
-  # class definition
-end
+`*class Foo
+  `(class definition)
+`*end
 
-module Foo
-  # module definition
-end
+`*module Foo
+  `(module definition)
+`*end
 `e child-namespace-declaration
-module Foo::Bar
-  # module definitions
-end
+`*module Foo::Bar
+  `(module definitions)
+`*end
 
-module Foo
-  module Bar
-    # module definitions
-  end
-end
+`*module Foo
+  `*module Bar
+    `(module definitions)
+  `*end
+`*end
 
-# classes can nest inside classes or
-
-# modules; modules can nest in classes
+`(classes can nest inside classes or modules; modules can nest in classes)
 `e namespace-alias
 Fu = Foo.dup
 
-
-include Fu
+`*include Fu
 `e unqualified-import-of-namespace
 # inside class or module:
-include Foo
+`*include Foo
 `e unqualified-import-of-all-subnamespaces
-
 `e unqualified-import-of-definitions
-none
+`(none)
 `e list-installed-packages-install-a-package
-$ gem list
-
-$ gem install rails
+`$[gem list]
+`$[gem install rails]
 `e package-specification-format
-in foo.gemspec:
-
-
-spec = Gem::Specification.new do |s|
+`(in foo.gemspec:)
+spec = Gem::Specification.new `*do |s|
   s.name = "foo"
   s.authors = "Joe Foo"
   s.version = "1.0"
   s.summary = "a gem"
   s.files = Dir["lib/*.rb"]
-
-end
+`*end
 `e define-class
-class Int
+`*class Int
   attr_accessor :value
-  def initialize(i=0)
+  `*def initialize(i=0)
     @value = i
-  end
-end
+  `*end
+`*end
 `e create-object
 i = Int.new
-
 i2 = Int.new(7)
 `e instance-variable-visibility
 private by default; use attr_reader, attr_writer, attr_accessor to make public
@@ -1336,9 +1135,9 @@ v = i.value
 
 i.value = v + 1
 `e define-method
-def plus(i)
+`*def plus(i)
   value + i
-end
+`*end
 `e invoke-method
 i.plus(7)
 `e define-class-method
@@ -1346,317 +1145,249 @@ i.plus(7)
 `e invoke-class-method
 Counter.instances
 `e define-class-variable
-
 `e get-and-set-class-variable
-
 `e handle-undefined-method-invocation
-def method_missing(name, *a)
+`*def method_missing(name, *a)
   puts "no def: #{name}" +
     " arity: #{a.size}"
-end
+`*end
 `e alias-method
-class Point
-
+`*class Point
   attr_reader :x, :y, :color
-
   alias_method :colour, :color
-
-  def initialize(x, y, color=:black)
+  `*def initialize(x, y, color=:black)
     @x, @y = x, y
     @color = color
-  end
-end
+  `*end
+`*end
 `e destructor
 val = i.value
 ObjectSpace.define_finalizer(int) {
   puts "bye, #{val}"
-
 }
 `e subclass
-class Counter < Int
-
+`*class Counter < Int
   @@instances = 0
-
-  def initialize
+  `*def initialize
     @@instances += 1
     super
-  end
-
-  def incr
-    self.value += 1
-  end
-
-  def self.instances
+  `*end
+  `*def incr
+    `=self.value += 1
+  `*end
+  `*def `=self.instances
     @@instances
-  end
-end
+  `*end
+`*end
 `e mixin
-
 `e overload-operator
-class Fixnum
-  def /(n)
-    self.fdiv(n)
-  end
-end
+`*class Fixnum
+  `*def `+/(n)
+    `=self.fdiv(n)
+  `*end
+`*end
 `e object-id
 o.object_id
 `e inspect-type
-[].class == Array
+[].`*class == Array
 `e basic-types
 NilClass
-
 TrueClass
-
 FalseClass
-
 Fixnum
-
 Bignum
-
 Float
-
 String
-
 Regexp
-
 Time
-
 Array
-
 Hash
-
 Object
-
 File
 `e inspect-class
-o.class == Foo
-
+o.`*class == Foo
 o.instance_of?(Foo)
 `e inspect-class-hierarchy
-o.class.superclass
-
-o.class.included_modules
+o.`*class.superclass
+o.`*class.included_modules
 `e has-method
 o.respond_to?("reverse")
 `e message-passing
-(1..9).each do |i|
+(1..9).each `*do |i|
   o.send("phone#{i}=", nil)
-end
+`*end
 `e eval
-loop do
+`*loop `*do
   puts eval(gets)
-end
+`*end
 `e list-obj-object-methods
 o.methods
 `e list-object-attributes
 o.instance_variables
 `e list-loaded-libraries
-# relative to directory in lib path:
-
-$LOADED_FEATURES
-
-$"
+`(relative to directory in lib path:)
+`.[$LOADED_FEATURES]
+`.[$"]
 `e list-loaded-namespaces
-Class.constants.select do |c|
-  Module.const_get(c).class == Class
-
-end
+Class.constants.select `*do |c|
+  Module.const_get(c).`*class == Class
+`*end
 `e inspect-namespace
-require 'uri'
-
+`.require 'uri'
 
 URI.constants
-
 URI.methods
-
 URI.class_variables
 `e pretty-print
-require 'pp'
-
+`.require 'pp'
 
 d = {"lorem"=>1, "ipsum"=>[2,3]}
-
-
 pp d
 `e source-line-number-and-file-name
-__LINE__
-__FILE__
+`=[__LINE__]
+`=[__FILE__]
 `e command-line-documentation
-$ ri -c
-
-$ ri Math
-
-$ ri Math.atan2
+`$[ri -c]
+`$[ri Math]
+`$[ri Math.atan2]
 `e get-local-hostname-dns-lookup-reverse-dns-lookup
-require 'socket'
-
+`.require 'socket'
 
 hostname = Socket.gethostname
-
-
 ip = Socket.getaddrinfo(
   Socket.gethostname,
   "echo")[0][3]
-
-
 host2 = Socket.gethostbyaddr(ip)[0]
 `e http-get
-require 'net/http'
-
+`.require 'net/http'
 
 url = "www.google.com"
-
-r = Net::HTTP.start(url, 80) do |f|
+r = Net::HTTP.start(url, 80) `*do |f|
   f.get("/")
-end
-if r.code == "200"
+`*end
+`*if r.code == "200"
   s = r.body
-end
+`*end
 `e http-post
-
 `e serve-working-directory
-$ ruby -rwebrick -e \
+`$[ruby -rwebrick -e \]
 
 'WEBrick::HTTPServer.new(:Port => 8000, '\
 
 ':DocumentRoot => Dir.pwd).start'
 `e absolute-url-from-base-and-relative-url
-require 'uri'
+`.require 'uri'
 
 URI.join("http://google.com", "analytics")
 `e parse-url
-require 'uri'
-
+`.require 'uri'
 
 url = "http://google.com:80/foo?q=3#bar"
-
 up = URI(url)
-
-
 protocol = up.scheme
-
 hostname = up.host
-
 port = up.port
-
 path = up.path
-
 query_str = up.query
-
 fragment = up.fragment
-
-# Ruby 1.9; returns array of pairs:
-
+`(Ruby 1.9; returns array of pairs:)
 params = URI.decode_www_form(query_str)
 `e url-encode-decode
-require 'cgi'
+`.require 'cgi'
 
 CGI::escape("lorem ipsum?")
 CGI::unescape("lorem+ipsum%3F")
 `e base64-encode-decode
-require 'base64'
-
+`.require 'base64'
 
 s = File.open("foo.png").read
-
 b64 = Base64.encode64(s)
-
 s2 = Base64.decode64(b64)
 `e test-class
-require 'test/unit'
+`.require 'test/unit'
 
-class TestFoo < Test::Unit::TestCase
-  def test_01
-    assert(true, "not true!")
-  end
-end
+`*class TestFoo < Test::Unit::TestCase
+  `*def test_01
+    assert(`=true, "not true!")
+  `*end
+`*end
 `e run-tests-run-test-method
-$ ruby test_foo.rb
-
-$ ruby test_foo.rb -n test_01
+`$[ruby test_foo.rb]
+`$[ruby test_foo.rb -n test_01]
 `e equality-assertion
 s = "do re me"
-
 assert_equal("do re me", s)
 `e approximate-assertion
 x = 10.0 * (1.0 / 3.0)
-
 y = 10.0 / 3.0
-
-# default for delta is 0.001
-
+`(default for delta is 0.001)
 assert_in_delta(x, y, 0.1**6)
 `e regex-assertion
 s = "lorem ipsum"
-
 assert_match(/lorem/, s)
 `e exception-assertion
-assert_raises(ZeroDivisionError) do
+assert_raises(ZeroDivisionError) `*do
   1 / 0
-end
+`*end
 `e mock-method
 # gem install mocha
 
-require 'mocha'
-
+`.require 'mocha'
 
 foo = mock()
-
 foo.expects(:run).returns(7).with(13).once
-
-
 foo.run(13)
 `e setup
-# in class TestFoo:
-def setup
+`(in class TestFoo:)
+`*def setup
   puts "setting up"
-end
+`*end
 `e teardown
-# in class TestFoo:
-def teardown
+`(in class TestFoo:)
+`*def teardown
   puts "tearing down"
-end
+`*end
 `e check-syntax
-$ ruby -c foo.rb
+`$[ruby -c foo.rb]
 `e stronger-warnings
-$ ruby -w foo.rb
+`$[ruby -w foo.rb]
 
-$ ruby -W2 foo.rb
+`$[ruby -W2 foo.rb]
 `e lint
 
 `e source-cleanup
 
 `e run-debugger
-$ sudo gem install ruby-debug
+`$[sudo gem install ruby-debug]
 
-$ rdebug foo.rb
+`$[rdebug foo.rb]
 `e debugger-commands
 h l n s b c w u down p q
 `e benchmark-code
-require 'benchmark'
+`.require 'benchmark'
 
 
 n = 1_000_000
 
 i = 0
 
-puts Benchmark.measure do
+puts Benchmark.measure `*do
   n.times { i += 1 }
-end
+`*end
 `e profile-code
-$ sudo gem install ruby-prof
+`$[sudo gem install ruby-prof]
 
-$ ruby-prof foo.rb
+`$[ruby-prof foo.rb]
 `e java-version
 JRuby 1.7
 
 compatible with Ruby 1.9
 `e java-repl
-$ jirb
+`$[jirb]
 `e java-interpreter
-$ jruby
+`$[jruby]
 `e java-compiler
-$ jrubyc
+`$[jrubyc]
 `e java-prologue
 none
 `e java-new
@@ -1668,11 +1399,11 @@ java_import java.util.Random
 
 rnd = Random.new
 `e non-bundled-java-libraries
-require 'path/to/mycode.jar'
+`.require 'path/to/mycode.jar'
 `e java-shadowing-avoidance
-module JavaIO
+`*module JavaIO
   include_package "java.io"
-end
+`*end
 `e convert-native-array-to-java-array
 [1, 2, 3].to_java(Java::int)
 `e are-java-classes-subclassable
