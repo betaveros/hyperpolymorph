@@ -2,6 +2,8 @@
 
 A flexible multi-language cheat sheet based on hyperpolyglot.org
 
+[**View on GitHub Pages**](http://betaveros.github.io/hyperpolymorph/)
+
 ## Why?
 
 - Sometimes, I want to compare languages that are on different sheets, like Python and JavaScript, or in completely different paradigms, like Python and Haskell and C++. It's not easy to do this with hyperpolyglot.org.
@@ -20,4 +22,4 @@ The content of the cheat sheets themselves are licensed under [CC BY-SA 3.0](htt
 
 The scripts for parsing files and producing the HTML are released under the MIT license. Note that this is a very small part of the project.
 
-Still very much a WIP.
+Still very much a WIP. I will tend to focus on languages proportional to how much I want to learn or use them, so it is quite unlikely my languages will develop the same as hyperpolyglot.org. Pull requests adding different languages are welcome, of course.
