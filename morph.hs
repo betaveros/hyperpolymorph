@@ -1,4 +1,6 @@
 import qualified Data.Map as M
+import qualified Data.Set as S
+import System.IO
 import Control.Applicative ((<$>))
 import Control.Monad
 import Data.Char
@@ -123,6 +125,9 @@ bqEntrySection = do
     assocs <- many bqEntryAssoc
     return (heading, assocs)
 
+listSectionKeys :: Section -> [String]
+listSectionKeys = map fst . snd
+
 bqSectionList :: CharParser [Section]
 bqSectionList = many bqEntrySection
 
@@ -200,6 +205,9 @@ readEntryMap name = readFile (name ++ ".txt") >>= parseIO bqEntryMap name
 readNamedEntryMap :: String -> IO (String, EntryMap)
 readNamedEntryMap name = (,) name <$> readEntryMap name
 
+unusedEntries :: EntryMap -> [Section] -> [String]
+unusedEntries m ss = S.toList $ M.keysSet m S.\\ S.fromList (concatMap listSectionKeys ss)
+
 -- langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","clojure","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
 
 main :: IO ()
@@ -211,6 +219,12 @@ main = do
     putStrLn startHTML
     putStrLn $ buildTable secs langs
     putStrLn footHTML
+    forM_ langs $ \(langName, langMap) ->
+        case unusedEntries langMap secs of
+            [] -> return ()
+            xs -> do
+                hPutStrLn stderr $ "Warning: " ++ langName ++ " has " ++ show (length xs) ++ " unused entries:"
+                forM_ xs $ hPutStrLn stderr . (" > " ++)
     putStrLn $ buildToC secs
     putStrLn . buildJsCall langNames $ map (toKey . fst) secs
     putStrLn endHTML
