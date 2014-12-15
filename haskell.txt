@@ -620,9 +620,9 @@ IOError
 `e assert
 
 `e standard-file-handles
-`*import System.Posix.IO
+`*import System.IO
 
-stdInput stdOutput stdError
+stdin, stdout, stderr `+[::] Handle
 `e read-line-from-stdin
 line `+[<-] getLine
 `e end-of-file-behavior
@@ -632,7 +632,10 @@ when last data is returned, hIsEOF will return True. Reading after end-of-file t
 `e write-line-to-stdout
 putStrLn "lorem ipsum"
 `e printf
+`*import Text.Printf
 
+printf :: PrintfType r => String -> r
+`(printf can be an IO action or a string, taking any number of format arguments, chosen by type-inference magic)
 `e open-file-for-reading
 `*import System.IO
 
@@ -652,8 +655,8 @@ hClose f
 `e i-o-errors
 
 `e read-line
-`*import IO
-
+line `+[<-] hGetLine f
+`e iterate-over-file-by-line
 readAndPrintLines h = `*do
   eof `+[<-] hIsEOF h
   `*if eof
@@ -663,17 +666,19 @@ readAndPrintLines h = `*do
       putStrLn line
       readAndPrintLines h
 
-
 main = `*do
   h `+[<-] openFile "/etc/passwd" ReadMode
   readAndPrintLines h
-`e iterate-over-file-by-line
 
 `e read-file-into-array-of-strings
 
 `e read-file-into-string
+readFile "/etc/hosts"
 
+f `+[<-] openFile "/etc/hosts" ReadMode
+hGetContents f
 `e write-string
+hPutStr f "hello world"
 
 `e write-line
 s = "hello out\n"
@@ -682,7 +687,7 @@ f = "/tmp/test-haskell"
 
 main = writeFile f s
 `e flush-file-handle
-
+hFlush f
 `e end-of-file-test
 
 `e get-and-set-filehandle-position
@@ -690,10 +695,7 @@ main = writeFile f s
 `e file-exists-test-regular-file-test
 `*import System
 
-
 Directory.doesFileExist "/etc/hosts"
-
-
 `*import Control.Monad
 
 `*import System.Posix.Files
