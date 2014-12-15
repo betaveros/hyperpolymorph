@@ -6,7 +6,7 @@ import sys, codecs, re
 def textish(node):
 	for d in node.descendants:
 		if isinstance(d, NavigableString):
-			yield unicode(d)
+			yield unicode(d).replace("\n", "")
 		elif d.name == "br":
 			yield "\n"
 
@@ -118,9 +118,10 @@ def parse(filename, colfilenames):
 				for f in colfiles:
 					name = ''.join(textish(tds[0]))
 					e = normalize(name)
-					f.write('`e ')
-					f.write(e)
-					f.write('\n')
+					if e:
+						f.write('`e ')
+						f.write(e)
+						f.write('\n')
 				for td, f in zip(tds[1:], colfiles):
 					for txt in textish(td):
 						f.write(txt.replace('`','``').replace(u'\xa0', u' '))
@@ -133,7 +134,8 @@ def parse(filename, colfilenames):
 to_parse_entries = []
 # to_parse = [('scripting.html', ['perl.txt', 'php.txt', 'python.txt', 'ruby.txt']),('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt']),('cpp.html', ['cpp.txt', 'objective-c.txt', 'java.txt', 'c-sharp.txt']),('c.html', ['c.txt', 'go.txt']),('pascal.html', ['pascal.txt', 'ada.txt', 'plpgsql.txt']),('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt']),('ml.html', ['ocaml.txt', 'f-sharp.txt', 'scala.txt', 'haskell.txt']),('logic.html', ['prolog.txt', 'erlang.txt']),('stack.html', ['forth.txt', 'postscript.txt', 'factor.txt']),('shell.html', ['posix-shell.txt', 'applescript.txt', 'powershell.txt']),('data.html', ['sql.txt', 'awk.txt', 'pig.txt']),('numerical-analysis.html', ['matlab.txt', 'r.txt', 'numpy.txt']),('fortran.html', ['fortran.txt']),('computer-algebra.html', ['mathematica.txt', 'sympy.txt', 'maxima.txt', 'pari-gp.txt']),]
 # to_parse = [('ml.html', ['ocaml.txt', 'f-sharp.txt', 'scala.txt', 'haskell.txt'])]
-to_parse = [('scripting2.html', ['perl2.txt', 'php2.txt', 'python2.txt', 'ruby2.txt'])]
+# to_parse = [('scripting2.html', ['perl2.txt', 'php2.txt', 'python2.txt', 'ruby2.txt'])]
+to_parse = [('rust.html', ['rust.txt', 'swift.txt', 'scala2.txt'])]
 # to_parse = [('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt'])]
 # to_parse = [('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt'])]
 
