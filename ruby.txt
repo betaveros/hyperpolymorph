@@ -33,11 +33,8 @@ another line
 =end
 `e local-variable
 v = nil
-
 a, d = [], {}
-
 x = 1
-
 y, z = 2, 3
 `e regions-which-define-lexical-scope
 top level:
@@ -45,7 +42,6 @@ top level:
   class block
   module block
   method body
-
 
 nestable:
   anonymous function body
@@ -55,7 +51,6 @@ $g1, $g2 = 7, 8
 
 `*def swap_globals
   $g1, $g2 = $g2, $g1
-
 `*end
 `e constant
 `(warning if capitalized identifier is reassigned)
@@ -66,11 +61,9 @@ v = 1
 x, y, z = 1, 2, 3
 
 `(3 is discarded:)
-
 x, y = 1, 2, 3
 
 `(z set to nil:)
-
 x, y, z = 1, 2
 `e swap
 x, y = y, x
@@ -81,7 +74,6 @@ x, y = y, x
 `+[<<= >>= &= |= ^=]
 `e increment-and-decrement
 x = 1
-
 `(x and y not mutated:)
 y = x.succ
 z = y.pred
@@ -89,7 +81,6 @@ z = y.pred
 `=nil
 `e null-test
 v `+[==] `=nil
-
 v.nil?
 `e uninitialized-local-variable
 `![raises NameError]
@@ -177,13 +168,11 @@ z.conj
 rand(100)
 
 rand
-none
+`(none)
 `e random-seed
 srand(17)
 
-
 seed = srand
-
 srand(seed)
 `e bit-operators
 `+[<< >> & | ^ ~]
@@ -201,11 +190,11 @@ String
 `=['don`%[\']t say "no"']
 `=["don't " 'say "no"']
 `e newline-in-literal
-'first line
-second line'
+`=['first line
+second line']
 
-"first line
-second line"
+`=["first line
+second line"]
 `e literal-escapes
 `(double quoted:)
 `%[\a \b \cx \e \f \n \r \s \t \v \xhh \ooo \uhhhh \u{hhhhh}]
@@ -213,9 +202,9 @@ second line"
 `(single quoted:)
 `%[\' \\]
 `e custom-delimiters
-s1 = %q(lorem ipsum)
+s1 = `=[%q(lorem ipsum)]
 
-s2 = %Q(#{s1} dolor sit amet)
+s2 = `=[%Q(`%[#{s1}] dolor sit amet)]
 `e here-document
 word = `=["amet"]
 s = `=[<<EOF
@@ -231,18 +220,18 @@ puts `=["`%[#{count} #{item}]s"]
 `e format
 `=["lorem `%[%s %d %f]"] `+% ["ipsum", 13, 3.7]
 `e are-strings-mutable
-s = "bar"
+s = `=["bar"]
 s2 = s
 `(sets s and s2 to "baz":)
-s[2] = "z"
+s[2] = `=["z"]
 `e copy-string
-s = "bar"
+s = `=["bar"]
 s2 = s.clone
 `(s2 is not altered:)
-s[2] = "z"
+s[2] = `=["z"]
 `e concatenate-strings
-s = "Hello, "
-s2 = s + "World!"
+s = `=["Hello, "]
+s2 = s `++ `=["World!"]
 
 `(juxtaposition can be used to concatenate literals:)
 s2 = "Hello, " 'World!'
@@ -279,6 +268,9 @@ hbar = `=["-"] `+* 80
 "do re mi fa".split(/\s+/, 2)
 `e split-and-keep-delimiters
 "do re mi fa".split(/(\s+)/)
+`e prefix-and-suffix-test
+`=['foobar'].start_with?(`=['foo'])
+`=['foobar'].end_with?(`=['bar'])
 `e string-length
 "lorem".length
 "lorem".size
@@ -287,72 +279,65 @@ hbar = `=["-"] `+* 80
 "do re re".index("re")
 "do re re".rindex("re")
 `e extract-substring
-"lorem ipsum"[6, 5]
-"lorem ipsum"[6..10]
-"lorem ipsum"[6...11]
+`=["lorem ipsum"][6, 5]
+`=["lorem ipsum"][6..10]
+`=["lorem ipsum"][6...11]
 `e extract-character
-"lorem ipsum"[6]
+`=["lorem ipsum"][6]
 `e chr-and-ord
 65.chr
-"A".ord
+`=["A"].ord
 `e to-array-of-characters
-"abcd".split("")
+`=["abcd"].split(`=[""])
 `e translate-characters
-"hello".tr("a-z", "n-za-m")
+`=["hello"].tr(`=["a-z"], `=["n-za-m"])
 `e delete-characters
-"disemvowel me".delete("aeiou")
+`=["disemvowel me"].delete(`=["aeiou"])
 `e squeeze-characters
-"too  much  space".squeeze(" ")
+`=["too  much  space"].squeeze(`=[" "])
 `e literal-custom-delimited-literal
-/lorem|ipsum/
-
-%r(/etc/hosts)
+`=[/lorem|ipsum/
+%r(/etc/hosts)]
 `e character-class-abbreviations
-. \d \D \h \H \s \S \w \W
+`%[. \d \D \h \H \s \S \w \W]
 `e anchors
-^ $ \A \b \B \z \Z
+`%[^ $ \A \b \B \z \Z]
 `e match-test
-`*if /1999/.match(s)
-  puts "party!"
+`*if `=[/1999/].match(s)
+  puts `=["party!"]
 `*end
 `e case-insensitive-match-test
-/lorem/i.match("Lorem")
+`=[/lorem/i].match(`=["Lorem"])
 `e modifiers
 i o m x
 `e substitution
-s = "do re mi mi mi"
-
-s.gsub!(/mi/, "ma")
+s = `=["do re mi mi mi"]
+s.gsub!(`=[/mi/], `=["ma"])
 `e match-prematch-postmatch
-m = /\d{4}/.match(s)
+m = `=[/\d{4}/].match(s)
 `*if m
   match = m[0]
   prematch = m.pre_match
   postmatch = m.post_match
 `*end
 `e group-capture
-rx = /(\d{4})-(\d{2})-(\d{2})/
-
-m = rx.match("2010-06-03")
-
+rx = `=[/(\d{4})-(\d{2})-(\d{2})/]
+m = rx.match(`=["2010-06-03"])
 yr, mo, dy = m[1..3]
 `e named-group-capture
-rx = /^(?<file>.+)\.(?<suffix>.+)$/
+rx = `=[/^(?<file>.+)\.(?<suffix>.+)$/]
+m = rx.match(`=['foo.txt'])
 
-m = rx.match('foo.txt')
-
-
-m["file"]
-
-m["suffix"]
+m[`=["file"]]
+m[`=["suffix"]]
 `e scan
-a = "dolor sit amet".scan(/\w+/)
+a = `=["dolor sit amet"].scan(`=[/\w+/])
 `e backreference-in-match-and-substitution
-/(\w+) \1/.match("do do")
+`=[/(\w+) \1/].match(`=["do do"])
 
-"do re".sub(/(\w+) (\w+)/, '\2 \1')
+`=["do re"].sub(`=[/(\w+) (\w+)/], `=['\2 \1'])
 `e recursive-regex
-/(?<foo>\(([^()]*|\g<foo>)*\))/
+`=[/(?<foo>\(([^()]*|\g<foo>)*\))/]
 `e date-time-type
 Time
 `e current-date-time
@@ -381,13 +366,13 @@ t = Date.parse(s).to_time
 `e date-subtraction
 Float containing time difference in seconds
 `e add-duration
-`.require 'date/delta'
+`.require `=['date/delta']
 
-s = "10 min, 3 s"
+s = `=["10 min, 3 s"]
 delta = Date::Delta.parse(s).in_secs
 t = Time.now + delta
 `e local-timezone
-`*if no timezone is specified the local timezone is used
+`(if no timezone is specified the local timezone is used)
 `e arbitrary-timezone
 # gem install tzinfo
 `.require 'tzinfo'
@@ -438,6 +423,10 @@ a[10] = "lorem"
 `e index-of-element
 a = %w(x y z w)
 i = a.index("y")
+
+`(return nil if not found:)
+a.index(`=['y'])
+a.rindex(`=['y'])
 `e slice
 `(select 3rd and 4th elements:)
 a[2..3]
@@ -473,11 +462,11 @@ parameter contains address copy
 a = %w(do re mi fa)
 
 a.each_with_index `*do |s, i|
-  puts "#{s} at index #{i}"
+  puts `=["`%[#{s}] at index `%[#{i}]"]
 `*end
 `e iterate-over-range
 (1..1_000_000).each `*do |i|
-  code
+  `(code)
 `*end
 `e instantiate-range-as-list
 a = (1..10).to_a
@@ -506,7 +495,7 @@ a.include?(7)
 `e union
 [1,2] | [2,3,4]
 `e relative-complement-symmetric-difference
-`.require 'set'
+`.require `=['set']
 
 [1,2,3] - [2]
 Set[1,2] ^ Set[2,3,4]
@@ -677,8 +666,7 @@ puts nays.resume
 `e operator-as-function
 3.`+*(7)
 
-a = ['foo', 'bar', 'baz']
-
+a = [`=['foo'], `=['bar'], `=['baz']]
 a.`+[[]](2)
 `e if
 `*if n == 0
@@ -712,6 +700,38 @@ starts an anonymous block. Also starts the body of a loop, while, or until loop
 `e statement-modifiers
 puts "positive" `*if i > 0
 puts "nonzero" `*unless i == 0
+`e base-exception
+Exception
+
+`(User-defined exceptions should subclass StandardError.)
+`e predefined-exceptions
+Exception
+  NoMemoryError
+  ScriptError
+    LoadError
+    NotImplementedError
+    SyntaxError
+  SignalException
+  StandardError
+    ArgumentError
+    IOError
+      EOFError
+    IndexError
+    LocalJumpError
+    NameError
+    RangeError
+    RegexpError
+    RuntimeError
+    SecurityError
+    SocketError
+    SystemCallError
+      Errno::*
+    SystemStackError
+    ThreadError
+    TypeError
+    ZeroDivisionError
+  SystemExit
+  fatal
 `e raise-exception
 `![raises RuntimeError]
 `*raise "bad arg"
