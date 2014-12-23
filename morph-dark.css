@@ -1,0 +1,38 @@
+body { background-color: #111; color: #eed; }
+a:link { color: #9cf; }
+a:visited { color: #c9c; }
+h1 { color: #fff; }
+#cc { color: #999; }
+#toc {
+	background-color: #002;
+	background-color: rgba(0, 0, 34, 0.8);
+}
+#toc a { color: #8bd; }
+#toc a:hover { color: #8ff; }
+#toc a.ts { color: #9cf; text-shadow: #0ff 0 0 0.1em; }
+#morpher { background-color: #006; }
+th {
+	background-color: #eee;
+	background: linear-gradient(to bottom, #333, #111);
+	border: 1px solid #333;
+}
+th.section-header {
+	color: #fff;
+	background-color: #dde;
+	background: linear-gradient(to bottom, #006, #003);
+}
+td.cont { color: #eee; border: 1px solid #333; }
+td.empty { background-color: #000; border: 1px dotted #333; }
+td.desc { color: #ddd; border: 1px solid #333; background-color: #111; background: linear-gradient(135deg, #222, #000); }
+a.perm { color: #444; }
+a.perm:hover { color: #9cf; }
+.key { color: #d8f; font-weight: bold; }
+.op { color: #8ce; }
+.val { color: #d75; }
+.sval { color: #f7a; }
+.builtin { color: #fd7; }
+.note { color: #999; font-style: italic; }
+.empty { background-color: #111; }
+.error { color: #f99; background-color: #600; }
+.cli:before { content: "$ "; color: #777; }
+.preproc { color: #2d2; }

@@ -6,50 +6,26 @@ body, h1 {
 #wrapper {
 	padding: 1em 1em 7em 1em;
 }
-#cc { color: #777; }
 #toc {
 	position: fixed;
 	bottom: 0;
 	margin: 0;
 	padding: 1em;
 	width: 100%;
-	background-color: #eef;
-	background-color: rgba(238, 238, 255, 0.8);
 	z-index: 1;
 }
-#toc a { color: #00c; text-decoration: none; }
-#toc a:hover { color: #06c; text-decoration: underline overline; }
-#toc a.ts { color: #099; text-decoration: underline overline; text-shadow: #0ff 0 0 0.1em; }
-#morpher {
-	background-color: #eff;
-	margin: 1em 0;
-}
+#toc a { text-decoration: none; }
+#toc a:hover { text-decoration: underline overline; }
+#toc a.ts { text-decoration: underline overline; }
+#morpher { margin: 1em 0; }
 table { border-collapse: collapse; }
 th {
 	font-family: sans-serif;
-	border: 1px solid #bbb;
 	padding: 0.3em 0.7em;
-	background-color: #eee;
-	background: linear-gradient(to bottom, #fff, #eee);
 }
-th.section-header {
-	text-align: left;
-	background-color: #dde;
-	background: linear-gradient(to bottom, #eef, #ddf);
-}
-td.cont { color: #000; border: 1px solid #bbb; padding: 0.3em 0.7em; font-size: 12pt; font-family: "Ubuntu Mono", monospace; min-width: 10em; }
-td.empty { background-color: #eee; border: 1px dotted #bbb; }
-td.desc { color: #000; border: 1px solid #bbb; padding: 0.3em 0.7em 0.3em 1.0em; font-family: sans-serif; background-color: #eee; background: linear-gradient(135deg, #fff, #eee); color: black; }
+th.section-header { text-align: left; }
+td.cont { padding: 0.3em 0.7em; font-size: 12pt; font-family: "Ubuntu Mono", monospace; min-width: 10em; }
+td.desc { padding: 0.3em 0.7em 0.3em 1.0em; font-family: sans-serif; }
 .pd { position: relative; }
-a.perm { position: absolute; left: -0.7em; text-decoration: none; color: #bbb; }
-a.perm:hover { color: blue; }
-.key { color: #909; font-weight: bold; }
-.op { color: #c60; }
-.val { color: #00c; }
-.sval { color: #03f; }
-.builtin { color: #099; }
-.note { color: #777; font-style: italic; }
-.empty { background-color: #eee; }
-.error { display: block; padding: 0 0.2em; border-radius: 0.2em; color: #900; background-color: #fdd; }
-.cli:before { content: "$ "; color: #ccc; }
-.preproc { color: #090; }
+a.perm { position: absolute; left: -0.7em; text-decoration: none; }
+.error { display: block; padding: 0 0.2em; border-radius: 0.2em; }

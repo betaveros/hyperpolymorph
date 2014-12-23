@@ -1,0 +1,33 @@
+#cc { color: #777; }
+#toc {
+	background-color: #eef;
+	background-color: rgba(238, 238, 255, 0.8);
+}
+#toc a { color: #00c; }
+#toc a:hover { color: #06c; }
+#toc a.ts { color: #099; text-shadow: #0ff 0 0 0.1em; }
+#morpher { background-color: #eff; }
+th {
+	background-color: #eee;
+	background: linear-gradient(to bottom, #fff, #eee);
+	border: 1px solid #bbb;
+}
+th.section-header {
+	background-color: #dde;
+	background: linear-gradient(to bottom, #eef, #ddf);
+}
+td.cont { color: #000; border: 1px solid #bbb; }
+td.empty { background-color: #eee; border: 1px dotted #bbb; }
+td.desc { color: #000; border: 1px solid #bbb; background-color: #eee; background: linear-gradient(135deg, #fff, #eee); color: black; }
+a.perm { color: #bbb; }
+a.perm:hover { color: blue; }
+.key { color: #909; font-weight: bold; }
+.op { color: #c60; }
+.val { color: #00c; }
+.sval { color: #03f; }
+.builtin { color: #099; }
+.note { color: #777; font-style: italic; }
+.empty { background-color: #eee; }
+.error { color: #900; background-color: #fdd; }
+.cli:before { content: "$ "; color: #ccc; }
+.preproc { color: #090; }

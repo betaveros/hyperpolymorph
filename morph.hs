@@ -176,6 +176,7 @@ startHTML = unlines [
     "<title>Hyperpolymorph</title>",
     "<meta charset='utf-8' />",
     "<link rel='stylesheet' href='morph.css' />",
+    "<link rel='stylesheet' href='morph-dark.css' />",
     "</head>",
     "<body>",
     "<div id='wrapper'>",
