@@ -113,7 +113,6 @@ variable-interpolation: variable interpolation
 expression-interpolation: expression interpolation
 format: format
 compare-strings: compare strings
-are-strings-mutable: are strings mutable?
 copy-string: copy string
 concatenate-strings: concatenate strings / and append
 replicate-string: replicate string
@@ -226,7 +225,7 @@ iterate-over-indices-and-elements: iterate over indices and elements
 iterate-over-range: iterate over range
 instantiate-range-as-list: instantiate range as list
 reverse: reverse / non-destructive, in-place
-sort: sort / non-destructive, /  / in-place, /  / custom comparision
+sort: sort / non-destructive / in-place / custom comparision
 dedupe: dedupe / non-destructive, in-place
 membership: membership
 map: map
@@ -514,8 +513,7 @@ library-path: library path
 library-path-environment-variable: library path environment variable
 compile-app-using-package: compile app using package
 # user-defined types
-typedef: typedef
-type-synonym: type synonym
+type-synonym: type synonym or typedef
 sum-type: sum type
 tuple-product-type-with-one-field: tuple product type with one field
 tuple-product-type-with-two-fields: tuple product type with two fields

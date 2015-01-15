@@ -98,11 +98,11 @@ overrides = {
 	"class-definition": "define-class",
 	"object-creation": "create-object",
 	"method-invocation": "invoke-method",
+	"typedef": "type-synonym",
 }
 def normalize(e):
 	h = re.sub(r'\W+', '-', e.lower()).strip('-')
 	return overrides.get(h, h)
-	
 
 def parse_entries(filename, outfilename, append=True):
 	with codecs.open(filename, 'r', encoding="utf-8") as infile:

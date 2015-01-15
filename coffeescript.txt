@@ -537,7 +537,6 @@ immediately invokes a function, forwarding arguments (useful for forcing closure
 `e library-path
 `e library-path-environment-variable
 `e compile-app-using-package
-`e typedef
 `e type-synonym
 `e sum-type
 `e tuple-product-type-with-one-field

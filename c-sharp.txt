@@ -788,7 +788,7 @@ WriteLine(foo.bar.Baz.ANSWER);
 
 `e package-manager
 
-`e typedef
+`e type-synonym
 none
 `e enum
 public enum DayOfWeek { MON, TUE, WED, THU, FRI, SAT, SUN };

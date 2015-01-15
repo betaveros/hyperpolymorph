@@ -903,7 +903,7 @@ System.out.println(foo.bar.Baz.ANSWER);
 set JAVA_HOME environment variable to directory containing a bin subdirectory with java, javac, and other command line tools. Put $JAVA_HOME/bin at front of search path.
 `e package-manager
 
-`e typedef
+`e type-synonym
 none
 `e enum
 `*public enum DayOfWeek { MON, TUE, WED, THU, FRI, SAT, SUN };

@@ -566,7 +566,7 @@ writefln("count: %d", `=7);
 `e application-environment
 `e multiple-installations
 `e package-manager
-`e typedef
+`e type-synonym
 `*alias customer_id = `*int;
 customer_id cid = `=3;
 `e enum

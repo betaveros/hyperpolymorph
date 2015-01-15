@@ -781,7 +781,7 @@ Foundation Framework
 
 `e package-manager
 
-`e typedef
+`e type-synonym
 typedef int customer_id;
 
 customer_id cid = 3;
