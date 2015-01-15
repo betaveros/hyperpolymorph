@@ -22,7 +22,7 @@ function makeMorpher(langs) {
 		var ch = document.createElement("input");
 		ch.type = "checkbox";
 		ch.onclick = checker(ch, lang);
-		if (i < 4) {
+		if (lang === "python" || lang === "d" || lang === "scala" || lang === "haskell") {
 			ch.checked = true;
 		} else {
 			setDisplay(lang, "none");
