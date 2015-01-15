@@ -206,28 +206,18 @@ modular arithmetic for all types except BigInt
 evaluates to Infinity, a value which has no literal
 `e arbitrary-length-integer
 `*val n = BigInt(7)
-
 `*val m = BigInt(12)
 `e arbitrary-length-integer-operators
 n + m
-
 n - m
-
 n * m
-
 n / m
-
 n % m
 
-
 n == m
-
 n < m
-
 n < m
-
 n <= m
-
 n >= m
 `e rational-type
 
@@ -248,21 +238,15 @@ n >= m
 `e random-number-uniform-integer-uniform-float-normal-float
 `*import scala.util.Random
 
-
 `*val rnd = Random
 
-
 rnd.nextInt(100)
-
 rnd.nextDouble
-
 rnd.nextGaussian
 `e random-seed
 `*import scala.util.Random
 
-
 `*val rnd = Random
-
 
 rnd.setSeed(17)
 `(none)
@@ -316,11 +300,9 @@ no
 "hello".padTo(10, " ").mkString
 `e number-to-string
 "two: " + 2.toString
-
 "pi: " + 3.14.toString
 `e string-to-number
 7 + "12".toInt
-
 73.9 + ".037".toFloat
 `![raises NumberFormatException if string doesn't completely parse]
 `e join
@@ -819,8 +801,7 @@ out.close
 `e backticks
 
 `e namespace-example
-Baz.scala
-
+`(Baz.scala)
 package Foo.Bar;
 
 
@@ -828,8 +809,7 @@ package Foo.Bar;
   `*def say() { println("hello"); }
 }
 
-Main.scala
-
+`(Main.scala)
 `*import Foo.Bar.Baz;
 
 `*object Main {
@@ -933,7 +913,6 @@ c.get
 `e invoke-repl
 `$[scala]
 `e repl-limitations
-
 `e repl-last-value
 res0, res1, …
 `e help
