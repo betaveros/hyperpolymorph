@@ -1,5 +1,5 @@
 index.html : morph
-	./morph ruby python javascript cpp d java ocaml haskell coffeescript perl php scala > index.html
+	./morph python ruby javascript coffeescript perl php cpp d java scala ocaml haskell > index.html
 
 morph : morph.hs
 	ghc --make morph.hs
