@@ -274,44 +274,47 @@ hbar = `=['-'] `+* 80
 'lorem'.capitalize()
 string.capwords('lorem ipsum')
 `e trim
-' lorem '.strip()
-' lorem'.lstrip()
-'lorem '.rstrip()
+`=[' lorem '].strip()
+`=[' lorem'].lstrip()
+`=['lorem '].rstrip()
 `e pad-on-right-on-left-centered
-'lorem'.ljust(10)
-'lorem'.rjust(10)
-'lorem'.center(10)
+`=['lorem'].ljust(10)
+`=['lorem'].rjust(10)
+`=['lorem'].center(10)
 `e number-to-string
-'value: ' + `.str(8)
+`=['value: '] + `*[str](8)
 `e string-to-number
 7 + `.int('12')
 73.9 + `.float('.037')
 `e join
-' '.join(['do', 're', 'mi', 'fa'])
+`=[' '].join([`=['do'], `=['re'], `=['mi'], `=['fa']])
 `![raises `.TypeError:]
-' '.join([1, 2, 3])
+`=[' '].join([1, 2, 3])
 `e split
-'do re mi fa'.split()
+`=['do re mi fa'].split()
 `e split-in-two
-'do re mi fa'.split(`=None, 1)
+`=['do re mi fa'].split(`=None, 1)
 `e split-and-keep-delimiters
-re.split(`=['(\s+)'], 'do re mi fa')
+re.split(`=['(\s+)'], `=['do re mi fa'])
+`e prefix-and-suffix-test
+'foobar'.startswith('foo')
+'foobar'.endswith('bar')
 `e string-length
 `.len('lorem')
 `e index-of-substring
 `![raises `.ValueError if not found:]
-'do re re'.index('re')
-'do re re'.rindex('re')
+`=['do re re'].index(`=['re'])
+`=['do re re'].rindex(`=['re'])
 
 `(returns -1 if not found:)
-'do re re'.find('re')
-'do re re'.rfind('re')
+`=['do re re'].find(`=['re'])
+`=['do re re'].rfind(`=['re'])
 `e extract-substring
 `(none)
 `(none)
-'lorem ipsum'[6:11]
+`=['lorem ipsum'][6:11]
 `e extract-character
-'lorem ipsum'[6]
+`=['lorem ipsum'][6]
 `e character-type
 `(essentially length-1 str)
 `e character-literal
@@ -325,19 +328,19 @@ re.split(`=['(\s+)'], 'do re mi fa')
 `=['c'].islower
 `e chr-and-ord
 `.chr(65)
-`.ord('A')
+`.ord(`=['A'])
 `e to-array-of-characters
-`.list('abcd')
+`.list(`=['abcd'])
 `e translate-characters
 `*from string `*import lowercase `*as ins
 `*from string `*import maketrans
 
 outs = ins[13:] + ins[:13]
-'hello'.translate(maketrans(ins,outs))
+`=['hello'].translate(maketrans(ins,outs))
 `e delete-characters
-"disemvowel me".translate(`=None, "aeiou")
+`=["disemvowel me"].translate(`=None, "aeiou")
 `e squeeze-characters
-re.sub(`=['(\s)+'], `=[r'\1'], 'too  much  space')
+re.sub(`=['(\s)+'], `=[r'\1'], `=['too  much  space'])
 `e literal-custom-delimited-literal
 re.compile(`=['lorem|ipsum'])
 `(none)
@@ -346,42 +349,40 @@ re.compile(`=['lorem|ipsum'])
 `e anchors
 `%[^ $ \A \b \B \Z]
 `e match-test
-`*if re.search('1999', s):
+`*if re.search(`=['1999'], s):
   `.print('party!')
 `e case-insensitive-match-test
-re.search('lorem', 'Lorem', re.I)
+re.search(`=['lorem'], `=['Lorem'], re.I)
 `e modifiers
 re.I re.M re.S re.X
 `e substitution
-s = 'do re mi mi mi'
-s = re.compile('mi').sub('ma', s)
+s = `=['do re mi mi mi']
+s = re.compile(`=['mi']).sub(`=['ma'], s)
 `e match-prematch-postmatch
-m = re.search('\d{4}', s)
+m = re.search(`=['\d{4}'], s)
 `*if m:
   match = m.group()
   prematch = s[0:m.start(0)]
   postmatch = s[m.end(0):`.len(s)]
 `e group-capture
-rx = '(\d{4})-(\d{2})-(\d{2})'
-m = re.search(rx, '2010-06-03')
+rx = `=['(\d{4})-(\d{2})-(\d{2})']
+m = re.search(rx, `=['2010-06-03'])
 yr, mo, dy = m.groups()
 `e named-group-capture
-rx = '^(?P<file>.+)\.(?P<suffix>.+)$'
-m = re.search(rx, ''foo.txt')
+rx = `=['^(?P<file>.+)\.(?P<suffix>.+)$']
+m = re.search(rx, `=['foo.txt'])
 
-
-m.groupdict()['file']
-
-m.groupdict()['suffix']
+m.groupdict()[`=['file']]
+m.groupdict()[`=['suffix']]
 `e scan
-s = 'dolor sit amet'
-a = re.findall('\w+', s)
+s = `=['dolor sit amet']
+a = re.findall(`=['\w+'], s)
 `e backreference-in-match-and-substitution
 `(none)
 
-rx = re.compile('(\w+) (\w+)')
+rx = re.compile(`=['(\w+) (\w+)'])
 
-rx.sub(r'\2 \1', 'do re')
+rx.sub(r`=['\2 \1'], `=['do re'])
 `e recursive-regex
 none
 `e date-time-type
@@ -450,9 +451,7 @@ jp_dt = utc_dt.astimezone(tmz)
 
 tm = time.localtime()
 
-
 time.tzname[tm.tm_isdst]
-
 (time.timezone / -3600) + tm.tm_isdst
 
 tm.tm_isdst
@@ -460,7 +459,6 @@ tm.tm_isdst
 t.microsecond
 `e sleep
 `*import time
-
 
 time.sleep(0.5)
 `e timeout
@@ -796,9 +794,9 @@ nays = make_counter()
 `e decorator
 `*def logcall(f):
   `*def wrapper(*a, **opts):
-    `.print('calling ' + f.__name__)
+    `.print(`=['calling '] + f.__name__)
     f(*a, **opts)
-    `.print('called ' + f.__name__)
+    `.print(`=['called '] + f.__name__)
   `*return wrapper
 
 @logcall
@@ -841,9 +839,53 @@ operator.itemgetter(2)(a)
 `e what-do-does
 `![raises `.NameError unless a value was assigned to it]
 `e statement-modifiers
-none
+`(none)
+`e base-exception
+BaseException
+
+`(User-defined exceptions should subclass Exception.)
+
+`(In Python 2 old-style classes can be thrown.)
+`e predefined-exceptions
+BaseException
+  SystemExit
+  KeyboardInterrupt
+  GeneratorExit
+  Exception
+    StopIteration
+    StandardError
+      BufferError
+      ArithmeticError
+        FloatingPointError
+        OverflowError
+        ZeroDivisionError
+      AssertionError
+      AttributeError
+      EnvironmentError
+       EOFError
+      ImportError
+      LookupError
+        IndexError
+        KeyError
+      MemoryError
+      NameError
+      ReferenceError
+      RuntimeError
+        NotImplementedError
+      SyntaxError
+      SystemError
+      TypeError
+      ValueError
+        UnicodeError
+
+`(Python 3 has a different tree)
 `e raise-exception
 `*raise `.Exception('bad arg')
+`e catch-all-handler
+`*[try]:
+  risky()
+`*[except]:
+  `*[print](`=['risky failed'])
 `e re-raise-exception
 `*try:
   `*raise `.Exception('bam!')
