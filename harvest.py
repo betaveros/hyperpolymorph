@@ -2,7 +2,6 @@ from __future__ import print_function
 from bs4 import BeautifulSoup, NavigableString
 import sys, codecs, re
 
-
 def textish(node):
 	for d in node.descendants:
 		if isinstance(d, NavigableString):
@@ -10,7 +9,27 @@ def textish(node):
 		elif d.name == "br":
 			yield "\n"
 
+def get_surroundings(style):
+	if "purple" in style: return ("`*[", "]")
+	if "teal" in style: return ("`.[", "]")
+	if "maroon" in style: return ("`=[", "]")
+	if "gray" in style: return ("`(", ")")
+	return None
 
+def marked_text(node):
+	for d in node.children:
+		if isinstance(d, NavigableString):
+			yield unicode(d).replace("\n", "").replace("`","``")
+		elif d.name == "br":
+			yield "\n"
+		else:
+			try:
+				sur = get_surroundings(d["style"])
+			except KeyError:
+				sur = None
+			if sur: yield sur[0]
+			for t in marked_text(d): yield t
+			if sur: yield sur[1]
 
 overrides = {
 	"statement-separator": "statement-terminator",
@@ -123,8 +142,8 @@ def parse(filename, colfilenames):
 						f.write(e)
 						f.write('\n')
 				for td, f in zip(tds[1:], colfiles):
-					for txt in textish(td):
-						f.write(txt.replace('`','``').replace(u'\xa0', u' '))
+					for txt in marked_text(td):
+						f.write(txt.replace(u'\xa0', u' '))
 					f.write('\n')
 	for f in colfiles: f.close()
 
