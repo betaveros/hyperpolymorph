@@ -12,6 +12,9 @@ D 2.066.0
 }
 `e file-suffixes
 foo.d
+`e interpreter
+`(sort of)
+`$[dmd -run foo.d]
 `e block-delimiters
 { }
 `e statement-terminator
@@ -43,6 +46,10 @@ n = 3;
 `+[+= -= *= /= %= ^^=]
 `+[<<= >>= &= ^= |=]
 `e increment-and-decrement
+`*int n = 1;
+`*int one = n++;
+`*int three = ++n;
+`*int two = --n;
 `e address
 `e dereference
 `e type-size
@@ -100,6 +107,8 @@ n = 3;
 `*double.nan
 -`*double.infinity
 `e power
+`=2 `+[^^] `=20
+`=[2.0] `+[^^] `=[32.0]
 `e sqrt
 `e sqrt-1
 nan
@@ -115,22 +124,10 @@ atan2
 
 E PI
 `e float-truncation
-`#[#include <cmath>]
 `*double x = 3.7;
 
 `*long trnc = `*cast(`*long)(x);
-`*double rnd = round(x);
-`*long lrnd = lround(x);
-`*double flr = floor(x);
-`*double cl = ceil(x);
 `e absolute-value-and-signum
-`*import std.math;
-
-`*int n = -7;
-`*int absn = abs(n);
-
-`*double x = -7.77;
-`*double absx = fabs(x);
 `e integer-overflow
 modular arithmetic, see http://dlang.org/expression.html#AddExpression
 `e float-overflow
@@ -171,7 +168,7 @@ z.im
 `e string-type
 `*char[] s = "lorem ipsum";
 `e string-literal
-`(char[]:)
+`(string, aka immutable char[]:)
 `=["don't say `%[\"]no`%[\"]"]
 `e newline-in-literal
 `e literal-escapes
@@ -179,25 +176,25 @@ z.im
 `%[\\ \" \']
 `%[\xhh \o \oo \ooo]
 `e allocate-string
-`.string* s = `*new string("hello");
+`.string s = "hello";
 `e are-strings-mutable
-`.string s("bar");
+`(no, but char[]s are:)
+`*char[] s = `=["bar"].dup;
 
 s[2] = `=['z'];
 `e copy-string
-`.string s("bar");
+`(not necessary for strings since they're immutable, but)
+`*const `*char[] s = `=["bar"];
 
-`(use assignment or copy constructor:)
-`.string s2 = s;
-`.string s3(s);
+`*char[] s2 = s.dup;
+`*char[] s3 = s;
 
 `(s contains "baz"; s2 and s3 contain "bar":)
-
-s[2] = 'z';
+s[2] = `=['z'];
 `e format
 `e compare-strings
 `+[== != < > <= >=]
-`e concatenate
+`e concatenate-strings
 `(same as arrays:)
 `.string s = "hello";
 `.string s2 = s ~ " world";
@@ -208,7 +205,11 @@ s ~= " world";
 `e trim
 `e pad
 `e number-to-string
+`*import std.conv;
+to!`.string(14)
 `e string-to-number
+`*import std.conv;
+to!`.int(14)
 `e join
 `e split
 `e serialize
@@ -219,6 +220,8 @@ s ~= " world";
 `e extract-substring
 `e character-type
 `*char
+`*wchar
+`*dchar
 `e character-literal
 `*char n = 'X';
 `e test-character
@@ -270,16 +273,20 @@ a.length = 10;
 `e array-size
 `*int a[10];
 a.length;
-`e lookup
+`e array-lookup
 `*int first = a[0];
-`e update
+`e array-update
 a[0] = 7;
 `e out-of-bounds
 RangeError if detected
 `e copy
 `e as-function-argument
 `e array-iterate
-`e sort
+int a[] = [ 3, 2, 4, 1 ];
+`*foreach (i, e; a) {
+  writeln("value at ", i, " is ", e);
+}
+`e array-sort
 `*import std.algorithm;
 
 `*bool comp(`*int a, `*int b) @safe `*pure `*nothrow {
@@ -287,19 +294,27 @@ RangeError if detected
 }
 
 `*int[] arr = [3, 2, 1, 4];
-sort!("a > b")(arr);
-sort!(comp)(arr);
+sort!("a > b")(arr); `(first pair of parens optional)
+sort!(comp)(arr); `(first pair of parens optional)
 `e list-name
 T[]
 `e list-declare
+`*int[] a;
 `e list-literal
 [1, 2, 3]
 `e list-size
 a.length
 `e capacity-get-increase
+a.capacity
+a.capacity = 10;
 `e empty-test-and-clear
-`e lookup
-`e update
+`*bool isEmpty = a.empty;
+
+a.length = `=0;
+`e list-lookup
+a[0]
+`e list-update
+a[2] = 4;
 `e out-of-bounds
 `e index-of-element
 `e slice
@@ -307,6 +322,10 @@ a.length
 `e manipulate-back
 `e manipulate-front
 `e concatenate
+`*int[] a = [1, 2, 3];
+`*int[] b = [4, 5, 6];
+`*int[] c = a1 ~ a2;
+a1 ~= a2;
 `e list-replicate
 `e copy
 `e array-as-function-argument
@@ -327,15 +346,17 @@ a.length
 `e dedupe
 `e membership
 `e intersection
-
 `e union
-
 `e relative-complement-symmetric-difference
-
 `e map
-
+`*import std.algorithm;
+map!(x => x * x)([1, 2, 3]) `(same as) [1, 2, 3].map!(x => x * x)
+map!`=["a * a"]([1, 2, 3]) `(same as) [1, 2, 3].map!`=["a * a"]
+`(these are lazy ranges; call .array to get an array)
 `e filter
-
+`*import std.algorithm;
+filter!(x => x > 1)([1, 2, 3]) `(same as) [1, 2, 3].filter!(x => x > 1)
+filter!`=["a > 1"]([1, 2, 3]) `(same as) [1, 2, 3].filter!`=["a > 1"]
 `e min-and-max-element
 
 `e shuffle-and-sample
@@ -343,32 +364,49 @@ a.length
 `e zip
 
 `e declare-pair
+`*import std.typecons;
+Tuple!(string, int) p1;
+Tuple!(string, int) p2 = tuple(`=["foo"], `=7);
 `e lookup-pair-elements
+`*auto p = tuple("foo", 7);
+
+p[0]
+p[1]
 `e update-pair-elements
+p[0] = `=["bar"];
+p[1] = `=8;
 `e declare-tuple
+Tuple!(string, `*int, `*float) tup1;
+Tuple!(string, `*int, `*float) tup2 = tuple(`=["foo"], `=1, `=[3.7]);
+
+`*auto tup3 = tuple("foo", 1, 3.7);
 `e lookup-tuple-elements
-
+tup3[0]
+tup3[1]
+tup3[2]
 `e update-tuple-elements
-
+tup3[0] = "bar";
 `e tuple-size
 
 `e create-references-for-tuple-elements
 
 `e map-declaration
+`*int[`*string] m;
 `e map-access
+m[`=["hello"]] = 5;
+writeln(m[`=["hello"]]);
 `e map-size
+m.length
 `e map-remove-element
 `e map-element-not-found-result
 `e map-iterate
+`*foreach (k, v; m) {
+  writeln(k, " ", v);
+}
 `e declare-function
-`(parameter names are optional:)
-`*int
-add(`*int m, `*int n);
 `e define-function
-`*int
-add(`*int m, `*int n) {
+`*int add(`*int m, `*int n) {
   `*return m + n;
-
 }
 `e invoke-function
 `*int sum = add(3, 7);
@@ -378,13 +416,30 @@ add(`*int m, `*int n) {
 
 `e named-parameters
 `e pass-by-value
+`*int add1(`*int n) {
+  `*return ++n;
+}
+
+`*int i = 7;
+`*int i2 = add1(i);
 `e pass-by-reference
+`*int add1(`*ref `*int n) {
+  `*return ++n;
+}
+
+`*int i = 7;
+`*int i2 = add1(i);
 `e pass-by-address
+`*int add1(`*int* n) {
+  `*return ++*n;
+}
+
+`*int i = 7;
+`*int i2 = add1(&i);
 `e return-value
 `e no-return-value
 `e recursive-function
-`*int
-factorial(`*int n) {
+`*int factorial(`*int n) {
   `*if (n <= 1) {
     `*return 1;
   }
@@ -397,7 +452,7 @@ factorial(`*int n) {
 `e function-as-value
 `e overload-operator
 `*ref Rational opBinary(`*string op)(`*in Rational o)
-  if (op == "+") {
+  `*if (op == "+") { `(compile-time test)
     `*return Rational(`*this.num * o.denom + o.num * `*this.denom, `*this.denom * o.denom);
 }
 `e if
@@ -411,8 +466,29 @@ factorial(`*int n) {
 }
 `e dangling-else
 `e switch
+`*const `*int INVALID_BINARY_DIGIT = -`=1;
+`*int bin_digit;
+
+`*switch(n) {
+`*case `=0, `=1:
+  bin_digit = n;
+  `*break;
+`*default:
+  bin_digit = INVALID_BINARY_DIGIT;
+  `*break;
+}
 `e while
+`*int i = 1, fact = 1, n = 10;
+
+`*while (i < n) {
+  fact *= i;
+  ++i;
+}
 `e for
+`*int fact;
+`*for (i; 1 .. 11) { `(half-open)
+  fact *= i;
+}
 `e break
 `e break-out-of-nested-loops
 `e continue
@@ -439,7 +515,16 @@ factorial(`*int n) {
 `e send-message
 `e receive-message
 `e standard-file-handles
+stdin
+stderr
+stdout
+`e read-line-from-stdin
+`*string line = readln();
+`e write-line-from-stdin
+writeln("Hello, world!");
 `e printf
+writef("count: `%[%d\n]", `=7);
+writefln("count: %d", `=7);
 `e read-from-file
 `e write-to-file
 `e file-exists-test-file-regular-test
@@ -482,12 +567,29 @@ factorial(`*int n) {
 `e multiple-installations
 `e package-manager
 `e typedef
+`*alias customer_id = `*int;
+customer_id cid = `=3;
 `e enum
+`*enum DayOfWeek { Mon, Tue, Wed, Thu, Fri, Sat, Sun}
+DayOfWeek d = Tue;
 `e struct-definition
+`*class MedalCount {
+  `*string country;
+  `*int gold;
+  `*int silver;
+  `*int bronze;
+}
 `e struct-declaration
+MedalCount spain;
 `e struct-initialization
+MedalCount spain = MedalCount("Spain", 3, 7, 4);
 `e struct-member-assignment
+spain.country = "Spain";
+spain.gold = 3;
+spain.silver = 7;
+spain.bronze = 4;
 `e struct-member-access
+`*int spain_total = spain.gold + spain.silver + spain.bronze;
 `e define-generic-type
 `e instantiate-generic-type
 `e generic-function
@@ -500,6 +602,7 @@ factorial(`*int n) {
 `e template-parameters
 `e variadic-template
 `e semantics-of
+value comparison
 `e define-class
 `e class-definition-location
 `e constructor

@@ -290,7 +290,7 @@ oss << "Spain: " << 7;
 `*int result1 = s1.compare(s2);
 
 `*bool result2 = s1 == s2;
-`e concatenate
+`e concatenate-strings
 `.string s("hello");
 `.string s2 = s + " world";
 
@@ -460,9 +460,9 @@ regex rx("lorem", icase);
 
 `(stack arrays only:)
 size_t len = `.sizeof(a) / `.sizeof(a[0]);
-`e lookup
+`e array-lookup
 `*int first = a[0];
-`e update
+`e array-update
 a[0] = 7;
 `e out-of-bounds
 No defined behavior
@@ -539,12 +539,12 @@ a.reserve(10);
 `*bool is_empty = a.empty();
 
 a.clear();
-`e lookup
+`e list-lookup
 `*int n = a[0];
 
 `(can raise out_of_range:)
 `*int n2 = a.at(0);
-`e update
+`e list-update
 a[2] = 4;
 `e out-of-bounds
 using [] with out-of-bounds index has undefined behavior
@@ -879,15 +879,14 @@ Rational Rational::operator+(Rational& o) {
 `*const `*int INVALID_BINARY_DIGIT(-1);
 `*int bin_digit;
 
-switch(n) {
-case 0:
-case 1:
+`*switch(n) {
+`*case 0:
+`*case 1:
   bin_digit = n;
   break;
-default:
+`*default:
   bin_digit = INVALID_BINARY_DIGIT;
-  break;
-
+  `*break;
 }
 `e while
 `*int i(1), fact(1), n(10);
@@ -895,7 +894,6 @@ default:
 `*while (i < n) {
   fact *= i;
   ++i;
-
 }
 `e for
 `*int fact, n(10);
@@ -937,10 +935,9 @@ default:
 
 `*for (`*int i = 0; i < 4; ++i) {
   `*if (a[i] == 0) {
-    continue;
+    `*continue;
   }
   cout << 1.0 / a[i] << endl;
-
 }
 `e goto
 
@@ -974,7 +971,7 @@ exception
 
 `*void risky() {
   `*if (rand() < 10) {
-    throw runtime_error("bam!");
+    `*throw runtime_error("bam!");
   }
 
 }
@@ -1097,11 +1094,8 @@ add(`*int a, `*int b) noexcept {
 
 `e standard-file-handles
 cin
-
 cout
-
 cerr
-
 clog
 `e printf
 cout << "count: " << 7 << endl;
@@ -1261,14 +1255,12 @@ enum day_of_week { mon, tue, wed, thu, fri, sat, sun };
 
 day_of_week d = tue;
 `e struct-definition
-class MedalCount {
-
-public:
+`*class MedalCount {
+`*public:
   `*const `*char *country;
   `*int gold;
   `*int silver;
   `*int bronze;
-
 };
 `e struct-declaration
 MedalCount spain;
@@ -1276,30 +1268,21 @@ MedalCount spain;
 MedalCount spain = { "Spain", 3, 7, 4 };
 `e struct-member-assignment
 spain.country = "Spain";
-
 spain.gold = 3;
-
 spain.silver = 7;
-
 spain.bronze = 4;
 `e struct-member-access
 `*int spain_total = spain.gold + spain.silver + spain.bronze;
 `e define-generic-type
-template <class A>
-
-class Foo {
-
-public:
+`*template <class A>
+`*class Foo {
+`*public:
   A a;
   Foo(A a);
-
 };
- 
 
-template <class A>
-
+`*template <`*class A>
 Foo<A>::Foo(A a) : a(a) {
-
 }
 `e instantiate-generic-type
 Foo<`.string> f = Foo<`.string>("foo");
