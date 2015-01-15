@@ -215,31 +215,23 @@ Complex Double
 `e complex-decomposition
 `*import Data.Complex
 
-
 realPart (1 :+ 2)
-
 imagPart (1 :+ 2)
-
 phase (1 :+ 2)
-
 magnitude (1 :+ 2)
-
 conjugate (1 :+ 2)
 `e random-number-uniform-integer-uniform-float-normal-float
 `$[cabal install random]
 
 `*import System.Random
 
-
 getStdRandom (randomR (0, 99))
-
 getStdRandom (randomR (0.0, 1.0))
 none
 `e random-seed
 `$[cabal install random]
 
 `*import System.Random
-
 
 setStdGen $ mkStdGen 17
 
@@ -249,22 +241,15 @@ setStdGen seed
 `e bit-operators
 `*import Data.Bits
 
-
 x = 1 `+[::] Integer
-
 y = 3 `+[::] Integer
 
 
 shiftL x 4
-
 shiftR x 4
-
 x .&. y
-
 x .|. y
-
 xor x y
-
 complement x
 `e binary-octal-and-hex-literals
 `(none)
@@ -294,7 +279,6 @@ no
 `e format
 `*import Text.Printf
 
-
 printf "foo %s %d %.2f" "bar" 7 3.1415
 `e concatenate-strings
 "Hello" ++ ", " ++ "World!"
@@ -304,9 +288,7 @@ replicate 80 '-'
 `e translate-case
 `*import Data.Char
 
-
 map toUpper "hello"
-
 map toLower "HELLO"
 `e capitalize
 
@@ -316,7 +298,6 @@ map toLower "HELLO"
 
 `e number-to-string
 "two: " ++ (show 2)
-
 "pi: " ++ (show 3.14)
 `e string-to-number
 `![raises exception if string doesn't completely parse:]
@@ -334,13 +315,13 @@ reads "12" `+[::] [(Int, String)]
 fmap (7 +) $ readMaybe "12"
 fmap (73.9 +) $ readEither "0.037"
 `e join
+unwords ["do", "re", "mi", "fa"] `(join by spaces)
 `*import Data.List
 intercalate " " ["do", "re", "mi", "fa"]
 
 `e split
 `(on whitespace:)
 words "do re mi fa"
-
 `e character-type
 `.Char
 `e character-literal
@@ -682,9 +663,7 @@ hPutStr f "hello world"
 
 `e write-line
 s = "hello out\n"
-
 f = "/tmp/test-haskell"
-
 main = writeFile f s
 `e flush-file-handle
 hFlush f
@@ -696,10 +675,9 @@ hFlush f
 `*import System
 
 Directory.doesFileExist "/etc/hosts"
+
 `*import Control.Monad
-
 `*import System.Posix.Files
-
 
 liftM isRegularFile (getFileStatus "/etc/hosts")
 `e file-size
@@ -712,84 +690,63 @@ liftM fileSize (getFileStatus "/etc/hosts")
 `e is-file-readable-writable-executable
 `*import Control.Monad
 
-
 liftM readable
   (getPermissions "/etc/hosts")
-
 liftM writable
   (getPermissions "/etc/hosts")
-
 liftM executable
   (getPermissions "/etc/hosts")
 `e set-file-permissions
 `*import System.Posix.Files
 
-
-setFileMode "/tmp/foo" ownerModes
-
-setFileMode "/tmp/foo" groupReadMode
-
-setFileMode "/tmp/foo" groupExecuteMode
-
-setFileMode "/tmp/foo" otherReadMode
-
-setFileMode "/tmp/foo" otherExecuteMode
+setFileMode `=["/tmp/foo"] ownerModes
+setFileMode `=["/tmp/foo"] groupReadMode
+setFileMode `=["/tmp/foo"] groupExecuteMode
+setFileMode `=["/tmp/foo"] otherReadMode
+setFileMode `=["/tmp/foo"] otherExecuteMode
 `e copy-file-remove-file-rename-file
 `*import System.Directory
 
-
-copyFile "/tmp/foo" "/tmp/bar"
-
-removeFile "/tmp/foo"
-
-renameFile "/tmp/bar" "/tmp/foo"
+copyFile `=["/tmp/foo"] `=["/tmp/bar"]
+removeFile `=["/tmp/foo"]
+renameFile `=["/tmp/bar"] `=["/tmp/foo"]
 `e create-symlink-symlink-test-readlink
 `*import System.Posix.Files
 
-
 createSymbolicLink "/etc/hosts" "/tmp/hosts"
 ??
-
 readSymbolicLink "/tmp/hosts"
 `e generate-unused-file-name
 
 `e build-pathname
 `*import System.FilePath ((</>))
 
-
 `*let path = "/etc" </> "hosts"
 `e dirname-and-basename
 `*import System.FilePath
 
-
 takeFileName "/etc/hosts"
-
 takeDirectory "/etc/hosts"
 `e iterate-over-directory-by-file
 `*import System
 
--- returns IO [FilePath]
-
+`(returns IO [FilePath])
 Directory.getDirectoryContents "/etc"
 `e make-directory
 `*import System.Directory
-
 
 createDirectoryIfMissing True
   "/tmp/foo/bar"
 `e remove-empty-directory
 `*import System.Directory
 
-
 removeDirectory "/tmp/foodir"
 `e remove-directory-and-contents
 `*import System.Directory
 
-
 removeDirectoryRecursive "/tmp/foodir"
 `e directory-test
 `*import System
-
 
 Directory.doesDirectoryExist "/tmp"
 `e system-temporary-file-directory
@@ -818,37 +775,29 @@ s `+[<-] getProgName
 `e get-and-set-environment-variable
 `*import System.Posix.Env
 
-
 s `+[<-] getEnv "HOME"
-
 putEnv "PATH=/bin"
 `e get-pid-parent-pid
 `*import System.Posix.Process
 
-
 pid `+[<-] getProcessID
-
 ppid `+[<-] getParentProcessID
 `e get-user-id-and-name
 `*import System.Posix.User
 
 uid `+[<-] getRealUserID
-
 username `+[<-] getLoginName
 `e exit
 `*import System.Exit
 
-
 exitWith ExitSuccess
 
-to return nonzero status:
-
+`(to return nonzero status:)
 exitWith (ExitFailure 1)
 `e set-signal-handler
 
 `e external-command
 `*import System.Cmd
-
 
 rawSystem "ls" ["-l", "/tmp"]
 `e escaped-external-command
@@ -856,24 +805,19 @@ rawSystem "ls" ["-l", "/tmp"]
 `e backticks
 
 `e namespace-example
-Foo/Bar.hs
-
+`(Foo/Bar.hs)
 `*module Foo.Bar `*where
   data Baz = Baz
   say Baz = putStrLn "hello"
 
-Main.hs
-
+`(Main.hs)
 `*module Main `*where
-
 `*import Foo.Bar
 
 baz = Baz
-
 main = say baz
 
-to compile and run
-
+`(to compile and run)
 `$[ghc -c Foo/Bar.hs]
 `$[ghc Main.hs]
 `$[./Main]
@@ -895,11 +839,9 @@ module Foo.Bar must be in Foo/Bar.hs
 `e package-manager-setup
 
 `e package-manager-search-install-list-installed
-$ cabal list parsec
-
-$ cabal install parsec
-
-$ cabal list --installed
+`$[cabal list parsec]
+`$[cabal install parsec]
+`$[cabal list --installed]
 `e compile-app-using-package
 
 `e type-synonym
@@ -950,7 +892,6 @@ c = Red
 none, use `*if or piecewise function definition
 `e pattern-match-catchall
 c = Green
-
 `*case c `*of Red `+[->] "red"; `+_ `+[->] "not red"
 `e define-class
 
@@ -976,13 +917,11 @@ it
 
 `e inspect-type
 `*let a = 3
-
 :type a
 `e inspect-namespace
 
 `e load-source-file
 :edit hello.hs
-
 :load hello
 `e load-package
 
