@@ -206,9 +206,10 @@ unusedEntries m ss = S.toList $ M.keysSet m S.\\ S.fromList (concatMap listSecti
 
 main :: IO ()
 main = do
-    cont <- readFile "entries.txt"
-    secs <- parseIO bqSectionList "(entries.txt)" cont
-    langNames <- getArgs
+    (entryName : langNames) <- getArgs
+    let entryFile = entryName ++ ".txt"
+    cont <- readFile entryFile
+    secs <- parseIO bqSectionList entryFile cont
     langs <- mapM readNamedEntryMap langNames
     putStrLn startHTML
     putStrLn $ buildTable secs langs
