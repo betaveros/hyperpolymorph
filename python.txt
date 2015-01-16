@@ -6,13 +6,13 @@
 `e implicit-prologue
 `*import os, re, sys
 `e hello-world
-`(2.x:)
+`c[2.x:]
 `*print `=["Hello, world!"]
-`(3.x:)
+`c[3.x:]
 `.print(`=["Hello, world!"])
 `e file-suffixes
 .py
-`(none)
+`c[none]
 .pyc
 `e interpreter
 `$[python foo.py]
@@ -27,16 +27,16 @@ newline or ;
 
 newlines not separators inside (), [], {}, triple quote literals, or after backslash: \
 `e source-code-encoding
-`(Python 3 source is UTF-8 by default)
+`c[Python 3 source is UTF-8 by default]
 # -*- coding: utf-8 -*-
 `e end-of-line-comment
 # comment
 `e multiple-line-comment
-`(use triple quote string literal:)
+`c[use triple quote string literal:]
 '''comment line
 another line'''
 `e local-variable
-`(in function body:)
+`c[in function body:]
 v = `=None
 a, d = [], {}
 x = 1
@@ -50,10 +50,10 @@ g1, g2 = 7, 8
   `*global g1, g2
   g1, g2 = g2, g1
 `e constant
-`(uppercase identifiers constant by convention)
+`c[uppercase identifiers constant by convention]
 PI = 3.14
 `e assignment
-`(assignments can be chained but otherwise don't return values:)
+`c[assignments can be chained but otherwise don't return values:]
 v = 1
 `e parallel-assignment
 x, y, z = 1, 2, 3
@@ -66,17 +66,17 @@ x, y, z = 1, 2
 `e swap
 x, y = y, x
 `e compound-assignment-arithmetic-string-logical-bit
-`(do not return values:)
+`c[do not return values:]
 += -= *= /= //= %= **=
 += *=
 &= |= ^=
 <<= >>= &= |= ^=
 `e increment-and-decrement
-`(just use x += 1 and x -= 1)
+`c[just use x += 1 and x -= 1]
 `e null
 `=None
 `e null-test
-v `*is `=None `(slightly preferable to ==, as the latter can be overridden)
+v `*is `=None `c[slightly preferable to ==, as the latter can be overridden]
 `e uninitialized-local-variable
 `![raises `.NameError]
 `e uninitialized-global-variable
@@ -92,10 +92,10 @@ x `*if x > 0 `*else -x
 `e logical-operators
 `*and `*or `*not
 `e relational-operators
-`(relational operators are chainable:)
+`c[relational operators are chainable:]
 == != > < >= <=
 `e compare-strings
-`(relational operators are chainable:)
+`c[relational operators are chainable:]
 == != > < >= <=
 `e min-and-max
 `.min(1, 2, 3)
@@ -104,7 +104,7 @@ x `*if x > 0 `*else -x
 `.min([1, 2, 3])
 `.max([1, 2, 3])
 `e three-value-comparison
-`(removed from Python 3:)
+`c[removed from Python 3:]
 `.cmp(0, 1)
 `.cmp('do', 're')
 `e integer-type
@@ -114,15 +114,15 @@ x `*if x > 0 `*else -x
 `e float-type
 `.float
 `e arithmetic-operators
-+ - * `(see note) // %
++ - * `c[see note] // %
 
-`(Python 2 does not have an operator which performs float division on integers. In Python 3 / always performs float division.)
+`c[Python 2 does not have an operator which performs float division on integers. In Python 3 / always performs float division.]
 `e integer-operators
-`(as above)
+`c[as above]
 `e float-operators
-`(as above)
+`c[as above]
 `e add-integer-and-float
-`(automatically coerced)
+`c[automatically coerced]
 `e integer-division
 13 // 5
 `e divmod
@@ -131,7 +131,7 @@ q, r = `.divmod(13, 5)
 `![raises `.ZeroDivisionError]
 `e float-division
 `.float(13) / 5
-`(Python 3:)
+`c[Python 3:]
 13 / 5
 `e float-division-by-zero
 `![raises `.ZeroDivisionError]
@@ -163,13 +163,13 @@ math.floor(x)
 `.abs(x)
 
 `*import math
-math.copysign(1, x) `(returns 1.0 or -1.0 for positive or negative floating zero; int zero is coerced to positive zero)
+math.copysign(1, x) `c[returns 1.0 or -1.0 for positive or negative floating zero; int zero is coerced to positive zero]
 `e arbitrary-length-integer
-`(automatically promoted)
+`c[automatically promoted]
 `e arbitrary-length-integer-operators
-`(as above)
+`c[as above]
 `e integer-overflow
-`(becomes arbitrary length integer of type long)
+`c[becomes arbitrary length integer of type long]
 `e float-overflow
 `![raises `.OverflowError]
 `e rational-type
@@ -192,7 +192,7 @@ cmath.phase(z)
 `.abs(z)
 z.conjugate()
 `e complex-operators
-`(as above)
+`c[as above]
 `e random-number-uniform-integer-uniform-float-normal-float
 `*import random
 
@@ -215,7 +215,7 @@ random.setstate(seed)
 052
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
-`(none)
+`c[none]
 `.int("60", 7)
 `e string-type
 `.str
@@ -226,17 +226,17 @@ random.setstate(seed)
 `=['''don't say "no"''']
 `=["""don't say "no`%[\"]"""]
 `e newline-in-literal
-`(triple quote literals only:)
+`c[triple quote literals only:]
 `=['''first line
 second line''']
 
 `=["""first line
 second line"""]
 `e literal-escapes
-`(single and double quoted:)
+`c[single and double quoted:]
 `%[\newline \\ \' \" \a \b \f \n \r \t \v \ooo \xhh]
 
-`(Python 3:)
+`c[Python 3:]
 `%[\uhhhh \Uhhhhhhhh]
 `e custom-delimiters
 `e here-document
@@ -248,20 +248,20 @@ item = 'ball'
 `e expression-interpolation
 `=['1 + 1 = `%[{}]'].format(1 + 1)
 `e format
-`(old-style)
+`c[old-style]
 `=['lorem `%[%s %d %f]'] % ('ipsum', 13, 3.7)
-`(new-style)
+`c[new-style]
 fmt = `=['lorem `%[{0} {1} {2}]']
 fmt.format('ipsum', 13, 3.7)
 `e are-strings-mutable
 no
 `e copy-string
-`(not necessary)
+`c[not necessary]
 `e concatenate-strings
 s = `=['Hello, ']
 s2 = s + `=['World!']
 
-`(juxtaposition can be used to concatenate literals:)
+`c[juxtaposition can be used to concatenate literals:]
 s2 = 'Hello, ' "World!"
 `e replicate-string
 hbar = `=['-'] `+* 80
@@ -306,21 +306,21 @@ re.split(`=['(\s+)'], `=['do re mi fa'])
 `=['do re re'].index(`=['re'])
 `=['do re re'].rindex(`=['re'])
 
-`(returns -1 if not found:)
+`c[returns -1 if not found:]
 `=['do re re'].find(`=['re'])
 `=['do re re'].rfind(`=['re'])
 `e extract-substring
-`(none)
-`(none)
+`c[none]
+`c[none]
 `=['lorem ipsum'][6:11]
 `e extract-character
 `=['lorem ipsum'][6]
 `e character-type
-`(essentially length-1 str)
+`c[essentially length-1 str]
 `e character-literal
-`(same as string)
+`c[same as string]
 `e test-character
-`(operate on any strings, testing if all characters satisfy:)
+`c[operate on any strings, testing if all characters satisfy:]
 `=['c'].isalpha
 `=['c'].isdigit
 `=['c'].isspace
@@ -343,7 +343,7 @@ outs = ins[13:] + ins[:13]
 re.sub(`=['(\s)+'], `=[r'\1'], `=['too  much  space'])
 `e literal-custom-delimited-literal
 re.compile(`=['lorem|ipsum'])
-`(none)
+`c[none]
 `e character-class-abbreviations
 `%[. \d \D \s \S \w \W]
 `e anchors
@@ -378,7 +378,7 @@ m.groupdict()[`=['suffix']]
 s = `=['dolor sit amet']
 a = re.findall(`=['\w+'], s)
 `e backreference-in-match-and-substitution
-`(none)
+`c[none]
 
 rx = re.compile(`=['(\w+) (\w+)'])
 
@@ -494,8 +494,8 @@ a = [1, 2, 3, 4]
 a[0]
 `e list-lookup
 a[0]
-`(negative indices count from end:)
-a[-1] `(last element)
+`c[negative indices count from end:]
+a[-1] `c[last element]
 `e list-update
 a[0] = 'lorem'
 `e list-out-of-bounds
@@ -508,7 +508,7 @@ a[10] = 'lorem'
 a = ['x', 'y', 'z', 'w']
 i = a.index('y')
 `e slice
-`(select 3rd and 4th elements:)
+`c[select 3rd and 4th elements:]
 a[2:4]
 a[2:2 + 2]
 `e drop
@@ -554,18 +554,18 @@ a = ['do', 're', 'mi', 'fa']
 `*for i, s `*in `.enumerate(a):
   `.print('%s at index %d' % (s, i))
 `e iterate-over-range
-`(use range() in Python 3:)
+`c[use range(] in Python 3:)
 `*for i `*in `.xrange(1, 1000001):
   code
 `e instantiate-range-as-list
 a = `.range(1, 11)
-`(Python 3:)
+`c[Python 3:]
 a = `.list(`.range(1, 11))
 `e reverse
 a = [1, 2, 3]
 
 a[::-1]
-`.reversed(a) `(iterator)
+`.reversed(a) `c[iterator]
 
 a.reverse()
 `e list-sort
@@ -574,7 +574,7 @@ a = ['b', 'A', 'a', 'B']
 sorted(a)
 
 a.sort()
-`(custom binary comparision removed from Python 3:)
+`c[custom binary comparision removed from Python 3:]
 a.sort(key=`.str.lower)
 `e dedupe
 a = [1, 2, 2, 3]
@@ -596,14 +596,14 @@ a = `.list(`.set(a))
 `.max([1,2,3])
 `e map
 `.map(`*lambda x: x * x, [1,2,3])
-`(or use list comprehension:)
+`c[or use list comprehension:]
 [x * x `*for x `*in [1,2,3]]
 `e filter
 `.filter(`*lambda x: x > 1, [1,2,3])
-`(or use list comprehension:)
+`c[or use list comprehension:]
 [x `*for x `*in [1,2,3] `*if x > 1]
 `e fold-from-left
-`(import needed in Python 3 only)
+`c[import needed in Python 3 only]
 `*from functools `*import reduce
 
 `.reduce(`*lambda x, y: x+y, [1,2,3], 0)
@@ -620,7 +620,7 @@ shuffle(a)
 
 sample(a, 2)
 `e zip
-`(array of 3 pairs:)
+`c[array of 3 pairs:]
 a = `.zip([1,2,3], ['a', 'b', 'c'])
 `e map-literal
 d = { 't':1, 'f':0 }
@@ -632,7 +632,7 @@ d['t']
 d = {}
 `![raises `.KeyError:]
 d['lorem']
-`(adds key/value pair:)
+`c[adds key/value pair:]
 d['lorem'] = 'ipsum'
 `e is-key-present
 'y' `*in d
@@ -652,14 +652,14 @@ d2 = {'b':3, 'c':4}
 d1.update(d2)
 `e invert
 to_num = {'t':1, 'f':0}
-`(dict comprehensions added in 2.7:)
+`c[dict comprehensions added in 2.7:]
 to_let = {v:k `*for k, v
   `*in to_num.items()}
 `e iteration
 `*for k, v `*in d.iteritems():
   code
 
-`(Python 3:)
+`c[Python 3:]
 `*for k, v `*in d.items():
   code
 `e keys-and-values-as-arrays
@@ -667,7 +667,7 @@ d.keys()
 
 d.values()
 
-`(Python 3:)
+`c[Python 3:]
 
 `.list(d.keys())
 `.list(d.values())
@@ -705,7 +705,7 @@ a = [2, 3]
 
 add3(1, *a)
 
-`(splat operator can only be used once, and must appear after other unnamed arguments)
+`c[splat operator can only be used once, and must appear after other unnamed arguments]
 `e missing-argument-behavior
 `![raises `.TypeError] if number of arguments doesn't match function arity
 `e default-argument
@@ -746,21 +746,21 @@ d = {'t':1, 'f':0}
 
 foo(a, d)
 `e return-value
-`*return arg `(or None, if not specified)
+`*return arg `c[or None, if not specified]
 `e multiple-return-values
 `*def first_and_second(a):
   `*return a[0], a[1]
 
 x, y = first_and_second([1,2,3])
 `e lambda
-`(body must be an expression:)
+`c[body must be an expression:]
 sqr = `*lambda x: x * x
 `e lambda-invocation
 sqr(2)
 `e function-as-value
 func = add
 `e function-with-private-state
-`(state not private:)
+`c[state not private:]
 `*def counter():
   counter.i += 1
   `*return counter.i
@@ -769,7 +769,7 @@ func = add
 counter.i = 0
 `.print(counter())
 `e closure
-`(Python 3:)
+`c[Python 3:]
 `*def make_counter():
   i = 0
   `*def counter():
@@ -781,7 +781,7 @@ counter.i = 0
 
 nays = make_counter()
 `e generator
-`(The itertools library contains standard generators. c.f. itertools.count())
+`c[The itertools library contains standard generators. c.f. itertools.count(])
 
 `*def make_counter():
   i = 0
@@ -812,9 +812,9 @@ a = ['foo', 'bar', 'baz']
 operator.itemgetter(2)(a)
 `e overload-operator
 `*class Rational:
-  `(...)
+  `c[...]
   `*def __add__(self, o): `*return Rational(self.num * o.denom + o.num * self.denom, self.denom * o.denom)
-`(use special method names)
+`c[use special method names]
 `e if
 `*if 0 == n:
   `.print('no hits')
@@ -833,19 +833,19 @@ operator.itemgetter(2)(a)
 `e continue
 `*continue
 `e break-continue-redo
-`*break `*continue `(none)
+`*break `*continue `c[none]
 `e control-structure-keywords
 `*elif `*else `*for `*if `*while
 `e what-do-does
 `![raises `.NameError unless a value was assigned to it]
 `e statement-modifiers
-`(none)
+`c[none]
 `e base-exception
 BaseException
 
-`(User-defined exceptions should subclass Exception.)
+`c[User-defined exceptions should subclass Exception.]
 
-`(In Python 2 old-style classes can be thrown.)
+`c[In Python 2 old-style classes can be thrown.]
 `e predefined-exceptions
 BaseException
   SystemExit
@@ -878,7 +878,7 @@ BaseException
       ValueError
         UnicodeError
 
-`(Python 3 has a different tree)
+`c[Python 3 has a different tree]
 `e raise-exception
 `*raise `.Exception('bad arg')
 `e catch-all-handler
@@ -978,7 +978,7 @@ f.write('lorem ipsum\n')
 `e flush-file-handle
 f.flush()
 `e end-of-file-test
-`(?)
+`c[?]
 `e get-and-set-file-handle-position
 f.tell()
 
@@ -1005,7 +1005,7 @@ f = StringIO()
 f.write('lorem ipsum\n')
 s = f.getvalue()
 
-`(Python 3 moved StringIO to the io module)
+`c[Python 3 moved StringIO to the io module]
 `e file-exists-test-file-regular-test
 os.path.exists('/etc/hosts')
 
@@ -1023,10 +1023,10 @@ os.chmod('/tmp/foo', 0755)
 `e last-modification-time
 `*from datetime `*import datetime `*as dt
 
-`(unix epoch:)
+`c[unix epoch:]
 t = os.stat('/etc/passwd').st_mtime
 
-`(datetime object:)
+`c[datetime object:]
 t2 = dt.fromtimestamp(t)
 `e copy-file-remove-file-rename-file
 `*import shutil
@@ -1085,7 +1085,7 @@ builder.end('b')
 builder.end('a')
 et = builder.close()
 
-`(<a><b id="123">foo</b></a>:)
+`c[<a><b id="123">foo</b></a>:]
 
 `.print(ET.tostring(et))
 `e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
@@ -1095,7 +1095,7 @@ xml = '<a><b><c ref="3">foo</c></b></a>'
 
 `![raises xml.etree.ElementTree.ParseError]
 
-`(if not well-formed:)
+`c[if not well-formed:]
 doc = ElementTree.fromstring(xml)
 
 nodes = doc.findall('b/c')
@@ -1126,7 +1126,7 @@ os.path.dirname('/etc/hosts')
 
 os.path.basename('/etc/hosts')
 `e absolute-pathname-and-tilde-expansion
-`(symbolic links are not resolved:)
+`c[symbolic links are not resolved:]
 
 os.path.abspath('foo')
 
@@ -1242,12 +1242,12 @@ args = parser.parse_args()
 the_file = args.file
 verbose = args.verbose
 
-`(The flags -h and --help and the usage message are generated automatically. Positional arguments are in args.positional_args. Options can follow positional arguments.)
+`c[The flags -h and --help and the usage message are generated automatically. Positional arguments are in args.positional_args. Options can follow positional arguments.]
 `e load-library
-`(searches sys.path for foo.pyc or foo.py:)
+`c[searches sys.path for foo.pyc or foo.py:]
 `*import foo
 `e load-library-in-subdirectory
-`(foo must contain __init__.py file)
+`c[foo must contain __init__.py file]
 `*import foo.bar
 `e hot-patch
 reload(foo)
@@ -1255,7 +1255,7 @@ reload(foo)
 `![raises `.ImportError if library not found; exceptions generated when parsing library propagate to client]
 `e main-routine-in-library
 `*if __name__ == '__main__':
-  `(code)
+  `c[code]
 `e library-path
 sys.path
 
@@ -1284,7 +1284,7 @@ foo must be in sys.path:
 `e unqualified-import-of-namespace
 `*from foo `*import *
 `e unqualified-import-of-all-subnamespaces
-`(subnamespaces in list __all__ of foo/__init__.py are imported)
+`c[subnamespaces in list __all__ of foo/__init__.py are imported]
 `*from foo `*import *
 `e unqualified-import-of-definitions
 `*from foo `*import bar, baz
@@ -1292,7 +1292,7 @@ foo must be in sys.path:
 `$[pip freeze]
 `$[pip install jinja2]
 `e package-specification-format
-`(in setup.py:)
+`c[in setup.py:]
 #!/usr/bin/env python
 `*from distutils.core `*import setup
 setup(
@@ -1463,7 +1463,7 @@ resp = conn.getresponse()
 urlparse.urljoin('http://google.com',
   'analytics')
 `e parse-url
-`(Python 3 location: urllib.parse)
+`c[Python 3 location: urllib.parse]
 `*import urlparse
 
 url = 'http://google.com:80/foo?q=3#bar'
@@ -1476,10 +1476,10 @@ path = up.path
 query_str = up.query
 fragment = up.fragment
 
-`(returns dict of lists:)
+`c[returns dict of lists:]
 params = urlparse.parse_qs(query_str)
 `e url-encode-decode
-`(Python 3 location: urllib.parse)
+`c[Python 3 location: urllib.parse]
 `*import urllib
 
 
@@ -1514,11 +1514,11 @@ self.assertEqual('do re me',
 x = 10.0 * (1.0 / 3.0)
 y = 10.0 / 3.0
 
-`(default for delta is 0.1**7)
+`c[default for delta is 0.1**7]
 self.assertAlmostEqual(x, y, delta=0.1**6)
 `e regex-assertion
 s = 'lorem ipsum'
-`(uses re.search, not re.match:)
+`c[uses re.search, not re.match:]
 self.assertRegexpMatches(s, 'lorem')
 `e exception-assertion
 a = []
@@ -1536,17 +1536,17 @@ self.assertEqual(7, foo.run(13))
 
 foo.run.assert_called_once_with(13)
 `e setup
-`(in class TestFoo:)
+`c[in class TestFoo:]
 `*def setUp(self):
   `.print('setting up')
 `e teardown
-`(in class TestFoo:)
+`c[in class TestFoo:]
 `*def tearDown(self):
   `.print('tearing down')
 `e check-syntax
 `*import py_compile
 
-`(precompile to bytecode:)
+`c[precompile to bytecode:]
 
 py_compile.compile('foo.py')
 `e stronger-warnings

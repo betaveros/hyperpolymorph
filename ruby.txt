@@ -53,28 +53,28 @@ $g1, $g2 = 7, 8
   $g1, $g2 = $g2, $g1
 `*end
 `e constant
-`(warning if capitalized identifier is reassigned)
+`c[warning if capitalized identifier is reassigned]
 PI = 3.14
 `e assignment
 v = 1
 `e parallel-assignment
 x, y, z = 1, 2, 3
 
-`(3 is discarded:)
+`c[3 is discarded:]
 x, y = 1, 2, 3
 
-`(z set to nil:)
+`c[z set to nil:]
 x, y, z = 1, 2
 `e swap
 x, y = y, x
 `e compound-assignment-arithmetic-string-logical-bit
-`+[+= -= *= /=] `(none) `+[%= **=]
+`+[+= -= *= /=] `c[none] `+[%= **=]
 `+[+= *=]
 `+[&&= ||= ^=]
 `+[<<= >>= &= |= ^=]
 `e increment-and-decrement
 x = 1
-`(x and y not mutated:)
+`c[x and y not mutated:]
 y = x.succ
 z = y.pred
 `e null
@@ -94,7 +94,7 @@ x `+> 0 `+? x `+: -x
 `=false `=nil
 `e logical-operators
 `+[&& || !]
-`(lower precedence:)
+`c[lower precedence:]
 `*[and or not]
 `e relational-operators
 `+[== != > < >= <=]
@@ -116,7 +116,7 @@ q, r = 13.divmod(5)
 `![raises `.ZeroDivisionError]
 `e float-division
 13.to_f `+/ 5
-`(or)
+`c[or]
 13.fdiv(5)
 `e float-division-by-zero
 returns -Infinity, NaN, or Infinity
@@ -144,7 +144,7 @@ x.floor
 `e absolute-value-and-signum
 x.abs
 `e integer-overflow
-`(becomes arbitrary length integer of type Bignum)
+`c[becomes arbitrary length integer of type Bignum]
 `e float-overflow
 Infinity
 `e rational-construction
@@ -168,7 +168,7 @@ z.conj
 rand(100)
 
 rand
-`(none)
+`c[none]
 `e random-seed
 srand(17)
 
@@ -196,10 +196,10 @@ second line']
 `=["first line
 second line"]
 `e literal-escapes
-`(double quoted:)
+`c[double quoted:]
 `%[\a \b \cx \e \f \n \r \s \t \v \xhh \ooo \uhhhh \u{hhhhh}]
 
-`(single quoted:)
+`c[single quoted:]
 `%[\' \\]
 `e custom-delimiters
 s1 = `=[%q(lorem ipsum)]
@@ -222,18 +222,18 @@ puts `=["`%[#{count} #{item}]s"]
 `e are-strings-mutable
 s = `=["bar"]
 s2 = s
-`(sets s and s2 to "baz":)
+`c[sets s and s2 to "baz":]
 s[2] = `=["z"]
 `e copy-string
 s = `=["bar"]
 s2 = s.clone
-`(s2 is not altered:)
+`c[s2 is not altered:]
 s[2] = `=["z"]
 `e concatenate-strings
 s = `=["Hello, "]
 s2 = s `++ `=["World!"]
 
-`(juxtaposition can be used to concatenate literals:)
+`c[juxtaposition can be used to concatenate literals:]
 s2 = "Hello, " 'World!'
 `e replicate-string
 hbar = `=["-"] `+* 80
@@ -242,7 +242,7 @@ hbar = `=["-"] `+* 80
 `=["LOREM"].downcase
 `e capitalize
 `=["lorem"].capitalize
-`(none)
+`c[none]
 `e trim
 `=[" lorem "].strip
 `=[" lorem"].lstrip
@@ -260,7 +260,7 @@ hbar = `=["-"] `+* 80
 `e join
 `=[%w(do re mi fa)].join(' ')
 
-`(implicitly converted to strings:)
+`c[implicitly converted to strings:]
 [1, 2, 3].join(' ')
 `e split
 "do re mi fa".split
@@ -372,7 +372,7 @@ s = `=["10 min, 3 s"]
 delta = Date::Delta.parse(s).in_secs
 t = Time.now + delta
 `e local-timezone
-`(if no timezone is specified the local timezone is used)
+`c[if no timezone is specified the local timezone is used]
 `e arbitrary-timezone
 # gem install tzinfo
 `.require 'tzinfo'
@@ -404,31 +404,31 @@ a = [1, 2, 3, 4]
 a = %w(do re mi)
 `e list-size
 a.size
-a.length `(same as size)
+a.length `c[same as size]
 `e empty-test
 `![NoMethodError if a is nil:]
 a.empty?
 `e lookup
 a[0]
-`(returns last element:)
+`c[returns last element:]
 a[-1]
 `e update
 a[0] = "lorem"
 `e out-of-bounds
 a = []
-`(evaluates as nil:)
+`c[evaluates as nil:]
 a[10]
-`(increases array size to 11:)
+`c[increases array size to 11:]
 a[10] = "lorem"
 `e index-of-element
 a = %w(x y z w)
 i = a.index("y")
 
-`(return nil if not found:)
+`c[return nil if not found:]
 a.index(`=['y'])
 a.rindex(`=['y'])
 `e slice
-`(select 3rd and 4th elements:)
+`c[select 3rd and 4th elements:]
 a[2..3]
 a[2, 2]
 `e drop
@@ -436,7 +436,7 @@ a[1..-1]
 `e manipulate-back
 a = [6, 7, 8]
 a.push(9)
-a << 9 `(same as push)
+a << 9 `c[same as push]
 a.pop
 `e manipulate-front
 a = [6, 7, 8]
@@ -466,7 +466,7 @@ a.each_with_index `*do |s, i|
 `*end
 `e iterate-over-range
 (1..1_000_000).each `*do |i|
-  `(code)
+  `c[code]
 `*end
 `e instantiate-range-as-list
 a = (1..10).to_a
@@ -513,20 +513,20 @@ Set[1,2] ^ Set[2,3,4]
 [1, 2, 3, 4].shuffle
 [1, 2, 3, 4].sample(2)
 `e zip
-`(array of 3 pairs:)
+`c[array of 3 pairs:]
 a = [1,2,3].zip(["a", "b", "c"])
 `e map-literal
 d = { "t" => 1, "f" => 0 }
 `e map-size
 d.size
-d.length `(same as size)
+d.length `c[same as size]
 `e map-lookup
 d["t"]
 `e map-out-of-bounds
 d = {}
-`(evaluates as nil:)
+`c[evaluates as nil:]
 d["lorem"]
-`(adds key/value pair:)
+`c[adds key/value pair:]
 d["lorem"] = "ipsum"
 `e is-key-present
 d.has_key?("y")
@@ -547,7 +547,7 @@ to_num = {"t" =>1, "f"=>0}
 to_let = to_num.invert
 `e iteration
 d.each `*do |k,v|
-  `(code)
+  `c[code]
 `*end
 `e keys-and-values-as-arrays
 d.keys
@@ -566,15 +566,15 @@ factorial = Hash.new `*do |h,k|
 `*def add3(x1, x2, x3)
   x1 + x2 + x3
 `*end
-`(parens are optional and customarily omitted when defining functions with no parameters)
+`c[parens are optional and customarily omitted when defining functions with no parameters]
 `e invoke-function
 add3(1, 2, 3)
-`(parens are optional:)
+`c[parens are optional:]
 add3 1, 2, 3
 `e apply-function-to-array
 a = [2, 3]
 add3(1, *a)
-`(splat operator can be used multiple times and can appear before regular arguments)
+`c[splat operator can be used multiple times and can appear before regular arguments]
 `e missing-argument-behavior
 `![raises ArgumentError if number of arguments doesn't match function arity]
 `e default-argument
@@ -602,7 +602,7 @@ my_log(42, Math::E)
 fequal(1.0, 1.001)
 fequal(1.0, 1.001, :eps=>0.1**10)
 
-`(Ruby 2.0:)
+`c[Ruby 2.0:]
 `*def fequals(x, y, eps: 0.01)
   (x - y).abs < eps
 `*end
@@ -632,7 +632,7 @@ x, y = first_and_second([1,2,3])
 sqr = `*lambda { |x| x * x }
 `e lambda-invocation
 sqr.call(2)
-`(or)
+`c[or]
 sqr[2]
 `e function-as-value
 func = `*lambda {|*args| add(*args)}
@@ -703,7 +703,7 @@ puts "nonzero" `*unless i == 0
 `e base-exception
 Exception
 
-`(User-defined exceptions should subclass StandardError.)
+`c[User-defined exceptions should subclass StandardError.]
 `e predefined-exceptions
 Exception
   NoMemoryError
@@ -743,7 +743,7 @@ Exception
   `*raise
 `*end
 `e catch-exception
-`(catches StandardError)
+`c[catches StandardError]
 `*begin
   risky
 `*rescue
@@ -846,7 +846,7 @@ f = Tempfile.new('')
 f.puts "lorem ipsum"
 puts "tmp file: #{f.path}"
 
-`(file is removed when file handle is garbage-collected or interpreter exits)
+`c[file is removed when file handle is garbage-collected or interpreter exits]
 `e in-memory-file
 `.require 'stringio'
 
@@ -866,9 +866,9 @@ File.executable?("/etc/hosts")
 `e set-file-permissions
 File.chmod(0755, "/tmp/foo")
 `e last-modification-time
-`(Time object:)
+`c[Time object:]
 t2 = File.stat('/etc/passwd').mtime
-`(unix epoch:)
+`c[unix epoch:]
 t = t2.to_i
 `e copy-file-remove-file-rename-file
 `.require 'fileutils'
@@ -911,7 +911,7 @@ xml = builder.a `*do |child|
   child.b("foo", :id=>"123")
 `*end
 
-`(<a><b id="123">foo</b></a>:)
+`c[<a><b id="123">foo</b></a>:]
 puts xml
 `e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
 `.require 'rexml/document'
@@ -1055,11 +1055,11 @@ file = options[:file]
 
 verbose = options[:verbose]
 
-`(The flags -h and --help and the usage message are generated automatically. After calling OptionParser.parse! only positional arguments are in ARGV. Options can follow positional args.)
+`c[The flags -h and --help and the usage message are generated automatically. After calling OptionParser.parse! only positional arguments are in ARGV. Options can follow positional args.]
 `e load-library
 `.require 'foo.rb'
 
-`(searches $LOAD_PATH for foo.rb, foo.so, foo.o, foo.dll:)
+`c[searches $LOAD_PATH for foo.rb, foo.so, foo.o, foo.dll:]
 
 `.require 'foo'
 `e load-library-in-subdirectory
@@ -1072,10 +1072,10 @@ load 'foo.rb'
 `![raises `.LoadError if library not found; exceptions generated when parsing library propagate to client]
 `e main-routine-in-library
 `*if `.[$0] == `.[__FILE__]
-  `(code)
+  `c[code]
 `*end
 `e library-path
-`($: is synonym for $LOAD_PATH:)
+`c[$: is synonym for $LOAD_PATH:]
 `.[$LOAD_PATH]
 `.[$LOAD_PATH] << "/some/path"
 `e library-path-environment-variable
@@ -1089,33 +1089,33 @@ constants, classes, and modules
 `e label-separator
 Foo::Bar.baz
 `e root-namespace-definition
-`(outside of class or module; only constants in root namespace:)
+`c[outside of class or module; only constants in root namespace:]
 
 FOO = 3
 
-`(inside class or module:)
+`c[inside class or module:]
 
 ::FOO = 3
 `e declare-namespace
 `*class Foo
-  `(class definition)
+  `c[class definition]
 `*end
 
 `*module Foo
-  `(module definition)
+  `c[module definition]
 `*end
 `e child-namespace-declaration
 `*module Foo::Bar
-  `(module definitions)
+  `c[module definitions]
 `*end
 
 `*module Foo
   `*module Bar
-    `(module definitions)
+    `c[module definitions]
   `*end
 `*end
 
-`(classes can nest inside classes or modules; modules can nest in classes)
+`c[classes can nest inside classes or modules; modules can nest in classes]
 `e namespace-alias
 Fu = Foo.dup
 
@@ -1125,12 +1125,12 @@ Fu = Foo.dup
 `*include Foo
 `e unqualified-import-of-all-subnamespaces
 `e unqualified-import-of-definitions
-`(none)
+`c[none]
 `e list-installed-packages-install-a-package
 `$[gem list]
 `$[gem install rails]
 `e package-specification-format
-`(in foo.gemspec:)
+`c[in foo.gemspec:]
 spec = Gem::Specification.new `*do |s|
   s.name = "foo"
   s.authors = "Joe Foo"
@@ -1245,7 +1245,7 @@ o.methods
 `e list-object-attributes
 o.instance_variables
 `e list-loaded-libraries
-`(relative to directory in lib path:)
+`c[relative to directory in lib path:]
 `.[$LOADED_FEATURES]
 `.[$"]
 `e list-loaded-namespaces
@@ -1310,7 +1310,7 @@ port = up.port
 path = up.path
 query_str = up.query
 fragment = up.fragment
-`(Ruby 1.9; returns array of pairs:)
+`c[Ruby 1.9; returns array of pairs:]
 params = URI.decode_www_form(query_str)
 `e url-encode-decode
 `.require 'cgi'
@@ -1340,7 +1340,7 @@ assert_equal("do re me", s)
 `e approximate-assertion
 x = 10.0 * (1.0 / 3.0)
 y = 10.0 / 3.0
-`(default for delta is 0.001)
+`c[default for delta is 0.001]
 assert_in_delta(x, y, 0.1**6)
 `e regex-assertion
 s = "lorem ipsum"
@@ -1358,12 +1358,12 @@ foo = mock()
 foo.expects(:run).returns(7).with(13).once
 foo.run(13)
 `e setup
-`(in class TestFoo:)
+`c[in class TestFoo:]
 `*def setup
   puts "setting up"
 `*end
 `e teardown
-`(in class TestFoo:)
+`c[in class TestFoo:]
 `*def teardown
   puts "tearing down"
 `*end

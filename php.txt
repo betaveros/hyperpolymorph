@@ -23,7 +23,7 @@ statements must be semicolon terminated inside {}
 /* comment line
 another line */
 `e local-variable
-`(in function body:)
+`c[in function body:]
 $v = `=NULL;
 $a = [];
 $d = [];
@@ -46,23 +46,23 @@ nestable (with use clause):
 $v = 1;
 `e parallel-assignment
 `*list($x, $y, $z) = [1 ,2, 3];
-`(3 is discarded:)
+`c[3 is discarded:]
 `*list($x, $y) = [1, 2, 3];
-`($z set to NULL:)
+`c[$z set to NULL:]
 `*list($x, $y, $z) = [1, 2];
 `e swap
 `*list($x, $y) = [$y, $x];
 `e compound-assignment-arithmetic-string-logical-bit
-+= -= *= `(none) /= %= **=
-.= `(none)
-&= |= `(none)
++= -= *= `c[none] /= %= **=
+.= `c[none]
+&= |= `c[none]
 <<= >>= &= |= ^=
 `e increment-and-decrement
 $x = 1;
 $y = ++$x;
 $z = --$y;
 `e null
-`=NULL `(case insensitive)
+`=NULL `c[case insensitive]
 `e null-test
 `*is_null($v)
 ! `*isset($v)
@@ -73,19 +73,19 @@ $z = --$y;
 `e conditional-expression
 $x > 0 ? $x : -$x
 `e true-and-false
-`=TRUE `=FALSE `(case insensitive)
+`=TRUE `=FALSE `c[case insensitive]
 `e falsehoods
 `=FALSE `=NULL 0 0.0 "" "0" []
 `e logical-operators
 && || !
-`(lower precedence:)
+`c[lower precedence:]
 `*and `*or `*xor
 `e relational-operators
 == != or <> > < >= <=
-`(no conversion:) === !==
+`c[no conversion:] === !==
 `e compare-strings
 == != or <> > < >= <=
-`(no conversion:) === !==
+`c[no conversion:] === !==
 `e min-and-max
 `.min(1, 2, 3)
 `.max(1, 2, 3)
@@ -94,7 +94,7 @@ $a = [1, 2, 3]
 `.max($a)
 `e three-value-comparison
 `e arithmetic-operators
-+ - * / `(none) %
++ - * / `c[none] %
 `e integer-division
 (`*int)(13 / 5)
 `e divmod
@@ -132,10 +132,10 @@ INF
 `e random-number-uniform-integer-uniform-float-normal-float
 `.rand(0,99)
 `.lcg_value()
-`(none)
+`c[none]
 `e random-seed
 `.srand(17);
-`(none)
+`c[none]
 `e bit-operators
 << >> & | ^ ~
 `e binary-octal-and-hex-literals
@@ -184,7 +184,7 @@ $fmt = "lorem %s %d %f";
 `e are-strings-mutable
 $s = "bar";
 $s2 = $s;
-`(sets s to "baz"; s2 is unchanged:)
+`c[sets s to "baz"; s2 is unchanged:]
 $s[2] = "z";
 `e copy-string
 $s2 = $s;
@@ -226,15 +226,15 @@ $a = ["do", "re", "mi", "fa"];
 `e string-length
 `.strlen("lorem")
 `e index-of-substring
-`(returns FALSE if not found, which must be tested for with === since it coerces to 0:)
+`c[returns FALSE if not found, which must be tested for with === since it coerces to 0:]
 `.strpos("do re re", "re")
 `.strrpos("do re re", "re")
 `e extract-substring
 `.substr("lorem ipsum", 6, 5)
-`(none)
-`(none)
+`c[none]
+`c[none]
 `e extract-character
-`(syntax error to use index notation directly on string literal:)
+`c[syntax error to use index notation directly on string literal:]
 $s = "lorem ipsum";
 $s[6];
 `e chr-and-ord
@@ -383,7 +383,7 @@ list($frac, $sec) = explode(" ",
 
 $usec = $frac * 1000 * 1000;
 `e sleep
-`(a float argument will be truncated to an integer:)
+`c[a float argument will be truncated to an integer:]
 
 sleep(1);
 `e timeout
@@ -392,7 +392,7 @@ use set_time_limit to limit execution time of the entire script; use stream_set_
 array
 `e list-literal
 $a = [1, 2, 3, 4];
-`(older syntax:)
+`c[older syntax:]
 $a = `.array(1, 2, 3, 4);
 `e quote-words
 `e list-size
@@ -401,21 +401,21 @@ $a = `.array(1, 2, 3, 4);
 `+!$a
 `e lookup
 $a[0]
-`(PHP uses the same type for arrays and dictionaries; indices can be negative integers or strings)
+`c[PHP uses the same type for arrays and dictionaries; indices can be negative integers or strings]
 `e update
 $a[0] = "lorem";
 `e out-of-bounds
 $a = [];
-`(evaluates as NULL:)
+`c[evaluates as NULL:]
 $a[10];
-`(increases array size to one:)
+`c[increases array size to one:]
 $a[10] = "lorem";
 `e index-of-element
 $a = ["x", "y", "z", "w"];
 $i = `.array_search("y", $a);
 `e slice
-`(select 3rd and 4th elements:)
-`(none)
+`c[select 3rd and 4th elements:]
+`c[none]
 `.array_slice($a, 2, 2)
 `e drop
 `.array_slice($a, 1)
@@ -423,7 +423,7 @@ $i = `.array_search("y", $a);
 $a = [6, 7, 8];
 
 `.array_push($a, 9);
-$a[] = 9; `(same as array_push)
+$a[] = 9; `c[same as array_push]
 
 array_pop($a);
 `e manipulate-front
@@ -444,7 +444,7 @@ $a = `.array_merge($a, [4, 5, 6]);
 $a = [1, 2, [3, 4]];
 
 $a2 =& $a;
-`(none)
+`c[none]
 
 $a4 = $a;
 `e arrays-as-function-arguments
@@ -472,10 +472,10 @@ $a = `.array_reverse($a);
 `e sort
 $a = ["b", "A", "a", "B"];
 
-`(none)
+`c[none]
 
 sort($a);
-`(none, but usort sorts in place)
+`c[none, but usort sorts in place]
 `e dedupe
 $a = [1, 2, 2, 3];
 
@@ -499,7 +499,7 @@ $a1 = [1, 2, 3];
 $a2 = [2];
 
 `.array_values(`.array_diff($a1, $a2))
-`(none)
+`c[none]
 `e map
 array_map(`*function ($x) {
     `*return $x * $x;
@@ -515,9 +515,9 @@ array_reduce([1, 2, 3],
     `*return $x + $y;
   }, 0)
 `e universal-test
-`(use array_filter)
+`c[use array_filter]
 `e existential-test
-`(use array_filter)
+`c[use array_filter]
 `e shuffle-and-sample
 $a = [1, 2, 3, 4];
 
@@ -525,7 +525,7 @@ shuffle($a);
 
 array_rand($a, 2)
 `e zip
-`(array of 3 pairs:)
+`c[array of 3 pairs:]
 
 $a = array_map(NULL,
   [1, 2, 3],
@@ -533,7 +533,7 @@ $a = array_map(NULL,
 `e literal
 $d = ["t" => 1, "f" => 0];
 
-`(older syntax:)
+`c[older syntax:]
 
 $d = array("t" => 1, "f" => 0);
 `e map-size
@@ -568,7 +568,7 @@ $to_num = ["t"=>1, "f"=>0];
 $to_let = array_flip($to_num);
 `e iteration
 `*foreach ($d `*as $k => $v) {
-  `(code)
+  `c[code]
 }
 `e keys-and-values-as-arrays
 `.array_keys($d)
@@ -593,7 +593,7 @@ extend ArrayObject for computed values and defaults other than zero or empty str
 `e invoke-function
 add3(1, 2, 3);
 
-`(function names are case insensitive:)
+`c[function names are case insensitive:]
 
 ADD3(1, 2, 3);
 `e apply-function-to-array
@@ -689,7 +689,7 @@ $func = "add";
 $nays = make_counter();
 `*echo $nays();
 `e generator
-`(PHP 5.5:)
+`c[PHP 5.5:]
 `*function make_counter() {
   $i = 0;
   `*while (1) {
@@ -700,10 +700,10 @@ $nays = make_counter();
 
 
 $nays = make_counter();
-`(does not return a value:)
+`c[does not return a value:]
 
 $nays->next();
-`(runs generator if generator has not yet yielded:)
+`c[runs generator if generator has not yet yielded:]
 `*echo $nays->current();
 `e decorator
 
@@ -848,7 +848,7 @@ $f = tmpfile();
 
 fwrite($f, "lorem ipsum\n");
 
-`(no way to get file name)
+`c[no way to get file name]
 
 fclose($f);
 
@@ -880,11 +880,11 @@ is_executable("/etc/hosts")
 `e set-file-permissions
 chmod("/tmp/foo", 0755);
 `e last-modification-time
-`(unix epoch:)
+`c[unix epoch:]
 
 $t = stat('/etc/passwd')['mtime'];
 
-`(DateTime object:)
+`c[DateTime object:]
 
 $t2 = new DateTime('UTC');
 
@@ -928,12 +928,12 @@ $b = $sxe->addChild("b", "foo");
 
 $b->addAttribute("id", "123");
 
-`(<a><b id="123">foo</b></a>:)
+`c[<a><b id="123">foo</b></a>:]
 `*echo $sxe->asXML();
 `e parse-xml-all-nodes-matching-xpath-query-first-node-matching-xpath-query
 $xml = "<a><b><c ref='3'>foo</c></b></a>";
 
-`(returns NULL and emits warning if not well-formed:)
+`c[returns NULL and emits warning if not well-formed:]
 
 $doc = simplexml_load_string($xml);
 
@@ -973,7 +973,7 @@ dirname("/etc/hosts")
 
 basename("/etc/hosts")
 `e absolute-pathname-and-tilde-expansion
-`(file must exist; symbolic links are resolved:)
+`c[file must exist; symbolic links are resolved:]
 
 realpath("foo")
 
@@ -982,7 +982,7 @@ realpath("/foo")
 realpath("../foo")
 
 realpath("./foo")
-`(no function for tilde expansion)
+`c[no function for tilde expansion]
 `e iterate-over-directory-by-file
 `*if ($dir = opendir("/etc")) {
   `*while ($file = readdir($dir)) {
@@ -1079,7 +1079,7 @@ $file = $opts["f"] ? $opts["f"] :
 
 }
 
-`(Processing stops at first positional argument. Unrecognized options are ignored. An option declared to have an argument is ignored if the argument is not provided on the command line. getopt() does not modify $argv or provide means to identify positional arguments.)
+`c[Processing stops at first positional argument. Unrecognized options are ignored. An option declared to have an argument is ignored if the argument is not provided on the command line. getopt(] does not modify $argv or provide means to identify positional arguments.)
 `e load-library
 require_once("foo.php");
 `e load-library-in-subdirectory
@@ -1301,7 +1301,7 @@ $query_str = $up["query"];
 
 $fragment = $up["fragment"];
 
-`($params is associative array; if keys are reused, later values overwrite earlier values)
+`c[$params is associative array; if keys are reused, later values overwrite earlier values]
 
 parse_str($query_str, $params);
 `e url-encode-decode
@@ -1341,7 +1341,7 @@ $s = "do re me";
 
 $this->assertEquals($s, "do re mi");
 
-`(also asserts args have same type:)
+`c[also asserts args have same type:]
 
 $this->assertSame($s, "do re mi");
 `e approximate-assertion

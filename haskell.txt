@@ -6,7 +6,7 @@
 main = putStrLn `=["hello"]
 `e file-suffixes
 .hs .lhs
-`(none)
+`c[none]
 .o
 `e interpreter
 `$[echo 'main = putStrLn "hello"' > hello.hs]
@@ -37,14 +37,14 @@ another comment -}
 `e constant
 n = 3
 `e local-variable
-`(Haskell is purely functional and all normal variables are immutable. A maximally functional version of mutable variables may be simulated with Control.Monad.Trans.State, of the transformers package:)
+`c[Haskell is purely functional and all normal variables are immutable. A maximally functional version of mutable variables may be simulated with Control.Monad.Trans.State, of the transformers package:]
 `*import Control.Monad.Trans.State
 evalState (`*do
   set 4
   modify (+1)
   fmap (+7) get) 3
-`(runState returns (result, state); evalState returns result; execState returns state)
-`(A more destructive version uses STRefs in a STRef monad or IORefs in the IO monad:)
+`c[runState returns (result, state]; evalState returns result; execState returns state)
+`c[A more destructive version uses STRefs in a STRef monad or IORefs in the IO monad:]
 `*import Data.IORef
 `*do
   n `+[<-] newIORef 3
@@ -67,7 +67,7 @@ n = -3
 `![compilation error:]
 `*if `=True `*then "hello" `*else 3
 `e null
-`.Nothing `(type Maybe a)
+`.Nothing `c[type Maybe a]
 `e nullable-type
 list = [`.Just 3, `.Nothing, `.Just (-4)]
 `e null-test
@@ -111,13 +111,13 @@ z = x * y
 `e compare-strings
 == /= < > <= >=
 `e three-value-comparison
-0 ``compare`` 1 `(returns value of type Ordering, one of LT, EQ, or GT)
+0 ``compare`` 1 `c[returns value of type Ordering, one of LT, EQ, or GT]
 `e min-and-max
 min 1 2
 max 1 2
 `e integer-type
-`.Int `(fixed-width)
-`.Integer `(arbitrary length)
+`.Int `c[fixed-width]
+`.Integer `c[arbitrary length]
 `e integer-literal
 an expression, not a literal:
 
@@ -126,13 +126,13 @@ an expression, not a literal:
 Double
 `e integer-operators
 + - * ``quot`` ``rem`` ``div`` ``mod``
-`(the last four are functions, not infix operators, although they are often used as infix operators by surrounding with backquotes. quot truncates towards 0 and rem's value has the same sign as the dividend; div truncates down and mod returns a nonnegative result.)
+`c[the last four are functions, not infix operators, although they are often used as infix operators by surrounding with backquotes. quot truncates towards 0 and rem's value has the same sign as the dividend; div truncates down and mod returns a nonnegative result.]
 `e float-operators
 `+[+ - * /]
 `e add-integer-and-float
-`(integer literals are parsed as floats in such contexts:)
+`c[integer literals are parsed as floats in such contexts:]
 3 + 7.0
-`(integers can be converted with fromIntegral:)
+`c[integers can be converted with fromIntegral:]
 x = 3 `+[::] Int
 fromIntegral x + 7.0
 `e divmod
@@ -145,13 +145,13 @@ fromIntegral x + 7.0
 `e float-division-by-zero
 evaluates to Infinity, NaN, or -Infinity, values which do not have literals
 `e power
-2 ^ 32 `(integer powers only)
-2 ^^ 32 `(fractional base, integer powers only)
-2 ** 32 `(same-type floating base and exponent)
+2 ^ 32 `c[integer powers only]
+2 ^^ 32 `c[fractional base, integer powers only]
+2 ** 32 `c[same-type floating base and exponent]
 `e sqrt
 sqrt 2
 `e sqrt-1
-sqrt (-1) `(evaluates to NaN, a value which has no literal)
+sqrt (-1) `c[evaluates to NaN, a value which has no literal]
 `e transcendental-functions
 exp log
 
@@ -175,16 +175,16 @@ signum (-7)
 `e float-overflow
 evaluates to Infinity, a value which has no literal
 `e arbitrary-length-integer
-`(Integer is arbitrary length type, and assumed by default for numbers in contexts where no other type restrictions can be inferred.)
+`c[Integer is arbitrary length type, and assumed by default for numbers in contexts where no other type restrictions can be inferred.]
 `*let n = 7 `+[::] `.Integer
-`(Note that an integer literal is polymorphic, as is a function defined as a single integer literal.)
+`c[Note that an integer literal is polymorphic, as is a function defined as a single integer literal.]
 `*let m = 12
 `e arbitrary-length-integer-operators
 n + m
 n - m
 n * m
-quot n m `(or) div n m
-rem n m `(or) mod n m
+quot n m `c[or] div n m
+rem n m `c[or] mod n m
 
 n == m
 n < m
@@ -253,7 +253,7 @@ x .|. y
 xor x y
 complement x
 `e binary-octal-and-hex-literals
-`(none)
+`c[none]
 052
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
@@ -264,7 +264,7 @@ showIntAtBase 7 intToDigit 42 ""
   [(n, "")] `+[->] n
   _ `+[->] error "Parse failed"
 `e string-type
-String `(alias for [Char])
+String `c[alias for [Char]]
 `e string-literal
 `=["Hello, World!"]
 `e newline-in-literal
@@ -305,30 +305,30 @@ map toLower "HELLO"
 7 + (read "12")`+[::]Integer
 73.9 + (read "0.037")`+[::]Double
 
-`(reads returns a list of (parsed value, remaining string) pairs, or an empty list if parsing fails:)
+`c[reads returns a list of (parsed value, remaining string] pairs, or an empty list if parsing fails:)
 reads "12" `+[::] [(Int, String)]
 `*case reads "12" `*of
   [(x, "")] `+[->] 7 + x
   `+_ `+[->] error "Parse failed"
 
-`(GHC 7.6:)
+`c[GHC 7.6:]
 `*import Text.Read
 fmap (7 +) $ readMaybe "12"
 fmap (73.9 +) $ readEither "0.037"
 `e join
-unwords ["do", "re", "mi", "fa"] `(join by spaces)
+unwords ["do", "re", "mi", "fa"] `c[join by spaces]
 `*import Data.List
 intercalate " " ["do", "re", "mi", "fa"]
 
 `e split
-`(on whitespace:)
+`c[on whitespace:]
 words "do re mi fa"
 `e character-type
 `.Char
 `e character-literal
 `=['h']
 `e string-length
-length "hello" `(type Int)
+length "hello" `c[type Int]
 `e index-of-substring
 
 `e extract-substring
@@ -339,7 +339,7 @@ drop 0 (take 4 "hello")
 Char.ord 'a'
 Char.chr 97
 `e to-array-of-characters
-`(strings are exactly the same as lists of characters)
+`c[strings are exactly the same as lists of characters]
 `e date-time-type
 ClockTime CalendarTime TimeDiff
 `e current-date-time
@@ -357,19 +357,19 @@ getClockTime >>= (`+\(TOD sec `+_) `+[->] return sec)
 `*import Data.Array
 a = listArray (0, 2) [1, 2, 3]
 `e array-size
-`(returns smallest and largest valid index:)
+`c[returns smallest and largest valid index:]
 bounds a
 `e array-lookup
 n = a ! 0
 `e array-update
-`(returns updated copy:)
+`c[returns updated copy:]
 a // [(2, 4)]
 `e array-out-of-bounds
 `![exception]
 `e array-iterate
-`(purely functional map:)
-fmap `(function) a
-`(for monadic iteration, first convert to list with elems or assocs:)
+`c[purely functional map:]
+fmap `c[function] a
+`c[for monadic iteration, first convert to list with elems or assocs:]
 mapM_ (`+\e `+[->] print e) $ elems a
 mapM_ (`+\(i,e) `+[->] printf "%d at index %d\n" e i) $ assocs a
 `e list-name
@@ -385,7 +385,7 @@ length [1, 2, 3]
 
 list == []
 null list
-`(pattern matching can often be used to avoid these constructions:)
+`c[pattern matching can often be used to avoid these constructions:]
 `*case list `*of
   (x:xs) = x + 1
   [] = error "empty list"
@@ -404,10 +404,10 @@ length [1, 2, 3]
 `e index-of-element
 `*import Data.list
 
-`(Just 1:)
+`c[Just 1:]
 elemIndex 8 [7, 8, 9]
 
-`(Nothing:)
+`c[Nothing:]
 elemIndex 10 [7, 8, 9]
 `e update
 
@@ -431,9 +431,9 @@ forM_ [1, 2, 3] print
 `e iterate-over-indices-and-elements
 mapM_ (uncurry $ printf "%s at index %d\n") $ zip ["do", "re", "mi", "fa"] [0..]
 `e iterate-over-range
-forM_ [1..1000000] `(IO monad expression)
+forM_ [1..1000000] `c[IO monad expression]
 `e instantiate-range-as-list
-[1..1000000] `(sugar for:) enumFromTo 1 1000000
+[1..1000000] `c[sugar for:] enumFromTo 1 1000000
 `e reverse
 reverse [1, 2, 3]
 `e sort
@@ -444,22 +444,22 @@ sortBy (`+\x y `+[->] y ``compare`` x) [1, 3, 2, 4]
 
 `*import Data.Ord
 sortBy (comparing id) [1, 3, 2, 4]
-sortBy (comparing Down) [1, 3, 2, 4] `(Down is newtype that reverses orderings)
+sortBy (comparing Down) [1, 3, 2, 4] `c[Down is newtype that reverses orderings]
 `e dedupe
 `*import Data.List
 a = [1, 2, 2, 3]
 nub a
 `e map
 map (`+\x `+[->] x * x) [1, 2, 3]
-`(or use list comprehension:)
+`c[or use list comprehension:]
 [x * x | x `+[<-] [1, 2, 3]]
 `e filter
 filter (`+\x `+[->] x > 2) [1, 2, 3]
-`(or use list comprehension:)
+`c[or use list comprehension:]
 [x | x `+[<-] [1, 2, 3], x > 2]
 `e fold-from-left
 foldl (+) 0 [1, 2, 3]
-foldl' (+) 0 [1, 2, 3] `(strict variant)
+foldl' (+) 0 [1, 2, 3] `c[strict variant]
 `e fold-from-right
 foldr (-) 0 [1, 2, 3]
 `e membership
@@ -499,19 +499,19 @@ m M.! k
 `e map-size
 M.length m
 `e map-remove-element
-M.delete k m `(returns new map)
+M.delete k m `c[returns new map]
 `e map-literal
-`(none, use fromList:)
+`c[none, use fromList:]
 M.fromList [('t', 1), ('f', 0)]
 `e is-key-present
-M.delete k m `(returns new map)
+M.delete k m `c[returns new map]
 `e define-function
 average a b = (a + b) / 2.0
 `e invoke-function
-`(4.5, as function application has highest precedence:)
+`c[4.5, as function application has highest precedence:]
 average 1 2 + 3
 
-`(3.0:)
+`c[3.0:]
 average 1 (2 + 3)
 average 1 $ 2 + 3
 `e define-function-with-block-body
@@ -537,7 +537,7 @@ add x y = x + y
 `e currying
 plus2 = add 2
 plus2 = (+) 2
-`(infix operators allow partial application by supplying one operand on either side:)
+`c[infix operators allow partial application by supplying one operand on either side:]
 half = (/ 2)
 twoOver = (2 /)
 `e composition
@@ -549,7 +549,7 @@ g x = x * 3
 double x = 2 * x
 quadruple x = double . double
 `e lazy-evaluation
-`(lazy evaluation is default:)
+`c[lazy evaluation is default:]
 arg1 x y = x
 arg1 7 (error "bam!")
 `e strict-evaluation
@@ -570,7 +570,7 @@ arg1 7 (error "bam!")
   putStrLn "one"
   putStrLn "two"
   putStrLn "three"
-`(sugar for:)
+`c[sugar for:]
 putStrLn "one" >> putStrLn "two" >> putStrLn "three"
 `e while
 
@@ -617,7 +617,7 @@ putStrLn "lorem ipsum"
 `*import Text.Printf
 
 printf :: PrintfType r => String -> r
-`(printf can be an IO action or a string, taking any number of format arguments, chosen by type-inference magic)
+`c[printf can be an IO action or a string, taking any number of format arguments, chosen by type-inference magic]
 `e open-file-for-reading
 `*import System.IO
 
@@ -731,7 +731,7 @@ takeDirectory "/etc/hosts"
 `e iterate-over-directory-by-file
 `*import System
 
-`(returns IO [FilePath])
+`c[returns IO [FilePath]]
 Directory.getDirectoryContents "/etc"
 `e make-directory
 `*import System.Directory
@@ -793,7 +793,7 @@ username `+[<-] getLoginName
 
 exitWith ExitSuccess
 
-`(to return nonzero status:)
+`c[to return nonzero status:]
 exitWith (ExitFailure 1)
 `e set-signal-handler
 
@@ -806,19 +806,19 @@ rawSystem "ls" ["-l", "/tmp"]
 `e backticks
 
 `e namespace-example
-`(Foo/Bar.hs)
+`c[Foo/Bar.hs]
 `*module Foo.Bar `*where
   data Baz = Baz
   say Baz = putStrLn "hello"
 
-`(Main.hs)
+`c[Main.hs]
 `*module Main `*where
 `*import Foo.Bar
 
 baz = Baz
 main = say baz
 
-`(to compile and run)
+`c[to compile and run]
 `$[ghc -c Foo/Bar.hs]
 `$[ghc Main.hs]
 `$[./Main]
@@ -851,8 +851,8 @@ module Foo.Bar must be in Foo/Bar.hs
 `*data Color = Red | Green | Blue `*deriving (Eq, Ord, Show)
 col = Red
 
-print col `(Red)
-col < Green `(True)
+print col `c[Red]
+col < Green `c[True]
 `e tuple-product-type-with-one-field
 `*data SpecialIntType = SpecialInt `.Integer
 n = SpecialInt 7

@@ -63,19 +63,13 @@ bqSpecial = try $ char '`' >>
     <|> (char '%' >> fmap (makeSpanTag "sval") bqGroup)
     <|> (char '!' >> fmap (makeSpanTag "error") bqGroup)
     <|> (char '#' >> fmap (makeSpanTag "preproc") bqGroup)
-    <|> (makeNote <$> plainMatching '(' ')')
+    <|> (char 'c' >> fmap makeNote bqGroup)
     )
 
 bqMatching :: Char -> Char -> CharParser String
 bqMatching lc rc = do
     void $ char lc
     ss <- manyTill (((\x -> [lc] ++ x ++ [rc]) <$> bqMatching lc rc) <|> bqAtom) (char rc)
-    return $ concat ss
-
-plainMatching :: Char -> Char -> CharParser String
-plainMatching lc rc = do
-    void $ char lc
-    ss <- manyTill (((\x -> [lc] ++ x ++ [rc]) <$> plainMatching lc rc) <|> plainAtom) (char rc)
     return $ concat ss
 
 bqGroup :: CharParser String

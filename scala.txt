@@ -3,23 +3,23 @@
 `e show-version
 `$[scala -version]
 `e hello-world
-`(script:)
+`c[script:]
 `.println(`=["Hello, world!"])
 
-`(object:)
+`c[object:]
 `*object Hello {
   `*def main(args: `.Array[`.String]) {
     `.println(`=["Hello, world!"])
   }
 }
 
-`(object, using App trait:)
+`c[object, using App trait:]
 `*object Hello `*extends App {
   `.println(`=["Hello, world!"])
 }
 `e file-suffixes
 .scala
-`(none)
+`c[none]
 .class
 `e interpreter
 `$[echo 'println("hello")' > hello.scala]
@@ -58,10 +58,10 @@ scala
 /* comment
 another comment */
 `e constant
-`(evaluates 1 + 2 once:)
+`c[evaluates 1 + 2 once:]
 `*val n = 1 + 2
 
-`(evaluates 1 + 2 each time n is used:)
+`c[evaluates 1 + 2 each time n is used:]
 `*def n = 1 + 2
 `e local-variable
 `*var n = 3
@@ -74,16 +74,16 @@ n + 7
 `e assignment
 `*val v = 1
 `*var w = 0
-w = 1 `(returns Unit)
+w = 1 `c[returns Unit]
 
-`(assigns the same value to multiple variables; only works when variables are first defined:)
+`c[assigns the same value to multiple variables; only works when variables are first defined:]
 `*val v1, v2 = 0
 `*var v3, v4 = 0
 `e parallel-assignment
-`(only works when variables are first defined:)
+`c[only works when variables are first defined:]
 `*val (x, y, z) = (1, 2, 3)
 `e compound-assignment-arithmetic-string-logical-bit
-+= -= *= /= `(none) %= `(none)
++= -= *= /= `c[none] %= `c[none]
 += *=
 &= |= ^=
 <<= >>= &= |= ^=
@@ -92,20 +92,20 @@ w = 1 `(returns Unit)
 
 `*if (n < 0) -n `*else n
 `e branch-type-mismatch
-`(expression has type Any:)
+`c[expression has type Any:]
 `*if (`=true) { "hello" } `*else { 3 }
 `e null
-`.None `(type Option[T])
-`=null `(generally discouraged, but needed for Java interop)
+`.None `c[type Option[T]]
+`=null `c[generally discouraged, but needed for Java interop]
 `e nullable-type
 `*val list = `.List(`.Some(3), `.None, `.Some(-4))
 `e null-test
-v.isDefined `(Option[T])
-v eq `=null `(Java null)
+v.isDefined `c[Option[T]]
+v eq `=null `c[Java null]
 `e coalesce
 `![throws Predef.NoSuchElementException if v is `.None:]
 v.get
-`(0 if v is None:)
+`c[0 if v is None:]
 v.getOrElse(0)
 `e nullif
 `e expression-type-declaration
@@ -131,29 +131,29 @@ Boolean
 `e compare-strings
 == != < > <= >=
 `e min-and-max
-math.min 1 2 `(or) 1 min 2
-math.max 1 2 `(or) 1 max 2
+math.min 1 2 `c[or] 1 min 2
+math.max 1 2 `c[or] 1 max 2
 
 List(1, 2, 3).min
 List(1, 2, 3).max
 `e three-value-comparison
-`(defined in scala.math.Ordered[A]:)
+`c[defined in scala.math.Ordered[A]:]
 0 compare 1
 "do" compare "re"
 `e integer-type
-`.Int `(type of integer literals)
-`.Byte `.Short `.Long `(other modular types)
-`.BigInt `(arbitrary precision type)
+`.Int `c[type of integer literals]
+`.Byte `.Short `.Long `c[other modular types]
+`.BigInt `c[arbitrary precision type]
 `e integer-literal
 -4
 `e float-type
-`(type of float literals:)
+`c[type of float literals:]
 `.Double
 
-`(other types:)
+`c[other types:]
 `.Float
 `e arithmetic-operators
-`++ `+- `+* `+/ `(none) `+%
+`++ `+- `+* `+/ `c[none] `+%
 `e integer-operators
 `++ `+- `+* `+/ `+%
 `e float-operators
@@ -165,13 +165,13 @@ List(1, 2, 3).max
 `e divmod
 7 `+/ 3
 7 `+% 3
-`(BigInts only:)
+`c[BigInts only:]
 `.BigInt(7) `+[/%] `.BigInt(3)
 `e integer-division-by-zero
 `![java.lang.ArithmeticException]
 `e float-division
-7.toDouble / 3 `(type coercion built into Int)
-(7: `.Double) / 3 `(type ascription, fueled by implicits)
+7.toDouble / 3 `c[type coercion built into Int]
+(7: `.Double) / 3 `c[type ascription, fueled by implicits]
 `e float-division-by-zero
 evaluates to Infinity, NaN, or -Infinity, values which do not have literals
 `e power
@@ -191,10 +191,10 @@ math.Pi
 
 math.E
 `e float-truncation
-3.14.toInt `(or) 3.14.toLong
+3.14.toInt `c[or] 3.14.toLong
 3.14.round
-3.14.floor `(returns Double)
-3.14.ceil `(returns Double)
+3.14.floor `c[returns Double]
+3.14.ceil `c[returns Double]
 `e absolute-value-and-signum
 math.abs(-7)
 math.signum(-7)
@@ -247,8 +247,8 @@ rnd.nextGaussian
 `*val rnd = Random
 
 rnd.setSeed(17)
-`(none)
-`(none)
+`c[none]
+`c[none]
 `e bit-operators
 1 << 4
 1 >> 4
@@ -257,19 +257,19 @@ rnd.setSeed(17)
 1 ^ 3
 ~ 1
 `e binary-octal-and-hex-literals
-`(none)
+`c[none]
 052
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 Integer.toString(42, 7)
 Integer.parseInt("60", 7)
 `e string-type
-java.lang.`.String `(frequently implicitly converted to StringOps or WrappedString)
+java.lang.`.String `c[frequently implicitly converted to StringOps or WrappedString]
 `e string-literal
 `=["Hello, World!"]
 `=["""Hello, World!"""]
 `e newline-in-literal
-`(in triple quote literal only)
+`c[in triple quote literal only]
 `=["""first line
 second line"""]
 `e literal-escapes
@@ -329,22 +329,22 @@ no
 `=['a'].toInt
 `=97.toChar
 `e to-array-of-characters
-`(implicit --- via Predef.augmentString, to StringOps, or Predef.wrapString, to WrappedString)
+`c[implicit --- via Predef.augmentString, to StringOps, or Predef.wrapString, to WrappedString]
 `e regex-type
 scala.util.matching.Regex
 `e literal-custom-delimited-literal
 `*val r = `=["lorem|ipsum"].r
-`(none)
+`c[none]
 `e character-class-abbreviations
 `%[. \c \s \S \d \D \w \W \x \O
 [:upper:] [:lower:] [:alpha:] [:alnum:] [:digit:] [:xdigit:] [:punct:] [:blank:] [:space:] [:cntrl:] [:graph:] [:print:] [:word:]]
 `e anchors
 `%[^ $ \A \b \B \< \> \Z]
 `e lookahead-positive-negative
-`%[(?= `(...) )
-(?! `(...) )
-(?<= `(...) )
-(?<! `(...) )]
+`%[(?= `c[...] )
+(?! `c[...] )
+(?<= `c[...] )
+(?<! `c[...] )]
 `e match-test
 `*if (`=["1999"].r.findFirstIn(s).isDefined)
   `.println("party!")
@@ -363,14 +363,14 @@ fm `*match {
     m.before
     m.after
   }
-  `*case `.None `+[=>] ... `(no match)
+  `*case `.None `+[=>] ... `c[no match]
 }
 `e group-capture
 `*val rx = `=["""`%[(\d{4})]-`%[(\d{2})]-`%[(\d{2})]"""].r
 m = rx.findFirstMatchIn("2010-06-03")
 `*val `.List(yr, mo, dy) = m.get.subgroups
 
-`(only full match:)
+`c[only full match:]
 `*val rx(yr, mo, dy) = "2010-06-03"
 `e named-group-capture
 `*val rx = "^(.+)\\.(.+)$".r("file", "suffix")
@@ -396,7 +396,7 @@ m.group("suffix")
 `*val a = `.Array(1, 2, 3)
 `e array-size
 a.length
-a.size `(via implicit conversion to ArrayOps)
+a.size `c[via implicit conversion to ArrayOps]
 `e array-lookup
 `*val n = a(0)
 `e array-update
@@ -406,16 +406,16 @@ a(2) = 4
 `e array-copy
 a.clone()
 `e array-iterate
-`*for (v `+[<-] a) { `(code) }
-a.foreach(v `+[=>] `(code) )
+`*for (v `+[<-] a) { `c[code] }
+a.foreach(v `+[=>] `c[code] )
 `e array-sort
 `.Array(3, 2, 1, 4).sorted
 `e list-name
-`.Seq `(generic trait)
-`.List `(immutable, preferred)
-`.ArrayBuffer, `.ListBuffer `(mutable)
+`.Seq `c[generic trait]
+`.List `c[immutable, preferred]
+`.ArrayBuffer, `.ListBuffer `c[mutable]
 `e list-literal
-`(none; use constructor:)
+`c[none; use constructor:]
 `.List(1, 2, 3)
 `e empty-list
 `.Nil
@@ -441,17 +441,17 @@ a.slice(2, 4)
 `.List(1, 2, 3).length
 `.List(1, 2, 3).size
 `e capacity-get-increase
-`(none)
-a.sizeHint(10) `(ArrayBuffer, ListBuffer, or other Builder[Elem, To])
+`c[none]
+a.sizeHint(10) `c[ArrayBuffer, ListBuffer, or other Builder[Elem, To]]
 `e list-lookup
 `.List(1, 2, 3)(0)
 `e index-of-element
-`(evaluates to 1:)
+`c[evaluates to 1:]
 `.List(7, 8, 9).indexOf(8)
-`(evaluates to -1:)
+`c[evaluates to -1:]
 `.List(7, 8, 9).indexOf(10)
 `e list-update
-`(evaluates to List(1, 4, 3):)
+`c[evaluates to List(1, 4, 3]:)
 `.List(1, 2, 3).updated(1, 4)
 `e list-out-of-bounds
 `![raises `.[java.lang.IndexOutOfBoundsException]]
@@ -466,16 +466,16 @@ a.sizeHint(10) `(ArrayBuffer, ListBuffer, or other Builder[Elem, To])
 `.List(1, 2, 3).init
 `e manipulate-back
 `*val a = ListBuffer(6, 7, 8)
-a.append(9) `(or) a += 9
+a.append(9) `c[or] a += 9
 
-a.remove(a.size - 1) `(returns removed value)
-a.trimEnd(1) `(does not return value)
+a.remove(a.size - 1) `c[returns removed value]
+a.trimEnd(1) `c[does not return value]
 `e manipulate-front
 `*val a = ListBuffer(6, 7, 8)
-a.prepend(5) `(or) 5 +=: a
+a.prepend(5) `c[or] 5 +=: a
 a.head
-a.remove(0) `(returns removed value)
-a.trimStart(1) `(does not return value)
+a.remove(0) `c[returns removed value]
+a.trimStart(1) `c[does not return value]
 `e take
 `.List(1, 2, 3).take(2)
 `e drop
@@ -514,13 +514,13 @@ a.trimStart(1) `(does not return value)
 `e existential-test
 `.List(1, 2, 3).exists(`+_ > 2)
 `e intersection
-`.List(1, 2) intersect `.List(2, 3, 4) `(Sets also allow &)
+`.List(1, 2) intersect `.List(2, 3, 4) `c[Sets also allow &]
 `e union
-`.List(1, 2) union `.List(2, 3, 4) `(Sets also allow |)
+`.List(1, 2) union `.List(2, 3, 4) `c[Sets also allow |]
 `e relative-complement-symmetric-difference
-`.List(1, 2) diff `.List(2, 3, 4) `(Sets also allow &~)
+`.List(1, 2) diff `.List(2, 3, 4) `c[Sets also allow &~]
 
-`(only BitSets:)
+`c[only BitSets:]
 `*import scala.collection.BitSet
 BitSet(1, 2) ^ BitSet(2, 3, 4)
 `e min-and-max-element
@@ -531,15 +531,15 @@ BitSet(1, 2) ^ BitSet(2, 3, 4)
 Random.shuffle(`.List(1, 2, 3, 4))
 `*new Random().shuffle(`.List(1, 2, 3, 4))
 
-`(none)
+`c[none]
 `e zip
 List(1,2,3) zip List("a","b","c")
-(List(1,2,3), List("a","b","c")).zipped `(allows mapping etc. with functions taking 2 arguments rather than a 2-tuple)
+(List(1,2,3), List("a","b","c")).zipped `c[allows mapping etc. with functions taking 2 arguments rather than a 2-tuple]
 `e iterate-over-range
-`(includes 1000000:)
-`*for (i `+[<-] 1 to 1000000) { `(code) }
-`(excludes 1000000:)
-`*for (i `+[<-] 0 to 1000000) { `(code) }
+`c[includes 1000000:]
+`*for (i `+[<-] 1 to 1000000) { `c[code] }
+`c[excludes 1000000:]
+`*for (i `+[<-] 0 to 1000000) { `c[code] }
 `e instantiate-range-as-list
 `.List.range(1, 11)
 `e tuple
@@ -550,35 +550,35 @@ List(1,2,3) zip List("a","b","c")
 (12, "December")._1
 (12, "December")._2
 `e define-function
-`(argument types must be declared:)
+`c[argument types must be declared:]
 `*def add3(x1: `.Int, x2: `.Int, x3: `.Int)
   = x1 + x2 + x3
 `*def average(a: `.Double, b: `.Double)
   = (a + b) / 2.0
 
-`(return value type must be declared if function is recursive:)
+`c[return value type must be declared if function is recursive:]
 `*def factorial(n: `.Int): `.Int =
   `*if (n < 1)
     1
   `*else
     n * factorial(n - 1)
 `e invoke-function
-`(3.0:)
+`c[3.0:]
 average(1, 2 + 3)
 
-`(4.5:)
+`c[4.5:]
 average(1, 2) + 3
 
-`(parens can be omitted when a function takes no arguments, mainly for Java interopability; by convention parens are omitted when the function has no side effects)
+`c[parens can be omitted when a function takes no arguments, mainly for Java interopability; by convention parens are omitted when the function has no side effects]
 `e define-function-with-block-body
-`(braces must be used if body not an expression:)
+`c[braces must be used if body not an expression:]
 `*def print_numbers() = {
   println("one")
   println("two")
 }
 `e apply-function-to-array
-`(only for functions defined with variable number of arguments:)
-`*def firstAndLast(a: `.Int`+*) = { `(...) }
+`c[only for functions defined with variable number of arguments:]
+`*def firstAndLast(a: `.Int`+*) = { `c[...] }
 `*val a = List(1, 2, 3)
 firstAndLast(a:`+[_*])
 `e variable-number-of-arguments
@@ -612,13 +612,13 @@ logarithm(10, base = 2)
 `e operator-as-function
 ((`+_:`.Int) * (`+_:w.Int))(3, 7)
 
-`(implicit Numeric[T] make many math operations implicitly available)
+`c[implicit Numeric[T] make many math operations implicitly available]
 
-`(Seqs are automatically functions sending an index to its corresponding element)
+`c[Seqs are automatically functions sending an index to its corresponding element]
 `e overload-operator
-`(almost all operators in Scala are just methods with symbolic names:)
+`c[almost all operators in Scala are just methods with symbolic names:]
 `*class Rational(`*val num: `.Int, `*val denom: `.Int) {
-  `(...)
+  `c[...]
   `*def +(o: Rational)
     = `*new Rational(num * o.denom + o.num * denom, denom * o.denom)
 }
@@ -629,7 +629,7 @@ unary methods can be used as binary operators
 `*def plus(x: `.Int)(y: `.Int) = x + y
 plus(3)(7)
 
-`(must follow with underscore for partial application:)
+`c[must follow with underscore for partial application:]
 `*def plus2 = plus(2) `+_
 plus2(7)
 `e composition
@@ -644,7 +644,7 @@ plus2(7)
 `*def arg1(x: `+[=>] `.Int, y: `+[=>] `.Int): `.Int = x
 arg1(7, 1 / 0)
 `e strict-evaluation
-`(default behavior)
+`c[default behavior]
 `e if
 `*if ( x > 0 )
   println("pos")
@@ -799,7 +799,7 @@ out.close
 `e backticks
 
 `e namespace-example
-`(Baz.scala)
+`c[Baz.scala]
 package Foo.Bar;
 
 
@@ -807,7 +807,7 @@ package Foo.Bar;
   `*def say() { println("hello"); }
 }
 
-`(Main.scala)
+`c[Main.scala]
 `*import Foo.Bar.Baz;
 
 `*object Main {
@@ -826,7 +826,7 @@ hello
 `e namespaces
 
 `e file-name-restrictions
-`(none)
+`c[none]
 `e namespace
 
 `e namespace-creation
@@ -853,7 +853,7 @@ type Name = `.String
 
 `*val col = Red
 
-`(this won’t compile:)
+`c[this won’t compile:]
 col < Green
 `e tuple-product-type-with-one-field
 `*class SpecialInt(x: `.Int)

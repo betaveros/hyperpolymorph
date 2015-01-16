@@ -10,10 +10,10 @@ def textish(node):
 			yield "\n"
 
 def get_surroundings(style):
-	if "purple" in style: return ("`*[", "]")
-	if "teal" in style: return ("`.[", "]")
-	if "maroon" in style: return ("`=[", "]")
-	if "gray" in style: return ("`(", ")")
+	if "purple" in style: return "`*"
+	if "teal" in style: return "`."
+	if "maroon" in style: return "`="
+	if "gray" in style: return "`c"
 	return None
 
 def marked_text(node):
@@ -27,9 +27,20 @@ def marked_text(node):
 				sur = get_surroundings(d["style"])
 			except KeyError:
 				sur = None
-			if sur: yield sur[0]
-			for t in marked_text(d): yield t
-			if sur: yield sur[1]
+			if sur: yield sur
+			needBracket = False
+			buf = []
+			for t in marked_text(d):
+				if sur and not needBracket and all(c.isalnum() or c == '_' for c in t):
+					buf.append(t)
+				else:
+					if sur and not needBracket:
+						needBracket = True
+						yield "["
+						for tt in buf: yield tt
+					yield t
+			for tt in buf: yield tt
+			if sur and needBracket: yield "]"
 
 overrides = {
 	"statement-separator": "statement-terminator",
@@ -152,9 +163,10 @@ def parse(filename, colfilenames):
 # to_parse_entries = [('scripting2.html', 'scripting2.txt')]
 to_parse_entries = []
 # to_parse = [('scripting.html', ['perl.txt', 'php.txt', 'python.txt', 'ruby.txt']),('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt']),('cpp.html', ['cpp.txt', 'objective-c.txt', 'java.txt', 'c-sharp.txt']),('c.html', ['c.txt', 'go.txt']),('pascal.html', ['pascal.txt', 'ada.txt', 'plpgsql.txt']),('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt']),('ml.html', ['ocaml.txt', 'f-sharp.txt', 'scala.txt', 'haskell.txt']),('logic.html', ['prolog.txt', 'erlang.txt']),('stack.html', ['forth.txt', 'postscript.txt', 'factor.txt']),('shell.html', ['posix-shell.txt', 'applescript.txt', 'powershell.txt']),('data.html', ['sql.txt', 'awk.txt', 'pig.txt']),('numerical-analysis.html', ['matlab.txt', 'r.txt', 'numpy.txt']),('fortran.html', ['fortran.txt']),('computer-algebra.html', ['mathematica.txt', 'sympy.txt', 'maxima.txt', 'pari-gp.txt']),]
-# to_parse = [('ml.html', ['ocaml.txt', 'f-sharp.txt', 'scala.txt', 'haskell.txt'])]
+# to_parse = [('ml.html', ['sml-new.txt', 'ocaml-new.txt', 'f-sharp-new.txt', 'haskell-new.txt'])]
 # to_parse = [('scripting2.html', ['perl2.txt', 'php2.txt', 'python2.txt', 'ruby2.txt'])]
-to_parse = [('rust.html', ['rust.txt', 'swift.txt', 'scala2.txt'])]
+# to_parse = [('rust.html', ['rust.txt', 'swift.txt', 'scala2.txt'])]
+to_parse = [('scripting.html', ['javascript-new.txt', 'php-new.txt', 'python-new.txt', 'ruby-new.txt'])]
 # to_parse = [('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt'])]
 # to_parse = [('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt'])]
 

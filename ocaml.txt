@@ -50,7 +50,7 @@ unit
 
 `*if `=true `*then "hello" `*else 3;;
 `e null
-`.None `(type 'a option)
+`.None `c[type 'a option]
 `e nullable-type
 `*type list_option_int = `.int option list;;
 
@@ -85,26 +85,26 @@ bool
 && || not
 `e relational-operators
 `+[= <> < > <= >=]
-`[== !=] `(warning: == and != test for "physical equality")
+`[== !=] `c[warning: == and != test for "physical equality"]
 `e min-and-max
 min 1 2
 max 1 2
 `e integer-type
 `.int
-`(other integer types:)
+`c[other integer types:]
 int32 int64 nativeint
 `e integer-literal
 `.int, int64, and nativeint literals:
 12 12L 12n
-`(literals can contain underscores:)
+`c[literals can contain underscores:]
 1_000_000
-`(this parses as an expression:)
+`c[this parses as an expression:]
 -4
 `e float-type
 `.float
 `e integer-operators
 `+[+ - * /] `*mod
-`(mod is an infix operator, and is signed like % or rem in other languages)
+`c[mod is an infix operator, and is signed like % or rem in other languages]
 `e float-operators
 `+[+. -. *. /.]
 `e add-integer-and-float
@@ -134,9 +134,9 @@ asin acos atan atan2
 exp 1.0
 `e float-truncation
 truncate 3.14
-`(none)
-floor 3.14 `(returns float)
-ceil 3.14 `(returns float)
+`c[none]
+floor 3.14 `c[returns float]
+ceil 3.14 `c[returns float]
 `e absolute-value-and-signum
 abs (-7)
 abs_float (-7.0)
@@ -188,7 +188,7 @@ Complex.conj z;;
 `e random-number-uniform-integer-uniform-float-normal-float
 Random.int 100
 Random.float 1.0
-`(none)
+`c[none]
 `e random-seed
 Random.init 17;;
 `*let seed = Random.get_state();;

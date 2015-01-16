@@ -45,10 +45,10 @@ The behavior is undefined.
 
 Most implementations do not zero-initialize stack variables, so the value will be whatever happened to be in memory.
 `e global-variable
-`(in foo.cpp and outside of any function or class definition:)
+`c[in foo.cpp and outside of any function or class definition:]
 `*int foo = 7;
 
-`(in bar.cpp and outside of any function or class definition:)
+`c[in bar.cpp and outside of any function or class definition:]
 `*extern `*int foo;
 `e uninitialized-global-variable
 Zero initialized: numeric types and pointers are set to zero. Classes, structs, and arrays have all of their members or elements zero-initialized recursively.
@@ -107,27 +107,27 @@ Memory allocated by the new operator is zero-initialized.
 `e relational-operators
 `+[== != < > <= >=]
 `e integer-type
-`*signed `*char n1;   `(1+ bytes)
-`*short `*int n2;     `(2+ bytes)
-`*int n3;           `(2+ bytes)
-`*long `*int n4;      `(4+ bytes)
-`*long `*long `*int n5; `(4+ bytes)
+`*signed `*char n1;   `c[1+ bytes]
+`*short `*int n2;     `c[2+ bytes]
+`*int n3;           `c[2+ bytes]
+`*long `*int n4;      `c[4+ bytes]
+`*long `*long `*int n5; `c[4+ bytes]
 `e unsigned-type
-`*unsigned `*char n1;          `(1+ bytes)
-`*unsigned `*short `*int n2;     `(2+ bytes)
-`*unsigned `*int n3;           `(2+ bytes)
-`*unsigned `*long `*int n4;      `(4+ bytes)
-`*unsigned `*long `*long `*int n5; `(4+ bytes)
+`*unsigned `*char n1;          `c[1+ bytes]
+`*unsigned `*short `*int n2;     `c[2+ bytes]
+`*unsigned `*int n3;           `c[2+ bytes]
+`*unsigned `*long `*int n4;      `c[4+ bytes]
+`*unsigned `*long `*long `*int n5; `c[4+ bytes]
 `e float-type
-`*float x1;       `(4 bytes)
-`*double x2;      `(8 bytes)
-`*long `*double x3; `(16 bytes)
+`*float x1;       `c[4 bytes]
+`*double x2;      `c[8 bytes]
+`*long `*double x3; `c[16 bytes]
 `e fixed-type
-`(none)
+`c[none]
 `e arithmetic-operators
 + - * / %
 `e integer-division
-`(evaluates to 2:)
+`c[evaluates to 2:]
 
 7 / 3
 `e integer-division-by-zero
@@ -178,8 +178,8 @@ atan2
 `*long flr = floorl(x);
 `*long cl = ceill(x);
 `e absolute-value-and-signum
-`#[#include <cmath>]    `(fabs())
-`#[#include <cstdlib>]  `(abs())
+`#[#include <cmath>]    `c[fabs(])
+`#[#include <cstdlib>]  `c[abs(])
 
 `*int n = -7;
 `*int absn = abs(n);
@@ -228,10 +228,10 @@ normal_distribution<`*double> nd(0.0, 1.0);
 `e random-seed
 `#[#include <random>]
 
-`(set seed in constructor:)
+`c[set seed in constructor:]
 default_random_engine dre(17);
 
-`(set seed of existing engine:)
+`c[set seed of existing engine:]
 
 dre.seed(17);
 `e bit-operators
@@ -248,10 +248,10 @@ dre.seed(17);
 `e string-type
 `.string s("lorem ipsum");
 
-`(convert to C string:)
+`c[convert to C string:]
 `*const `*char* s2 = s.c_str();
 `e string-literal
-`(const char*:)
+`c[const char*:]
 "don't say \"no\""
 `e newline-in-literal
 Newlines in string literals are ignored.
@@ -268,11 +268,11 @@ s[2] = `=['z'];
 `e copy-string
 `.string s("bar");
 
-`(use assignment or copy constructor:)
+`c[use assignment or copy constructor:]
 `.string s2 = s;
 `.string s3(s);
 
-`(s contains "baz"; s2 and s3 contain "bar":)
+`c[s contains "baz"; s2 and s3 contain "bar":]
 
 s[2] = 'z';
 `e format
@@ -286,7 +286,7 @@ oss << "Spain: " << 7;
 `.string s1("hello");
 `.string s2("world");
 
-`(negative if s1 lexically before s2; zero if s1 and s2 are equal:)
+`c[negative if s1 lexically before s2; zero if s1 and s2 are equal:]
 `*int result1 = s1.compare(s2);
 
 `*bool result2 = s1 == s2;
@@ -302,7 +302,7 @@ s += " world";
 
 `.string s("foo");
 
-`(in place:)
+`c[in place:]
 
 transform(s.begin(), s.end(),
           s.begin(), ::toupper);
@@ -310,7 +310,7 @@ transform(s.begin(), s.end(),
 transform(s.begin(), s.end(),
           s.begin(), ::tolower);
 
-`(non-destructive:)
+`c[non-destructive:]
 `.string s2;
 
 s2.resize(s.size();
@@ -321,7 +321,7 @@ transform(s.begin(), s.end(),
 `#[#include <algorithm>]
 
 `.string s(" hello ");
-`(trim in place on left:)
+`c[trim in place on left:]
 
 s.erase(
   s.begin(),
@@ -332,7 +332,7 @@ s.erase(
   )
 );
 
-`(trim in place on right:)
+`c[trim in place on right:]
 
 s.erase(
   find_if(
@@ -386,7 +386,7 @@ wchar_t
 `e character-literal
 `*char n = 'X';
 `e test-character
-`(functions have this signature:)
+`c[functions have this signature:]
 `*int (*)(`*int)
 
 isalpha
@@ -458,7 +458,7 @@ regex rx("lorem", icase);
 `e array-size
 `*int a[10];
 
-`(stack arrays only:)
+`c[stack arrays only:]
 size_t len = `.sizeof(a) / `.sizeof(a[0]);
 `e array-lookup
 `*int first = a[0];
@@ -473,7 +473,7 @@ An out-of-bounds lookup may return the value the memory location contains; an ou
 `*int src[LEN] = {3, 2, 4, 1};
 `*int dest[LEN];
 
-`(3rd arg is number of bytes to copy:)
+`c[3rd arg is number of bytes to copy:]
 
 memcpy(dest, src, LEN * `.sizeof(src[0]));
 `e as-function-argument
@@ -518,7 +518,7 @@ comp(`*const `*void* `*const `*void* bp) {
 qsort(a, LEN, `.sizeof(a[0]), &comp);
 `e list-name
 vector<T>
-`(supports efficient random access and manipulation of end; STL also provides deque<T> and list<T>)
+`c[supports efficient random access and manipulation of end; STL also provides deque<T> and list<T>]
 `e list-declare
 `#[#include <vector>]
 vector <`*int> a;
@@ -532,7 +532,7 @@ size_t len = a.size();
 `e capacity-get-increase
 size_t cap = a.capacity();
 
-`(will not decrease capacity:)
+`c[will not decrease capacity:]
 
 a.reserve(10);
 `e empty-test-and-clear
@@ -542,7 +542,7 @@ a.clear();
 `e list-lookup
 `*int n = a[0];
 
-`(can raise out_of_range:)
+`c[can raise out_of_range:]
 `*int n2 = a.at(0);
 `e list-update
 a[2] = 4;
@@ -563,7 +563,7 @@ vector<`*int> a({6, 7, 8, 9});
 
 vector<`*int> a({6, 7, 8, 9});
 
-`(a2 contains {7, 8}:)
+`c[a2 contains {7, 8}:]
 vector<`*int> a2(a.cbegin() + 1,
                a.cbegin() + 3);
 `e drop
@@ -571,7 +571,7 @@ vector<`*int> a2(a.cbegin() + 1,
 
 vector<`*int> a({6, 7, 8, 9});
 
-`(a2 contains {7, 8, 9}:)
+`c[a2 contains {7, 8, 9}:]
 vector<`*int> a2(a.cbegin() + 1, a.cend());
 `e manipulate-back
 `#[#include <vector>]
@@ -586,7 +586,7 @@ a.push_back(9);
 
 vector<`*int> a({6, 7, 8});
 
-`(slower than manipulating back:)
+`c[slower than manipulating back:]
 
 a.insert(a.cbegin(), 5);
 `*int elem = a[0];
@@ -605,17 +605,17 @@ a1.insert(a1.cend(),
 `e list-replicate
 `#[#include <vector>]
 
-`(array of 10 zeros:)
+`c[array of 10 zeros:]
 vector<`*int> a(10, 0);
 `e copy
 `#[#include <vector>]
 
 vector<`*int> a({1, 2, 3});
-`(copy constructor:)
+`c[copy constructor:]
 vector<`*int> a2(a);
 vector<`*int> a3;
 
-`(assignment performs copy:)
+`c[assignment performs copy:]
 
 a3 = a;
 `e array-as-function-argument
@@ -657,7 +657,7 @@ sort(a.begin(), a.end());
 
 vector<`*int> a({1, 1, 2, 2, 3});
 set<`*int> tmp(a.cbegin(), a.cend());
-`(often unnecessary since sets provide many of the same methods as vectors:)
+`c[often unnecessary since sets provide many of the same methods as vectors:]
 vector<`*int> a2(tmp.cbegin(), tmp.cend());
 `e membership
 `#[#include <vector>]
@@ -735,7 +735,7 @@ map<`.string,`*int>::iterator mi;
 
 }
 `e declare-function
-`(parameter names are optional:)
+`c[parameter names are optional:]
 `*int
 add(`*int m, `*int n);
 `e define-function
@@ -747,14 +747,14 @@ add(`*int m, `*int n) {
 `e invoke-function
 `*int sum = add(3, 7);
 `e define-static-class-method
-`(Ops.h:)
+`c[Ops.h:]
 class Ops {
 public:
   static `*int add(`*int m, `*int n);
 
 };
 
-`(Ops.cpp:)
+`c[Ops.cpp:]
 `*int Ops::add(`*int m, `*int n) {
   `*return m + n;
 
@@ -762,7 +762,7 @@ public:
 `e invoke-static-class-method
 `*int sum = Ops::add(3, 7);
 
-`(class name not needed inside class namespace:)
+`c[class name not needed inside class namespace:]
 `*int sum = add(3, 7);
 `e overload-function
 `*int add(`*int m, `*int n) {
@@ -792,7 +792,7 @@ none
 
 `*int i(7);
 
-`(set i2 to 8 w/o modifying i:)
+`c[set i2 to 8 w/o modifying i:]
 `*int i2 = add1(i);
 `e pass-by-reference
 `*int add1(`*int& n) {
@@ -802,7 +802,7 @@ none
 
 `*int i(7);
 
-`(set i and i2 to 8:)
+`c[set i and i2 to 8:]
 `*int i2 = add1(i);
 `e pass-by-address
 `*int add1(`*int* n) {
@@ -812,7 +812,7 @@ none
 
 `*int i(7);
 
-`(set i and i2 to 8:)
+`c[set i and i2 to 8:]
 `*int i2 = add1(&i);
 `e return-value
 argument of `*return; type must be declared
@@ -833,16 +833,16 @@ factorial(`*int n) {
 `*auto add = [](`*int n, `*int m) {
   `*return n + m;
 };
-`(with explicit type annotation and capture-by-reference:)
+`c[with explicit type annotation and capture-by-reference:]
 `#[#include <functional>]
 std::function<`*int(`*int)> fibo = [&](`*int x){
     `*return x <= 1 ? x : fibo(x-1) + fibo(x-2);
 };
 `e invoke-anonymous-function
-`(on variable holding anon. function:)
+`c[on variable holding anon. function:]
 `*int sum = add(3, 7);
 
-`(on lambda expression:)
+`c[on lambda expression:]
 `*int sum2 = [](`*int n, `*int m) {
   `*return n + m;
 }(3, 7);
@@ -1068,7 +1068,7 @@ catch (`*const system_error &e) {
 `e finally
 none
 `e exception-specification
-`(Use noexcept to declare that a function does not raise exceptions; declaring which exceptions a function raises is deprecated in C++11.)
+`c[Use noexcept to declare that a function does not raise exceptions; declaring which exceptions a function raises is deprecated in C++11.]
 `*int
 add(`*int a, `*int b) noexcept {
   `*return a + b;
@@ -1109,14 +1109,14 @@ ifstream f("/etc/passwd");
 `*if (f.is_open()) {
   `*while (!f.eof()) {
     getline(f, line);
-    `(process line)
+    `c[process line]
   }
   f.close();
   `*if ( 0 != f.fail() ) {
-    `(handle error)
+    `c[handle error]
   }
 } `*else {
-  `(handle error)
+  `c[handle error]
 }
 `e write-to-file
 `#[#include <fstream>]

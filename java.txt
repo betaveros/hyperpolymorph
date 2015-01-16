@@ -49,7 +49,7 @@ zero initialized
 foo/Foo.java:
 package foo;
 
-`(globals must be declared inside a class:)
+`c[globals must be declared inside a class:]
 `*public `*class Foo {
   `*public static `*int bar;
 
@@ -97,7 +97,7 @@ none
 `e weak-pointer
 none
 `e allocate-heap
-`(Primitive types are stack allocated. Use a wrapper class to store on the heap:)
+`c[Primitive types are stack allocated. Use a wrapper class to store on the heap:]
 Integer i = `*new Integer(0);
 `e uninitialized-heap
 zero-initialized
@@ -118,21 +118,21 @@ String s1 = s2 == `*null ? "was null" : s2;
 `e relational-operators
 == != < > <= >=
 `e integer-type
-`*byte n1;  `(1 byte)
-`*short n2; `(2 bytes)
-`*int n3;   `(4 bytes)
-`*long n4;  `(8 bytes)
+`*byte n1;  `c[1 byte]
+`*short n2; `c[2 bytes]
+`*int n3;   `c[4 bytes]
+`*long n4;  `c[8 bytes]
 `e unsigned-type
-`*char n1;  `(2 bytes)
+`*char n1;  `c[2 bytes]
 `e float-type
-`*float x1;  `(4 bytes)
-`*double x2; `(8 bytes)
+`*float x1;  `c[4 bytes]
+`*double x2; `c[8 bytes]
 `e fixed-type
 none
 `e arithmetic-operators
 + - * / %
 `e integer-division
-`(evaluates to 2:)
+`c[evaluates to 2:]
 
 7 / 3
 `e integer-division-by-zero
@@ -203,7 +203,7 @@ Random rnd = `*new Random();
 
 rnd.setSeed(17);
 
-`(seed can also be passed to constructor)
+`c[seed can also be passed to constructor]
 `e bit-operators
  << >> & | ^ ~ 
 
@@ -243,7 +243,7 @@ String s = "bar";
 StringBuffer sb = `*new StringBuffer(s);
 
 sb.setCharAt(2, 'z');
-`(s contains "bar"; s2 contains "baz":)
+`c[s contains "bar"; s2 contains "baz":]
 
 String s2 = sb.toString();
 `e format
@@ -347,7 +347,7 @@ String s2 = fmt.format(dt);
 String s = "2011-05-03 17:00:00";
 Date dt2 = fmt.parse(s);
 `e date-subtraction
-`(difference in milliseconds as a long:)
+`c[difference in milliseconds as a long:]
 dt2.getTime() - dt.getTime()
 `e add-duration
 `*long day_ms = 24 * 3600 * 1000;
@@ -383,7 +383,7 @@ ArrayIndexOutOfBoundsException
 
 `e list-name
 java.util.ArrayList<T>
-`(The Java Collections API also provides LinkedList<T> and a few others; Vector<T> is older and slower because it is synchronized.)
+`c[The Java Collections API also provides LinkedList<T> and a few others; Vector<T> is older and slower because it is synchronized.]
 `e list-declare
 java.util.ArrayList<String> list = `*new java.util.ArrayList<String>();
 
@@ -407,7 +407,7 @@ throws ArrayIndexOutOfBoundsException
 
 `e manipulate-back
 list.add("hello");
-`(or)
+`c[or]
 list.add(list.size(), "hello");
 
 vec.removeElementAt(vec.size()-1);
@@ -729,7 +729,7 @@ f.canExecute()
 
 File f = `*new File("/tmp/foo");
 
-`(sets owner perms; to turn perms off set arg to false:)
+`c[sets owner perms; to turn perms off set arg to false:]
 
 f.setReadable(`*true);
 
@@ -737,7 +737,7 @@ f.setWritable(`*true);
 
 f.setExecutable(`*true);
 
-`(if 2nd arg is false, perms are for owner, group, and other:)
+`c[if 2nd arg is false, perms are for owner, group, and other:]
 
 f.setReadable(`*true, `*false);
 
@@ -796,7 +796,7 @@ File f = `*new File("foo");
 
 String abspath = f.getAbsolutePath();
 
-`(getCanonicalPath() expands .. and .:)
+`c[getCanonicalPath(] expands .. and .:)
 
 File f2 = `*new File("../foo");
 
@@ -811,14 +811,14 @@ String abspath3 = f3.getCanonicalPath();
 
 File dir = `*new File("/etc");
 
-`(iterate over names:)
+`c[iterate over names:]
 
 `*for (String name: dir.list()) {
   System.out.println(name);
 
 }
 
-`(iterate over file objects:)
+`c[iterate over file objects:]
 
 `*for (File f: dir.listFiles()) {
   System.out.println(f.getName());

@@ -67,7 +67,7 @@ $v = 1;
 `e swap
 ($x, $y) = ($y, $x);
 `e compound-assignment-arithmetic-string-logical-bit
-+= -= *= `(none) /= %= **=
++= -= *= `c[none] /= %= **=
 
 .= x=
 
@@ -94,10 +94,10 @@ $x > 0 ? $x : -$x
 `=[undef 0 0.0 "" "0" ()]
 `e logical-operators
 `+[&& || !]
-`(lower precedence:)
+`c[lower precedence:]
 `+[and or xor not]
 `e relational-operators
-`(numbers only:) `+[== != > < >= <=]
+`c[numbers only:] `+[== != > < >= <=]
 `e compare-strings
 `+[eq ne gt lt ge le]
 `e min-and-max
@@ -113,15 +113,15 @@ max(@a);
 0 `+[<=>] 1
 "do" `+[cmp] "re"
 `e integer-type
-`(all numbers are floats, unless Math::BigInt is used)
+`c[all numbers are floats, unless Math::BigInt is used]
 `e integer-literal
 -4
 `e float-type
 scalar
 `e arithmetic-operators
-+ - * / `(none) %
++ - * / `c[none] %
 `e float-operators
-`(as above)
+`c[as above]
 `e integer-division
 `.int(13 / 5)
 `e divmod
@@ -160,18 +160,18 @@ abs($x)
 `*my $n = Math::BigInt->new("7");
 `*my $m = Math::BigInt->new("12");
 
-`("magically" makes almost all integers arbitrary-length:)
+`c["magically" makes almost all integers arbitrary-length:]
 `*use bigint;
 `e arbitrary-length-integer-operators
-`(under use Math::BigInt without use bigint:)
-`(destructive on left operand:)
+`c[under use Math::BigInt without use bigint:]
+`c[destructive on left operand:]
 $n->badd($m);
 $n->bsub($m);
 $n->bmul($m);
 $n->bdiv($m);
 $n->bmod($m);
 
-$n->bcmp($m); `(returns -1, 0, 1)
+$n->bcmp($m); `c[returns -1, 0, 1]
 `e integer-overflow
 converted to float; `*use Math::BigInt to create arbitrary length integers
 `e float-overflow
@@ -201,7 +201,7 @@ abs($z);
 `e random-number-uniform-integer-uniform-float-normal-float
 `.int(`.rand() * 100)
 `.rand()
-`(none)
+`c[none]
 `e random-seed
 `.srand 17;
 
@@ -263,7 +263,7 @@ sprintf($fmt, "ipsum", 13, 3.7)
 `e are-strings-mutable
 $s = "bar";
 $s2 = $s;
-`(sets s to "baz"; s2 is unchanged:)
+`c[sets s to "baz"; s2 is unchanged:]
 $s =~ s/r/z/;
 `e copy-string
 $s2 = $s;
@@ -316,7 +316,7 @@ split(/(\s+)/, "do re mi fa")
 `e string-length
 length("lorem")
 `e index-of-substring
-`(returns -1 if not found:)
+`c[returns -1 if not found:]
 index("lorem ipsum", "ipsum")
 rindex("do re re", "re")
 `e extract-substring
@@ -324,7 +324,7 @@ substr("lorem ipsum", 6, 5)
 none
 none
 `e extract-character
-`(can't use index notation with strings:)
+`c[can't use index notation with strings:]
 substr("lorem ipsum", 6, 1)
 `e chr-and-ord
 chr(65)
@@ -471,7 +471,7 @@ $tz->is_dst_for_datetime($dt);
 
 ($sec, $usec) = gettimeofday;
 `e sleep
-`(a float argument will be truncated to an integer:)
+`c[a float argument will be truncated to an integer:]
 `.sleep 1;
 `e timeout
 `.eval {
@@ -488,21 +488,21 @@ ephemeral value: list
 `e quote-words
 @a = qw(do re mi);
 `e size
-$#a + 1 `(or)
+$#a + 1 `c[or]
 `.scalar(@a)
 `e empty-test
 `+!@a
 `e lookup
 $a[0]
-`(returns last element:)
+`c[returns last element:]
 $a[-1]
 `e update
 $a[0] = "lorem";
 `e out-of-bounds
 @a = ();
-`(evaluates as undef:)
+`c[evaluates as undef:]
 $a[10];
-`(increases array size to 11:)
+`c[increases array size to 11:]
 $a[10] = "lorem";
 `e index-of-element
 `*use List::Util 'first';
@@ -597,7 +597,7 @@ any { $_ % 2 == 0 } (1,2,3,4)
 @a = (1, 2, 3, 4);
 
 shuffle(@a);
-`(none)
+`c[none]
 `e zip
 # cpan -i List::MoreUtils
 `*use List::MoreUtils 'zip';
@@ -608,17 +608,17 @@ shuffle(@a);
 @a = zip @nums, @lets;
 `e map-literal
 %d = ( "t" => 1, "f" => 0 );
-`(barewords permitted in front of => under 'use strict')
+`c[barewords permitted in front of => under 'use strict']
 `e map-size
 `.scalar(`.keys %d)
 `e map-lookup
 $d{"t"}
-`(barewords permitted inside { } under 'use strict')
+`c[barewords permitted inside { } under 'use strict']
 `e map-out-of-bounds
 %d = ();
-`(evaluates as undef:)
+`c[evaluates as undef:]
 $d{"lorem"};
-`(adds key/value pair:)
+`c[adds key/value pair:]
 $d{"lorem"} = "ipsum";
 `e is-key-present
 `.exists $d{"y"}
@@ -637,7 +637,7 @@ $d{"lorem"} = "ipsum";
 %to_let = `.reverse %to_num;
 `e iteration
 `*while (($k, $v) = `.each %d) {
-  `(code)
+  `c[code]
 }
 `e keys-and-values-as-arrays
 `.keys %d
@@ -663,13 +663,13 @@ define a tied hash for computed values and defaults other than zero or empty str
 }
 `e invoke-function
 add3(1, 2, 3);
-`(parens are optional:)
+`c[parens are optional:]
 add3 1, 2, 3;
 `e apply-function-to-array
 @a = (2, 3);
 
 add3(1, @a);
-`(arrays are always expanded when used as arguments)
+`c[arrays are always expanded when used as arguments]
 `e missing-argument-behavior
 set to `=undef
 `e default-argument
@@ -1137,7 +1137,7 @@ $path = <>;
   `.exit 0;
 }
 
-`(After call to GetOptions() only, positional arguments are in @ARGV. Options can follow positional arguments. Long options can be preceded by one or two hyphens. Single letters can be used if only one long option begins with that letter. Single letter options cannot be bundled after a single hyphen. Single letter options must be separated from an argument by a space or =.)
+`c[After call to GetOptions(] only, positional arguments are in @ARGV. Options can follow positional arguments. Long options can be preceded by one or two hyphens. Single letters can be used if only one long option begins with that letter. Single letter options cannot be bundled after a single hyphen. Single letter options must be separated from an argument by a space or =.)
 `e load-library
 `*require 'Foo.pm';
 # searches @INC for Foo.pm:
@@ -1151,7 +1151,7 @@ do 'Foo.pm';
 fatal error if library not found or if last expression in library does not evaluate as true; fatal error parsing library propagates to client
 `e main-routine-in-library
 `*unless (caller) {
-  `(code)
+  `c[code]
 }
 `e library-path
 @INC
@@ -1166,9 +1166,9 @@ all identifiers not declared with `*my
 `e label-separator
 Foo::Bar::baz();
 `e root-namespace-definition
-`(outside of package or in package main:)
+`c[outside of package or in package main:]
 `*our $foo = 3;
-`(inside package:)
+`c[inside package:]
 `*our $::foo = 3;
 `*our $main::foo = 3;
 `e declare-namespace
@@ -1181,12 +1181,12 @@ Foo::Bar::baz();
 `e namespace-alias
 
 `e unqualified-import-of-namespace
-`(imports symbols in @EXPORT:)
+`c[imports symbols in @EXPORT:]
 `*use Foo;
 `e unqualified-import-of-all-subnamespaces
 
 `e unqualified-import-of-definitions
-`(bar and baz must be in @EXPORT or @EXPORT_OK:)
+`c[bar and baz must be in @EXPORT or @EXPORT_OK:]
 `*use Foo qw(bar baz);
 `e list-installed-packages-install-a-package
 `$[perldoc perllocal]

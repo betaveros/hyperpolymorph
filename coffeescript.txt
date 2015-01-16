@@ -129,7 +129,7 @@ foo ? 4
 `e variable-interpolation
 count = 3
 item = ball
-alert "`%[#{count}] `%[#{item}]s" `(double-quoted strings only)
+alert "`%[#{count}] `%[#{item}]s" `c[double-quoted strings only]
 `e expression-interpolation
 `e format
 `e compare-strings
@@ -352,14 +352,14 @@ square = (x) `+[->] x * x
 `e while
 `*while i < 100
   i += 1
-`(when used as an expression, returns array containing result of each iteration)
-`(alternate)
+`c[when used as an expression, returns array containing result of each iteration]
+`c[alternate]
 i += 1 `*while i < 100
 `e for
 `*for i `*in [0...10]
   alert i
 
-name `*for name `*of window `(iterate over properties)
+name `*for name `*of window `c[iterate over properties]
 `e for-in-reverse
 `e c-style-for
 `e break

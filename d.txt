@@ -13,7 +13,7 @@ D 2.066.0
 `e file-suffixes
 foo.d
 `e interpreter
-`(sort of)
+`c[sort of]
 `$[dmd -run foo.d]
 `e block-delimiters
 { }
@@ -32,11 +32,11 @@ another comment */
 `e global-variable
 `e uninitialized-global-variable
 `e constant
-`(compile-time/manifest constant:)
+`c[compile-time/manifest constant:]
 `*enum `*int i = 7;
-`(must be constant in the entire program:)
+`c[must be constant in the entire program:]
 `*immutable `*int j = 7;
-`(not changeable through this pointer:)
+`c[not changeable through this pointer:]
 `*const `*int k = 7;
 `e assignment
 `*int n;
@@ -70,15 +70,17 @@ n = 3;
 `e nullable-type
 `*import std.typecons;
 Nullable!T
-`(usage:)
+`c[usage:]
 Nullable!`*int a;
 a = 5;
-a.nullify(); `(set to null)
+a.nullify(); `c[set to null]
 `e null test
 v `*is `*null
-`(Nullable!T:)
+`c[Nullable!T:]
 v.isNull
 `e coalesce
+`e conditional-expression
+x > 0 ? x : -x
 `e boolean-type
 `*bool
 `e true-and-false
@@ -89,28 +91,28 @@ v.isNull
 `+[&& || !]
 `e relational-operators
 `+[== != < > <= >=]
-`+[!<>= <> <>= !<= !< !>= !> !<>] `(handles NaN differently)
+`+[!<>= <> <>= !<= !< !>= !> !<>] `c[handles NaN differently]
 `*is `+!`*is
 `e integer-type
-`*byte n1;  `(1 byte)
-`*short n2; `(2 bytes)
-`*int n3;   `(4 bytes)
-`*long n4;  `(8 bytes)
+`*byte n1;  `c[1 byte]
+`*short n2; `c[2 bytes]
+`*int n3;   `c[4 bytes]
+`*long n4;  `c[8 bytes]
 `e unsigned-type
-`*ubyte n1;  `(1 byte)
-`*ushort n2; `(2 bytes)
-`*uint n3;   `(4 bytes)
-`*ulong n4;  `(8 bytes)
+`*ubyte n1;  `c[1 byte]
+`*ushort n2; `c[2 bytes]
+`*uint n3;   `c[4 bytes]
+`*ulong n4;  `c[8 bytes]
 `e float-type
-`*float x1;  `(4 bytes)
-`*double x2; `(8 bytes)
-`*real x3;   `(largest in hardware)
+`*float x1;  `c[4 bytes]
+`*double x2; `c[8 bytes]
+`*real x3;   `c[largest in hardware]
 `e fixed-type
-`(none)
+`c[none]
 `e arithmetic-operators
 `+[+ - * / % ^^]
 `e integer-division
-`(evaluates to 2:)
+`c[evaluates to 2:]
 7 / 3
 `e integer-division-by-zero
 `e float-division
@@ -152,19 +154,19 @@ IEEE 754
 `*real.max
 `*real.min_normal
 `e complex-construction
-`(built-in (deprecated))
+`c[built-in (deprecated])
 `*cfloat c = 1 + 3.14 * 1.0i;
 `*cdouble z = 1 + 3.14 * 1.0i;
 
-`(modern)
+`c[modern]
 `*import std.complex;
 
 `*auto c = complex(2.0);
 `*auto z = complex(1, 3.14L);
 `e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
-`(built-in (deprecated))
+`c[built-in (deprecated])
 
-`(modern)
+`c[modern]
 z.re
 z.im
 `e random-number-uniform-integer-uniform-float-normal-float
@@ -180,7 +182,7 @@ z.im
 `e string-type
 `*char[] s = "lorem ipsum";
 `e string-literal
-`(string, aka immutable char[]:)
+`c[string, aka immutable char[]:]
 `=["don't say `%[\"]no`%[\"]"]
 `e newline-in-literal
 `e literal-escapes
@@ -190,24 +192,24 @@ z.im
 `e allocate-string
 `.string s = "hello";
 `e are-strings-mutable
-`(no, but char[]s are:)
+`c[no, but char[]s are:]
 `*char[] s = `=["bar"].dup;
 
 s[2] = `=['z'];
 `e copy-string
-`(not necessary for strings since they're immutable, but)
+`c[not necessary for strings since they're immutable, but]
 `*const `*char[] s = `=["bar"];
 
 `*char[] s2 = s.dup;
 `*char[] s3 = s;
 
-`(s contains "baz"; s2 and s3 contain "bar":)
+`c[s contains "baz"; s2 and s3 contain "bar":]
 s[2] = `=['z'];
 `e format
 `e compare-strings
 `+[== != < > <= >=]
 `e concatenate-strings
-`(same as arrays:)
+`c[same as arrays:]
 `.string s = "hello";
 `.string s2 = s ~ " world";
 
@@ -306,8 +308,8 @@ int a[] = [ 3, 2, 4, 1 ];
 }
 
 `*int[] arr = [3, 2, 1, 4];
-sort!("a > b")(arr); `(first pair of parens optional)
-sort!(comp)(arr); `(first pair of parens optional)
+sort!("a > b")(arr); `c[first pair of parens optional]
+sort!(comp)(arr); `c[first pair of parens optional]
 `e list-name
 T[]
 `e list-declare
@@ -362,13 +364,13 @@ a1 ~= a2;
 `e relative-complement-symmetric-difference
 `e map
 `*import std.algorithm;
-map!(x => x * x)([1, 2, 3]) `(same as) [1, 2, 3].map!(x => x * x)
-map!`=["a * a"]([1, 2, 3]) `(same as) [1, 2, 3].map!`=["a * a"]
-`(these are lazy ranges; call .array to get an array)
+map!(x => x * x)([1, 2, 3]) `c[same as] [1, 2, 3].map!(x => x * x)
+map!`=["a * a"]([1, 2, 3]) `c[same as] [1, 2, 3].map!`=["a * a"]
+`c[these are lazy ranges; call .array to get an array]
 `e filter
 `*import std.algorithm;
-filter!(x => x > 1)([1, 2, 3]) `(same as) [1, 2, 3].filter!(x => x > 1)
-filter!`=["a > 1"]([1, 2, 3]) `(same as) [1, 2, 3].filter!`=["a > 1"]
+filter!(x => x > 1)([1, 2, 3]) `c[same as] [1, 2, 3].filter!(x => x > 1)
+filter!`=["a > 1"]([1, 2, 3]) `c[same as] [1, 2, 3].filter!`=["a > 1"]
 `e min-and-max-element
 
 `e shuffle-and-sample
@@ -464,7 +466,7 @@ m.length
 `e function-as-value
 `e overload-operator
 `*ref Rational opBinary(`*string op)(`*in Rational o)
-  `*if (op == "+") { `(compile-time test)
+  `*if (op == "+") { `c[compile-time test]
     `*return Rational(`*this.num * o.denom + o.num * `*this.denom, `*this.denom * o.denom);
 }
 `e if
@@ -498,7 +500,7 @@ m.length
 }
 `e for
 `*int fact;
-`*for (i; 1 .. 11) { `(half-open)
+`*for (i; 1 .. 11) { `c[half-open]
   fact *= i;
 }
 `e break
