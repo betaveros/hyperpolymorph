@@ -66,6 +66,18 @@ n = 3;
 `e uninitialized-heap
 `e free-heap
 `e null
+`*null
+`e nullable-type
+`*import std.typecons;
+Nullable!T
+`(usage:)
+Nullable!`*int a;
+a = 5;
+a.nullify(); `(set to null)
+`e null test
+v `*is `*null
+`(Nullable!T:)
+v.isNull
 `e coalesce
 `e boolean-type
 `*bool
