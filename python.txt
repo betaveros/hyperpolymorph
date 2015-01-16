@@ -216,7 +216,7 @@ random.setstate(seed)
 0x2a
 `e radix-convert-integer-to-and-from-string-with-radix
 `c[none]
-`.int("60", 7)
+`.int(`=["60"], 7)
 `e string-type
 `.str
 `e string-literal
@@ -262,12 +262,12 @@ s = `=['Hello, ']
 s2 = s + `=['World!']
 
 `c[juxtaposition can be used to concatenate literals:]
-s2 = 'Hello, ' "World!"
+s2 = `=['Hello, ' "World!"]
 `e replicate-string
 hbar = `=['-'] `+* 80
 `e translate-case
-'lorem'.upper()
-'LOREM'.lower()
+`=['lorem'].upper()
+`=['LOREM'].lower()
 `e capitalize
 `*import string
 
@@ -286,6 +286,11 @@ string.capwords('lorem ipsum')
 `e string-to-number
 7 + `.int('12')
 73.9 + `.float('.037')
+
+`![raises `.ValueError:]
+`.int(`=['12A'])
+`![raises `.ValueError:]
+`.int(`=['A'])
 `e join
 `=[' '].join([`=['do'], `=['re'], `=['mi'], `=['fa']])
 `![raises `.TypeError:]
@@ -321,11 +326,11 @@ re.split(`=['(\s+)'], `=['do re mi fa'])
 `c[same as string]
 `e test-character
 `c[operate on any strings, testing if all characters satisfy:]
-`=['c'].isalpha
-`=['c'].isdigit
-`=['c'].isspace
-`=['c'].isupper
-`=['c'].islower
+`=['c'].isalpha()
+`=['c'].isdigit()
+`=['c'].isspace()
+`=['c'].isupper()
+`=['c'].islower()
 `e chr-and-ord
 `.chr(65)
 `.ord(`=['A'])
@@ -381,7 +386,6 @@ a = re.findall(`=['\w+'], s)
 `c[none]
 
 rx = re.compile(`=['(\w+) (\w+)'])
-
 rx.sub(r`=['\2 \1'], `=['do re'])
 `e recursive-regex
 none
@@ -438,13 +442,10 @@ a datetime object has no timezone information unless a tzinfo object is provided
 `*import datetime
 
 tmz = pytz.timezone('Asia/Tokyo')
-
 utc = datetime.datetime.utcnow()
-
 utc_dt = datetime.datetime(
   *utc.timetuple()[0:5],
   tzinfo=pytz.utc)
-
 jp_dt = utc_dt.astimezone(tmz)
 `e timezone-name-offset-from-utc-is-daylight-savings
 `*import time
@@ -469,7 +470,6 @@ time.sleep(0.5)
 `*def timeout_handler(signo, fm):
   `*raise Timeout()
 
-
 signal.signal(signal.SIGALRM,
   timeout_handler)
 
@@ -478,7 +478,6 @@ signal.signal(signal.SIGALRM,
   time.sleep(10)
 `*except Timeout:
   `*pass
-
 signal.alarm(0)
 `e list-name
 `.list
@@ -505,7 +504,7 @@ a[10]
 `![raises `.IndexError:]
 a[10] = 'lorem'
 `e index-of-element
-a = ['x', 'y', 'z', 'w']
+a = [`=['x'], `=['y'], `=['y'], `=['z']]
 i = a.index('y')
 `e slice
 `c[select 3rd and 4th elements:]
@@ -518,20 +517,15 @@ a[-1]
 a[:-1]
 `e manipulate-back
 a = [6, 7, 8]
-
 a.append(9)
-
 a.pop()
 `e manipulate-front
 a = [6, 7, 8]
-
 a.insert(0, 5)
-
 a.pop(0)
 `e concatenate
 a = [1, 2, 3]
 a2 = a + [4, 5, 6]
-
 a.extend([4, 5, 6])
 `e list-replicate
 a = [`=None] * 10
@@ -566,13 +560,11 @@ a = [1, 2, 3]
 
 a[::-1]
 `.reversed(a) `c[iterator]
-
 a.reverse()
 `e list-sort
 a = ['b', 'A', 'a', 'B']
 
-sorted(a)
-
+`.sorted(a)
 a.sort()
 `c[custom binary comparision removed from Python 3:]
 a.sort(key=`.str.lower)
@@ -615,7 +607,6 @@ a = `.list(`.set(a))
 `*from random `*import shuffle, sample
 
 a = [1, 2, 3, 4]
-
 shuffle(a)
 
 sample(a, 2)
@@ -640,14 +631,14 @@ d['lorem'] = 'ipsum'
 d = {1: `=True, 0: `=False}
 `*del d[1]
 `e from-array-of-pairs-from-even-length-array
-a = [[1,'a'], [2,'b'], [3,'c']]
+a = [[`=['a'], 1], [`=['b'], 2], [`=['c'], 3]]
 d = `.dict(a)
 
-a = [1,'a',2,'b',3,'c']
+a = [`=['a'], 1, `=['b'], 2, `=['c'], 3]
 d = `.dict(`.zip(a[::2], a[1::2]))
 `e merge
-d1 = {'a':1, 'b':2}
-d2 = {'b':3, 'c':4}
+d1 = {`=['a']: 1, `=['b']: 2}
+d2 = {`=['b']: 3, `=['c']: 4}
 
 d1.update(d2)
 `e invert
@@ -657,18 +648,17 @@ to_let = {v:k `*for k, v
   `*in to_num.items()}
 `e iteration
 `*for k, v `*in d.iteritems():
-  code
+  `ccode
 
 `c[Python 3:]
 `*for k, v `*in d.items():
-  code
+  `ccode
 `e keys-and-values-as-arrays
 d.keys()
 
 d.values()
 
 `c[Python 3:]
-
 `.list(d.keys())
 `.list(d.values())
 `e sort-by-values
@@ -683,8 +673,7 @@ pairs = `.sorted(d.iteritems(),
 `*from collections `*import defaultdict
 
 counts = defaultdict(`*lambda: 0)
-
-counts['foo'] += 1
+counts[`=['foo']] += 1
 
 `*class Factorial(dict):
   `*def __missing__(self, k):
@@ -714,9 +703,7 @@ add3(1, *a)
 `*def my_log(x, base=10):
   `*return math.log(x) / math.log(base)
 
-
 my_log(42)
-
 my_log(42, math.e)
 `e variable-number-of-arguments
 `*def first_and_last(*a):
@@ -730,9 +717,7 @@ my_log(42, math.e)
 `*def fequal(x, y, eps=0.01):
   `*return abs(x - y) < eps
 
-
 fequal(1.0, 1.001)
-
 fequal(1.0, 1.001, eps=0.1**10)
 `e pass-number-or-string-by-reference
 not possible
@@ -764,7 +749,6 @@ func = add
 `*def counter():
   counter.i += 1
   `*return counter.i
-
 
 counter.i = 0
 `.print(counter())
@@ -807,8 +791,7 @@ nays = make_counter()
 
 operator.mul(3, 7)
 
-a = ['foo', 'bar', 'baz']
-
+a = [`=['foo'], `=['bar'], `=['baz']]
 operator.itemgetter(2)(a)
 `e overload-operator
 `*class Rational:
@@ -822,6 +805,8 @@ operator.itemgetter(2)(a)
   `.print('one hit')
 `*else:
   `.print(`.str(n) + ' hits')
+`e switch
+`cnone
 `e while
 `*while i < 100:
   i += 1
@@ -880,17 +865,17 @@ BaseException
 
 `c[Python 3 has a different tree]
 `e raise-exception
-`*raise `.Exception('bad arg')
+`*raise `.Exception(`=['bad arg'])
 `e catch-all-handler
-`*[try]:
+`*try:
   risky()
-`*[except]:
-  `*[print](`=['risky failed'])
+`*except:
+  `*print(`=['risky failed'])
 `e re-raise-exception
 `*try:
   `*raise `.Exception('bam!')
 `*except:
-  `.print('re-raising...')
+  `.print(`=['re-raising...'])
   `*raise
 `e catch-exception
 `*try:
@@ -902,7 +887,7 @@ last exception: sys.exc_info()[1]
 `e define-exception
 `*class Bam(`.Exception):
   `*def __init__(self):
-    super(Bam, self).__init__('bam!')
+    `*super(Bam, self).__init__('bam!')
 `e catch-exception-by-type
 `*try:
   `*raise Bam()
@@ -912,7 +897,7 @@ last exception: sys.exc_info()[1]
 acquire_resource()
 `*try:
   risky()
-finally:
+`*finally:
   release_resource()
 `e start-thread
 `*class sleep10(threading.Thread):
@@ -920,7 +905,6 @@ finally:
     time.sleep(10)
 
 thr = sleep10()
-
 thr.start()
 `e wait-on-thread
 thr.join()

@@ -25,11 +25,8 @@ Ruby 2.0 source is UTF-8 by default
 # comment
 `e multiple-line-comment
 =begin
-
 comment line
-
 another line
-
 =end
 `e local-variable
 v = nil
@@ -166,7 +163,6 @@ z.abs
 z.conj
 `e random-number-uniform-integer-uniform-float-normal-float
 rand(100)
-
 rand
 `c[none]
 `e random-seed
@@ -203,7 +199,6 @@ second line"]
 `%[\' \\]
 `e custom-delimiters
 s1 = `=[%q(lorem ipsum)]
-
 s2 = `=[%Q(`%[#{s1}] dolor sit amet)]
 `e here-document
 word = `=["amet"]
@@ -248,15 +243,19 @@ hbar = `=["-"] `+* 80
 `=[" lorem"].lstrip
 `=["lorem "].rstrip
 `e pad-on-right-on-left-centered
-"lorem".ljust(10)
-"lorem".rjust(10)
-"lorem".center(10)
+`=["lorem"].ljust(10)
+`=["lorem"].rjust(10)
+`=["lorem"].center(10)
 `e number-to-string
 "value: " + 8.to_s
 `e string-to-number
-7 + "12".to_i
+7 + `=["12"].to_i
+73.9 + `=[".037"].to_f
 
-73.9 + ".037".to_f
+`c[# 12:]
+`=["12A"].to_i
+`c[# 0:]
+`=["A"].to_i
 `e join
 `=[%w(do re mi fa)].join(' ')
 
@@ -272,12 +271,12 @@ hbar = `=["-"] `+* 80
 `=['foobar'].start_with?(`=['foo'])
 `=['foobar'].end_with?(`=['bar'])
 `e string-length
-"lorem".length
-"lorem".size
+`=["lorem"].length
+`=["lorem"].size
 `e index-of-substring
-# returns nil if not found:
-"do re re".index("re")
-"do re re".rindex("re")
+`c[returns nil if not found:]
+`=["do re re"].index(`=["re"])
+`=["do re re"].rindex(`=["re"])
 `e extract-substring
 `=["lorem ipsum"][6, 5]
 `=["lorem ipsum"][6..10]
@@ -534,16 +533,17 @@ d.has_key?("y")
 d = {1 => `=true, 0 => false}
 d.delete(1)
 `e from-array-of-pairs-from-even-length-array
-a = [[1,"a"], [2,"b"], [3,"c"]]
+a = [[`=['a'], 1], [`=['b'], 2], [`=['c'], 3]]
 d = Hash[a]
-a = [1,"a",2,"b",3,"c"]
+
+a = [`=['a'], 1, `=['b'], 2, `=['c'], 3]
 d = Hash[*a]
 `e merge
-d1 = {"a"=>1, "b"=>2}
-d2 = {"b"=>3, "c"=>4}
+d1 = {`=['a'] => 1, `=['b'] => 2}
+d2 = {`=['b'] => 3, `=['c'] => 4}
 d1.merge!(d2)
 `e invert
-to_num = {"t" =>1, "f"=>0}
+to_num = {`=['t'] => 1, `=['f'] => 0}
 to_let = to_num.invert
 `e iteration
 d.each `*do |k,v|
@@ -586,13 +586,25 @@ my_log(42)
 my_log(42, Math::E)
 `e variable-number-of-arguments
 `*def first_and_last(*a)
+
   `*if a.size >= 1
-    puts "first: #{a[0]}"
+    puts `=["first: #{a[0]}"]
   `*end
+
   `*if a.size >= 2
-    puts "last: #{a[-1]}"
+    puts `=["last: #{a[-1]}"]
   `*end
 `*end
+`e pass-array-elements-as-separate-arguments
+a = [2, 3]
+
+add3(1, *a)
+
+`c[# splat operator can be used multiple
+# times and can appear before regular
+# arguments]
+`e parameter-alias
+`cnone
 `e named-parameters
 `*def fequal(x, y, opts={})
   eps = opts[:eps] || 0.01
@@ -645,7 +657,6 @@ none
 `*end
 
 nays = make_counter
-
 puts nays.call
 `e generator
 `*def make_counter
@@ -659,7 +670,6 @@ puts nays.call
 `*end
 
 nays = make_counter
-
 puts nays.resume
 `e decorator
 
@@ -670,20 +680,20 @@ a = [`=['foo'], `=['bar'], `=['baz']]
 a.`+[[]](2)
 `e if
 `*if n == 0
-  puts "no hits"
+  puts `=["no hits"]
 `*elsif 1 == n
-  puts "one hit"
+  puts `=["one hit"]
 `*else
-  puts "#{n} hits"
+  puts `=["]#{n} `=[hits"]
 `*end
 `e switch
 `*case n
 `*when 0
-  puts "no hits"
+  puts `=["no hits"]
 `*when 1
-  puts "one hit"
+  puts `=["one hit"]
 `*else
-  puts "#{n} hits"
+  puts `=["#{n} hits"]
 `*end
 `e while
 `*while i < 100 `*do
@@ -777,7 +787,6 @@ ensure
 thr = Thread.new { sleep 10 }
 `e wait-on-thread
 thr.join
-
 `e standard-file-handles
 $stdin $stdout $stderr
 `e read-line-from-stdin
