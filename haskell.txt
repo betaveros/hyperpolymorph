@@ -1,4 +1,4 @@
-`e version-used
+`e versions-used
 7.4
 `e show-version
 `$[ghc --version]
@@ -283,7 +283,7 @@ no
 printf "foo %s %d %.2f" "bar" 7 3.1415
 `e concatenate-strings
 "Hello" ++ ", " ++ "World!"
-`e replicate-strings
+`e replicate-string
 concat $ replicate 80 "-"
 replicate 80 '-'
 `e translate-case
@@ -670,9 +670,9 @@ main = writeFile f s
 hFlush f
 `e end-of-file-test
 
-`e get-and-set-filehandle-position
+`e get-and-set-file-handle-position
 
-`e file-exists-test-regular-file-test
+`e file-exists-test-regular-test
 `*import System
 
 Directory.doesFileExist "/etc/hosts"

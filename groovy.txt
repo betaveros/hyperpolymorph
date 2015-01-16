@@ -477,7 +477,7 @@ System.out.println("Hello, World!")
 
 `e flush-file-handle
 
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 f = new File('/etc/hosts')
 
 

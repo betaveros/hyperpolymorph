@@ -135,7 +135,7 @@ s = "Hello, " + "World!";
 "lorem".toUpperCase()
 "LOREM".toLowerCase()
 `c[none]
-`e strip
+`e trim
 " lorem ".trim()
 # some browsers:
 " lorem".trimLeft()
@@ -284,17 +284,15 @@ d = { "t":1, "f":0 };
 }
 `e map-lookup
 d.t
-
 d["t"]
-`e map-update
+`e map-access
 d["t"] = 2;
-
 d.t = 2;
 `e map-out-of-bounds
 returns `=undefined
 `e is-key-present
 d.hasOwnProperty("t");
-`e delete
+`e map-remove-element
 `*delete d["t"];
 `*delete d.t;
 `e iteration
@@ -406,7 +404,7 @@ fs.readFileSync("/tmp/foo", "utf8");
 fs.writeSync(f, "lorem ipsum");
 `e flush-file-handle
 none
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 `*var path = require('path');
 
 

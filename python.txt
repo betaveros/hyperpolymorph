@@ -184,7 +184,7 @@ x.denominator
 complex
 `e complex-construction
 z = 1 + 1.414j
-`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+`e complex-decomposition
 `*import cmath
 z.real
 z.imag
@@ -277,7 +277,7 @@ string.capwords('lorem ipsum')
 `=[' lorem '].strip()
 `=[' lorem'].lstrip()
 `=['lorem '].rstrip()
-`e pad-on-right-on-left-centered
+`e pad
 `=['lorem'].ljust(10)
 `=['lorem'].rjust(10)
 `=['lorem'].center(10)
@@ -561,7 +561,7 @@ a = [1, 2, 3]
 a[::-1]
 `.reversed(a) `c[iterator]
 a.reverse()
-`e list-sort
+`e sort
 a = ['b', 'A', 'a', 'B']
 
 `.sorted(a)
@@ -990,7 +990,7 @@ f.write('lorem ipsum\n')
 s = f.getvalue()
 
 `c[Python 3 moved StringIO to the io module]
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 os.path.exists('/etc/hosts')
 
 os.path.isfile('/etc/hosts')

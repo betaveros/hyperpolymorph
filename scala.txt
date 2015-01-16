@@ -739,9 +739,9 @@ out.close
 
 `e end-of-file-test
 
-`e get-and-set-filehandle-position
+`e get-and-set-file-handle-position
 
-`e file-exists-test-regular-file-test
+`e file-exists-test-regular-test
 
 `e file-size
 

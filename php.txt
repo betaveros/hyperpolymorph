@@ -203,7 +203,7 @@ $hbar = `.str_repeat("-", 80);
 `.trim(" lorem ")
 `.ltrim(" lorem")
 `.rtrim("lorem ")
-`e pad-on-right-on-left-centered
+`e pad
 `.str_pad("lorem", 10)
 `.str_pad("lorem", 10, " ", STR_PAD_LEFT)
 `.str_pad("lorem", 10, " ", STR_PAD_BOTH)
@@ -399,12 +399,12 @@ $a = `.array(1, 2, 3, 4);
 `.count($a)
 `e empty-test
 `+!$a
-`e lookup
+`e list-lookup
 $a[0]
 `c[PHP uses the same type for arrays and dictionaries; indices can be negative integers or strings]
-`e update
+`e list-update
 $a[0] = "lorem";
-`e out-of-bounds
+`e list-out-of-bounds
 $a = [];
 `c[evaluates as NULL:]
 $a[10];
@@ -440,7 +440,7 @@ $a2 = `.array_merge($a, [4, 5, 6]);
 $a = `.array_merge($a, [4, 5, 6]);
 `e list-replicate
 
-`e copy
+`e list-copy
 $a = [1, 2, [3, 4]];
 
 $a2 =& $a;
@@ -530,11 +530,10 @@ array_rand($a, 2)
 $a = array_map(NULL,
   [1, 2, 3],
   ["a", "b", "c"]);
-`e literal
+`e map-literal
 $d = ["t" => 1, "f" => 0];
 
 `c[older syntax:]
-
 $d = array("t" => 1, "f" => 0);
 `e map-size
 count($d)
@@ -865,7 +864,7 @@ fputs($f, "lorem ipsum");
 rewind($f);
 
 $s = fread($f, $meg);
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 file_exists("/etc/hosts")
 
 is_file("/etc/hosts")

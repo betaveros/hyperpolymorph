@@ -110,6 +110,14 @@ overrides = {
 	"object-creation": "create-object",
 	"method-invocation": "invoke-method",
 	"typedef": "type-synonym",
+	"get-and-set-filehandle-position": "get-and-set-file-handle-position",
+	"file-exists-test-file-regular-test": "file-exists-test-regular-test",
+	"file-exists-test-regular-file-test": "file-exists-test-regular-test",
+	"pad-on-right-on-left-centered": "pad",
+	"complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate": "complex-decomposition",
+	"float-division-by-zero-dividend-is-positive-zero-negative": "float-division-by-zero",
+	"version-used": "versions-used",
+	"add-time-duration": "add-duration",
 }
 def normalize(e):
 	h = re.sub(r'\W+', '-', e.lower()).strip('-')

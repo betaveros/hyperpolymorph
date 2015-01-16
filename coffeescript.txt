@@ -187,7 +187,7 @@ alert "`%[#{count}] `%[#{item}]s" `c[double-quoted strings only]
 `e parse-date
 `e parse-date-w-o-format
 `e date-subtraction
-`e add-time-duration
+`e add-duration
 `e date-parts
 `e time-parts
 `e build-date-time-from-parts
@@ -431,10 +431,10 @@ immediately invokes a function, forwarding arguments (useful for forcing closure
 `e i-o-error
 `e i-o-errors
 `e encoding-error
-`e get-and-set-filehandle-position
+`e get-and-set-file-handle-position
 `e open-temporary-file
 `e in-memory-file
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 `e file-size
 `e is-file-readable-writable-executable
 `e set-file-permissions

@@ -139,12 +139,12 @@ none
 throws java.lang.ArithmeticException
 `e float-division
 7 / (`*float)3
-`e float-division-by-zero-dividend-is-positive-zero-negative
-Float.POSITIVE_INFINITY
-Float.NaN
-Float.NEGATIVE_INFINITY
+`e float-division-by-zero
+positive dividend: Float.POSITIVE_INFINITY
+zero dividend: Float.NaN
+negative dividend: Float.NEGATIVE_INFINITY
 
-constants with same names defined in Double
+`c[constants with same names defined in Double]
 `e power
 Math.pow(2.0, 32.0);
 `e sqrt
@@ -252,14 +252,11 @@ String.format("%s: %d", "Spain", 7)
 "hello".compareTo("world")
 `e concatenate
 "hello" + " world"
-`e replicate
+`e replicate-string
 `*import java.util.Arrays;
 
-
 `*char[] a = `*new `*char[80];
-
 Arrays.fill(a, '-');
-
 String s = `*new String(a);
 `e translate-case
 "hello".toUpperCase()
@@ -371,7 +368,7 @@ a.length
 a[0]
 `e array-update
 
-`e out-of-bounds
+`e array-out-of-bounds
 ArrayIndexOutOfBoundsException
 `e copy
 
@@ -393,11 +390,11 @@ list.size()
 
 `e empty-test-and-clear
 
-`e lookup
+`e list-lookup
 list.elementAt(0)
 `e update
 
-`e out-of-bounds
+`e list-out-of-bounds
 throws ArrayIndexOutOfBoundsException
 `e index-of-element
 
@@ -695,7 +692,7 @@ BufferedWriter fout = `*new BufferedWriter(`*new FileWriter("/tmp/test2"));
 }
 
 fout.close();
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 `*import java.io.File;
 
 

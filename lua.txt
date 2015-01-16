@@ -439,7 +439,7 @@ f:read("*a")
 f:write("lorem ipsum")
 `e flush-file-handle
 f:flush()
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 none
 `e file-size
 

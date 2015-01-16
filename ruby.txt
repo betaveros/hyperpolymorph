@@ -155,7 +155,7 @@ x.denominator
 `.require 'complex'
 
 z = 1 + 1.414.im
-`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+`e complex-decomposition
 z.real
 z.imag
 z.arg
@@ -242,7 +242,7 @@ hbar = `=["-"] `+* 80
 `=[" lorem "].strip
 `=[" lorem"].lstrip
 `=["lorem "].rstrip
-`e pad-on-right-on-left-centered
+`e pad
 `=["lorem"].ljust(10)
 `=["lorem"].rjust(10)
 `=["lorem"].center(10)
@@ -407,13 +407,13 @@ a.length `c[same as size]
 `e empty-test
 `![NoMethodError if a is nil:]
 a.empty?
-`e lookup
+`e list-lookup
 a[0]
 `c[returns last element:]
 a[-1]
-`e update
+`e list-update
 a[0] = "lorem"
-`e out-of-bounds
+`e list-out-of-bounds
 a = []
 `c[evaluates as nil:]
 a[10]
@@ -448,7 +448,7 @@ a.concat([4, 5, 6])
 `e list-replicate
 a = [nil] * 10
 a = Array.new(10, nil)
-`e copy
+`e list-copy
 a = [1,2,[3,4]]
 a2 = a
 a3 = a.dup
@@ -863,7 +863,7 @@ f = StringIO.new
 f.puts("lorem ipsum")
 f.rewind
 s = f.read
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 File.exists?("/etc/hosts")
 File.file?("/etc/hosts")
 `e file-size

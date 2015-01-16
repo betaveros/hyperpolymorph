@@ -696,7 +696,7 @@ while (line = [i nextObject]) {
 }
 `e write-to-file
 
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 
 `e file-size
 
