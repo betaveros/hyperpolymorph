@@ -262,11 +262,11 @@ hbar = `=["-"] `+* 80
 `c[implicitly converted to strings:]
 [1, 2, 3].join(' ')
 `e split
-"do re mi fa".split
+`=["do re mi fa"].split
 `e split-in-two
-"do re mi fa".split(/\s+/, 2)
+`=["do re mi fa"].split(`=[/\s+/], 2)
 `e split-and-keep-delimiters
-"do re mi fa".split(/(\s+)/)
+`=["do re mi fa"].split(`=[/(\s+)/])
 `e prefix-and-suffix-test
 `=['foobar'].start_with?(`=['foo'])
 `=['foobar'].end_with?(`=['bar'])
@@ -456,7 +456,7 @@ a4 = Marshal.load(Marshal.dump(a))
 `e arrays-as-function-arguments
 parameter contains address copy
 `e iterate-over-elements
-[1,2,3].each { |i| puts i }
+[1, 2, 3].each { |i| puts i }
 `e iterate-over-indices-and-elements
 a = %w(do re mi fa)
 
@@ -496,24 +496,25 @@ a.include?(7)
 `e relative-complement-symmetric-difference
 `.require `=['set']
 
-[1,2,3] - [2]
+[1, 2, 3] - [2]
 Set[1,2] ^ Set[2,3,4]
 `e map
-[1,2,3].map { |o| o * o }
+[1, 2, 3].map { |o| o * o }
+[1, 2, 3].map `+&:to_s
 `e filter
-[1,2,3].select { |o| o > 1 }
+[1, 2, 3].select { |o| o > 1 }
 `e fold-from-left
-[1,2,3].inject(0) { |m,o| m+o }
+[1, 2, 3].inject(0) { |m,o| m+o }
 `e universal-test
-[1,2,3,4].all? { |i| i.even? }
+[1, 2, 3, 4].all? { |i| i.even? }
 `e existential-test
-[1,2,3,4].any? { |i| i.even? }
+[1, 2, 3, 4].any? { |i| i.even? }
 `e shuffle-and-sample
 [1, 2, 3, 4].shuffle
 [1, 2, 3, 4].sample(2)
 `e zip
 `c[array of 3 pairs:]
-a = [1,2,3].zip(["a", "b", "c"])
+a = [1, 2, 3].zip([`=["a"], `=["b"], `=["c"]])
 `e map-literal
 d = { "t" => 1, "f" => 0 }
 `e map-size
