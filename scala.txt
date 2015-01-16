@@ -65,9 +65,7 @@ another comment */
 `*def n = 1 + 2
 `e local-variable
 `*var n = 3
-
 n = 4
-
 n + 7
 `e unit-type-and-value
 `.Unit

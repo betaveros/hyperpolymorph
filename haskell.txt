@@ -82,6 +82,7 @@ isJust v
 
 `![raises exception if `.Nothing:]
 fromJust foo
+
 `![evaluates to 0 if `.Nothing:]
 maybe 0 intId foo
 fromMaybe 0 foo
