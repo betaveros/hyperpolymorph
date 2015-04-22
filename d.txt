@@ -355,6 +355,15 @@ a1 ~= a2;
 `*foreach (i, n; a) {
   writeln("value at ", i, " is ", n);
 }
+`e iterate-over-range
+`*foreach (i; 1..1000001) {
+  `c[code]
+}
+`e instantiate-range-as-list
+`*import std.range;
+`*auto a = iota(1, 11).array; `c[1, 2, ..., 10]
+iota(11) `c[0, 1, 2, ..., 10]
+iota(1, 11, 2) `c[1, 3, 5, 7, 9]
 `e reverse
 `e sort
 `e dedupe
