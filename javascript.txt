@@ -126,20 +126,20 @@ yes
 `c[single and double quotes:]
 `%[\b \f \n \r \t \v \uhhhh \xhh \" \' \\]
 `e concatenate-strings
-s = "Hello, " + "World!";
+s = `=["Hello, "] + `=["World!"];
 `e split
-"do re mi".split(" ")
+`=["do re mi"].split(`=[" "])
 `e join
-["do", "re", "mi"].join(" ")
+[`=["do"], `=["re"], `=["mi"]].join(`=[" "])
 `e translate-case
-"lorem".toUpperCase()
-"LOREM".toLowerCase()
+`=["lorem"].toUpperCase()
+`=["LOREM"].toLowerCase()
 `c[none]
 `e trim
-" lorem ".trim()
-# some browsers:
-" lorem".trimLeft()
-"lorem ".trimRight()
+`=[" lorem "].trim()
+`c[some browsers:]
+`=[" lorem"].trimLeft()
+`=["lorem "].trimRight()
 `e pad
 `e string-to-number
 7 + `.parseInt("12", 10)
@@ -157,6 +157,14 @@ s = "Hello, " + "World!";
 `e extract-character
 `=["lorem ipsum"].charAt(6)
 `=["lorem ipsum"].charCodeAt(6)
+`e test-character
+`c[use regexes, somehow]
+`=[/^[a-zA-Z]$/].test(`=['c'])
+`=[/^\d$/].test(`=['c'])
+`=[/^\s$/].test(`=['c'])
+`=[/^[A-Z]$/].test(`=['c'])
+`=[/^[a-z]$/].test(`=['c'])
+`c[for speed, use charCode comparisons]
 `e chr-and-ord
 String.fromCharCode(65)
 `=["A"].charCodeAt(0)
