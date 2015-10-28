@@ -450,7 +450,7 @@ read $f
 puts -nonewline $f "lorem ipsum"
 `e flush-file-handle
 flush $f
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 file exists "/etc/hosts"
 file isfile "/etc/hosts"
 `e file-size

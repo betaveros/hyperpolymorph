@@ -188,15 +188,11 @@ $x->denominator();
 `*use Math::Complex;
 
 `*my $z = 1 + 1.414 * i;
-`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+`e complex-decomposition
 Re($z);
-
 Im($z);
-
 arg($z);
-
 abs($z);
-
 ~$z;
 `e random-number-uniform-integer-uniform-float-normal-float
 `.int(`.rand() * 100)
@@ -288,7 +284,7 @@ $s2 = $s;
 trim " lorem "
 ltrim " lorem"
 rtrim "lorem "
-`e pad-on-right-on-left-centered
+`e pad
 # cpan -i Text::Format
 `*use Text::Format;
 
@@ -434,6 +430,22 @@ $t = Time::Piece->strptime($s,$fmt);
 
 
 $epoch = str2time("July 7, 1999");
+`e date-parts
+$t->year
+$t->mon
+$t->mday
+`e time-parts
+$t->hour
+$t->min
+$t->sec
+`e build-date-time-from-parts
+$dt = DateTime->new(
+  year=>2014,
+  month=>4,
+  day=>1,
+  hour=>10,
+  minute=>3,
+  second=>56);
 `e date-subtraction
 Time::Seconds object if `*use Time::Piece in effect; not meaningful to subtract tm arrays
 `e add-duration
@@ -487,18 +499,18 @@ ephemeral value: list
 @a = (1, 2, 3, 4);
 `e quote-words
 @a = qw(do re mi);
-`e size
+`e list-size
 $#a + 1 `c[or]
 `.scalar(@a)
 `e empty-test
 `+!@a
-`e lookup
+`e list-lookup
 $a[0]
 `c[returns last element:]
 $a[-1]
-`e update
+`e list-update
 $a[0] = "lorem";
-`e out-of-bounds
+`e list-out-of-bounds
 @a = ();
 `c[evaluates as undef:]
 $a[10];
@@ -529,7 +541,7 @@ $i = first {$a[$_] `+eq "y"} (0..$#a);
 `.push @a, (4,5,6);
 `e list-replicate
 @a = (`=undef) x 10;
-`e copy
+`e list-copy
 `*use Storable 'dclone'
 
 `*my @a = (1,2,[3,4]);
@@ -876,7 +888,7 @@ eof($f)
 `e get-and-set-file-handle-position
 tell($f)
 seek($f, 0, SEEK_SET);
-`e open-temporary-file
+`e temporary-file
 `*use File::Temp;
 
 
@@ -895,7 +907,7 @@ file is removed when file handle goes out of scope
 `.open($f, ">", \$s);
 `.print $f "lorem ipsum\n";
 $s;
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 `.[-e] "/etc/hosts"
 `.[-f] "/etc/hosts"
 `e file-size

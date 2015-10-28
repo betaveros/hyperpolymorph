@@ -1,4 +1,4 @@
-`e version-used
+`e versions-used
 4.0
 `e show-version
 `$[ocaml -version]
@@ -225,7 +225,7 @@ no
 
 `e concatenate-strings
 `=["Hello"] `+^ `=[", "] `+^ `=["World!"]
-`e replicate
+`e replicate-string
 String.make 80 '-'
 `e translate-case
 String.uppercase "hello"
@@ -275,8 +275,6 @@ open Unix;;
 (* float: *)
 
 time();;
-`e literal
-
 `e size
 
 `e lookup
@@ -285,7 +283,7 @@ time();;
 
 `e out-of-bounds
 
-`e literal
+`e list-literal
 [1; 2; 3]
 `e empty-list
 []
@@ -543,9 +541,9 @@ close_out oc;;
 
 `e end-of-file-test
 
-`e get-and-set-filehandle-position
+`e get-and-set-file-handle-position
 
-`e file-exists-test-regular-file-test
+`e file-exists-test-regular-test
 open Unix
 
 

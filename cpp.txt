@@ -134,12 +134,10 @@ Memory allocated by the new operator is zero-initialized.
 process sent a SIGFPE signal
 `e float-division
 7 / static_cast<`*float>(3)
-`e float-division-by-zero-dividend-is-positive-zero-negative
-inf
-
-nan
-
--inf
+`e float-division-by-zero
+positive dividend: inf
+zero dividend: nan
+negative dividend: -inf
 
 There are no portably defined literals or constants for the above values.
 `e power
@@ -206,7 +204,7 @@ LDBL_MIN
 `#[#include <complex>]
 
 complex<`*double> z(1.0, 2.0);
-`e complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate
+`e complex-decomposition
 z.real()
 z.imag()
 arg(z)
@@ -295,7 +293,7 @@ oss << "Spain: " << 7;
 `.string s2 = s + " world";
 
 s += " world";
-`e replicate
+`e replicate-string
 `.string hbar(80, '-');
 `e translate-case
 `#[#include <algorithm>]
@@ -464,11 +462,11 @@ size_t len = `.sizeof(a) / `.sizeof(a[0]);
 `*int first = a[0];
 `e array-update
 a[0] = 7;
-`e out-of-bounds
+`e array-out-of-bounds
 No defined behavior
 
 An out-of-bounds lookup may return the value the memory location contains; an out-of-bounds update may cause memory corruption. The system may detect an invalid address and send the process a SIGSEGV.
-`e copy
+`e array-copy
 `*const size_t LEN(4);
 `*int src[LEN] = {3, 2, 4, 1};
 `*int dest[LEN];
@@ -546,7 +544,7 @@ a.clear();
 `*int n2 = a.at(0);
 `e list-update
 a[2] = 4;
-`e out-of-bounds
+`e list-out-of-bounds
 using [] with out-of-bounds index has undefined behavior
 `e index-of-element
 `#[#include <vector>]
@@ -607,7 +605,7 @@ a1.insert(a1.cend(),
 
 `c[array of 10 zeros:]
 vector<`*int> a(10, 0);
-`e copy
+`e list-copy
 `#[#include <vector>]
 
 vector<`*int> a({1, 2, 3});
@@ -1136,7 +1134,7 @@ f.close();
   handle error
 
 }
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 
 `e file-size
 

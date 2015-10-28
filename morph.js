@@ -12,7 +12,7 @@ function checker(ch, lang) { // force closure capture
 	}
 }
 
-function makeMorpher(langs) {
+function makeMorpher(langs, showLangs) {
 	var morpher = document.getElementById("morpher");
 
 	for (var i = 0; i < langs.length; i++) {
@@ -22,7 +22,7 @@ function makeMorpher(langs) {
 		var ch = document.createElement("input");
 		ch.type = "checkbox";
 		ch.onclick = checker(ch, lang);
-		if (lang === "python" || lang === "d" || lang === "scala" || lang === "haskell") {
+		if (showLangs.indexOf(lang) > -1) {
 			ch.checked = true;
 		} else {
 			setDisplay(lang, "none");

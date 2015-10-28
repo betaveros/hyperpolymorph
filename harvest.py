@@ -110,6 +110,15 @@ overrides = {
 	"object-creation": "create-object",
 	"method-invocation": "invoke-method",
 	"typedef": "type-synonym",
+	"get-and-set-filehandle-position": "get-and-set-file-handle-position",
+	"file-exists-test-file-regular-test": "file-exists-test-regular-test",
+	"file-exists-test-regular-file-test": "file-exists-test-regular-test",
+	"pad-on-right-on-left-centered": "pad",
+	"complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate": "complex-decomposition",
+	"float-division-by-zero-dividend-is-positive-zero-negative": "float-division-by-zero",
+	"version-used": "versions-used",
+	"add-time-duration": "add-duration",
+	"open-temporary-file": "temporary-file",
 }
 def normalize(e):
 	h = re.sub(r'\W+', '-', e.lower()).strip('-')
@@ -119,7 +128,7 @@ def parse_entries(filename, outfilename, append=True):
 	with codecs.open(filename, 'r', encoding="utf-8") as infile:
 		with codecs.open(outfilename, 'a' if append else 'w', encoding="utf-8") as outfile:
 			outfile.write('# general\n')
-			soup = BeautifulSoup(infile)
+			soup = BeautifulSoup(infile, "html.parser")
 			t = soup.table
 			for row in t.find_all('tr'):
 				ths = row.find_all('th')
@@ -140,7 +149,7 @@ def parse(filename, colfilenames):
 	colfiles = [codecs.open(fn, 'w', encoding="utf-8") for fn in colfilenames]
 
 	with codecs.open(filename, encoding="utf-8") as infile:
-		soup = BeautifulSoup(infile)
+		soup = BeautifulSoup(infile, "html.parser")
 		t = soup.table
 		for row in t.find_all('tr'):
 			tds = row.find_all('td')
@@ -166,7 +175,7 @@ to_parse_entries = []
 # to_parse = [('ml.html', ['sml-new.txt', 'ocaml-new.txt', 'f-sharp-new.txt', 'haskell-new.txt'])]
 # to_parse = [('scripting2.html', ['perl2.txt', 'php2.txt', 'python2.txt', 'ruby2.txt'])]
 # to_parse = [('rust.html', ['rust.txt', 'swift.txt', 'scala2.txt'])]
-to_parse = [('scripting.html', ['javascript-new.txt', 'php-new.txt', 'python-new.txt', 'ruby-new.txt'])]
+to_parse = [('more.html', ['perl2.txt', 'lua2.txt', 'groovy.txt'])]
 # to_parse = [('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt'])]
 # to_parse = [('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt'])]
 

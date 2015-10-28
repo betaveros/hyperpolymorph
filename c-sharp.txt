@@ -683,7 +683,7 @@ for (i=0; i<10; i++) {
 }
 
 fout.Close();
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 System.IO.File.Exists("/etc/hosts")
 `e file-size
 

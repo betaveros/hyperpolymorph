@@ -2,6 +2,7 @@
 versions-used: versions used
 show-version: show version
 implicit-prologue: implicit prologue
+shebang: shebang
 # grammar and invocation
 hello-world: hello world
 file-suffixes: file suffixes / source, header, object file
@@ -93,7 +94,7 @@ rational-decomposition: rational decomposition
 complex-type: complex type
 complex-constants: complex constants
 complex-construction: complex construction
-complex-decomposition-real-and-imaginary-component-argument-absolute-value-conjugate: complex decomposition / real and imaginary component, argument, absolute value, conjugate
+complex-decomposition: complex decomposition / real and imaginary component, argument, absolute value, conjugate
 complex-operators: complex operators
 random-number-uniform-integer-uniform-float-normal-float: random number / uniform integer, uniform float, normal float
 random-seed: random seed / set, get, restore
@@ -126,6 +127,7 @@ join: join
 split: split
 split-in-two: split in two
 split-and-keep-delimiters: split and keep delimiters
+prefix-and-suffix-test: prefix and suffix test
 serialize: serialize
 string-length: string-length
 index-of-substring: index of substring / first, last
@@ -168,7 +170,7 @@ strptime: strptime
 parse-date: parse date
 parse-date-w-o-format: parse date w/o format
 date-subtraction: result of date subtraction
-add-time-duration: add time duration
+add-duration: add duration
 date-parts: date parts
 time-parts: time parts
 build-date-time-from-parts: build date/time from parts
@@ -203,6 +205,7 @@ empty-list: empty list
 empty-test: empty test
 empty-test-and-clear: empty test / and clear
 head: head
+tail: tail
 list-lookup: lookup
 list-update: update
 list-out-of-bounds: out-of-bounds behavior
@@ -400,11 +403,11 @@ end-of-file-behavior: end-of-file behavior
 i-o-error: i/o error
 i-o-errors: i/o errors
 encoding-error: encoding error
-get-and-set-filehandle-position: get and set filehandle position
-open-temporary-file: open temporary file
+get-and-set-file-handle-position: get and set file handle position
+temporary-file: temporary file
 in-memory-file: in memory file
 # files
-file-exists-test-file-regular-test: file exists test, file regular test
+file-exists-test-regular-test: file exists test, file regular test
 file-size: file size
 is-file-readable-writable-executable: is file readable, writable, executable
 set-file-permissions: set file permissions

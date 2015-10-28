@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 import qualified Data.Map as M
 import qualified Data.Set as S
 import System.IO
@@ -6,6 +7,7 @@ import Control.Monad
 import Data.Char
 import Data.Function
 import Data.List
+import Data.Monoid (mconcat)
 import System.Environment
 import Text.Parsec
 
@@ -182,12 +184,16 @@ footHTML :: String
 footHTML = "</div>"
 endHTML :: String
 endHTML = unlines ["</body>", "</html>"]
-buildJsCall :: [String] -> [String] -> String
-buildJsCall names skeys = unlines [
+
+jsList :: [String] -> String
+jsList xs = "[" ++ intercalate "," ["\"" ++ x ++ "\"" | x <- xs] ++ "]"
+
+buildJsCall :: [String] -> [String] -> [String] -> String
+buildJsCall names showNames skeys = unlines [
     "<script type='text/javascript' src='morph.js'></script>",
     "<script type='text/javascript'>",
-    "makeMorpher([" ++ intercalate "," ["\"" ++ name ++ "\"" | name <- names] ++ "]);",
-    "makeToCScroller([" ++ intercalate "," ["\"" ++ skey ++ "\"" | skey <- skeys] ++ "]);",
+    "makeMorpher(" ++ jsList names ++ ", " ++ jsList showNames ++ ");",
+    "makeToCScroller(" ++ jsList skeys ++ ");",
     "</script>"
     ]
 
@@ -204,11 +210,18 @@ unusedEntries m ss = S.toList $ M.keysSet m S.\\ S.fromList (concatMap listSecti
 
 -- langNames = ["perl","php","python","ruby","tcl","lua","javascript","groovy","cpp","objective-c","java","c-sharp","c","go","pascal","ada","plpgsql","common-lisp","racket","clojure","c-sharp","ocaml","f-sharp","scala","haskell","prolog","erlang","forth","postscript","factor","posix-shell","applescript","powershell","sql","awk","pig","matlab","r","numpy","fortran","mathematica","sympy","maxima","pari-gp"]
 
+categorizeLangNames :: [String] -> ([String], [String])
+categorizeLangNames = mconcat . map (\x -> case x of
+    ('+' : s) -> ([s], [s])
+    s -> ([s], []))
+
 main :: IO ()
 main = do
-    cont <- readFile "entries.txt"
-    secs <- parseIO bqSectionList "(entries.txt)" cont
-    langNames <- getArgs
+    (entryName : langNames0) <- getArgs
+    let (langNames, showLangNames) = categorizeLangNames langNames0
+    let entryFile = entryName ++ ".txt"
+    cont <- readFile entryFile
+    secs <- parseIO bqSectionList entryFile cont
     langs <- mapM readNamedEntryMap langNames
     putStrLn startHTML
     putStrLn $ buildTable secs langs
@@ -220,5 +233,5 @@ main = do
                 hPutStrLn stderr $ "Warning: " ++ langName ++ " has " ++ show (length xs) ++ " unused entries:"
                 forM_ xs $ hPutStrLn stderr . (" > " ++)
     putStrLn $ buildToC secs
-    putStrLn . buildJsCall langNames $ map (toKey . fst) secs
+    putStrLn . buildJsCall langNames showLangNames $ map (toKey . fst) secs
     putStrLn endHTML

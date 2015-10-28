@@ -126,20 +126,20 @@ yes
 `c[single and double quotes:]
 `%[\b \f \n \r \t \v \uhhhh \xhh \" \' \\]
 `e concatenate-strings
-s = "Hello, " + "World!";
+s = `=["Hello, "] + `=["World!"];
 `e split
-"do re mi".split(" ")
+`=["do re mi"].split(`=[" "])
 `e join
-["do", "re", "mi"].join(" ")
+[`=["do"], `=["re"], `=["mi"]].join(`=[" "])
 `e translate-case
-"lorem".toUpperCase()
-"LOREM".toLowerCase()
+`=["lorem"].toUpperCase()
+`=["LOREM"].toLowerCase()
 `c[none]
-`e strip
-" lorem ".trim()
-# some browsers:
-" lorem".trimLeft()
-"lorem ".trimRight()
+`e trim
+`=[" lorem "].trim()
+`c[some browsers:]
+`=[" lorem"].trimLeft()
+`=["lorem "].trimRight()
 `e pad
 `e string-to-number
 7 + `.parseInt("12", 10)
@@ -157,6 +157,14 @@ s = "Hello, " + "World!";
 `e extract-character
 `=["lorem ipsum"].charAt(6)
 `=["lorem ipsum"].charCodeAt(6)
+`e test-character
+`c[use regexes, somehow]
+`=[/^[a-zA-Z]$/].test(`=['c'])
+`=[/^\d$/].test(`=['c'])
+`=[/^\s$/].test(`=['c'])
+`=[/^[A-Z]$/].test(`=['c'])
+`=[/^[a-z]$/].test(`=['c'])
+`c[for speed, use charCode comparisons]
 `e chr-and-ord
 String.fromCharCode(65)
 `=["A"].charCodeAt(0)
@@ -284,17 +292,15 @@ d = { "t":1, "f":0 };
 }
 `e map-lookup
 d.t
-
 d["t"]
-`e map-update
+`e map-access
 d["t"] = 2;
-
 d.t = 2;
 `e map-out-of-bounds
 returns `=undefined
 `e is-key-present
 d.hasOwnProperty("t");
-`e delete
+`e map-remove-element
 `*delete d["t"];
 `*delete d.t;
 `e iteration
@@ -406,7 +412,7 @@ fs.readFileSync("/tmp/foo", "utf8");
 fs.writeSync(f, "lorem ipsum");
 `e flush-file-handle
 none
-`e file-exists-test-file-regular-test
+`e file-exists-test-regular-test
 `*var path = require('path');
 
 
