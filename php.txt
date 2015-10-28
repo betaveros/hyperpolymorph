@@ -841,7 +841,7 @@ feof($f)
 ftell($f)
 
 fseek($f, 0);
-`e open-temporary-file
+`e temporary-file
 $f = tmpfile();
 
 

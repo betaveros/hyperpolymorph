@@ -848,7 +848,7 @@ f.seek(0)
 f.pos
 
 f.pos = 0
-`e open-temporary-file
+`e temporary-file
 `.require 'tempfile'
 
 f = Tempfile.new('')

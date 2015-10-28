@@ -404,7 +404,7 @@ i-o-error: i/o error
 i-o-errors: i/o errors
 encoding-error: encoding error
 get-and-set-file-handle-position: get and set file handle position
-open-temporary-file: open temporary file
+temporary-file: temporary file
 in-memory-file: in memory file
 # files
 file-exists-test-regular-test: file exists test, file regular test

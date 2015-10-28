@@ -430,6 +430,22 @@ $t = Time::Piece->strptime($s,$fmt);
 
 
 $epoch = str2time("July 7, 1999");
+`e date-parts
+$t->year
+$t->mon
+$t->mday
+`e time-parts
+$t->hour
+$t->min
+$t->sec
+`e build-date-time-from-parts
+$dt = DateTime->new(
+  year=>2014,
+  month=>4,
+  day=>1,
+  hour=>10,
+  minute=>3,
+  second=>56);
 `e date-subtraction
 Time::Seconds object if `*use Time::Piece in effect; not meaningful to subtract tm arrays
 `e add-duration
@@ -872,7 +888,7 @@ eof($f)
 `e get-and-set-file-handle-position
 tell($f)
 seek($f, 0, SEEK_SET);
-`e open-temporary-file
+`e temporary-file
 `*use File::Temp;
 
 

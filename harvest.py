@@ -118,6 +118,7 @@ overrides = {
 	"float-division-by-zero-dividend-is-positive-zero-negative": "float-division-by-zero",
 	"version-used": "versions-used",
 	"add-time-duration": "add-duration",
+	"open-temporary-file": "temporary-file",
 }
 def normalize(e):
 	h = re.sub(r'\W+', '-', e.lower()).strip('-')
@@ -174,7 +175,7 @@ to_parse_entries = []
 # to_parse = [('ml.html', ['sml-new.txt', 'ocaml-new.txt', 'f-sharp-new.txt', 'haskell-new.txt'])]
 # to_parse = [('scripting2.html', ['perl2.txt', 'php2.txt', 'python2.txt', 'ruby2.txt'])]
 # to_parse = [('rust.html', ['rust.txt', 'swift.txt', 'scala2.txt'])]
-to_parse = [('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt'])]
+to_parse = [('more.html', ['perl2.txt', 'lua2.txt', 'groovy.txt'])]
 # to_parse = [('more.html', ['tcl.txt', 'lua.txt', 'javascript.txt', 'groovy.txt'])]
 # to_parse = [('lisp.html', ['common-lisp.txt', 'racket.txt', 'clojure.txt', 'emacs-lisp.txt'])]
 

@@ -1,20 +1,19 @@
-`e version-used
+`e versions-used
 5.1
 `e show-version
-$ lua -v
+`$[lua -v]
 `e interpreter
-$ lua foo.lua
+`$[lua foo.lua]
 `e repl
-$ lua
+`$[lua]
 `e command-line-program
-$ lua -e 'print("hi world!")'
+`$[lua -e 'print("hi world!")']
 `e block-delimiters
-do end
+`*do `*end
 `e statement-terminator
 newline or ;
 
 newline not separator inside {}, (), or after binary operator.
-
 
 newline can be put in "" or '' if preceded by backslash
 `e are-expressions-statements
@@ -25,48 +24,44 @@ no
 --[[
   commented out
   also commented out
-
 ]]
 `e local-variable
-local x = 1
+`*local x = 1
 `e global-variable
--- assign without using local
-
+`c[assign without using local]
 g = 1
 
-function incr_global()
+`*function incr_global()
   g = g + 1
-end
+`*end
 `e assignment
 x = 1
 `e parallel-assignment
 x, y, z = 1, 2, 3
 
--- 3 is discarded:
-
+`c[3 is discarded:]
 x, y = 1, 2, 3
 
--- z is set to nil:
-
+`c[z is set to nil:]
 x, y, z = 1, 2
 `e swap
 x, y = y, x
 `e null
-nil
+`=nil
 `e null-test
-v == nil
+v == `=nil
 `e uninitialized-local-variable
-nil
+`=nil
 `e uninitialized-global-variable
-nil
+`=nil
 `e conditional-expression
 none
 `e true-and-false
 true false
 `e falsehoods
-false nil
+false `=nil
 `e logical-operators
-and or not
+`*and `*or `*not
 `e relational-expression
 x > 3
 `e relational-operators
@@ -82,8 +77,8 @@ math.min(unpack({1 ,2 ,3}))
 math.max(unpack({1, 2, 3}))
 `e arithmetic-expression
 1 + 3
-`e arithmetic-operators-addition-subtraction-multiplication-float-division-quotient-modulus
-+ - * / none % ^
+`e arithmetic-operators
++ - * / `c[none] % ^
 `e integer-division
 math.floor(x / y)
 `e integer-division-by-zero
@@ -159,8 +154,6 @@ string.upper("lorem")
 
 string.lower("LOREM")
 none
-`e strip
-none
 `e pad
 none
 `e string-to-number
@@ -180,16 +173,14 @@ string.sub("lorem ipsum", 7, 11)
 string.char(65)
 
 string.byte("A")
-`e character-class-abbreviations-and-anchors
-char class abbrevs:
-
-. %a %c %d %l %p %s %u %w %x %z
-
-anchors: ^ $
+`e character-class-abbreviations
+`%[. %a %c %d %l %p %s %u %w %x %z]
+`e anchors
+`%[^ $]
 `e match-test
-if string.match(s, "1999") then
-  print("party!")
-end
+`*if string.match(s, "1999") `*then
+  `.print("party!")
+`*end
 `e case-insensitive-match-test
 none
 `e modifiers
@@ -243,7 +234,7 @@ a[1]
 `e list-update
 a[1] = "lorem"
 `e list-out-of-bounds
-returns nil
+returns `=nil
 `e index-of-element
 none; use for and ipairs
 `e slice
@@ -267,9 +258,9 @@ table.insert(a, 1, 5)
 
 i = table.remove(a, 1)
 `e iterate-over-elements
-for k,v in ipairs(a) do
-  print(v)
-end
+`*for k,v `*in ipairs(a) `*do
+  `.print(v)
+`*end
 `e reverse
 none
 `e sort
@@ -296,119 +287,117 @@ none
 none
 `e zip
 none
-`e literal
+`e map-literal
 d = { t=1, f=0 }
 `e map-size
 size = 0
-for k, v in pairs(d) do
+`*for k, v `*in pairs(d) `*do
   size = size + 1
-end
-`e lookup
+`*end
+`e map-lookup
 d.t
 
 d["t"]
-`e update
+`e map-update
 d["t"] = 2
 
 d.t = 2
-`e out-of-bounds
-returns nil
+`e map-out-of-bounds
+returns `=nil
 `e is-key-present
-d["t"] ~= nil
-`e delete
-d.t = nil
+d["t"] ~= `=nil
+`e delete-entry
+d.t = `=nil
 
-d["t"] = nil
+d["t"] = `=nil
 `e iteration
-for k,v in pairs(d) do
+`*for k,v `*in pairs(d) `*do
   use k or v
-end
+`*end
 `e declare-function
-function add(x, y)
-  return x + y
-end
+`*function add(x, y)
+  `*return x + y
+`*end
 `e invoke-function
 add(1, 2)
 `e missing-argument-behavior
-nil
+`=nil
 `e extra-arguments
 ignored
 `e default-value
 none
 `e variable-number-of-arguments
 declare function with ellipsis:
-function foo(...)
-  local arg = {...}
+`*function foo(...)
+  `*local arg = {...}
 `e return-value
-return arg or nil
+`*return arg
+or `=nil
 `e multiple-return-values
-function roots(x)
+`*function roots(x)
   r = math.sqrt(x)
-  return r, -r
-end
+  `*return r, -r
+`*end
 
 r1,r2 = roots(4)
 `e lambda
-sqr = function(x) return x*x end
+sqr = `*function(x) `*return x*x `*end
 `e lambda-invocation
 sqr(2)
 `e default-scope
-global unless declared with local
+global unless declared with `*local
 `e nested-function-visibility
 visible outside containing function
 `e if
-if n == 0 then
-  print("no hits")
-elseif n == 1 then
-  print("one hit")
-else
-  print(n .. " hits")
-end
+`*if n == 0 `*then
+  `.print("no hits")
+`*elseif n == 1 `*then
+  `.print("one hit")
+`*else
+  `.print(n .. " hits")
+`*end
 `e while
-while i < 100 do
+`*while i < 100 `*do
   i = i + 1
-end
+`*end
 `e break-continue-redo
 break none
 `e for
-for i = 0, 9 do
-  print(i)
-end
+`*for i = 0, 9 `*do
+  `.print(i)
+`*end
 `e raise-exception
 error "bad arg"
 `e catch-exception
-if not pcall(risky) then
-  print "risky failed"
-end
+`*if `*not pcall(risky) `*then
+  `.print "risky failed"
+`*end
 `e finally
 none
 `e uncaught-exception-behavior
 stderr and exit
 `e generator
 crt = coroutine.create(
-  function (n)
-    while (true) do
+  `*function (n)
+    `*while (true) `*do
       coroutine.yield(n % 2)
       n = n + 1
-    end
-  end
-
+    `*end
+  `*end
 )
-
 
 status, retval =
   coroutine.resume(crt, 1)
-
-if status then
-  print("parity: " .. retval)
-else
-  print("couldn't resume crt")
-end
+`*if status `*then
+  `.print("parity: " .. retval)
+`*else
+  `.print("couldn't resume crt")
+`*end
 
 
 _, retval = coroutine.resume(crt)
 
-print("parity: " .. retval)
+`.print("parity: " .. retval)
 `e standard-file-handles
 io.stdin
 
@@ -418,7 +407,7 @@ io.stderr
 `e read-line-from-stdin
 line = io.stdin:read()
 `e write-line-to-stdout
-print "Hello, World!"
+`.print "Hello, World!"
 `e open-file-for-reading
 f = io.open("/tmp/foo")
 `e open-file-for-writing
@@ -428,9 +417,9 @@ f:close()
 `e read-line
 f:read()
 `e iterate-over-file-by-line
-for s in f:lines() do
+`*for s `*in f:lines() `*do
   use s
-end
+`*end
 `e chomp
 none, read() and lines() remove trailing newlines
 `e read-file
@@ -490,7 +479,7 @@ s = f:read("*a")
 `e library
 $ cat foo.lua
 
-function add(x, y) return x+y end
+`*function add(x, y) `*return x+y `*end
 `e import-library
 require 'foo'
 
@@ -514,26 +503,23 @@ o = {}
 `e set-attribute
 o.score = 21
 `e get-attribute
-if o.score == 21 then
-  print("Blackjack!")
-
-end
+`*if o.score == 21 `*then
+  `.print("Blackjack!")
+`*end
 `e define-method
-function o.doubleScore(self)
-  return 2 * self.score
-
-end
+`*function o.doubleScore(self)
+  `*return 2 * self.score
+`*end
 `e invoke-method
-print("Answer: " .. o:doubleScore())
+`.print("Answer: " .. o:doubleScore())
 `e clone-object
 
 `e object-literal
 o = {
   score=21,
-  doubleScore=function(self)
-    return 2*self.score
-  end
-
+  doubleScore=`*function(self)
+    `*return 2*self.score
+  `*end
 }
 `e inspect-type
 type(o)

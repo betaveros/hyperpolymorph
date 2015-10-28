@@ -967,7 +967,7 @@ f.flush()
 f.tell()
 
 f.seek(0)
-`e open-temporary-file
+`e temporary-file
 `*import tempfile
 
 f = tempfile.NamedTemporaryFile()

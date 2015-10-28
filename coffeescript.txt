@@ -432,7 +432,7 @@ immediately invokes a function, forwarding arguments (useful for forcing closure
 `e i-o-errors
 `e encoding-error
 `e get-and-set-file-handle-position
-`e open-temporary-file
+`e temporary-file
 `e in-memory-file
 `e file-exists-test-regular-test
 `e file-size
